@@ -1,4 +1,4 @@
-# TI1216 Template Repository
+# CSE1105 Template Repository
 
 This a template repository to help you get started on making the best project possible!
 
