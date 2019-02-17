@@ -116,4 +116,51 @@ Part 2: Goals
         Teammates help: stay motivated, do their work on time, help each other when needed. 
 
             
+------------------------    Marvin    ------------------------
+Student ID: 4674138
+Picture: ![Marvin](src/main/resources/images/marvintud.jpg)
 
+Part 1: Strengths / Weaknesses
+    
+    Strong points
+        Motivated to work
+            Example: For linear algebra I always practice the things we did during the lecture that same day so I really understand
+            In team: I will be motivated to do my part of that week which means others that need my work won’t have to wait too long.
+        Eager to learn
+            Example: When I get errors during programming I won’t give up immediately, but try and dig for that mistake and learn from it.
+            In team: I will be more willing to ask for help when I’m stuck with something which means that that part of the project won’t be on hold for that long.
+        
+    Weak points
+        I tend to procrastinate
+            Example: When doing the weekly assignments for ADS I focused a lot with the analysis part and left the implementation part undone thinking I would do it later.
+            In team: Others might have to wait longer for my part to be done if I procrastinate too long.
+        Communication
+            Example: When I need something or somebody else needs an answer from me, I tend to wait a lot before asking/answering.
+            In team: This way certain parts of the project will be delayed which will then delay the whole project.
+        
+Part 2: Goals
+    
+    Learning goals
+        Learn to communicate better
+            Important: Good communication means that the project will elapse easier, as all members will stay up-to-date.
+            Success: Whenever I need something or finished something, almost immediately let my teammates know.
+        Try and learn things from others
+            Important: Learning more things from others will give me more experience on that subject, and make me more willing to ask others for help
+            Success: Whenever I’m stuck or find something someone is doing interesting, ask for help/explanations.
+        Gain more experience in overall coding
+            Important: Gaining more experience will make coding easier, which means that assignment may go easier or quicker.
+            Success: Try and participate in as many parts of the projects to get some sort of understanding of those parts and gain more experience.
+        
+    Reality
+        I now tend to ask questions more frequently when I’m in need of help, but also about things what others do.
+        I can still improve my communication with others more. Whenever I have something on my mind, just say it out loud.
+        
+    Options
+        Say the things I have on my mind, spend more time outside of this project on coding, be more social.
+        Want I want to most is being more social.
+        Taking the extra step to say something is stopping me now.
+        
+    Will
+        I’m going to try and communicate as much as I can with my teammates during this project, but also after.
+        I can start with some more coding outside of this project.
+        My teammates can help me by being willing to give me these explanations or answers.
