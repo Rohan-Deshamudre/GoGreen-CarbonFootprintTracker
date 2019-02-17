@@ -164,3 +164,68 @@ Part 2: Goals
         I’m going to try and communicate as much as I can with my teammates during this project, but also after.
         I can start with some more coding outside of this project.
         My teammates can help me by being willing to give me these explanations or answers.
+
+
+
+------------------------    Justin    ------------------------
+Student ID: 4698460
+Picture: 
+
+Part 1: Strengths / Weaknesses
+    
+    Strong points
+        Motivated to learn
+        I will be working hard on not only my part but also try to make some part of the others if I can, and even though it will
+        be hard and maybe most of the stuff I won’t be able to understand, I will not give up so easily but putting a lot of 
+        effort instead. I might not be a fast learner but I will definitely put a lot of effort in this group project.
+
+        Communication
+        Although I might not be a really talkative person, but I will certainly try to maintain good communication with each 
+        other and 
+        try not to trigger my group mates or even ease the conflict between others. For communication within the project, I will
+        keep my groupmate in touch on the progress for the project.
+
+        Working hard
+        I am gonna put a lot of time on the project and to not only finish my part of work but try to do it to perfection if I 
+        have time left. I will be really spending at least 13 hours per week on this project.
+        
+    Weak points
+        Less programming experience
+
+        Do not have much experience on programming. I am new to programming as I have never seriously have studied programming
+        before this bachelor programme, so I actually just started to learn about programming for the OOP in the first quarter.  
+        So I might encounter many new stuff in this project.
+
+        Low efficiency
+
+        My production with respect to the time I spent on my work is relatively low, so even though I spent a lot of time on my   
+        own part I might not be able to produce as much as others, because I am not really a fast-learner.
+        
+Part 2: Goals
+    
+    Learning goals
+        My learning goals for this project is that I could get way better on programming as I am at the moment. As I am learning 
+        more and more new programming stuff, I hope I could also improve my speed on programming too.
+        
+        My other learning goal is that I hope I could make friends with everyone else in the group and will maintain a good 
+        communication with the rest of the group, and even though we might conflict on some point, but I hope we will be able to 
+        solve the problems in a smart way.
+        
+    Reality
+        I have got to be working harder on improving my coding skill and get more experience since I do not have much.
+
+        I have to improve my productivity on not only the project, but also on other courses so that I can spend more time on 
+        this project as for the other courses I am still on track.
+
+        Try to get to meeting on time and be well prepare for the meeting so that we could make good use of the meeting and be 
+        able to ask the TA some solid questions.
+    Options
+        Try to work more as a group which we help each other among the group so that the productivity will be increased and our
+        team working skills will be enhanced as well.
+
+        Getting out of bed earlier so that even if we have some early meeting I would be well-prepared.
+        
+    Will
+        I will be able to code pretty fluently after finishing the project or even in the middle of the project.
+
+        I will be able to communicate with my groupmates very well and spend some good time with them.
