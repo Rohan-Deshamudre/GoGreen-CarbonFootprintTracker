@@ -117,6 +117,7 @@ Part 2: Goals
 
             
 ------------------------    Marvin    ------------------------
+NetID: mevorasousa
 Student ID: 4674138
 Picture: ![Marvin](src/main/resources/images/marvintud.jpg)
 
