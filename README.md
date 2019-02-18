@@ -271,3 +271,62 @@ Part 2: Goals
         I am going to do this during the whole quarter.
         My teammates can help me by saying something when I mess something up and don’t notice it.
         
+------------------------    Nathan    ------------------------
+        NetID: nkindt
+        Student ID: 4916484
+        Picture: ![Nathan](src/main/resources/images/nathantud.png)
+        
+        STRONG POINT ONE - ENTHUSIASTIC
+        When I’m motivated for a project and interested in the subject, 
+        I can work really hard, like, hours and hours a day. I can also get
+        really enthusiastic (more like obsessed actually) about a project.
+        A perfect example of this was the web assignment last semester, were
+        I made a chess website with legal move detection and stuff. I didn’t
+        had a lot of prior experience with javascript so it took me a while
+        to figure everything out (see weak points) but I didn’t stop until I
+        was proud on the result.
+        
+        STRONG POINT TWO - SOCIAL
+        Even though I don’t have any social media I would still consider myself
+        a social person. I like working with other people, especially helping
+        and explaining things (that’s why it’s my job, I tutor high school kids
+        in my neighborhood). That being said, I can be pretty stubborn sometimes
+        (ask my web partner) so I guess we’ll see how that goes! :p
+        
+        WEAK POINT ONE - PROCRASTINATING
+        Don’t think this one needs much explanation. I’m a terrible procrastinator.
+        I managed to not make any calculus homework since week 2 of the previous
+        semester so yeah… I’m not that worried about it now though, because the
+        responsibility i have towards the group helps a lot with reaching deadlines
+        for me and if I, eventually, start something I will usually finish it. Like
+        with the web assignment last semester in contrary to my calculus.
+        
+        WEAK POINT TWO - NOT THAT FAST
+        So, I can be pretty slow sometimes when working on something new. But I don’t
+        really see this as a weak point, because the reason is I can’t just copy paste 
+       something of stack overflow while not understanding it, or assume something works
+       and ‘just go with it’. I want to understand why and how something works. Also I can
+       sometimes be a real perfectionist. Rewriting code several times or just CSS
+       (10px up… no make that 7, goddammit 8 then). 
+        Oh, And I’m probably that guy that stares at a problem on the screen for an hour
+        without getting somewhere of trying to implement something silly and useless.
+        
+        STEP TWO
+        
+        G(OAL) 
+        ONE - Learning more about the java language in general and getting more proficient with it.
+        TWO - Getting used to git and other software around the project.
+        THEE - managing to work with a group (obviously). That means for me both working within
+        one as well as coordinating members and leading one.
+        
+        R(EALITY)
+        Struggling with that procrastination problem and just disciplining myself in
+        general (bed time, diet). I realise I spend way to little time on my study as I should be.
+        
+        O(PTIONS)
+        Just doing it. Start today and not tomorrow mentality would help a lot, work on my self discipline.
+        
+        W(ILL)
+        See the above, I’m going to start on tasks as soon as possible so I can get help and
+        feedback from my teammates early, so they can help me (or I them) as soon as possible.
+
