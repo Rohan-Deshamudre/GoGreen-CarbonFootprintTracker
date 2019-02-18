@@ -330,3 +330,49 @@ Part 2: Goals
         See the above, I’m going to start on tasks as soon as possible so I can get help and
         feedback from my teammates early, so they can help me (or I them) as soon as possible.
 
+------------------------    Paul    ------------------------
+        NetID: pfrolke
+        Student ID: 4888693
+        Picture: ![Paul](src/main/resources/images/paul.JPG)
+ 
+        Strong points
+            I can learn pretty quickly.
+            Example: last quarter I didn’t go to any lectures, started studying the week before the finals week, but still passed all courses.
+            In a team: I can adapt to new methods and expectations.
+            
+            I am motivated to put in the work required to get good results.
+            Example: I am an active member of a committee of my student association.  
+            In a team: motivated team members can often motivate the rest of the team, making the whole team more productive.
+        
+        Weaker points
+            I have problems getting to meetings on time/at all.
+            Example: last quarter I didn’t go to any lectures.
+            In a team: meetings are important for the progress of a team project.
+        
+            I have difficulty admitting I don’t understand a problem and need help to continue.
+            Example: I can get stuck on math problems for hours because I won’t accept I just don’t know how to solve it.
+            In a team: asking team members for help can greatly improve the productivity of the whole team.
+        
+        Goal
+        Learning goals:
+            Learn how to work effectively in a team.
+            Important because: previous group projects I’ve participated in have almost always ended in me doing all of the work.
+            Success when: I trusted the rest of the team and focussed mostly on finishing my side of the work.
+            
+            Learn to get more disciplined to attend all meetings.
+            Important because: I am a master at sleeping through my alarms.
+            Success when: I have attended all meetings and finished all my tasks in time.
+        
+        Reality
+            Going well: getting to appointments in time, waking up earlier.
+            Can use improvement: going to bed earlier so I can wake up even earlier.
+        
+        Options
+            Go to bed earlier, spend less time partying, stop scheduling overlapping appointments.
+            Use the most: go to bed earlier.
+            Stopping me: parties/events with my friends and roommates.
+        
+        Will
+            I will get my shit together and trust my teammates more.
+            First step: finish my own tasks as soon as possible the best I can.
+            How can teammates help: by staying motivated and finishing their tasks in time.
