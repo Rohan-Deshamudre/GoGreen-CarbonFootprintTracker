@@ -274,7 +274,7 @@ Part 2: Goals
 ------------------------    Nathan    ------------------------
         NetID: nkindt
         Student ID: 4916484
-        Picture: ![Nathan](src/main/resources/images/nathantud.png)
+        Picture: ![Nathan](src/main/resources/images/nathantud.JPG)
         
         STRONG POINT ONE - ENTHUSIASTIC
         When I’m motivated for a project and interested in the subject, 
