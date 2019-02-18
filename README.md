@@ -231,3 +231,43 @@ Part 2: Goals
         I will be able to code pretty fluently after finishing the project or even in the middle of the project.
 
         I will be able to communicate with my groupmates very well and spend some good time with them.
+        
+
+------------------------    Denys    ------------------------
+NetID: dsheremet
+Student ID: 4960564
+Picture: ![Denys](src/main/resources/images/Denys_Profielfoto.png)
+
+Part 1: Strengths / Weaknesses
+
+    Strong points: 
+        Meeting deadlines
+        I’m used to spending a lot of time to make something happen.
+        Motivation for this project
+        I think this project will be fun and want to make the program great.
+        
+    Weak points: 
+        Spreading the work evenly
+        In the web & data project I did my part and my partner didn't 
+        do what he was supposed to do.
+        Little experience with tools such as Git.
+    
+Part 2: Goals
+        
+    Goal: 
+        My goal for this course is to learn to work in a relatively large group. I think that especially in the beginning we will have troubles with communication. This might mean that not everyone knows what we are doing as a whole. So I want to experience and learn what works and what doesn’t. 
+        
+    Reality:
+         I have no experience with programing in a group or even doing anything big with a group of more than 4. In the previous quarter my partner did not actually want to do anything for the project and in the second half gave up. I realised this way too late and wasted a lot of time.
+        I can improve by knowing more about what others want and keep that in mind. And if somebody does not do their part, trying to understand why that happened and if there is an underlying problem.
+        
+    Options:
+        The way to achieve my goal is to try and fail a lot and then learn from this. Also I can look at what others are doing and learn from that as well.
+        Also I can get better at teamwork by theorizing. 
+        I prefer to fail a lot and then learn from that.
+        
+    Will:
+        To reach my goal, I am going to actively participate in this project.
+        I am going to do this during the whole quarter.
+        My teammates can help me by saying something when I mess something up and don’t notice it.
+        
