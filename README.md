@@ -333,7 +333,7 @@ Part 2: Goals
 ------------------------    Paul    ------------------------
         NetID: pfrolke
         Student ID: 4888693
-        Picture: ![Paul](src/main/resources/images/paul.JPG)
+        Picture: ![Paul](src/main/resources/images/paul.jpg)
  
         Strong points
             I can learn pretty quickly.
