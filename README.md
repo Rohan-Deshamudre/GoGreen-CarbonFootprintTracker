@@ -171,7 +171,7 @@ Part 2: Goals
 ------------------------    Justin    ------------------------
 NetID: jcysun
 Student ID: 4698460
-Picture: 
+Picture: ![](pictures\IMG_7443.JPG)
 
 Part 1: Strengths / Weaknesses
     
