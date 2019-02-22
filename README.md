@@ -375,4 +375,6 @@ Part 2: Goals
         Will
             I will get my shit together and trust my teammates more.
             First step: finish my own tasks as soon as possible the best I can.
-            How can teammates help: by staying motivated and finishing their tasks in time.
+            How can teammates help: by staying motivated and finishing their tasks in time. 
+
+The end.
