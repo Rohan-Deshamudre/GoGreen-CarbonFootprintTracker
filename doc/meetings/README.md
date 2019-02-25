@@ -13,3 +13,4 @@ For instance, for February 13th you would use `20190213_agenda.xyz`.
 After your weekly meeting you need to commit your notes in this folder.
 Please use the following naming convention: `20190213_notes.xyz` (where you change the date to the date of the meeting).
 Please hand in either a MarkDown or PDF file.
+
