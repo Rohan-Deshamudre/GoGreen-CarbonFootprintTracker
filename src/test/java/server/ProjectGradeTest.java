@@ -1,4 +1,4 @@
-package grade;
+package server;
 
 import org.junit.Assert;
 import org.junit.Test;

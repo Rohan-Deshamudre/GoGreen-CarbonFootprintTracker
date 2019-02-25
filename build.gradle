@@ -40,4 +40,4 @@ checkstyle {
 }
 
 // Define the main class for the application
-mainClassName = 'grade.ProjectGrade'
+mainClassName = 'server.Application'
