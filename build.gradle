@@ -57,4 +57,4 @@ test {
 }
 
 // Define the main class for the application
-mainClassName = 'client.Application'
+mainClassName = 'client.ClientApplication'
