@@ -11,4 +11,11 @@ public class LoginResponse extends ServerMessage {
     public boolean getSuccess() {
         return this.success;
     }
+
+    @Override
+    public String toString() {
+        return "<LoginResponse{" +
+                "\n    success: " + success +
+                "\n}>";
+    }
 }

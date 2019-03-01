@@ -17,4 +17,12 @@ public class LoginRequest extends ClientMessage {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return "<LoginRequest{" +
+                "\n    username: " + username +
+                "\n    password: " + password +
+                "\n}>";
+    }
 }
