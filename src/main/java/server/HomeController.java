@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-//@Controller
+@Controller
 public class HomeController {
-    //@RequestMapping("/")
-    //@ResponseBody
+    @RequestMapping("/")
+    @ResponseBody
     String home() {
         return "Hello client!";
     }
