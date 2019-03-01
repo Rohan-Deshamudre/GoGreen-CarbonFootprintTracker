@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @SpringBootApplication
-public class Application {
+public class ServerApplication {
 
     @RequestMapping("/")
     @ResponseBody
@@ -17,6 +17,21 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ServerApplication.class, args);
     }
+
+    /**
+     * THIS IS TEMPORARY
+     * In the future this will be connected to the database.
+     * @param username
+     * @param password
+     * @return
+     */
+    public static boolean checkLoginData(String username, String password) {
+        if (username.equals("John") && password.equals("Cena")) {
+            return true;
+        }
+        return false;
+    }
+
 }
