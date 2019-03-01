@@ -21,8 +21,12 @@ plugins {
 
     // Apply Springboot
     id 'org.springframework.boot' version '2.1.3.RELEASE'
+
+    // Apply javafx
+    id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
+apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
 repositories {
@@ -36,10 +40,14 @@ dependencies {
     implementation 'com.google.guava:guava:26.0-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation('org.junit.jupiter:junit-jupiter:5.4.0')
 
     // Use springframework
     implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+javafx {
+    modules = [ 'javafx.controls' ]
 }
 
 checkstyle {
@@ -47,5 +55,13 @@ checkstyle {
     configFile = rootProject.file('CSE1105.checkstyle.xml')
 }
 
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
 // Define the main class for the application
-mainClassName = 'client.Application'
+mainClassName = 'server.ServerApplication'

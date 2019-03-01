@@ -6,17 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
 @SpringBootApplication
-public class Application {
+@Controller
+public class ServerApplication {
 
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello client";
-    }
-
+    // Starts the spring application
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ServerApplication.class, args);
     }
 }
