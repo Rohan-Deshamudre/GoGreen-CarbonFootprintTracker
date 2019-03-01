@@ -2,6 +2,7 @@ package server;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,8 @@ public class MirrorController {
     /**
      * Adds a page /test/status which responds an up message
      */
-    @RequestMapping("/test/status")
+    @RequestMapping(value = "/test/status",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<String> status() {
         return new ResponseEntity<>("{\"status\" : \"UP\"}", HttpStatus.OK);
@@ -22,7 +24,9 @@ public class MirrorController {
     /**
      * Adds a page /test/mirror which responds by mirroring the request
      */
-    @RequestMapping("/test/mirror")
+    @RequestMapping(value = "/test/mirror",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<String> mirror(@RequestBody String req) {
         return new ResponseEntity<>(req, HttpStatus.OK);
