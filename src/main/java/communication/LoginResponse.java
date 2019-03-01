@@ -7,4 +7,8 @@ public class LoginResponse extends ServerMessage {
     public LoginResponse(boolean success) {
         this.success = success;
     }
+
+    public boolean getSuccess() {
+        return this.success;
+    }
 }
