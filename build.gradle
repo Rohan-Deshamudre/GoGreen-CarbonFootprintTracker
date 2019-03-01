@@ -24,6 +24,9 @@ plugins {
 
     // Apply javafx
     id 'org.openjfx.javafxplugin' version '0.0.7'
+
+    // Apply mockito
+    //id 'org.mockito' version '2.24.5'
 }
 
 apply plugin: 'java'
@@ -44,6 +47,9 @@ dependencies {
 
     // Use springframework
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // use mockito inline
+    testCompile "org.mockito:mockito-inline:+"
 }
 
 javafx {
