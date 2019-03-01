@@ -1,4 +1,4 @@
 package communication;
 
-public class ClientMessage extends Message {
+public abstract class ClientMessage extends Message {
 }
