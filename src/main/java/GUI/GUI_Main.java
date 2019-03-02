@@ -334,7 +334,13 @@ public class GUI_Main extends Application {
 
         SeparatorMenuItem sep3 = new SeparatorMenuItem();
         MenuItem logout = new MenuItem("Logout");
-//        logout.setOnAction(e -> logout());
+        logout.setOnAction(e -> {
+            try {
+                loginPage();
+            } catch(Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
 
         menu.getItems().addAll(goToHomeScreen, sep1, goToFood, goToTransport, goToEnergy, sep2, goToShare, sep3, logout);
 
