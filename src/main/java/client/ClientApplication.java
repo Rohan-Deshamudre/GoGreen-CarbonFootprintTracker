@@ -1,11 +1,11 @@
 package client;
 
+
 import communication.LoginRequest;
 import communication.LoginResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestTemplate;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -22,9 +22,10 @@ public class ClientApplication {
 
     /**
      * get requests index page of our heroku server
+     *
      * @return the text response from the server
      */
-    public static String getRequestHeroku () {
+    public static String getRequestHeroku() {
         RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject(URL, String.class);
         return quote;
@@ -42,5 +43,4 @@ public class ClientApplication {
 
         return res.getSuccess();
     }
-
 }

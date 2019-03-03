@@ -27,6 +27,7 @@ plugins {
 
     // Apply mockito
     //id 'org.mockito' version '2.24.5'
+
 }
 
 apply plugin: 'java'
@@ -56,6 +57,10 @@ javafx {
     modules = [ 'javafx.controls' ]
 }
 
+javafx {
+    modules = [ 'javafx.controls' ]
+}
+
 checkstyle {
     toolVersion = '7.6.1'
     configFile = rootProject.file('CSE1105.checkstyle.xml')
@@ -72,3 +77,4 @@ test {
 // Define the main class for the application
 //mainClassName = 'server.ServerApplication'
 mainClassName = 'client.ClientApplication'
+
