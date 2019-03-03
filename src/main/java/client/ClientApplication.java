@@ -12,10 +12,10 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private final static String URL = "http://localhost:8080/";
+    private final static String URL = "https://gogreen32.herokuapp.com/";
 
     public static void main(String args[]) throws URISyntaxException {
-//        getRequestHeroku();
+
         boolean success = sendLoginRequest("Roy", "Donders");
         System.out.println("Success: " + success);
     }
