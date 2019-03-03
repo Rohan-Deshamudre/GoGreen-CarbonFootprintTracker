@@ -1,12 +1,12 @@
 package server;
 
+import communication.LoginRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
 @SpringBootApplication
 public class ServerApplication {
 
@@ -28,10 +28,14 @@ public class ServerApplication {
      * @return
      */
     public static boolean checkLoginData(String username, String password) {
-        if (username.equals("John") && password.equals("Cena")) {
+        if (username.equals("John") && password.equals("Wick")) {
             return true;
         }
         return false;
+    }
+
+    public static boolean checkLoginData(LoginRequest req) {
+        return checkLoginData(req.getUsername(), req.getPassword());
     }
 
 }

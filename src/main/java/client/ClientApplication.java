@@ -15,7 +15,6 @@ public class ClientApplication {
     private final static String URL = "https://gogreen32.herokuapp.com/";
 
     public static void main(String args[]) throws URISyntaxException {
-
         boolean success = sendLoginRequest("Roy", "Donders");
         System.out.println("Success: " + success);
     }
@@ -31,6 +30,13 @@ public class ClientApplication {
         return quote;
     }
 
+    /**
+     * This method sends a POST request to the server with the login information
+     * @param username
+     * @param password
+     * @return
+     * @throws URISyntaxException
+     */
     public static boolean sendLoginRequest(String username, String password) throws URISyntaxException {
         LoginRequest req = new LoginRequest(username, password);
 
@@ -43,4 +49,5 @@ public class ClientApplication {
 
         return res.getSuccess();
     }
+
 }

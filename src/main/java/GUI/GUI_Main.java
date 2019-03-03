@@ -27,6 +27,8 @@ import javafx.stage.Stage;
 import client.ClientApplication;
 import server.ServerApplication;
 
+import java.net.URISyntaxException;
+
 
 public class GUI_Main extends Application {
 
@@ -45,7 +47,6 @@ public class GUI_Main extends Application {
 
     /**
      * This is the login page
-     * @param primaryStage
      * @throws Exception
      */
     private void loginPage() throws Exception {
@@ -356,7 +357,12 @@ public class GUI_Main extends Application {
      * @param password
      */
     private void loginButtonAction(String username, String password){
-        boolean ok = server.ServerApplication.checkLoginData(username, password);
+        boolean ok = false;
+        try {
+            ok = ClientApplication.sendLoginRequest(username, password);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         if (ok) {
             System.out.println("LOGIN SUCCESFULL");
             System.out.println("username: " + username);
