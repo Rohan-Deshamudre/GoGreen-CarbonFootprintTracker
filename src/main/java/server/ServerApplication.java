@@ -1,5 +1,6 @@
 package server;
 
+import communication.LoginRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,10 +19,14 @@ public class ServerApplication {
      * @return
      */
     public static boolean checkLoginData(String username, String password) {
-        if (username.equals("John") && password.equals("Cena")) {
+        if (username.equals("Roy") && password.equals("Donders")) {
             return true;
         }
         return false;
+    }
+
+    public static boolean checkLoginData(LoginRequest request) {
+        return checkLoginData(request.getUsername(), request.getPassword());
     }
 
 }

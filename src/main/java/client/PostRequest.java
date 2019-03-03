@@ -16,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import communication.LoginRequest;
+import communication.LoginResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,17 +26,18 @@ public class PostRequest {
         RestTemplate restTemplate = new RestTemplate();
 
         // Make uri from the url
-        final String baseUrl = "https://gogreen32.herokuapp.com/test/mirror";
+//        final String baseUrl = "https://gogreen32.herokuapp.com/test/mirror";
+        final String baseUrl = "http://localhost:8080/login";
         URI uri = new URI(baseUrl);
 
         // Make LoginRequest
-        LoginRequest loginRequest = new LoginRequest("Tay", "Zonday");
+        LoginRequest loginRequest = new LoginRequest("Roy", "Donders");
 
         // POST Request
-        LoginRequest result = restTemplate.postForObject(uri, loginRequest, LoginRequest.class);
+        LoginResponse result = restTemplate.postForObject(uri, loginRequest, LoginResponse.class);
 
         System.out.println();
-        System.out.println(result.toString());
+        System.out.println(result);
 
     }
 }
