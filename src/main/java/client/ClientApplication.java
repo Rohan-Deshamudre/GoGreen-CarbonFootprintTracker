@@ -34,9 +34,8 @@ public class ClientApplication {
         LoginRequest req = new LoginRequest(username, password);
 
         RestTemplate restTemplate = new RestTemplate();
-        URI uri = new URI(URL + "login");
 
-        LoginResponse res = restTemplate.postForObject(uri, req, LoginResponse.class);
+        LoginResponse res = restTemplate.postForObject(URL + "login", req, LoginResponse.class);
 
         System.out.println();
         System.out.println(res);
