@@ -71,4 +71,4 @@ test {
 
 // Define the main class for the application
 //mainClassName = 'server.ServerApplication'
-mainClassName = 'client.PostRequest'
+mainClassName = 'client.ClientApplication'
