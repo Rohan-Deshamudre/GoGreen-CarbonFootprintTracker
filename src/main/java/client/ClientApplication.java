@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private static final String URL = "http://localhost:8080/";
+    private static final String URL = "https://gogreen32.herokuapp.com/";
 
     /**
      * PLACEHOLDER JAVADOC.
@@ -17,7 +17,6 @@ public class ClientApplication {
      * @throws URISyntaxException - exception thrown when sendLoginRequest uses the wrong url
      */
     public static void main(String args[]) throws URISyntaxException {
-        //getRequestHeroku();
         boolean success = sendLoginRequest("Roy", "Donders");
         System.out.println("Success: " + success);
     }
