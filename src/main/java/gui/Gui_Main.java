@@ -1,44 +1,45 @@
-package GUI;
+package gui;
 
+import client.ClientApplication;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
-import client.ClientApplication;
-import server.ServerApplication;
-
 import java.net.URISyntaxException;
 
 
-public class GUI_Main extends Application {
+public class Gui_Main extends Application {
 
     private Stage window;
     private Scene loginScene;
 
+    /**
+     * Main method of the class, launches the application.
+     *
+     * @param args: the input
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * This method starts the window.
+     *
+     * @param primaryStage: this is the window of the application.
+     * @throws Exception: in case of an exception.
+     */
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
@@ -46,8 +47,9 @@ public class GUI_Main extends Application {
     }
 
     /**
-     * This is the login page
-     * @throws Exception
+     * This is the login page.
+     *
+     * @throws Exception: in case of an exception.
      */
     private void loginPage() throws Exception {
         window.setTitle("Login");
@@ -67,18 +69,24 @@ public class GUI_Main extends Application {
         // Hello client label
         String helloString = ClientApplication.getRequestHeroku() + "!";
         Label helloLabel = new Label(helloString);
+        GridPane.setConstraints(helloLabel, 1, 0);
 
         // Enter username
         Label usernameLabel = new Label("Username: ");
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
+        GridPane.setConstraints(usernameLabel, 0, 1);
+        GridPane.setConstraints(usernameField, 1, 1);
+
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
         TextField passwordField = new TextField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
+        GridPane.setConstraints(passwordLabel, 0, 2);
+        GridPane.setConstraints(passwordField, 1, 2);
 
         // Login button
         Button loginButton = new Button("Login");
@@ -87,24 +95,20 @@ public class GUI_Main extends Application {
             usernameField.setText("");
             passwordField.setText("");
         });
-
-        // Add all elements to the grid
-        GridPane.setConstraints(helloLabel, 1, 0);
-        GridPane.setConstraints(usernameLabel, 0, 1);
-        GridPane.setConstraints(usernameField, 1, 1);
-        GridPane.setConstraints(passwordLabel, 0, 2);
-        GridPane.setConstraints(passwordField, 1, 2);
         GridPane.setConstraints(loginButton, 1, 3);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(10,10,10,10));
+        borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
         borderPane.setCenter(grid);
 
 
         // Make scene
-        grid.getChildren().addAll(helloLabel, usernameLabel, usernameField, passwordLabel, passwordField, loginButton);
+        grid.getChildren().addAll(
+                helloLabel, usernameLabel, usernameField,
+                passwordLabel, passwordField, loginButton
+        );
         loginScene = new Scene(borderPane, 600, 400);
 
         // Show window
@@ -113,6 +117,9 @@ public class GUI_Main extends Application {
         window.show();
     }
 
+    /**
+     * This is the method for the main menu.
+     */
     private void showMainMenu() {
         window.setTitle("Main menu");
 
@@ -171,6 +178,9 @@ public class GUI_Main extends Application {
         window.show();
     }
 
+    /**
+     * This is the page for the food page.
+     */
     private void showFoodPage() {
         window.setTitle("Food");
 
@@ -181,7 +191,8 @@ public class GUI_Main extends Application {
         Label foodTitle = new Label("Food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Ate a vegetarian meal", "Bought from a biological store");
+        choiceBox.getItems().addAll("Ate a vegetarian meal",
+                "Bought from a biological store");
         choiceBox.setValue("Ate a vegetarian meal");
 
         Button addOption = new Button("Add");
@@ -200,6 +211,9 @@ public class GUI_Main extends Application {
         window.show();
     }
 
+    /**
+     * This is the method for the transport page.
+     */
     private void showTransportPage() {
         window.setTitle("Transport");
 
@@ -210,7 +224,8 @@ public class GUI_Main extends Application {
         Label transportTitle = new Label("Transport");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Using bike instead of car", "Using public transport instead of car");
+        choiceBox.getItems().addAll("Using bike instead of car",
+                "Using public transport instead of car");
         choiceBox.setValue("Using bike instead of car");
 
         Button addOption = new Button("Add");
@@ -229,6 +244,9 @@ public class GUI_Main extends Application {
         window.show();
     }
 
+    /**
+     * This is the method for the home energy page.
+     */
     private void showHomeEnergy() {
         window.setTitle("Home Energy");
 
@@ -239,7 +257,8 @@ public class GUI_Main extends Application {
         Label energyTitle = new Label("Home energy");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Lowering the temperature of your home", "Installing solar panels");
+        choiceBox.getItems().addAll("Lowering the temperature of your home",
+                "Installing solar panels");
         choiceBox.setValue("Lowering the temperature of your home");
 
         Button addOption = new Button("Add");
@@ -338,12 +357,15 @@ public class GUI_Main extends Application {
         logout.setOnAction(e -> {
             try {
                 loginPage();
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         });
 
-        menu.getItems().addAll(goToHomeScreen, sep1, goToFood, goToTransport, goToEnergy, sep2, goToShare, sep3, logout);
+        menu.getItems().addAll(
+                goToHomeScreen, sep1, goToFood, goToTransport,
+                goToEnergy, sep2, goToShare, sep3, logout
+        );
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu);
@@ -353,10 +375,11 @@ public class GUI_Main extends Application {
 
     /**
      * NOT GUI
+     *
      * @param username
      * @param password
      */
-    private void loginButtonAction(String username, String password){
+    private void loginButtonAction(String username, String password) {
         boolean ok = false;
         try {
             ok = ClientApplication.sendLoginRequest(username, password);
@@ -369,8 +392,7 @@ public class GUI_Main extends Application {
             System.out.println("password: " + password);
             System.out.println();
             showMainMenu();
-        }
-        else {
+        } else {
             System.out.println("WRONG USERNAME OR PASSWORD");
             System.out.println("username: " + username);
             System.out.println("password: " + password);

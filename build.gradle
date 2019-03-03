@@ -73,4 +73,4 @@ test {
 // Define the main class for the application
 //mainClassName = 'server.ServerApplication'
 //mainClassName = 'client.ClientApplication'
-mainClassName = 'GUI.GUI_Main'
+mainClassName = 'gui.Gui_Main'

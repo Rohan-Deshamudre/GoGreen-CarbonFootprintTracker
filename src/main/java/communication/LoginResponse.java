@@ -16,8 +16,8 @@ public class LoginResponse extends ServerMessage {
 
     @Override
     public String toString() {
-        return "<LoginResponse{" +
-                "\n    success: " + success +
-                "\n}>";
+        return "<LoginResponse{"
+                + "\n    success: " + success
+                + "\n}>";
     }
 }

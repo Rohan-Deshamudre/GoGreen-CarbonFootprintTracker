@@ -1,14 +1,10 @@
 package client;
 
-
 import communication.LoginRequest;
 import communication.LoginResponse;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestTemplate;
-import java.net.URI;
-import java.net.URISyntaxException;
 
+import java.net.URISyntaxException;
 
 public class ClientApplication {
 
@@ -20,9 +16,9 @@ public class ClientApplication {
     }
 
     /**
-     * get requests index page of our heroku server
+     * get requests index page of our heroku server.
      *
-     * @return the text response from the server
+     * @return the text response from the server.
      */
     public static String getRequestHeroku() {
         RestTemplate restTemplate = new RestTemplate();
@@ -31,18 +27,21 @@ public class ClientApplication {
     }
 
     /**
-     * This method sends a POST request to the server with the login information
-     * @param username
-     * @param password
-     * @return
-     * @throws URISyntaxException
+     * This method sends a POST request to the server with the login information.
+     *
+     * @param username: the username.
+     * @param password: the password.
+     * @return: returns true if login successful.
+     * @throws URISyntaxException: can throw exception.
      */
-    public static boolean sendLoginRequest(String username, String password) throws URISyntaxException {
+    public static boolean sendLoginRequest(String username, String password)
+            throws URISyntaxException {
         LoginRequest req = new LoginRequest(username, password);
 
         RestTemplate restTemplate = new RestTemplate();
 
-        LoginResponse res = restTemplate.postForObject(URL + "login", req, LoginResponse.class);
+        String loginUrl = URL + "login";
+        LoginResponse res = restTemplate.postForObject(loginUrl, req, LoginResponse.class);
 
         System.out.println();
         System.out.println(res);

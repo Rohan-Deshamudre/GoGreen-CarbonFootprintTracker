@@ -3,7 +3,6 @@ package server;
 import communication.LoginRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,6 +22,7 @@ public class ServerApplication {
     /**
      * THIS IS TEMPORARY
      * In the future this will be connected to the database.
+     *
      * @param username
      * @param password
      * @return
