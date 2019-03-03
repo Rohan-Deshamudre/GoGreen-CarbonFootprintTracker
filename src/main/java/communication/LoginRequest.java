@@ -28,12 +28,17 @@ public class LoginRequest extends ClientMessage {
 
     @Override
     public String toString() {
-        if (username == null) username = "";
-        if (password == null) password = "";
+        if (username == null) {
+            username = "";
+        }
 
-        return "<LoginRequest{" +
-                "\n    username: " + username +
-                "\n    password: " + password +
-                "\n}>";
+        if (password == null) {
+            password = "";
+        }
+
+        return "<LoginRequest{"
+                + "\n    username: " + username
+                + "\n    password: " + password
+                + "\n}>";
     }
 }

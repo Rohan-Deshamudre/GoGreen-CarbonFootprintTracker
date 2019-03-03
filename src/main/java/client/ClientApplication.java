@@ -13,8 +13,8 @@ public class ClientApplication {
 
     /**
      * PLACEHOLDER JAVADOC.
-     * @param args
-     * @throws URISyntaxException
+     * @param args - java run arguments, not used
+     * @throws URISyntaxException - exception thrown when sendLoginRequest uses the wrong url
      */
     public static void main(String args[]) throws URISyntaxException {
         //getRequestHeroku();
@@ -34,10 +34,10 @@ public class ClientApplication {
 
     /**
      * PLACEHOLDER JAVADOC.
-     * @param username
-     * @param password
-     * @return
-     * @throws URISyntaxException
+     * @param username - String containing the username
+     * @param password - String containing the password
+     * @return - true iff the user/password combination resulted in a successful login
+     *@throws URISyntaxException exception thrown when the wrong url is used
      */
     public static boolean sendLoginRequest(String username, String password)
             throws URISyntaxException {

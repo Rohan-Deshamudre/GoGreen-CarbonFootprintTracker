@@ -14,9 +14,9 @@ public class ServerApplication {
     /**
      * THIS IS TEMPORARY
      * In the future this will be connected to the database.
-     * @param username
-     * @param password
-     * @return
+     * @param username - String containing the username.
+     * @param password - String containing the password.
+     * @return - true iff the username/password combination is correct.
      */
     public static boolean checkLoginData(String username, String password) {
         if (username.equals("Roy") && password.equals("Donders")) {

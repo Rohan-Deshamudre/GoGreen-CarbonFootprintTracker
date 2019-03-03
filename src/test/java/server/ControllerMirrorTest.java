@@ -1,14 +1,13 @@
 package server;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ControllerMirrorTest {
-    public static ResponseEntity<String> responseBuilder(String res){
+    public static ResponseEntity<String> responseBuilder(String res) {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
