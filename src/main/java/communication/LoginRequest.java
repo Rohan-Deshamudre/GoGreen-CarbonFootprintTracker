@@ -10,6 +10,12 @@ public class LoginRequest extends ClientMessage {
         this.password = password;
     }
 
+    /**
+     * This class needs to have a default constructor.
+     * Otherwise resttemplate.postForObject(...) does not work.
+     */
+    public LoginRequest() {}
+
     public String getUsername() {
         return username;
     }
@@ -18,8 +24,13 @@ public class LoginRequest extends ClientMessage {
         return password;
     }
 
+
+
     @Override
     public String toString() {
+        if (username == null) username = "";
+        if (password == null) password = "";
+
         return "<LoginRequest{" +
                 "\n    username: " + username +
                 "\n    password: " + password +
