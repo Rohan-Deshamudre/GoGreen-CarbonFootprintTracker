@@ -10,18 +10,18 @@ class ServerApplicationTest {
 
     @Test
     public void checkLoginDataTest() {
-       assertTrue(checkLoginData("Jhon", "Wick"));
-       assertFalse(checkLoginData("Jhon", "Cena"));
-       assertFalse(checkLoginData("Steve", "Wick"));
+        assertTrue(checkLoginData("John", "Wick"));
+        assertFalse(checkLoginData("John", "Cena"));
+        assertFalse(checkLoginData("Steve", "Wick"));
     }
 
     @Test
     public void checkLoginRequestTest() {
-        LoginRequest req1 = new LoginRequest("Jhon", "Wick");
-        LoginRequest req2 = new LoginRequest("Jhon", "Cena");
+        LoginRequest req1 = new LoginRequest("John", "Wick");
+        LoginRequest req2 = new LoginRequest("John", "Cena");
         LoginRequest req3 = new LoginRequest("Steve", "Wick");
         assertTrue(checkLoginData(req1));
-        assertTrue(checkLoginData(req2));
-        assertTrue(checkLoginData(req3));
+        assertFalse(checkLoginData(req2));
+        assertFalse(checkLoginData(req3));
     }
 }
