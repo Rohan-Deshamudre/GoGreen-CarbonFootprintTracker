@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ControllerMirrorTest {
+class MirrorControllerTest {
     public static ResponseEntity<String> responseBuilder(String res){
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
