@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private final static String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "https://gogreen32.herokuapp.com/";
 
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
@@ -29,10 +29,10 @@ public class ClientApplication {
     /**
      * This method sends a POST request to the server with the login information.
      *
-     * @param username: the username.
-     * @param password: the password.
-     * @return: returns true if login successful.
-     * @throws URISyntaxException: can throw exception.
+     * @param username - the username.
+     * @param password - the password.
+     * @return - returns true if login successful.
+     * @throws URISyntaxException - can throw exception.
      */
     public static boolean sendLoginRequest(String username, String password)
             throws URISyntaxException {
