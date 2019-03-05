@@ -130,7 +130,7 @@ public class Gui_Main extends Application {
         left.setAlignment(Pos.CENTER);
         left.setPadding(new Insets(10, 10, 10, 10));
 
-        Button food = new Button("Food");
+        Button food = new Button("food");
         food.setMinSize(left.getPrefWidth(), left.getPrefHeight());
         food.setOnAction(e -> showFoodPage());
 
@@ -182,13 +182,13 @@ public class Gui_Main extends Application {
      * This is the page for the food page.
      */
     private void showFoodPage() {
-        window.setTitle("Food");
+        window.setTitle("food");
 
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
-        Label foodTitle = new Label("Food");
+        Label foodTitle = new Label("food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Ate a vegetarian meal",
@@ -341,7 +341,7 @@ public class Gui_Main extends Application {
         goToHomeScreen.setOnAction(e -> showMainMenu());
 
         SeparatorMenuItem sep1 = new SeparatorMenuItem();
-        MenuItem goToFood = new MenuItem("Food");
+        MenuItem goToFood = new MenuItem("food");
         goToFood.setOnAction(e -> showFoodPage());
         MenuItem goToTransport = new MenuItem("Transport");
         goToTransport.setOnAction(e -> showTransportPage());
