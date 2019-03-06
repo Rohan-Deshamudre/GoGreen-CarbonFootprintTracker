@@ -6,16 +6,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
-
 public class ClientApplication {
 
     private static final String URL = "https://gogreen32.herokuapp.com/";
 
-    /**
-     * PLACEHOLDER JAVADOC.
-     * @param args - java run arguments, not used
-     * @throws URISyntaxException - exception thrown when sendLoginRequest uses the wrong url
-     */
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
         System.out.println("Success: " + success);
@@ -23,7 +17,8 @@ public class ClientApplication {
 
     /**
      * get requests index page of our heroku server.
-     * @return the text response from the server
+     *
+     * @return the text response from the server.
      */
     public static String getRequestHeroku() {
         RestTemplate restTemplate = new RestTemplate();
@@ -32,11 +27,12 @@ public class ClientApplication {
     }
 
     /**
-     * PLACEHOLDER JAVADOC.
-     * @param username - String containing the username
-     * @param password - String containing the password
-     * @return - true iff the user/password combination resulted in a successful login
-     *@throws URISyntaxException exception thrown when the wrong url is used
+     * This method sends a POST request to the server with the login information.
+     *
+     * @param username - the username.
+     * @param password - the password.
+     * @return - returns true if login successful.
+     * @throws URISyntaxException - can throw exception.
      */
     public static boolean sendLoginRequest(String username, String password)
             throws URISyntaxException {
@@ -44,7 +40,8 @@ public class ClientApplication {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        LoginResponse res = restTemplate.postForObject(URL + "login", req, LoginResponse.class);
+        String loginUrl = URL + "login";
+        LoginResponse res = restTemplate.postForObject(loginUrl, req, LoginResponse.class);
 
         System.out.println();
         System.out.println(res);

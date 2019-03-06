@@ -27,6 +27,7 @@ plugins {
 
     // Apply mockito
     //id 'org.mockito' version '2.24.5'
+
 }
 
 apply plugin: 'java'
@@ -71,4 +72,5 @@ test {
 
 // Define the main class for the application
 //mainClassName = 'server.ServerApplication'
-mainClassName = 'server.ServerApplication'
+//mainClassName = 'client.ClientApplication'
+mainClassName = 'gui.Gui_Main'

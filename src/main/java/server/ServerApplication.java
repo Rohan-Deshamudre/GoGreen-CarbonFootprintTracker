@@ -3,9 +3,17 @@ package server;
 import communication.LoginRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
 public class ServerApplication {
+
+    @RequestMapping("/")
+    @ResponseBody
+    String home() {
+        return "Hello client";
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
@@ -14,19 +22,20 @@ public class ServerApplication {
     /**
      * THIS IS TEMPORARY
      * In the future this will be connected to the database.
-     * @param username - String containing the username.
-     * @param password - String containing the password.
-     * @return - true iff the username/password combination is correct.
+     *
+     * @param username
+     * @param password
+     * @return
      */
     public static boolean checkLoginData(String username, String password) {
-        if (username.equals("Roy") && password.equals("Donders")) {
+        if (username.equals("John") && password.equals("Wick")) {
             return true;
         }
         return false;
     }
 
-    public static boolean checkLoginData(LoginRequest request) {
-        return checkLoginData(request.getUsername(), request.getPassword());
+    public static boolean checkLoginData(LoginRequest req) {
+        return checkLoginData(req.getUsername(), req.getPassword());
     }
 
 }

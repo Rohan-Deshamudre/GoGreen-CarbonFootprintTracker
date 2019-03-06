@@ -1,7 +1,10 @@
-package client;
+package server;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClientApplicationTest {
+class ApplicationTest {
+
+
+
 
 }
