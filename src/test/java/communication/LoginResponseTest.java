@@ -1,5 +1,7 @@
 package communication;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -11,8 +13,15 @@ class LoginResponseTest {
         LoginResponse resTrue = new LoginResponse(true);
         LoginResponse resFalse = new LoginResponse(false);
 
-        assertEquals(resTrue.getSuccess(),true);
-        assertEquals(resFalse.getSuccess(), false);
+        assertTrue(resTrue.getSuccess());
+        assertFalse(resFalse.getSuccess());
+    }
+
+    @Test
+    public void constructorTestEmpty() {
+        LoginResponse resEmpty = new LoginResponse();
+
+        assertFalse(resEmpty.getSuccess());
     }
 
     @Test
