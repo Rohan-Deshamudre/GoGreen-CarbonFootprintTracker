@@ -7,10 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -20,7 +17,7 @@ import javafx.stage.Stage;
 import java.net.URISyntaxException;
 
 
-public class Gui_Main extends Application {
+public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
@@ -28,7 +25,7 @@ public class Gui_Main extends Application {
     /**
      * Main method of the class, launches the application.
      *
-     * @param args: the input
+     * @param args - the input.
      */
     public static void main(String[] args) {
         launch(args);
@@ -37,10 +34,10 @@ public class Gui_Main extends Application {
     /**
      * This method starts the window.
      *
-     * @param primaryStage: this is the window of the application.
-     * @throws Exception: in case of an exception.
+     * @param primaryStage - this is the window of the application.
+     * @throws Exception - in case of an exception.
      */
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         window = primaryStage;
 
         loginPage();
@@ -49,9 +46,9 @@ public class Gui_Main extends Application {
     /**
      * This is the login page.
      *
-     * @throws Exception: in case of an exception.
+     * @throws Exception - in case of an exception.
      */
-    private void loginPage() throws Exception {
+    private void loginPage() {
         window.setTitle("Login");
 
         // TOP
@@ -88,14 +85,22 @@ public class Gui_Main extends Application {
         GridPane.setConstraints(passwordLabel, 0, 2);
         GridPane.setConstraints(passwordField, 1, 2);
 
-        // Login button
+        // Buttons
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> {
             loginButtonAction(usernameField.getText(), passwordField.getText());
             usernameField.setText("");
             passwordField.setText("");
         });
-        GridPane.setConstraints(loginButton, 1, 3);
+        Button registrationButton = new Button("Register");
+        registrationButton.setOnAction(e -> {
+            registrationPage();
+        });
+
+        HBox buttons = new HBox();
+        buttons.setSpacing(10);
+        buttons.getChildren().addAll(loginButton, registrationButton);
+        GridPane.setConstraints(buttons, 1, 3);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
@@ -107,7 +112,91 @@ public class Gui_Main extends Application {
         // Make scene
         grid.getChildren().addAll(
                 helloLabel, usernameLabel, usernameField,
-                passwordLabel, passwordField, loginButton
+                passwordLabel, passwordField, buttons
+        );
+        loginScene = new Scene(borderPane, 600, 400);
+
+        // Show window
+        window.setScene(loginScene);
+        window.show();
+    }
+
+
+    /**
+     * GUI of the Registration page.
+     *
+     * @throws Exception - in case of an Exception.
+     */
+    private void registrationPage() {
+        window.setTitle("Registration");
+
+        // TOP
+        Group topGroup = new Group();
+        Text goGreenText = new Text("Registration");
+        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
+        topGroup.getChildren().add(goGreenText);
+
+        // CENTER
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+        // Enter username
+        Label usernameLabel = new Label("Username: ");
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("username");
+        usernameField.setMaxWidth(300);
+        GridPane.setConstraints(usernameLabel, 0, 1);
+        GridPane.setConstraints(usernameField, 1, 1);
+
+
+        // Enter password
+        Label passwordLabel = new Label("Password: ");
+        TextField passwordField = new TextField();
+        passwordField.setPromptText("password");
+        passwordField.setMaxWidth(300);
+        GridPane.setConstraints(passwordLabel, 0, 2);
+        GridPane.setConstraints(passwordField, 1, 2);
+
+        // Repeat password
+        Label passwordLabel1 = new Label("Password: ");
+        TextField passwordField1 = new TextField();
+        passwordField1.setPromptText("repeat password");
+        passwordField1.setMaxWidth(300);
+        GridPane.setConstraints(passwordLabel1, 0, 3);
+        GridPane.setConstraints(passwordField1, 1, 3);
+
+        // Buttons
+        Button loginButton = new Button("Login");
+        loginButton.setOnAction(e -> {
+            loginPage();
+        });
+
+        Button registrationButton = new Button("Register");
+        registrationButton.setOnAction(e -> {
+            // Register
+
+            usernameField.setText("");
+            passwordField.setText("");
+        });
+
+        HBox buttons = new HBox();
+        buttons.setSpacing(10);
+        buttons.getChildren().addAll(registrationButton, loginButton);
+        GridPane.setConstraints(buttons, 1, 4);
+
+        // Make BorderPane layout
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(10, 10, 10, 10));
+        borderPane.setTop(topGroup);
+        borderPane.setCenter(grid);
+
+
+        // Make scene
+        grid.getChildren().addAll(
+                usernameLabel, usernameField, passwordLabel,
+                passwordLabel1, passwordField, passwordField1, buttons
         );
         loginScene = new Scene(borderPane, 600, 400);
 
@@ -277,6 +366,9 @@ public class Gui_Main extends Application {
         window.show();
     }
 
+    /**
+     * Page for the share page.
+     */
     private void showShare() {
         window.setTitle("Share");
 
@@ -284,8 +376,6 @@ public class Gui_Main extends Application {
         ChoiceBox<String> userChoice = new ChoiceBox<>();
         userChoice.getItems().addAll("User1", "User", "User3");
         userChoice.setValue("User1");
-
-        Label whitespace = new Label("");
 
         //left buttons
         VBox left = new VBox();
@@ -298,6 +388,7 @@ public class Gui_Main extends Application {
         Button react2 = new Button("Reaction 2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
 
+        Label whitespace = new Label("");
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
         //right buttons
@@ -334,13 +425,15 @@ public class Gui_Main extends Application {
         window.show();
     }
 
+    /**
+     * This is the menu bar for the top corner.
+     *
+     * @param pane - the window in which to display the menu bar.
+     */
     public void menuBar(BorderPane pane) {
-        Menu menu = new Menu("Menu");
-
         MenuItem goToHomeScreen = new MenuItem("Home");
         goToHomeScreen.setOnAction(e -> showMainMenu());
 
-        SeparatorMenuItem sep1 = new SeparatorMenuItem();
         MenuItem goToFood = new MenuItem("Food");
         goToFood.setOnAction(e -> showFoodPage());
         MenuItem goToTransport = new MenuItem("Transport");
@@ -355,12 +448,11 @@ public class Gui_Main extends Application {
         SeparatorMenuItem sep3 = new SeparatorMenuItem();
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
-            try {
-                loginPage();
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
+            loginPage();
         });
+
+        Menu menu = new Menu("Menu");
+        SeparatorMenuItem sep1 = new SeparatorMenuItem();
 
         menu.getItems().addAll(
                 goToHomeScreen, sep1, goToFood, goToTransport,
@@ -374,10 +466,10 @@ public class Gui_Main extends Application {
     }
 
     /**
-     * NOT GUI
+     * NOT GUI.
      *
-     * @param username
-     * @param password
+     * @param username - the username.
+     * @param password - the password.
      */
     private void loginButtonAction(String username, String password) {
         boolean ok = false;
