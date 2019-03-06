@@ -11,6 +11,10 @@ public abstract class ClientMessage extends Message {
         this.password = password;
     }
 
+    public ClientMessage () {
+
+    }
+
     public String getUsername() {
         return username;
     }
