@@ -126,6 +126,11 @@ public class Gui_Main extends Application {
     }
 
 
+    /**
+     * GUI of the Registration page.
+     *
+     * @throws Exception: in case of an Exception.
+     */
     private void registrationPage() throws Exception {
         window.setTitle("Registration");
 
