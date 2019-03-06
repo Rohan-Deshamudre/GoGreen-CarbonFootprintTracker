@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.net.URISyntaxException;
 
 
-public class Gui_Main extends Application {
+public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
@@ -25,7 +25,7 @@ public class Gui_Main extends Application {
     /**
      * Main method of the class, launches the application.
      *
-     * @param args: the input
+     * @param args - the input.
      */
     public static void main(String[] args) {
         launch(args);
@@ -34,10 +34,10 @@ public class Gui_Main extends Application {
     /**
      * This method starts the window.
      *
-     * @param primaryStage: this is the window of the application.
-     * @throws Exception: in case of an exception.
+     * @param primaryStage - this is the window of the application.
+     * @throws Exception - in case of an exception.
      */
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         window = primaryStage;
 
         loginPage();
@@ -46,9 +46,9 @@ public class Gui_Main extends Application {
     /**
      * This is the login page.
      *
-     * @throws Exception: in case of an exception.
+     * @throws Exception - in case of an exception.
      */
-    private void loginPage() throws Exception {
+    private void loginPage() {
         window.setTitle("Login");
 
         // TOP
@@ -94,11 +94,7 @@ public class Gui_Main extends Application {
         });
         Button registrationButton = new Button("Register");
         registrationButton.setOnAction(e -> {
-            try {
-                registrationPage();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            registrationPage();
         });
 
         HBox buttons = new HBox();
@@ -129,9 +125,9 @@ public class Gui_Main extends Application {
     /**
      * GUI of the Registration page.
      *
-     * @throws Exception: in case of an Exception.
+     * @throws Exception - in case of an Exception.
      */
-    private void registrationPage() throws Exception {
+    private void registrationPage() {
         window.setTitle("Registration");
 
         // TOP
@@ -174,11 +170,7 @@ public class Gui_Main extends Application {
         // Buttons
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> {
-            try {
-                loginPage();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            loginPage();
         });
 
         Button registrationButton = new Button("Register");
@@ -374,6 +366,9 @@ public class Gui_Main extends Application {
         window.show();
     }
 
+    /**
+     * Page for the share page.
+     */
     private void showShare() {
         window.setTitle("Share");
 
@@ -381,8 +376,6 @@ public class Gui_Main extends Application {
         ChoiceBox<String> userChoice = new ChoiceBox<>();
         userChoice.getItems().addAll("User1", "User", "User3");
         userChoice.setValue("User1");
-
-        Label whitespace = new Label("");
 
         //left buttons
         VBox left = new VBox();
@@ -395,6 +388,7 @@ public class Gui_Main extends Application {
         Button react2 = new Button("Reaction 2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
 
+        Label whitespace = new Label("");
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
         //right buttons
@@ -431,13 +425,15 @@ public class Gui_Main extends Application {
         window.show();
     }
 
+    /**
+     * This is the menu bar for the top corner.
+     *
+     * @param pane - the window in which to display the menu bar.
+     */
     public void menuBar(BorderPane pane) {
-        Menu menu = new Menu("Menu");
-
         MenuItem goToHomeScreen = new MenuItem("Home");
         goToHomeScreen.setOnAction(e -> showMainMenu());
 
-        SeparatorMenuItem sep1 = new SeparatorMenuItem();
         MenuItem goToFood = new MenuItem("Food");
         goToFood.setOnAction(e -> showFoodPage());
         MenuItem goToTransport = new MenuItem("Transport");
@@ -452,12 +448,11 @@ public class Gui_Main extends Application {
         SeparatorMenuItem sep3 = new SeparatorMenuItem();
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
-            try {
-                loginPage();
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
+            loginPage();
         });
+
+        Menu menu = new Menu("Menu");
+        SeparatorMenuItem sep1 = new SeparatorMenuItem();
 
         menu.getItems().addAll(
                 goToHomeScreen, sep1, goToFood, goToTransport,
@@ -471,10 +466,10 @@ public class Gui_Main extends Application {
     }
 
     /**
-     * NOT GUI
+     * NOT GUI.
      *
-     * @param username
-     * @param password
+     * @param username - the username.
+     * @param password - the password.
      */
     private void loginButtonAction(String username, String password) {
         boolean ok = false;
