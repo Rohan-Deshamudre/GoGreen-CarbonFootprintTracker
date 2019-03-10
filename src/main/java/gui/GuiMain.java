@@ -121,7 +121,6 @@ public class GuiMain extends Application {
         window.show();
     }
 
-
     /**
      * GUI of the Registration page.
      *
@@ -426,6 +425,40 @@ public class GuiMain extends Application {
     }
 
     /**
+     * This is the user page.
+     *
+     * @throws Exception - in case of an exception.
+     */
+    private void userPage() {
+        window.setTitle("User");
+
+        // CENTER
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+        // Make BorderPane layout
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(grid);
+        menuBar(borderPane);
+
+        // Stats
+        Label stats = new Label("Stats");
+
+        // Make scene
+        grid.getChildren().addAll(
+                stats
+        );
+
+        loginScene = new Scene(borderPane, 600, 400);
+
+        // Show window
+        window.setScene(loginScene);
+        window.show();
+    }
+
+    /**
      * This is the menu bar for the top corner.
      *
      * @param pane - the window in which to display the menu bar.
@@ -441,11 +474,11 @@ public class GuiMain extends Application {
         MenuItem goToEnergy = new MenuItem("Home energy");
         goToEnergy.setOnAction(e -> showHomeEnergy());
 
-        SeparatorMenuItem sep2 = new SeparatorMenuItem();
+        MenuItem goToUserPage = new MenuItem("Stats");
+        goToUserPage.setOnAction(e -> userPage());
         MenuItem goToShare = new MenuItem("Share");
         goToShare.setOnAction(e -> showShare());
 
-        SeparatorMenuItem sep3 = new SeparatorMenuItem();
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
             loginPage();
@@ -453,10 +486,12 @@ public class GuiMain extends Application {
 
         Menu menu = new Menu("Menu");
         SeparatorMenuItem sep1 = new SeparatorMenuItem();
+        SeparatorMenuItem sep2 = new SeparatorMenuItem();
+        SeparatorMenuItem sep3 = new SeparatorMenuItem();
 
         menu.getItems().addAll(
                 goToHomeScreen, sep1, goToFood, goToTransport,
-                goToEnergy, sep2, goToShare, sep3, logout
+                goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
         );
 
         MenuBar menuBar = new MenuBar();
