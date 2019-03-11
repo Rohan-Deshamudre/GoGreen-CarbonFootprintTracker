@@ -18,10 +18,6 @@ public class AddActivityMessage extends ClientMessage {
         return activity;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
     @Override
     public String toString() {
         return null;
