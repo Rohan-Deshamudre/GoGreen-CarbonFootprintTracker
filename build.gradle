@@ -53,6 +53,7 @@ dependencies {
     testCompile "org.mockito:mockito-inline:+"
 
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile("postgresql:postgresql:9.1-901.jdbc4")
 }
 
 javafx {
@@ -75,4 +76,5 @@ test {
 // Define the main class for the application
 //mainClassName = 'server.ServerApplication'
 //mainClassName = 'client.ClientApplication'
-mainClassName = 'gui.Gui_Main'
+//mainClassName = 'gui.Gui_Main'
+mainClassName = 'Database.controller.UserController'

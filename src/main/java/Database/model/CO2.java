@@ -6,10 +6,10 @@ import javax.persistence.*;
 @Table(name = "CO2")
 public class CO2 {
 
-    @Column(name = "cuserame")
+    @Column(name = "cusername")
     private String cusername;
 
-    @Column(name = "salt")
+    @Column(name = "co2reduc")
     private int co2reduc;
 
     protected CO2() {}
