@@ -3,17 +3,13 @@ package server;
 import communication.LoginRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
+@ComponentScan(basePackages = { "server","Database.controller"} )
 public class ServerApplication {
-
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello client";
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
