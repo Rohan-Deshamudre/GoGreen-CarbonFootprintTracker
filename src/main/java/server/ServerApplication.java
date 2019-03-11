@@ -3,17 +3,14 @@ package server;
 import communication.LoginRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = {"Database"})
 public class ServerApplication {
-
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello client";
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
