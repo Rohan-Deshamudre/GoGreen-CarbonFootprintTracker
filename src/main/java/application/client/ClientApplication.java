@@ -1,7 +1,7 @@
-package client;
+package application.client;
 
-import communication.LoginRequest;
-import communication.LoginResponse;
+import application.communication.LoginRequest;
+import application.communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;

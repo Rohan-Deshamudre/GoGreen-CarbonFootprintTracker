@@ -1,11 +1,15 @@
-package Database.model;
+package application.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "CO2")
+@Table(name = "co2", schema = "public")
 public class CO2 {
 
+    @Id
     @Column(name = "cusername")
     private String cusername;
 

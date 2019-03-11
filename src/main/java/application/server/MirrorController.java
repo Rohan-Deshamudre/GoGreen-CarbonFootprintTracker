@@ -1,4 +1,4 @@
-package server;
+package application.server;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.http.HttpStatus;

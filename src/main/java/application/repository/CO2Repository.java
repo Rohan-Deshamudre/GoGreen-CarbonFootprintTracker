@@ -1,5 +1,5 @@
-package Database.repository;
-import Database.model.CO2;
+package application.repository;
+import application.model.CO2;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

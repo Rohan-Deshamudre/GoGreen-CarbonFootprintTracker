@@ -1,6 +1,6 @@
-package gui;
+package application.gui;
 
-import client.ClientApplication;
+import application.client.ClientApplication;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

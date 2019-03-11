@@ -1,10 +1,9 @@
 package server;
 
-import communication.LoginRequest;
+import application.communication.LoginRequest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static server.ServerApplication.checkLoginData;
+import static ServerApplication.checkLoginData;
 
 class ServerApplicationTest {
 

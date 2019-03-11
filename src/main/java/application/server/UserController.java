@@ -1,7 +1,7 @@
-package Database.controller;
+package application.server;
 
-import Database.model.User;
-import Database.repository.UserRepository;
+import application.model.User;
+import application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

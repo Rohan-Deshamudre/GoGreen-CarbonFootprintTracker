@@ -1,4 +1,4 @@
-package communication;
+package application.communication;
 
 public class LoginResponse extends ServerMessage {
 
