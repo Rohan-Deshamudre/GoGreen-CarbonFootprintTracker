@@ -14,17 +14,10 @@ public abstract class Activity {
         return date;
     }
 
-    public void setDate(int date) {
-        this.date = date;
-    }
-
     public int getCo2Reduction() {
         return co2Reduction;
     }
 
-    public void setCo2Reduction(int co2Reduction) {
-        this.co2Reduction = co2Reduction;
-    }
     public abstract String toString();
 
 }
