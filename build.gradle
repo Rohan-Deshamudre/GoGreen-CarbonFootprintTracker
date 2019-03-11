@@ -53,7 +53,9 @@ dependencies {
     testCompile "org.mockito:mockito-inline:+"
 
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile("postgresql:postgresql:9.1-901.jdbc4")
+    implementation('org.postgresql:postgresql')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 javafx {
