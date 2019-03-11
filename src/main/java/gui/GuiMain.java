@@ -270,13 +270,13 @@ public class GuiMain extends Application {
      * This is the page for the food page.
      */
     private void showFoodPage() {
-        window.setTitle("Food");
+        window.setTitle("food");
 
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
-        Label foodTitle = new Label("Food");
+        Label foodTitle = new Label("food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Ate a vegetarian meal",

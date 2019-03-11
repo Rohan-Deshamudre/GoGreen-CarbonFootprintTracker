@@ -1,5 +1,7 @@
 package server;
 
+import static server.ServerApplication.checkLoginData;
+
 import communication.LoginRequest;
 import communication.LoginResponse;
 import org.springframework.http.HttpStatus;
@@ -10,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static server.ServerApplication.checkLoginData;
-
 @Controller
 public class LoginController {
     /**
-     * Adds a page /login which handles responding to login requests
+     * Adds a page /login which handles responding to login requests.
      */
     @RequestMapping(value = "/login",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
