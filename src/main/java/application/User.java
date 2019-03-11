@@ -3,25 +3,21 @@ package application;
 public class User {
 
      String username;
-     String firstname;
-     String lastname;
+     int CO2Reduction;
 
-    public User(String username, String firstname, String lastname) {
+
+    public User(String username, int CO2Reduction) {
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.CO2Reduction = CO2Reduction;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public int getCO2Reduction() {
+        return this.CO2Reduction;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
 
 }

@@ -1,14 +1,15 @@
 package client;
 
-import communication.LoginRequest;
-import communication.LoginResponse;
+import communication.LoginData;
+import communication.clientMessage.LoginRequest;
+import communication.serverMessage.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
 
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
@@ -36,8 +37,8 @@ public class ClientApplication {
      */
     public static boolean sendLoginRequest(String username, String password)
             throws URISyntaxException {
-        LoginRequest req = new LoginRequest(username, password);
 
+        LoginRequest req =  new LoginRequest(new LoginData(username, password));
         RestTemplate restTemplate = new RestTemplate();
 
         String loginUrl = URL + "login";
@@ -46,7 +47,7 @@ public class ClientApplication {
         System.out.println();
         System.out.println(res);
 
-        return res.getSuccess();
+        return res.isSuccess();
     }
 
 }

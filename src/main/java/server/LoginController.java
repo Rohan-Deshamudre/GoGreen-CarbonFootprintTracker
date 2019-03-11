@@ -1,9 +1,8 @@
 package server;
 
 import static server.ServerApplication.checkLoginData;
-
-import communication.LoginRequest;
-import communication.LoginResponse;
+import communication.clientMessage.LoginRequest;
+import communication.serverMessage.LoginResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,12 @@ public class LoginController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<LoginResponse> handleLoginRequest(@RequestBody LoginRequest req) {
-        boolean success = checkLoginData(req);
+        /*
+         * Needs to be connected to the database
+         */
+        boolean success = checkLoginData(req.getloginData());
+
         LoginResponse res = new LoginResponse(success);
-        return new ResponseEntity<LoginResponse>(res, HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

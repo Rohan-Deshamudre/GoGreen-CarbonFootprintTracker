@@ -9,27 +9,27 @@ class LoginRequestTest {
 
     @Test
     public void constructorTest() {
-        LoginRequest req = new LoginRequest("user", "pwd");
+        LoginData req = new LoginData("user", "pwd");
         assertEquals(req.getUsername(),"user");
         assertEquals(req.getPassword(),"pwd");
     }
 
     @Test
     public void constructorTestEmpty() {
-        LoginRequest req = new LoginRequest();
+        LoginData req = new LoginData();
         assertNull(req.getUsername());
         assertNull(req.getPassword());
     }
 
     @Test
     public void toStringTest() {
-        LoginRequest req = new LoginRequest("user", "pwd");
-        assertEquals(req.toString(),"<LoginRequest{\n    username: user\n    password: pwd\n}>");
+        LoginData req = new LoginData("user", "pwd");
+        assertEquals(req.toString(),"<LoginData{\n    username: user\n    password: pwd\n}>");
     }
 
     @Test
     public void toStringTestNull() {
-        LoginRequest req = new LoginRequest(null, null);
-        assertEquals(req.toString(), "<LoginRequest{\n    username: \n    password: \n}>");
+        LoginData req = new LoginData(null, null);
+        assertEquals(req.toString(), "<LoginData{\n    username: \n    password: \n}>");
     }
 }

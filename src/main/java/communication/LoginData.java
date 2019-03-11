@@ -1,11 +1,11 @@
 package communication;
 
-public class LoginRequest extends ClientMessage {
+public class LoginData extends ClientMessage {
 
     private String username;
     private String password;
 
-    public LoginRequest(String username, String password) {
+    public LoginData(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -14,17 +14,24 @@ public class LoginRequest extends ClientMessage {
      * This class needs to have a default constructor.
      * Otherwise resttemplate.postForObject(...) does not work.
      */
-    public LoginRequest() {
+    public LoginData() {
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {
@@ -35,7 +42,7 @@ public class LoginRequest extends ClientMessage {
             password = "";
         }
 
-        return "<LoginRequest{"
+        return "<LoginData{"
                 + "\n    username: " + username
                 + "\n    password: " + password
                 + "\n}>";

@@ -1,11 +1,9 @@
 package server;
 
-import communication.LoginRequest;
-import communication.LoginResponse;
+import communication.LoginData;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,14 +14,14 @@ class LoginControllerTest {
 
     @Test
     public void statusTest() {
-        LoginRequest req = new LoginRequest("user", "pwd");
+        LoginData req = new LoginData("user", "pwd");
         LoginController mc = new LoginController();
         LoginResponse res = new LoginResponse(false);
         assertEquals(mc.handleLoginRequest(req).toString(), "<200 OK OK,<LoginResponse{\n" +
                 "    success: false\n" +
                 "}>,[]>");
 
-        LoginRequest req1 = new LoginRequest("John", "Wick");
+        LoginData req1 = new LoginData("John", "Wick");
         LoginController mc1 = new LoginController();
         LoginResponse res1 = new LoginResponse(true);
         assertEquals(mc.handleLoginRequest(req1).toString(), "<200 OK OK,<LoginResponse{\n" +
