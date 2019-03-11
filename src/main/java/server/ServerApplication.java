@@ -28,7 +28,6 @@ public class ServerApplication {
      * @return
      */
     public static boolean checkLoginData(String username, String password) {
-
         if (username.equals("John") && password.equals("Wick")) {
             return true;
         }
