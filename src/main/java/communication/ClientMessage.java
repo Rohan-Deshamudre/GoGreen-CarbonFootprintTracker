@@ -15,4 +15,18 @@ public abstract class ClientMessage extends Message {
         return loginData;
     }
 
+    public void setLoginData(LoginData loginData) {
+        this.loginData = loginData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClientMessage that = (ClientMessage) o;
+
+        return this.loginData.equals(that.loginData);
+    }
+
 }

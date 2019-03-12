@@ -22,8 +22,18 @@ public class LoginResponse extends ServerMessage {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LoginResponse that = (LoginResponse) o;
+
+        return success == that.success;
+    }
+
+    @Override
     public String toString() {
         return "\n===LoginResponse===\n" +
-                "Success = " + this.success + ".\n";
+                "Success: " + this.success + ".\n";
     }
 }

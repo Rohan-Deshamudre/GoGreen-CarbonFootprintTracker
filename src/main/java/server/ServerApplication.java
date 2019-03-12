@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ServerApplication {
 
     public static void main(String[] args) {
-        User dummy = new User("Dummy", 420);
+        User dummy = new User("user", 420);
         SpringApplication.run(ServerApplication.class, args);
     }
 
@@ -22,7 +22,7 @@ public class ServerApplication {
      * @return
      */
     public static boolean checkLoginData(String username, String password) {
-        if (username.equals("dummy") && password.equals("123")) {
+        if (username.equals("user") && password.equals("password")) {
             return true;
         }
         return false;

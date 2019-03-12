@@ -1,35 +1,48 @@
 package communication;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+import communication.clientMessage.LoginRequest;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class LoginRequestTest {
 
+    LoginData loginData = new LoginData("user", "pwd");
+
     @Test
     public void constructorTest() {
-        LoginData req = new LoginData("user", "pwd");
-        assertEquals(req.getUsername(),"user");
-        assertEquals(req.getPassword(),"pwd");
+        LoginRequest req = new LoginRequest(loginData);
+        assertTrue(req.getLoginData().equals(loginData));
     }
 
     @Test
     public void constructorTestEmpty() {
-        LoginData req = new LoginData();
-        assertNull(req.getUsername());
-        assertNull(req.getPassword());
+        LoginRequest req = new LoginRequest();
+        assertNull(req.getLoginData());
+    }
+
+    @Test
+    public void equalsTest() {
+        LoginRequest req1 = new LoginRequest(loginData);
+        LoginRequest req2 = new LoginRequest(loginData);
+        LoginRequest req3 = new LoginRequest(new LoginData("invalid", "invalid"));
+        LoginRequest req4 = new LoginRequest();
+        assertTrue(req1.equals(req1));
+        assertTrue(req1.equals(req2));
+        assertFalse(req1.equals(req3));
+        assertFalse(req1.equals(req4));
+        assertTrue(req4.equals(req4));
     }
 
     @Test
     public void toStringTest() {
-        LoginData req = new LoginData("user", "pwd");
-        assertEquals(req.toString(),"<LoginData{\n    username: user\n    password: pwd\n}>");
+        LoginRequest req = new LoginRequest(loginData);
+        assertEquals(req.toString(),"\n===LoginRequest===\n<LoginData{\n    username: user\n    password: pwd\n}>");
     }
 
     @Test
     public void toStringTestNull() {
-        LoginData req = new LoginData(null, null);
-        assertEquals(req.toString(), "<LoginData{\n    username: \n    password: \n}>");
+        LoginRequest req = new LoginRequest();
+        assertEquals(req.toString(), "\n===LoginRequest===\n<LoginData{\n    username: \n    password: \n}>");
     }
 }

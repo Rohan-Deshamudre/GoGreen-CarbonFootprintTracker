@@ -24,7 +24,7 @@ public class LoginController {
         /*
          * Needs to be connected to the database
          */
-        boolean success = checkLoginData(req.getloginData());
+        boolean success = checkLoginData(req.getLoginData());
 
         LoginResponse res = new LoginResponse(success);
         return new ResponseEntity<>(res, HttpStatus.OK);

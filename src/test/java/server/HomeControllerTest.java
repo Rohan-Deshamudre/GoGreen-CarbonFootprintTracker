@@ -8,6 +8,6 @@ public class HomeControllerTest {
     @Test
     public void homeTest() {
         HomeController hc = new HomeController();
-        assertEquals(hc.home(), "Howdy client!");
+        assertEquals(hc.home(), "Please Log In:");
     }
 }

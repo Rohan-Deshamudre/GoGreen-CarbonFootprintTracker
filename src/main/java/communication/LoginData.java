@@ -1,10 +1,15 @@
 package communication;
 
-public class LoginData extends ClientMessage {
+public class LoginData {
 
     private String username;
     private String password;
 
+    /**
+     * The general constructor
+     * @param username
+     * @param password
+     */
     public LoginData(String username, String password) {
         this.username = username;
         this.password = password;
@@ -31,6 +36,17 @@ public class LoginData extends ClientMessage {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LoginData loginData = (LoginData) o;
+
+        if (!this.username.equals(loginData.username)) return false;
+        return this.password.equals(loginData.password);
     }
 
     @Override
