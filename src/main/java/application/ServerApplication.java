@@ -1,12 +1,22 @@
 package application;
 
 import application.communication.LoginRequest;
+import application.model.User;
+import application.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-//@EnableJpaRepositories(basePackages = {"Database"})
+
 public class ServerApplication {
+
+
+   // @Bean
+   // public PasswordEncoder passwordEncoder(){
+   //     return new BCryptPasswordEncoder();
+   // }
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
@@ -20,8 +30,10 @@ public class ServerApplication {
      * @param password
      * @return
      */
+
+
     public static boolean checkLoginData(String username, String password) {
-        if (username.equals("John") && password.equals("Wick")) {
+        if (username.equals("John")&& password.equals("Wick")) {
             return true;
         }
         return false;

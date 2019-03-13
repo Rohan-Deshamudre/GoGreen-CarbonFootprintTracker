@@ -17,7 +17,7 @@ public class UserController {
     @ResponseBody
     public String save() {
         // save a single Customer
-        repository.save(new User("Jack", "hello"));
+        repository.save(new User("Jack", "sparrow"));
 
         return "Done";
     }

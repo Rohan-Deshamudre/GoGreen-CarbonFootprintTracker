@@ -14,9 +14,12 @@ import static application.ServerApplication.checkLoginData;
 
 @Controller
 public class LoginController {
+
+
     /**
      * Adds a page /login which handles responding to login requests
      */
+
     @RequestMapping(value = "/login",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
