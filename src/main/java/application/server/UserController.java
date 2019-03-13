@@ -36,7 +36,7 @@ public class UserController {
 
     @RequestMapping("/findByUsername")
     @ResponseBody
-    public String fetchDataByUsername(@RequestParam("username") String username) {
+    public String findByUsername(@RequestParam("Jack") String username) {
         String result = "";
 
         for (User user : repository.findByUsername(username)) {
@@ -44,4 +44,7 @@ public class UserController {
         }
         return result;
     }
+
+
+
 }

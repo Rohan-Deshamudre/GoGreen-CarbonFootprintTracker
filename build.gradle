@@ -79,7 +79,7 @@ test {
 }
 
 // Define the main class for the application
-mainClassName = 'server.ServerApplication'
+//mainClassName = 'server.ServerApplication'
 //mainClassName = 'client.ClientApplication'
-//mainClassName = 'gui.Gui_Main'
+mainClassName = 'gui.Gui_Main'
 //mainClassName = 'Database.controller.UserController'

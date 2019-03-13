@@ -3,6 +3,7 @@ package application;
 import application.communication.LoginRequest;
 import application.model.User;
 import application.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 public class ServerApplication {
 
+    @Autowired
+    private static UserRepository repository;
 
    // @Bean
    // public PasswordEncoder passwordEncoder(){
@@ -33,11 +36,19 @@ public class ServerApplication {
 
 
     public static boolean checkLoginData(String username, String password) {
-        if (username.equals("John")&& password.equals("Wick")) {
-            return true;
+
+        for (User user : repository.findByUsernameAndPassword(username, password)) {
+            if (user == null) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
+//        if (username.equals("John")&& password.equals("Wick")) {
+//            return true;
+//        }
+//        return false;
+
 
     public static boolean checkLoginData(LoginRequest req) {
         return checkLoginData(req.getUsername(), req.getPassword());
