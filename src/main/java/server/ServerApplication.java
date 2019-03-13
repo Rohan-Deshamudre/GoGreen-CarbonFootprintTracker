@@ -14,12 +14,12 @@ public class ServerApplication {
     }
 
     /**
-     * THIS IS TEMPORARY
+     * THIS IS TEMPORARY.
      * In the future this will be connected to the database in the logincontroler method
      *
-     * @param username
-     * @param password
-     * @return
+     * @param username The username
+     * @param password The password
+     * @return boolean login succes or nots
      */
     public static boolean checkLoginData(String username, String password) {
         if (username.equals("user") && password.equals("password")) {

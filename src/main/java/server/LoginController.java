@@ -1,6 +1,7 @@
 package server;
 
 import static server.ServerApplication.checkLoginData;
+
 import communication.clientMessage.LoginRequest;
 import communication.serverMessage.LoginResponse;
 import org.springframework.http.HttpStatus;

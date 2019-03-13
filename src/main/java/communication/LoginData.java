@@ -6,9 +6,10 @@ public class LoginData {
     private String password;
 
     /**
-     * The general constructor
-     * @param username
-     * @param password
+     * The general constructor.
+     *
+     * @param username The username of the client
+     * @param password The password of the client
      */
     public LoginData(String username, String password) {
         this.username = username;
@@ -40,12 +41,18 @@ public class LoginData {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         LoginData loginData = (LoginData) o;
 
-        if (!this.username.equals(loginData.username)) return false;
+        if (!this.username.equals(loginData.username)) {
+            return false;
+        }
         return this.password.equals(loginData.password);
     }
 

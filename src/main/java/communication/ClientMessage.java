@@ -8,7 +8,7 @@ public abstract class ClientMessage extends Message {
         this.loginData = loginData;
     }
 
-    public ClientMessage () {
+    public ClientMessage() {
     }
 
     public LoginData getLoginData() {
@@ -21,8 +21,12 @@ public abstract class ClientMessage extends Message {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ClientMessage that = (ClientMessage) o;
 
