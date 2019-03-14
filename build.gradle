@@ -51,14 +51,6 @@ dependencies {
 
     // use mockito inline
     testCompile "org.mockito:mockito-inline:+"
-
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('org.postgresql:postgresql')
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-
-    //compile("org.springframework.boot:spring-boot-starter-security")
-    
 }
 
 javafx {
@@ -79,7 +71,6 @@ test {
 }
 
 // Define the main class for the application
-//mainClassName = 'application.ServerApplication'
+//mainClassName = 'server.ServerApplication'
 //mainClassName = 'client.ClientApplication'
-mainClassName = 'application.gui.Gui_Main'
-//mainClassName = 'Database.controller.UserController'
+mainClassName = 'gui.GuiMain'

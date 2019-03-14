@@ -1,4 +1,4 @@
-package application.server;
+package server;
 
 import java.security.SecureRandom;
 import javax.crypto.SecretKeyFactory;
