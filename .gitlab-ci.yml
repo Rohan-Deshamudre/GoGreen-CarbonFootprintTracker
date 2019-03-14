@@ -1,4 +1,4 @@
-image: gradle
+image: platpus/javafx:latest
 
 stages:
   - analysis
