@@ -1,0 +1,10 @@
+stages:
+  - analysis
+
+test-coverage:
+  stage: analysis
+  script:
+    - gradle jacocoTestReport
+  artifacts:
+    reports:
+      junit: build/reports/jacoco/test/html/index.html
