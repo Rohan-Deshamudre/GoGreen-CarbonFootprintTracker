@@ -1,8 +1,11 @@
 package client;
 
+import application.User;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import communication.LoginData;
 import communication.clientMessage.LoginRequest;
 import communication.serverMessage.LoginResponse;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -12,6 +15,9 @@ public class ClientApplication {
     private static final String URL = "http://localhost:8080/";
 
     public static void main(String args[]) throws URISyntaxException {
+
+
+
         boolean success = sendLoginRequest("Roy", "Donders");
         System.out.println("Success: " + success);
     }
@@ -41,12 +47,21 @@ public class ClientApplication {
         LoginRequest req =  new LoginRequest(new LoginData(username, password));
         RestTemplate restTemplate = new RestTemplate();
 
-        String loginUrl = URL + "login";
-        LoginResponse res = restTemplate.postForObject(loginUrl, req, LoginResponse.class);
+        LoginResponse res = restTemplate.postForObject(URL+"login", req, LoginResponse.class);
 
         System.out.println();
         System.out.println(res);
 
+        try {
+            User user = restTemplate.postForObject(URL + "user", req, User.class);
+            System.out.println();
+            System.out.println(user.getCO2Reduction());
+            User test = new User("dumber", 420);
+            System.out.println(test.getCO2Reduction());
+            System.out.println(user.toString());
+        } catch (HttpClientErrorException e) {
+            System.out.println("UNAUTHORIZED");
+        }
         return res.isSuccess();
     }
 

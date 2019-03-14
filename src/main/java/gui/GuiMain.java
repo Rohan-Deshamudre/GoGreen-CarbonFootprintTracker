@@ -31,6 +31,7 @@ public class GuiMain extends Application {
         launch(args);
     }
 
+
     /**
      * This method starts the window.
      *

@@ -4,6 +4,13 @@ public abstract class ClientMessage extends Message {
 
     protected LoginData loginData;
 
+    /**
+     * Abstract Class ClientMessage serves the purpose of making sure every
+     * ClientMessage contains LoginData. Later if we want to we can look into
+     * more secure ways to authenticate a clientMessage (with sessions or JWT)
+     * but for now we just resend username and password.
+     * @param loginData the username and password
+     */
     public ClientMessage(LoginData loginData) {
         this.loginData = loginData;
     }
@@ -13,24 +20,6 @@ public abstract class ClientMessage extends Message {
 
     public LoginData getLoginData() {
         return loginData;
-    }
-
-    public void setLoginData(LoginData loginData) {
-        this.loginData = loginData;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ClientMessage that = (ClientMessage) o;
-
-        return this.loginData.equals(that.loginData);
     }
 
 }

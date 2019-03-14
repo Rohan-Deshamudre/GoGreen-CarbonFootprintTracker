@@ -11,6 +11,10 @@ public class User {
         this.CO2Reduction = CO2Reduction;
     }
 
+    public User() {
+        super();
+    }
+
     public String getUsername() {
         return username;
     }
@@ -19,5 +23,11 @@ public class User {
         return this.CO2Reduction;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", CO2Reduction=" + CO2Reduction +
+                '}';
+    }
 }

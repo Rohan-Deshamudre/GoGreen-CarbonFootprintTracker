@@ -20,20 +20,6 @@ class LoginRequestTest {
         LoginRequest req = new LoginRequest();
         assertNull(req.getLoginData());
     }
-
-    @Test
-    public void equalsTest() {
-        LoginRequest req1 = new LoginRequest(loginData);
-        LoginRequest req2 = new LoginRequest(loginData);
-        LoginRequest req3 = new LoginRequest(new LoginData("invalid", "invalid"));
-        LoginRequest req4 = new LoginRequest();
-        assertTrue(req1.equals(req1));
-        assertTrue(req1.equals(req2));
-        assertFalse(req1.equals(req3));
-        assertFalse(req1.equals(req4));
-        assertTrue(req4.equals(req4));
-    }
-
     @Test
     public void toStringTest() {
         LoginRequest req = new LoginRequest(loginData);

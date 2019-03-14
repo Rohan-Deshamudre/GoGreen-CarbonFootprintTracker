@@ -6,19 +6,30 @@ public class LoginResponse extends ServerMessage {
 
     private boolean success;
 
+    /**
+     * A simple class that just contains a boolean to tell the user
+     * if a login request succeeded or not.
+     * @param success if the login request succeeded true or false.
+     */
     public LoginResponse(boolean success) {
         this.success = success;
     }
 
+    /**
+     * default constructor for Spring reasons I do not understand
+     */
     public LoginResponse() {
+        super();
     }
 
     public boolean isSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    @Override
+    public String toString() {
+        return "\n===LoginResponse===\n" +
+                "Success: " + this.success + ".\n";
     }
 
     @Override
@@ -29,11 +40,5 @@ public class LoginResponse extends ServerMessage {
         LoginResponse that = (LoginResponse) o;
 
         return success == that.success;
-    }
-
-    @Override
-    public String toString() {
-        return "\n===LoginResponse===\n" +
-                "Success: " + this.success + ".\n";
     }
 }

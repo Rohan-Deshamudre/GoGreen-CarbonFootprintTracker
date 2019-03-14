@@ -24,19 +24,6 @@ class LoginResponseTest {
 
         assertFalse(resEmpty.isSuccess());
     }
-
-    @Test
-    public void equalsTest() {
-        LoginResponse req1 = new LoginResponse(true);
-        LoginResponse req2 = new LoginResponse(true);
-        LoginResponse req3 = new LoginResponse(false);
-        LoginResponse req4 = new LoginResponse();
-        assertTrue(req1.equals(req1));
-        assertTrue(req1.equals(req2));
-        assertFalse(req1.equals(req3));
-        assertFalse(req1.equals(req4));
-        assertTrue(req4.equals(req4));
-    }
     @Test
     public void toStringTest() {
         LoginResponse resTrue = new LoginResponse(true);
