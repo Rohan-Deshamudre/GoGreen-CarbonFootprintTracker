@@ -18,7 +18,7 @@ version-check:
 test-coverage:
   stage: analysis
   script:
-    - gradle jacocoTestReport
+    - gradle test jacocoTestReport
   artifacts:
     reports:
       junit: build/reports/jacoco/test/html/index.html
