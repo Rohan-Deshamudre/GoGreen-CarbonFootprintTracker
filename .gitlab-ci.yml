@@ -21,4 +21,4 @@ test-coverage:
     - gradle test jacocoTestReport
   artifacts:
     reports:
-      junit: build/reports/jacoco/test/html/index.html
+      junit: build/reports/jacoco/test/html/index.xml
