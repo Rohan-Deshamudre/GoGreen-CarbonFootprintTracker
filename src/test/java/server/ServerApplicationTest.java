@@ -3,7 +3,9 @@ package server;
 import application.communication.LoginRequest;
 import org.junit.jupiter.api.Test;
 
-import static ServerApplication.checkLoginData;
+import static application.ServerApplication.checkLoginData;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class ServerApplicationTest {
 

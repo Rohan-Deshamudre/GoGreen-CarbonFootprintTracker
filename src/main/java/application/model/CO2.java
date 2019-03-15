@@ -22,6 +22,38 @@ public class CO2 {
         this.cusername = cusername;
     }
 
+    /**
+     * Getter of username.
+     * @return - username.
+     */
+    public String getCusername() {
+        return cusername;
+    }
+
+    /**
+     * Getter of co2reduc.
+     * @return - co2reduc.
+     */
+    public int getCo2reduc() {
+        return co2reduc;
+    }
+
+    /**
+     * Setter of cusername.
+     * @param cusername - the username.
+     */
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
+
+    /**
+     * Setter of co2reduc.
+     * @param co2reduc - the co2 reduction.
+     */
+    public void setCo2reduc(int co2reduc) {
+        this.co2reduc = co2reduc;
+    }
+
     @Override
     public String toString() {
         return String.format(
