@@ -208,7 +208,7 @@ public class Gui_Main extends Application {
         choiceBox.setValue("Ate a vegetarian meal");
 
         Button addOption = new Button("Add");
-//        addOption.setOnAction(e -> );
+        addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
 
         center.getChildren().addAll(foodTitle, choiceBox, addOption);
 

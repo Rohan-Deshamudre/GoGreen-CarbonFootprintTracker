@@ -57,7 +57,7 @@ public class ConfirmBox {
         return answer;
     }
 
-    private static void add(String title, String option) {
+    public static void add(String title, String option) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -70,7 +70,7 @@ public class ConfirmBox {
 
         Button add = new Button("add");
         add.setOnAction(e -> {
-            //call method in ServerApplication to update the database
+            //call method in ServerApplication to update the database with username as a parameter, application.ServerApplication.method(username.getText();
             window.close();
         });
 
