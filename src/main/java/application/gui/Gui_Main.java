@@ -208,7 +208,7 @@ public class Gui_Main extends Application {
         choiceBox.setValue("Ate a vegetarian meal");
 
         Button addOption = new Button("Add");
-        //add something that updates the database
+//        addOption.setOnAction(e -> );
 
         center.getChildren().addAll(foodTitle, choiceBox, addOption);
 
