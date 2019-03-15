@@ -1,7 +1,13 @@
 image: gradle:jdk11
 
 stages:
+  - build
   - analysis
+
+build:
+  stage: build
+  script:
+    - gradle build
 
 version-check:
   stage: analysis
