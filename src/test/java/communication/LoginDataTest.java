@@ -30,24 +30,11 @@ class LoginDataTest {
     }
 
     @Test
-    void setUsername() {
-        LoginData login = new LoginData("user", "pwd");
-        login.setUsername("changed");
-        assertEquals("changed", login.getUsername());
-    }
-
-    @Test
     void getPassword() {
         LoginData login = new LoginData("user", "pwd");
         assertEquals("pwd", login.getPassword());
     }
 
-    @Test
-    void setPassword() {
-        LoginData login = new LoginData("user", "pwd");
-        login.setPassword("changed");
-        assertEquals("changed", login.getPassword());
-    }
     @Test
     void equalsTest() {
         LoginData req1 = new LoginData("user", "password");
