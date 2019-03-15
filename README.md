@@ -1,3 +1,5 @@
+[![pipeline](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-32/template/badges/continuous-integration/pipeline.svg)]
+
 # TI1216 Template Repository
 
 This a template repository to help you get started on making the best project possible!
