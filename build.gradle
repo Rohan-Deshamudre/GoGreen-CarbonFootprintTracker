@@ -60,6 +60,8 @@ javafx {
 checkstyle {
     toolVersion = '7.6.1'
     configFile = rootProject.file('CSE1105.checkstyle.xml')
+    maxErrors = 20
+    maxWarnings = 20
 }
 
 test {
