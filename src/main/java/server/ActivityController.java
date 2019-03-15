@@ -18,7 +18,7 @@ public class ActivityController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<String> mirror(@RequestBody AddActivityRequest act) {
+    public ResponseEntity<String> activity(@RequestBody AddActivityRequest act) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
