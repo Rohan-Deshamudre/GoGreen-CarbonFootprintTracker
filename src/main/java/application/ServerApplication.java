@@ -39,24 +39,19 @@ public class ServerApplication {
    //     return new BCryptPasswordEncoder();
    // }
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
     }
 
     /**
-     * THIS IS TEMPORARY
-     * In the future this will be connected to the database.
+     * Checks whether there exists a user in the database with the provided
+     * username and password.
      *
-     * @param username
-     * @param password
-     * @return
+     * @param username - the username of the user
+     * @param password - the password of the user
+     * @return a boolean for if the user has been found or not
      */
-
-
     public static boolean checkLoginData(String username, String password) {
-
         for (User user : repository.findByUsernameAndPassword(username, password)) {
             if (user == null) {
                 return false;
@@ -64,10 +59,14 @@ public class ServerApplication {
         }
         return true;
     }
-//        if (username.equals("John")&& password.equals("Wick")) {
-//            return true;
-//        }
-//        return false;
+
+    /**
+     * Searches for the CO2 reduction in the database and returns it as
+     * an integer.
+     *
+     * @param cusername - the username of the user
+     * @return the CO2 reduction of that user
+     */
     public static int getCo2Reduc(String cusername) {
         CO2 reduc = null;
         for(CO2 co2 : co2Repository.findByCusername(cusername)) {
@@ -77,6 +76,13 @@ public class ServerApplication {
         return reduc.getCo2reduc();
     }
 
+    /**
+     * Calls method checkLoginData(above) with the provided username and
+     * password from the login request that has been made.
+     *
+     * @param req - the login request
+     * @return a boolean from the results of checkLoginData(above)
+     */
     public static boolean checkLoginData(LoginRequest req) {
         return checkLoginData(req.getUsername(), req.getPassword());
     }
