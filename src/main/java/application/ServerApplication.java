@@ -1,8 +1,10 @@
 package application;
 
 import application.communication.LoginRequest;
+import application.model.CO2;
 import application.model.User;
 import application.repository.UserRepository;
+import application.repository.CO2Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ServerApplication {
 
     private static UserRepository repository;
+    private static CO2Repository co2Repository;
 
     /**
      * SpringBoot automatically wires the UserRepository instance
@@ -22,6 +25,14 @@ public class ServerApplication {
     private void setRepository(UserRepository repository) {
         ServerApplication.repository = repository;
     }
+
+    /**
+     * SpringBoot automatically wires the CO2Repository instance
+     * into this class using this setter method
+     * @param co2repository - the CO2Repository instance
+     */
+    @Autowired
+    private void setCo2Repository(CO2Repository co2repository) { ServerApplication.co2Repository = co2repository; }
 
    // @Bean
    // public PasswordEncoder passwordEncoder(){
@@ -57,7 +68,14 @@ public class ServerApplication {
 //            return true;
 //        }
 //        return false;
+    public static int getCo2Reduc(String cusername) {
+        CO2 reduc = null;
+        for(CO2 co2 : co2Repository.findByCusername(cusername)) {
+            reduc = co2;
+        }
 
+        return reduc.getCo2reduc();
+    }
 
     public static boolean checkLoginData(LoginRequest req) {
         return checkLoginData(req.getUsername(), req.getPassword());

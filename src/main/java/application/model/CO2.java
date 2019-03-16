@@ -16,6 +16,14 @@ public class CO2 {
     @Column(name = "co2reduc")
     private int co2reduc;
 
+    public void setCo2reduc(int co2reduc) {
+        this.co2reduc = co2reduc;
+    }
+
+    public int getCo2reduc() {
+        return co2reduc;
+    }
+
     protected CO2() {}
 
     public CO2(String cusername) {
