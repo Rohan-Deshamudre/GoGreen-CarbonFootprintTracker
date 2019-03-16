@@ -1,5 +1,7 @@
 package application.client;
 
+import application.communication.Co2Request;
+import application.communication.Co2Response;
 import application.communication.LoginRequest;
 import application.communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
@@ -8,7 +10,7 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-//    private static final String URL = "https://gogreen32.herokuapp.com/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
     private static final String URL = "http://localhost:8080/";
 
     public static void main(String args[]) throws URISyntaxException {
@@ -48,6 +50,20 @@ public class ClientApplication {
         System.out.println(res);
 
         return res.getSuccess();
+    }
+
+    public static boolean co2Add(String choiceBoxValue)
+            throws URISyntaxException {
+        Co2Request req = new Co2Request(choiceBoxValue);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String co2AddURL = URL + "carbon";
+        Co2Response res = restTemplate.postForObject(co2AddURL, req, Co2Response.class);
+        System.out.println();
+        System.out.println(res);
+
+        return res.getResult();
     }
 
 }

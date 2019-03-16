@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     @Autowired
-    private UserRepository repository;
+    private UserRepository UserRepository;
 
     @RequestMapping("/save")
     @ResponseBody
-    public String save() {
+    public String save(@RequestParam String username, @RequestParam String password) {
         // save a single Customer
-        repository.save(new User("Jack", "sparrow"));
+        UserRepository.save(new User(username, password));
 
         return "Done";
     }
@@ -27,7 +27,7 @@ public class UserController {
     public String findAll() {
         String result = "";
 
-        for (User user : repository.findAll()) {
+        for (User user : UserRepository.findAll()) {
             result += user.toString() + "<br>";
         }
 
@@ -39,11 +39,12 @@ public class UserController {
     public String findByUsername(@RequestParam("Jack") String username) {
         String result = "";
 
-        for (User user : repository.findByUsername(username)) {
+        for (User user : UserRepository.findByUsername(username)) {
             result += user.toString() + "<br>";
         }
         return result;
     }
+
 
 
 
