@@ -18,8 +18,25 @@ public class CO2 {
 
     protected CO2() {}
 
-    public CO2(String cusername) {
+    public CO2(String cusername, int co2reduc) {
         this.cusername = cusername;
+        this.co2reduc=co2reduc;
+    }
+
+    public String getCusername() {
+        return cusername;
+    }
+
+    public int getCo2reduc() {
+        return co2reduc;
+    }
+
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
+
+    public void setCo2reduc(int co2reduc) {
+        this.co2reduc = co2reduc;
     }
 
     @Override

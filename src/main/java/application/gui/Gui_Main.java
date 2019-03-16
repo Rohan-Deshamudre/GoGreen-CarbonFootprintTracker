@@ -193,11 +193,14 @@ public class Gui_Main extends Application {
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Ate a vegetarian meal",
                 "Bought from a biological store");
-        choiceBox.setValue("Ate a vegetarian meal");
+        //choiceBox.setValue("Ate a vegetarian meal");
 
         Button addOption = new Button("Add");
         //add something that updates the database
+        addOption.setOnAction(e -> {
+            foodAddButtonAction(choiceBox.getValue());
 
+        });
         center.getChildren().addAll(foodTitle, choiceBox, addOption);
 
         //set up border pane
@@ -230,6 +233,9 @@ public class Gui_Main extends Application {
 
         Button addOption = new Button("Add");
         //add something that updates the database
+
+
+
 
         center.getChildren().addAll(transportTitle, choiceBox, addOption);
 
@@ -397,6 +403,20 @@ public class Gui_Main extends Application {
             System.out.println("username: " + username);
             System.out.println("password: " + password);
             System.out.println();
+        }
+    }
+    private void foodAddButtonAction(String choiceBoxValue) {
+        boolean ok = false;
+        try {
+            ok = ClientApplication.co2Add(choiceBoxValue);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        if (ok) {
+            System.out.println("INPUT SUCCESFULL");
+            showMainMenu();
+        } else {
+            System.out.println("INPUT FAILED");
         }
     }
 }
