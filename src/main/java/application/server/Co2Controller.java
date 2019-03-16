@@ -1,12 +1,15 @@
 package application.server;
 
+
 import application.communication.Co2Request;
 import application.communication.Co2Response;
+
 import application.model.CO2;
 import application.repository.CO2Repository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,4 +57,15 @@ public class Co2Controller {
 
 
 
+    @RequestMapping("/findByCusername")
+    @ResponseBody
+    public CO2 findReduc(String cusername) {
+        CO2 newUser = null;
+
+        for(CO2 co2 : co2Repository.findByCusername(cusername)) {
+            newUser = co2;
+        }
+
+        return newUser;
+    }
 }
