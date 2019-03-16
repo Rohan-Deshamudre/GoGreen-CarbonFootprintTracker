@@ -47,6 +47,7 @@ public class LoginController {
         return new ResponseEntity<LoginResponse>(res, HttpStatus.OK);
     }
 
+
     public boolean checkLoginData(String username, String password) {
         System.out.println("Entering check logindata"+username);
         log.info("Entering check loginDataMethod");
