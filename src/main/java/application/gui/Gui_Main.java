@@ -53,6 +53,10 @@ public class Gui_Main extends Application {
      */
     private void loginPage() throws Exception {
         window.setTitle("Login");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         // TOP
         Group topGroup = new Group();
@@ -122,6 +126,10 @@ public class Gui_Main extends Application {
      */
     private void showMainMenu() {
         window.setTitle("Main menu");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //left part
         VBox left = new VBox();
@@ -183,6 +191,10 @@ public class Gui_Main extends Application {
      */
     private void showFoodPage() {
         window.setTitle("Food");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //set up the page
         VBox center = new VBox();
@@ -196,9 +208,7 @@ public class Gui_Main extends Application {
         //choiceBox.setValue("Ate a vegetarian meal");
 
         Button addOption = new Button("Add");
-        //add something that updates the database
-        addOption.setOnAction(e -> {
-            foodAddButtonAction(choiceBox.getValue());
+        addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
 
         });
         center.getChildren().addAll(foodTitle, choiceBox, addOption);
@@ -219,6 +229,10 @@ public class Gui_Main extends Application {
      */
     private void showTransportPage() {
         window.setTitle("Transport");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //set up the page
         VBox center = new VBox();
@@ -255,6 +269,10 @@ public class Gui_Main extends Application {
      */
     private void showHomeEnergy() {
         window.setTitle("Home Energy");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //set up the page
         VBox center = new VBox();
@@ -285,6 +303,10 @@ public class Gui_Main extends Application {
 
     private void showShare() {
         window.setTitle("Share");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //setup username select
         ChoiceBox<String> userChoice = new ChoiceBox<>();
@@ -360,13 +382,7 @@ public class Gui_Main extends Application {
 
         SeparatorMenuItem sep3 = new SeparatorMenuItem();
         MenuItem logout = new MenuItem("Logout");
-        logout.setOnAction(e -> {
-            try {
-                loginPage();
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
-        });
+        logout.setOnAction(e -> logout());
 
         menu.getItems().addAll(
                 goToHomeScreen, sep1, goToFood, goToTransport,
@@ -405,18 +421,23 @@ public class Gui_Main extends Application {
             System.out.println();
         }
     }
-    private void foodAddButtonAction(String choiceBoxValue) {
-        boolean ok = false;
-        try {
-            ok = ClientApplication.co2Add(choiceBoxValue);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+
+    private void closeProgram() {
+        Boolean answer = ConfirmBox.display("Closing the program", "Are you sure you want to exit?");
+        if(answer) {
+            window.close();
         }
-        if (ok) {
-            System.out.println("INPUT SUCCESFULL");
-            showMainMenu();
-        } else {
-            System.out.println("INPUT FAILED");
+    }
+
+    private void logout() {
+        Boolean answer = ConfirmBox.display("Logout", "Are you sure you want to logout?");
+        try {
+            if(answer) {
+                AlertBox.display("You have logged out");
+                loginPage();
+            }
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
