@@ -12,21 +12,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ServerApplication {
 
     private static UserRepository repository;
-
     /**
-     * SpringBoot automatically wires the UserRepository instance
+     * SpringBoot automatically wires the UserRepository instance.
      * into this class using this setter method
      * @param repository - the UserRepository instance
      */
+
     @Autowired
     private void setRepository(UserRepository repository) {
         ServerApplication.repository = repository;
     }
 
-   // @Bean
-   // public PasswordEncoder passwordEncoder(){
-   //     return new BCryptPasswordEncoder();
-   // }
+    // @Bean
+    // public PasswordEncoder passwordEncoder(){
+    //     return new BCryptPasswordEncoder();
+    // }
 
 
 
