@@ -1,6 +1,7 @@
 package application.gui;
 
 import application.client.ClientApplication;
+import application.util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -203,16 +204,23 @@ public class Gui_Main extends Application {
         Label foodTitle = new Label("Food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Ate a vegetarian meal",
-                "Bought from a biological store");
+        choiceBox.getItems().addAll(CarbonUtil.FOOD_OPTION1,
+                CarbonUtil.FOOD_OPTION2);
         //choiceBox.setValue("Ate a vegetarian meal");
+        Label usernameLabel = new Label("Username: ");
+
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("username");
+        usernameField.setMaxWidth(300);
 
         Button addOption = new Button("Add");
-//      addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
+//       addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
         addOption.setOnAction(e -> {
-            foodAddButtonAction(choiceBox.getValue());
+            foodAddButtonAction(choiceBox.getValue(), usernameField.getText());
+            usernameField.setText("");
+            choiceBox.setValue("");
         });
-        center.getChildren().addAll(foodTitle, choiceBox, addOption);
+        center.getChildren().addAll(foodTitle, choiceBox, usernameLabel, usernameField, addOption);
 
          //set up border pane
          BorderPane foodPane = new BorderPane();
@@ -423,19 +431,19 @@ public class Gui_Main extends Application {
         }
     }
 
-    private void foodAddButtonAction(String choiceBoxValue) {
-        boolean ok = false;
+    private void foodAddButtonAction(String choiceBoxValue, String username) {
+        String message = "";
         try {
-            ok = ClientApplication.co2Add(choiceBoxValue);
-        } catch (URISyntaxException e) {
+            message = ClientApplication.co2Add(choiceBoxValue,username);
+        } catch (Exception e) {
             e.printStackTrace();
+            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
         }
-        if (ok) {
-            System.out.println("INPUT SUCCESFULL");
+            AlertBox.display(message);
             showMainMenu();
-        } else {
-            System.out.println("INPUT FAILED");
-        }
+
+
+
     }
 
     private void closeProgram() {

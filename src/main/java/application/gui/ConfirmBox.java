@@ -1,5 +1,6 @@
 package application.gui;
 
+import application.client.ClientApplication;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +13,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.net.URISyntaxException;
 
 public class ConfirmBox {
 
@@ -82,4 +85,6 @@ public class ConfirmBox {
         window.setScene(scene);
         window.showAndWait();
     }
+
+
 }

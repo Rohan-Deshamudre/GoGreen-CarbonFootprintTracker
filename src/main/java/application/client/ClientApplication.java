@@ -52,18 +52,25 @@ public class ClientApplication {
         return res.getSuccess();
     }
 
-    public static boolean co2Add(String choiceBoxValue)
+    public static String co2Add(String choiceBoxValue, String username)
             throws URISyntaxException {
-        Co2Request req = new Co2Request(choiceBoxValue);
+        String resMessage = "";
+        Co2Request req = new Co2Request(choiceBoxValue,username);
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String co2AddURL = URL + "carbon";
+        String co2AddURL = URL + "carbon/add";
         Co2Response res = restTemplate.postForObject(co2AddURL, req, Co2Response.class);
         System.out.println();
         System.out.println(res);
-
-        return res.getResult();
+        if(res!=null && res.getResult()){
+            resMessage="Congratulations "+res.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
+                    + " to " + res.getNewCarbonfootprint();
+        }
+        else{
+            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
+        }
+        return resMessage;
     }
 
 }

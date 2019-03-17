@@ -3,10 +3,11 @@ package application.communication;
 public class Co2Request extends ClientMessage {
 
     private String choiceBoxValue;
+    private String cusername;
 
-
-    public Co2Request(String choiceBoxValue) {
+    public Co2Request(String choiceBoxValue,String cusername) {
         this.choiceBoxValue=choiceBoxValue;
+        this.cusername=cusername;
 
     }
 
@@ -25,12 +26,21 @@ public class Co2Request extends ClientMessage {
         this.choiceBoxValue = choiceBoxValue;
     }
 
+    public String getCusername() {
+        return cusername;
+    }
+
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
+
     @Override
     public String toString() {
 
 
         return "<Co2Request{"
                 + "\n    checkboxValue: " + choiceBoxValue
+                + "\n    cusername: " + cusername
                 + "\n}>";
     }
 }
