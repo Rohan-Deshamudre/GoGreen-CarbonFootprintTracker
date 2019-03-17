@@ -208,15 +208,16 @@ public class Gui_Main extends Application {
         //choiceBox.setValue("Ate a vegetarian meal");
 
         Button addOption = new Button("Add");
-        addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
-
+//      addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
+        addOption.setOnAction(e -> {
+            foodAddButtonAction(choiceBox.getValue());
         });
         center.getChildren().addAll(foodTitle, choiceBox, addOption);
 
-        //set up border pane
-        BorderPane foodPane = new BorderPane();
-        menuBar(foodPane);
-        foodPane.setCenter(center);
+         //set up border pane
+         BorderPane foodPane = new BorderPane();
+         menuBar(foodPane);
+         foodPane.setCenter(center);
 
         //set up the scene
         Scene foodPage = new Scene(foodPane, 600, 400);
@@ -419,6 +420,21 @@ public class Gui_Main extends Application {
             System.out.println("username: " + username);
             System.out.println("password: " + password);
             System.out.println();
+        }
+    }
+
+    private void foodAddButtonAction(String choiceBoxValue) {
+        boolean ok = false;
+        try {
+            ok = ClientApplication.co2Add(choiceBoxValue);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        if (ok) {
+            System.out.println("INPUT SUCCESFULL");
+            showMainMenu();
+        } else {
+            System.out.println("INPUT FAILED");
         }
     }
 
