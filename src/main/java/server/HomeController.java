@@ -9,6 +9,6 @@ public class HomeController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return "Howdy client!";
+        return "Please Log In:";
     }
 }

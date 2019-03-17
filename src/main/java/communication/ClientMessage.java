@@ -2,24 +2,24 @@ package communication;
 
 public abstract class ClientMessage extends Message {
 
-    protected String username;
-    protected String password;
-    //Later we'll use a session ID instead of username / password
+    protected LoginData loginData;
 
-    public ClientMessage(String username, String password) {
-        this.username = username;
-        this.password = password;
+    /**
+     * Abstract Class ClientMessage serves the purpose of making sure every
+     * ClientMessage contains LoginData. Later if we want to we can look into
+     * more secure ways to authenticate a clientMessage (with sessions or JWT)
+     * but for now we just resend username and password.
+     * @param loginData the username and password
+     */
+    public ClientMessage(LoginData loginData) {
+        this.loginData = loginData;
     }
 
-    public ClientMessage () {
-
+    public ClientMessage() {
     }
 
-    public String getUsername() {
-        return username;
+    public LoginData getLoginData() {
+        return loginData;
     }
 
-    public String getPassword() {
-        return password;
-    }
 }

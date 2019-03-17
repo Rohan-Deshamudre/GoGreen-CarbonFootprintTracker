@@ -1,11 +1,17 @@
 package communication;
 
-public class LoginRequest extends ClientMessage {
+public class LoginData {
 
     private String username;
     private String password;
 
-    public LoginRequest(String username, String password) {
+    /**
+     * The general constructor.
+     *
+     * @param username The username of the client
+     * @param password The password of the client
+     */
+    public LoginData(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -14,7 +20,7 @@ public class LoginRequest extends ClientMessage {
      * This class needs to have a default constructor.
      * Otherwise resttemplate.postForObject(...) does not work.
      */
-    public LoginRequest() {
+    public LoginData() {
     }
 
     public String getUsername() {
@@ -25,6 +31,22 @@ public class LoginRequest extends ClientMessage {
         return password;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        LoginData loginData = (LoginData) o;
+
+        if (!this.username.equals(loginData.username)) {
+            return false;
+        }
+        return this.password.equals(loginData.password);
+    }
 
     @Override
     public String toString() {
@@ -35,7 +57,7 @@ public class LoginRequest extends ClientMessage {
             password = "";
         }
 
-        return "<LoginRequest{"
+        return "<LoginData{"
                 + "\n    username: " + username
                 + "\n    password: " + password
                 + "\n}>";

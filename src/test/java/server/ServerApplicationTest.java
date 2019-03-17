@@ -1,6 +1,6 @@
 package server;
 
-import communication.LoginRequest;
+import communication.LoginData;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,16 +10,16 @@ class ServerApplicationTest {
 
     @Test
     public void checkLoginDataTest() {
-        assertTrue(checkLoginData("John", "Wick"));
-        assertFalse(checkLoginData("John", "Cena"));
-        assertFalse(checkLoginData("Steve", "Wick"));
+        assertTrue(checkLoginData("user", "password"));
+        assertFalse(checkLoginData("user", "Cena"));
+        assertFalse(checkLoginData("Steve", "password"));
     }
 
     @Test
     public void checkLoginRequestTest() {
-        LoginRequest req1 = new LoginRequest("John", "Wick");
-        LoginRequest req2 = new LoginRequest("John", "Cena");
-        LoginRequest req3 = new LoginRequest("Steve", "Wick");
+        LoginData req1 = new LoginData("user", "password");
+        LoginData req2 = new LoginData("user", "Cena");
+        LoginData req3 = new LoginData("Steve", "password");
         assertTrue(checkLoginData(req1));
         assertFalse(checkLoginData(req2));
         assertFalse(checkLoginData(req3));
