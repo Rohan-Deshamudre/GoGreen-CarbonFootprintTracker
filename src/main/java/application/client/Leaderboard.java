@@ -2,6 +2,7 @@ package application.client;
 
 import application.model.CO2;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Leaderboard {
 
@@ -25,6 +26,7 @@ public class Leaderboard {
         al.add(b);
         al.add(c);
 
+
         Leaderboard leaderboard = new Leaderboard(al);
         leaderboard.sortLeaderboard();
         System.out.println(leaderboard);
@@ -42,8 +44,8 @@ public class Leaderboard {
     /**
      * Sorts the users field by co2reduc.
      */
+
     public void sortLeaderboard() {
-        // TODO
 
     }
 
