@@ -1,39 +1,24 @@
 package server;
 
-import communication.LoginRequest;
-import communication.LoginResponse;
+import communication.LoginData;
+import communication.clientMessage.LoginRequest;
+import communication.serverMessage.LoginResponse;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LoginControllerTest {
-    public static ResponseEntity<String> responseBuilder(String res){
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
 
     @Test
-    public void statusTest() {
-        LoginRequest req = new LoginRequest("user", "pwd");
-        LoginController mc = new LoginController();
-        LoginResponse res = new LoginResponse(false);
-        assertEquals(mc.handleLoginRequest(req).toString(), "<200 OK OK,<LoginResponse{\n" +
-                "    success: false\n" +
-                "}>,[]>");
-
-        LoginRequest req1 = new LoginRequest("John", "Wick");
+    public void loginTest() {
+        LoginRequest req1 = new LoginRequest(new LoginData("John", "Wick"));
         LoginController mc1 = new LoginController();
-        LoginResponse res1 = new LoginResponse(true);
-        assertEquals(mc.handleLoginRequest(req1).toString(), "<200 OK OK,<LoginResponse{\n" +
-                "    success: true\n" +
-                "}>,[]>");
-    }
+        LoginResponse res1 = new LoginResponse(false);
+        assertEquals(res1, mc1.handleLoginRequest(req1).getBody());
 
-    @Test
-    public void mirrorTest() {
-        MirrorController mc = new MirrorController();
-        assertEquals(mc.mirror("{1231}"), responseBuilder("{1231}"));
+        LoginRequest req2 = new LoginRequest(new LoginData("user", "password"));
+        LoginController mc2 = new LoginController();
+        LoginResponse res2 = new LoginResponse(true);
+        assertEquals(res2, mc2.handleLoginRequest(req2).getBody());
     }
 }
