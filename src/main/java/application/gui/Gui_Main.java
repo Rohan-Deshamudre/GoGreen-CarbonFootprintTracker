@@ -1,6 +1,7 @@
-package gui;
+package application.gui;
 
-import client.ClientApplication;
+import application.client.ClientApplication;
+import application.util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
 import java.net.URISyntaxException;
 
 
-public class GuiMain extends Application {
+public class Gui_Main extends Application {
 
     private Stage window;
     private Scene loginScene;
@@ -25,7 +26,7 @@ public class GuiMain extends Application {
     /**
      * Main method of the class, launches the application.
      *
-     * @param args - the input.
+     * @param args: the input
      */
     public static void main(String[] args) {
         launch(args);
@@ -34,10 +35,10 @@ public class GuiMain extends Application {
     /**
      * This method starts the window.
      *
-     * @param primaryStage - this is the window of the application.
-     * @throws Exception - in case of an exception.
+     * @param primaryStage: this is the window of the application.
+     * @throws Exception: in case of an exception.
      */
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)throws Exception{
         window = primaryStage;
 
         loginPage();
@@ -46,10 +47,14 @@ public class GuiMain extends Application {
     /**
      * This is the login page.
      *
-     * @throws Exception - in case of an exception.
+     * @throws Exception: in case of an exception.
      */
     private void loginPage() {
         window.setTitle("Login");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         // TOP
         Group topGroup = new Group();
@@ -92,11 +97,12 @@ public class GuiMain extends Application {
             usernameField.setText("");
             passwordField.setText("");
         });
+        GridPane.setConstraints(loginButton, 1, 3);
+
         Button registrationButton = new Button("Register");
         registrationButton.setOnAction(e -> {
-            registrationPage();
+                    registrationPage();
         });
-
         HBox buttons = new HBox();
         buttons.setSpacing(10);
         buttons.getChildren().addAll(loginButton, registrationButton);
@@ -115,12 +121,10 @@ public class GuiMain extends Application {
                 passwordLabel, passwordField, buttons
         );
         loginScene = new Scene(borderPane, 600, 400);
-
         // Show window
         window.setScene(loginScene);
         window.show();
     }
-
     /**
      * GUI of the Registration page.
      *
@@ -128,7 +132,6 @@ public class GuiMain extends Application {
      */
     private void registrationPage() {
         window.setTitle("Registration");
-
         // TOP
         Group topGroup = new Group();
         Text goGreenText = new Text("Registration");
@@ -171,15 +174,12 @@ public class GuiMain extends Application {
         loginButton.setOnAction(e -> {
             loginPage();
         });
-
         Button registrationButton = new Button("Register");
         registrationButton.setOnAction(e -> {
             // Register
-
             usernameField.setText("");
             passwordField.setText("");
         });
-
         HBox buttons = new HBox();
         buttons.setSpacing(10);
         buttons.getChildren().addAll(registrationButton, loginButton);
@@ -190,7 +190,6 @@ public class GuiMain extends Application {
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
         borderPane.setCenter(grid);
-
 
         // Make scene
         grid.getChildren().addAll(
@@ -210,6 +209,10 @@ public class GuiMain extends Application {
      */
     private void showMainMenu() {
         window.setTitle("Main menu");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //left part
         VBox left = new VBox();
@@ -270,23 +273,36 @@ public class GuiMain extends Application {
      * This is the page for the food page.
      */
     private void showFoodPage() {
-        window.setTitle("food");
+        window.setTitle("Food");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
-        Label foodTitle = new Label("food");
+        Label foodTitle = new Label("Food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Ate a vegetarian meal",
-                "Bought from a biological store");
-        choiceBox.setValue("Ate a vegetarian meal");
+        choiceBox.getItems().addAll(CarbonUtil.FOOD_OPTION1,
+                CarbonUtil.FOOD_OPTION2);
+        //choiceBox.setValue("Ate a vegetarian meal");
+        Label usernameLabel = new Label("Username: ");
+
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("username");
+        usernameField.setMaxWidth(300);
 
         Button addOption = new Button("Add");
-        //add something that updates the database
-
-        center.getChildren().addAll(foodTitle, choiceBox, addOption);
+//       addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
+        addOption.setOnAction(e -> {
+            foodAddButtonAction(choiceBox.getValue(), usernameField.getText());
+            usernameField.setText("");
+            choiceBox.setValue("");
+        });
+        center.getChildren().addAll(foodTitle, choiceBox, usernameLabel, usernameField, addOption);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
@@ -304,6 +320,10 @@ public class GuiMain extends Application {
      */
     private void showTransportPage() {
         window.setTitle("Transport");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //set up the page
         VBox center = new VBox();
@@ -318,6 +338,9 @@ public class GuiMain extends Application {
 
         Button addOption = new Button("Add");
         //add something that updates the database
+
+
+
 
         center.getChildren().addAll(transportTitle, choiceBox, addOption);
 
@@ -337,6 +360,10 @@ public class GuiMain extends Application {
      */
     private void showHomeEnergy() {
         window.setTitle("Home Energy");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //set up the page
         VBox center = new VBox();
@@ -370,11 +397,17 @@ public class GuiMain extends Application {
      */
     private void showShare() {
         window.setTitle("Share");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         //setup username select
         ChoiceBox<String> userChoice = new ChoiceBox<>();
         userChoice.getItems().addAll("User1", "User", "User3");
         userChoice.setValue("User1");
+
+        Label whitespace = new Label("");
 
         //left buttons
         VBox left = new VBox();
@@ -387,7 +420,6 @@ public class GuiMain extends Application {
         Button react2 = new Button("Reaction 2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
 
-        Label whitespace = new Label("");
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
         //right buttons
@@ -450,7 +482,6 @@ public class GuiMain extends Application {
         grid.getChildren().addAll(
                 stats
         );
-
         loginScene = new Scene(borderPane, 600, 400);
 
         // Show window
@@ -489,6 +520,7 @@ public class GuiMain extends Application {
         SeparatorMenuItem sep2 = new SeparatorMenuItem();
         SeparatorMenuItem sep3 = new SeparatorMenuItem();
 
+
         menu.getItems().addAll(
                 goToHomeScreen, sep1, goToFood, goToTransport,
                 goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
@@ -501,10 +533,10 @@ public class GuiMain extends Application {
     }
 
     /**
-     * NOT GUI.
+     * NOT GUI
      *
-     * @param username - the username.
-     * @param password - the password.
+     * @param username - the username
+     * @param password - the password
      */
     private void loginButtonAction(String username, String password) {
         boolean ok = false;
@@ -526,5 +558,38 @@ public class GuiMain extends Application {
             System.out.println();
         }
     }
-}
 
+    private void foodAddButtonAction(String choiceBoxValue, String username) {
+        String message = "";
+        try {
+            message = ClientApplication.co2Add(choiceBoxValue,username);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
+        }
+        AlertBox.display(message);
+        showMainMenu();
+
+
+
+    }
+
+    private void closeProgram() {
+        Boolean answer = ConfirmBox.display("Closing the program", "Are you sure you want to exit?");
+        if(answer) {
+            window.close();
+        }
+    }
+
+    private void logout() {
+        Boolean answer = ConfirmBox.display("Logout", "Are you sure you want to logout?");
+        try {
+            if(answer) {
+                AlertBox.display("You have logged out");
+                loginPage();
+            }
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+}

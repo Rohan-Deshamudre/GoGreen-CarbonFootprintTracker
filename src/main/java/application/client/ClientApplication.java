@@ -1,14 +1,17 @@
-package client;
+package application.client;
 
-import communication.LoginRequest;
-import communication.LoginResponse;
+import application.communication.Co2Request;
+import application.communication.Co2Response;
+import application.communication.LoginRequest;
+import application.communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
 
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
@@ -47,6 +50,27 @@ public class ClientApplication {
         System.out.println(res);
 
         return res.getSuccess();
+    }
+
+    public static String co2Add(String choiceBoxValue, String username)
+            throws URISyntaxException {
+        String resMessage = "";
+        Co2Request req = new Co2Request(choiceBoxValue,username);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String co2AddURL = URL + "carbon/add";
+        Co2Response res = restTemplate.postForObject(co2AddURL, req, Co2Response.class);
+        System.out.println();
+        System.out.println(res);
+        if(res!=null && res.getResult()){
+            resMessage="Congratulations "+res.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
+                    + " to " + res.getNewCarbonfootprint();
+        }
+        else{
+            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
+        }
+        return resMessage;
     }
 
 }

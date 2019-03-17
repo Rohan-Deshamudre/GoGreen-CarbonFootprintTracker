@@ -3,6 +3,7 @@ package communication;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import application.communication.LoginRequest;
 import org.junit.jupiter.api.Test;
 
 class LoginRequestTest {
