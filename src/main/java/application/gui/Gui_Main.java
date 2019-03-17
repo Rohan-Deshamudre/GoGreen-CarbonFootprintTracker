@@ -101,7 +101,7 @@ public class Gui_Main extends Application {
 
         Button registrationButton = new Button("Register");
         registrationButton.setOnAction(e -> {
-                    registrationPage();
+            registrationPage();
         });
         HBox buttons = new HBox();
         buttons.setSpacing(10);
