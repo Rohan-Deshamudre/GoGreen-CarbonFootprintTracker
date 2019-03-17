@@ -1,8 +1,11 @@
 package application.client;
 
 import application.model.CO2;
+
 import java.util.ArrayList;
 import java.util.Collections;
+
+
 
 public class Leaderboard {
 
@@ -43,9 +46,12 @@ public class Leaderboard {
 
     /**
      * Sorts the users field by co2reduc.
+     * the higher co2reduc on the top
      */
 
     public void sortLeaderboard() {
+        Collections.sort(users, new SortbyCo2reduc());
+
 
     }
 
