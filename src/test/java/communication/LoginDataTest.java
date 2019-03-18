@@ -1,9 +1,7 @@
 package communication;
 
-import communication.clientMessage.LoginRequest;
+import application.communication.LoginData;
 import org.junit.jupiter.api.Test;
-
-import javax.validation.constraints.AssertTrue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,18 +33,6 @@ class LoginDataTest {
         assertEquals("pwd", login.getPassword());
     }
 
-    @Test
-    void equalsTest() {
-        LoginData req1 = new LoginData("user", "password");
-        LoginData req2 = new LoginData("user", "password");
-        LoginData req3 = new LoginData("invalid", "invalid");
-        LoginData req4 = new LoginData();
-        assertTrue(req1.equals(req1));
-        assertTrue(req1.equals(req2));
-        assertFalse(req1.equals(req3));
-        assertFalse(req1.equals(req4));
-        assertTrue(req4.equals(req4));
-    }
     @Test
     void toStringTest() {
         LoginData req = new LoginData("user", "pwd");

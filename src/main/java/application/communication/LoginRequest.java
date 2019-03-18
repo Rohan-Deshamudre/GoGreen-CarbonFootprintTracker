@@ -2,12 +2,10 @@ package application.communication;
 
 public class LoginRequest extends ClientMessage {
 
-    private String username;
-    private String password;
+    private LoginData loginData;
 
-    public LoginRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public LoginRequest(LoginData loginData) {
+        this.loginData = loginData;
     }
 
     /**
@@ -17,27 +15,15 @@ public class LoginRequest extends ClientMessage {
     public LoginRequest() {
     }
 
-    public String getUsername() {
-        return username;
+    public LoginData getLoginData() {
+        return loginData;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
 
     @Override
     public String toString() {
-        if (username == null) {
-            username = "";
+        if (loginData == null) {
+            loginData = new LoginData("", "");
         }
-        if (password == null) {
-            password = "";
-        }
-
-        return "<LoginRequest{"
-                + "\n    username: " + username
-                + "\n    password: " + password
-                + "\n}>";
+        return this.loginData.toString();
     }
 }
