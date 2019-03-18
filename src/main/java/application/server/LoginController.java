@@ -30,6 +30,10 @@ public class LoginController {
 
     static Logger log = Logger.getLogger(LoginController.class.getName());
 
+    public LoginController(){
+
+    }
+
     /**
      * Adds a page /login which handles responding to login requests
      */
