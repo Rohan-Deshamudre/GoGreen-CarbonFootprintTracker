@@ -20,7 +20,7 @@ class LoginControllerTest {
         LoginRequest req1 = new LoginRequest(new LoginData("John", "Wick"));
         LoginController mc1 = new LoginController();
         LoginResponse res1 = new LoginResponse(false);
-        //assertEquals(res1, mc1.handleLoginRequest(req1).getBody());
+//        assertEquals(res1, mc1.handleLoginRequest(req1).getBody());
 
         LoginRequest req2 = new LoginRequest(new LoginData("user", "password"));
         LoginController mc2 = new LoginController();

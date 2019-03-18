@@ -7,8 +7,8 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    //private static final String URL = "https://gogreen32.herokuapp.com/";
-    private static final String URL = "http://localhost:8080/";
+    private static final String URL = "https://gogreen32.herokuapp.com/";
+//    private static final String URL = "http://localhost:8080/";
 
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
