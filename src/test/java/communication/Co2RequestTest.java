@@ -1,6 +1,5 @@
 package communication;
 
-import application.communication.Co2Request;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

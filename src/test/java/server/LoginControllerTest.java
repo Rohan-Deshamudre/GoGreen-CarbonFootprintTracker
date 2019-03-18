@@ -1,9 +1,8 @@
 package server;
 
-import application.communication.LoginData;
-import application.communication.LoginRequest;
-import application.communication.LoginResponse;
-import application.server.LoginController;
+import communication.LoginData;
+import communication.LoginRequest;
+import communication.LoginResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

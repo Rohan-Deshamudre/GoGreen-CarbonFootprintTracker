@@ -1,4 +1,4 @@
-package application.communication;
+package communication;
 
 public class Co2Request extends ClientMessage {
 

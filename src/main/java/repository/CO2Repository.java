@@ -1,5 +1,5 @@
-package application.repository;
-import application.model.CO2;
+package repository;
+import model.CO2;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

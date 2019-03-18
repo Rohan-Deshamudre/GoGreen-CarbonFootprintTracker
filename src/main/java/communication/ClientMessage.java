@@ -1,4 +1,4 @@
-package application.communication;
+package communication;
 
 public abstract class ClientMessage extends Message {
     LoginData loginData;

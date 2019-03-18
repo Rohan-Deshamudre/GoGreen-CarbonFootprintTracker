@@ -1,6 +1,6 @@
-package application.client;
+package client;
 
-import application.communication.*;
+import communication.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;

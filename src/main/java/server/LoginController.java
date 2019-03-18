@@ -1,9 +1,9 @@
-package application.server;
+package server;
 
-import application.communication.LoginRequest;
-import application.communication.LoginResponse;
-import application.model.User;
-import application.repository.UserRepository;
+import communication.LoginRequest;
+import communication.LoginResponse;
+import model.User;
+import repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
