@@ -18,6 +18,6 @@ public class HomeController {
         logger.info("An INFO Message");
         logger.warn("A WARN Message");
         logger.error("An ERROR Message");
-        return "Howdy client!";
+        return "Please Log In:";
     }
 }
