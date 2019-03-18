@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LoginControllerTest {
+    public static ResponseEntity<String> responseBuilder(String res){
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
     @Test
     public void loginTest() {
