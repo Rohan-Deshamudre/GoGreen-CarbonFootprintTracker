@@ -5,6 +5,8 @@ import application.communication.LoginRequest;
 import application.communication.LoginResponse;
 import application.server.LoginController;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
