@@ -14,7 +14,7 @@ public class UserTest {
         user.setPassword("pwd1");
         assertTrue("pwd1".equals(user.getPassword()));
     }
-
+    @Test
     public void getPassword() {
         User user = new User("user", "pwd");
         assertTrue("pwd".equals(user.getPassword()));
