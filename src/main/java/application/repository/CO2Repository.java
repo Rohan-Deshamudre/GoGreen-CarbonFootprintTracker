@@ -1,4 +1,5 @@
 package application.repository;
+
 import application.model.CO2;
 import org.springframework.data.repository.CrudRepository;
 

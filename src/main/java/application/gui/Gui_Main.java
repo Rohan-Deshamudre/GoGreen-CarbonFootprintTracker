@@ -285,7 +285,6 @@ public class Gui_Main extends Application {
         userChoice.getItems().addAll("User1", "User", "User3");
         userChoice.setValue("User1");
 
-        Label whitespace = new Label("");
 
         //left buttons
         VBox left = new VBox();
@@ -297,6 +296,8 @@ public class Gui_Main extends Application {
         react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
         Button react2 = new Button("Reaction 2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+
+        Label whitespace = new Label("");
 
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
@@ -335,12 +336,10 @@ public class Gui_Main extends Application {
     }
 
     public void menuBar(BorderPane pane) {
-        Menu menu = new Menu("Menu");
 
         MenuItem goToHomeScreen = new MenuItem("Home");
         goToHomeScreen.setOnAction(e -> showMainMenu());
 
-        SeparatorMenuItem sep1 = new SeparatorMenuItem();
         MenuItem goToFood = new MenuItem("Food");
         goToFood.setOnAction(e -> showFoodPage());
         MenuItem goToTransport = new MenuItem("Transport");
@@ -362,6 +361,10 @@ public class Gui_Main extends Application {
             }
         });
 
+        Menu menu = new Menu("Menu");
+        SeparatorMenuItem sep1 = new SeparatorMenuItem();
+
+
         menu.getItems().addAll(
                 goToHomeScreen, sep1, goToFood, goToTransport,
                 goToEnergy, sep2, goToShare, sep3, logout
@@ -374,10 +377,10 @@ public class Gui_Main extends Application {
     }
 
     /**
-     * NOT GUI
+     * NOT GUI.
      *
-     * @param username
-     * @param password
+     * @param username username of the user
+     * @param password password of the user
      */
     private void loginButtonAction(String username, String password) {
         boolean ok = false;

@@ -7,11 +7,11 @@ import java.util.Comparator;
 public class SortbyCo2reduc implements Comparator<CO2> {
     /**
      * compare the integer a and b and returns in descending order.
-     * @param a for parameter a
-     * @param b for parameter b
+     * @param a1 for parameter a1
+     * @param b1 for parameter b1
      * @return retuning
      */
-    public int compare(CO2 a, CO2 b) {
-        return b.getCo2reduc() - a.getCo2reduc();
+    public int compare(CO2 a1, CO2 b1) {
+        return b1.getCo2reduc() - a1.getCo2reduc();
     }
 }

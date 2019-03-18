@@ -17,7 +17,7 @@ public class LoginController {
 
 
     /**
-     * Adds a page /login which handles responding to login requests
+     * Adds a page /login which handles responding to login requests.
      */
 
     @RequestMapping(value = "/login",

@@ -16,18 +16,18 @@ public class Leaderboard {
      * @param args - the args.
      */
     public static void main(String[] args) {
-        CO2 a = new CO2("a");
-        CO2 b = new CO2("b");
-        CO2 c = new CO2("c");
+        CO2 a1 = new CO2("a1");
+        CO2 b2 = new CO2("b2");
+        CO2 c3 = new CO2("c3");
 
-        a.setCo2reduc(50);
-        b.setCo2reduc(10);
-        c.setCo2reduc(500);
+        a1.setCo2reduc(50);
+        b2.setCo2reduc(10);
+        c3.setCo2reduc(500);
 
         ArrayList<CO2> al = new ArrayList<>();
-        al.add(a);
-        al.add(b);
-        al.add(c);
+        al.add(a1);
+        al.add(b2);
+        al.add(c3);
 
 
         Leaderboard leaderboard = new Leaderboard(al);

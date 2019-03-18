@@ -38,9 +38,9 @@ public class ServerApplication {
      * THIS IS TEMPORARY
      * In the future this will be connected to the database.
      *
-     * @param username
-     * @param password
-     * @return
+     * @param username the username of the user
+     * @param password the password of the user
+     * @return returns
      */
 
 
@@ -53,10 +53,10 @@ public class ServerApplication {
         }
         return true;
     }
-//        if (username.equals("John")&& password.equals("Wick")) {
-//            return true;
-//        }
-//        return false;
+    //   if (username.equals("John")&& password.equals("Wick")) {
+    //   return true;
+    //   }
+    //   return false;
 
 
     public static boolean checkLoginData(LoginRequest req) {
