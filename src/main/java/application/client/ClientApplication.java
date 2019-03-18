@@ -1,9 +1,6 @@
 package application.client;
 
-import application.communication.Co2Request;
-import application.communication.Co2Response;
-import application.communication.LoginRequest;
-import application.communication.LoginResponse;
+import application.communication.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -39,7 +36,7 @@ public class ClientApplication {
      */
     public static boolean sendLoginRequest(String username, String password)
             throws URISyntaxException {
-        LoginRequest req = new LoginRequest(username, password);
+        LoginRequest req = new LoginRequest(new LoginData(username, password));
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -49,7 +46,7 @@ public class ClientApplication {
         System.out.println();
         System.out.println(res);
 
-        return res.getSuccess();
+        return res.isSuccess();
     }
 
     public static String co2Add(String choiceBoxValue, String username)

@@ -9,6 +9,6 @@ public class HomeControllerTest {
     @Test
     public void homeTest() {
         HomeController hc = new HomeController();
-        assertEquals(hc.home(), "Please Log In:");
+        assertEquals(hc.home(), "Howdy client!");
     }
 }

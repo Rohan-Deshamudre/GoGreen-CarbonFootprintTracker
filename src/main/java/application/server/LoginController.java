@@ -40,7 +40,7 @@ public class LoginController {
     @ResponseBody
     public ResponseEntity<LoginResponse> handleLoginRequest(@RequestBody LoginRequest req) {
         log.info("Entering check handleLoginRequest");
-        boolean result = checkLoginData(req.getUsername(), req.getPassword());
+        boolean result = checkLoginData(req.getLoginData().getUsername(), req.getLoginData().getPassword());
         LoginResponse res = new LoginResponse(result);
         return new ResponseEntity<LoginResponse>(res, HttpStatus.OK);
     }
