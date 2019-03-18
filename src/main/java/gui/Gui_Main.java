@@ -1,7 +1,7 @@
-package application.gui;
+package gui;
 
-import application.client.ClientApplication;
-import application.util.CarbonUtil;
+import client.ClientApplication;
+import util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -69,7 +69,7 @@ public class Gui_Main extends Application {
         grid.setHgap(10);
 
         // Hello client label
-        String helloString = ClientApplication.getRequestHeroku() + "!";
+        String helloString = ClientApplication.getRequestHeroku();
         Label helloLabel = new Label(helloString);
         GridPane.setConstraints(helloLabel, 1, 0);
 
