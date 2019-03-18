@@ -1,14 +1,14 @@
-package application.server;
+package server;
 
 
-import application.communication.Co2Request;
-import application.communication.Co2Response;
+import communication.Co2Request;
+import communication.Co2Response;
 
-import application.model.CO2;
-import application.model.User;
-import application.repository.CO2Repository;
-import application.repository.UserRepository;
-import application.util.CarbonUtil;
+import model.CO2;
+import model.User;
+import repository.CO2Repository;
+import repository.UserRepository;
+import util.CarbonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static application.util.CarbonUtil.getCarbonfootprint;
 
 
 @RestController

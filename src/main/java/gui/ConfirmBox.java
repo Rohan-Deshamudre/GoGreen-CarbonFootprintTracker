@@ -1,6 +1,5 @@
-package application.gui;
+package gui;
 
-import application.client.ClientApplication;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,8 +12,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.net.URISyntaxException;
 
 public class ConfirmBox {
 
@@ -73,7 +70,7 @@ public class ConfirmBox {
 
         Button add = new Button("add");
         add.setOnAction(e -> {
-            //call method in ServerApplication to update the database with username as a parameter, application.ServerApplication.method(username.getText();
+            //call method in ServerApplication to update the database with username as a parameter, server.ServerApplication.method(username.getText();
             window.close();
         });
 

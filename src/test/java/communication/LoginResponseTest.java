@@ -1,6 +1,5 @@
 package communication;
 
-import application.communication.LoginResponse;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

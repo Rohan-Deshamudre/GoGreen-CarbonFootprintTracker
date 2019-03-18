@@ -1,7 +1,7 @@
-package application.gui;
+package gui;
 
-import application.client.ClientApplication;
-import application.util.CarbonUtil;
+import client.ClientApplication;
+import util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
