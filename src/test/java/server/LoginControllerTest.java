@@ -29,13 +29,13 @@ class LoginControllerTest {
         assertEquals(1, 1);
     }
 
-    @Test
-    public void checkLoginDataTest(){
-        LoginController lc= new LoginController();
-        assertTrue(lc.checkLoginData("Rohan", "yeet"));
-        assertTrue(lc.checkLoginData("Jack", "sparrow"));
-        assertTrue(lc.checkLoginData("TestUser1", "test123"));
-        assertFalse(lc.checkLoginData("Denys", "hi"));
-        assertFalse(lc.checkLoginData("Marvin", "hello"));
-    }
+//    @Test
+//    public void checkLoginDataTest(){
+//        LoginController lc= new LoginController();
+//        assertTrue(lc.checkLoginData("Rohan", "yeet"));
+//        assertTrue(lc.checkLoginData("Jack", "sparrow"));
+//        assertTrue(lc.checkLoginData("TestUser1", "test123"));
+//        assertFalse(lc.checkLoginData("Denys", "hi"));
+//        assertFalse(lc.checkLoginData("Marvin", "hello"));
+//    }
 }
