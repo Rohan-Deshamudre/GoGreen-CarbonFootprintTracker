@@ -8,12 +8,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +28,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import util.CarbonUtil;
 
 import java.net.URISyntaxException;
@@ -93,7 +97,7 @@ public class GuiMain extends Application {
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
         GridPane.setConstraints(passwordLabel, 0, 2);
@@ -165,7 +169,7 @@ public class GuiMain extends Application {
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
         GridPane.setConstraints(passwordLabel, 0, 2);
@@ -173,7 +177,7 @@ public class GuiMain extends Application {
 
         // Repeat password
         Label passwordLabel1 = new Label("Password: ");
-        TextField passwordField1 = new TextField();
+        PasswordField passwordField1 = new PasswordField();
         passwordField1.setPromptText("repeat password");
         passwordField1.setMaxWidth(300);
         GridPane.setConstraints(passwordLabel1, 0, 3);
@@ -292,29 +296,28 @@ public class GuiMain extends Application {
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
 
+        // Set up buttons
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPrefWidth(180);
+        buttons.setPrefHeight(180);
+        buttons.setSpacing(20);
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll(CarbonUtil.FOOD_OPTION1,
-                CarbonUtil.FOOD_OPTION2);
-        //choiceBox.setValue("Ate a vegetarian meal");
+        Button option1 = new Button(CarbonUtil.FOOD_OPTION1);
+        option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        option1.setOnAction(e -> veggieMealPage());
 
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("username");
-        usernameField.setMaxWidth(300);
+        Button option2 = new Button(CarbonUtil.FOOD_OPTION2);
+        option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        option2.setOnAction(e -> localStorePage());
+
+        buttons.getChildren().addAll(option1, option2);
 
         Label foodTitle = new Label("Food");
-        Label usernameLabel = new Label("Username: ");
 
-        Button addOption = new Button("Add");
-        //addOption.setOnAction(e ->ConfirmBox.add("Changes to your CO2 reduction",
-        //choiceBox.getValue()));
-        addOption.setOnAction(e -> {
-            foodAddButtonAction(choiceBox.getValue(), usernameField.getText());
-            usernameField.setText("");
-            choiceBox.setValue("");
-        });
-        center.getChildren().addAll(foodTitle, choiceBox, usernameLabel, usernameField, addOption);
+        center.getChildren().addAll(foodTitle, buttons);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
@@ -323,6 +326,124 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene foodPage = new Scene(foodPane, 600, 400);
+        window.setScene(foodPage);
+        window.show();
+    }
+
+    /**
+     * On this page you can enter the details of your veggetarian meal.
+     */
+    private void veggieMealPage() {
+        window.setTitle("Vegetarian Meal");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        //set up the page
+        VBox center = new VBox();
+        center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+        center.setPadding(new Insets(30));
+
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        // addButton.setOnAction(e -> );
+
+        Slider sizeSlider1 = sizeSlider();
+        Slider sizeSlider2 = sizeSlider();
+        Slider sizeSlider3 = sizeSlider();
+        Slider sizeSlider4 = sizeSlider();
+
+        Label titleLabel = new Label("Vegetarian Meal");
+        Label sizeLabel = new Label("Size:");
+
+        Label label1 = new Label("Salad");
+        Label label2 = new Label("Fruits");
+        Label label3 = new Label("Vegetarian Meat");
+        Label label4 = new Label("Else");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,0,0);
+        centerGrid.add(label1,0,1);
+        centerGrid.add(label2,0,2);
+        centerGrid.add(label3,0,3);
+        centerGrid.add(label4,0,4);
+
+        centerGrid.add(sizeLabel,1,0);
+        centerGrid.add(sizeSlider1,1,1);
+        centerGrid.add(sizeSlider2,1,2);
+        centerGrid.add(sizeSlider3,1,3);
+        centerGrid.add(sizeSlider4,1,4);
+
+        centerGrid.add(addButton,1,5);
+
+        center.getChildren().addAll(centerGrid);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(center);
+
+        //set up the scene
+        Scene foodPage = new Scene(borderPane, 600, 400);
+        window.setScene(foodPage);
+        window.show();
+    }
+
+    /**
+     * On this page you can enter the details of your veggetarian meal.
+     */
+    private void localStorePage() {
+        window.setTitle("Local Store");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        //set up the page
+        VBox center = new VBox();
+        center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+        center.setPadding(new Insets(30));
+
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField weightField = new TextField();
+        weightField.setMaxWidth(300);
+        weightField.setPromptText("weight");
+
+        CheckBox checkBox = new CheckBox("Organic");
+
+        Label titleLabel = new Label("Local Store");
+        Label weightLabel = new Label("Weight:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,0,0);
+        centerGrid.add(weightLabel,0,1);
+        centerGrid.add(weightField,1,1);
+        centerGrid.add(checkBox,0,2);
+        centerGrid.add(addButton,1,5);
+
+        center.getChildren().addAll(centerGrid);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(center);
+
+        //set up the scene
+        Scene foodPage = new Scene(borderPane, 600, 400);
         window.setScene(foodPage);
         window.show();
     }
@@ -340,21 +461,28 @@ public class GuiMain extends Application {
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+
+        // Set up buttons
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPrefWidth(180);
+        buttons.setPrefHeight(180);
+        buttons.setSpacing(20);
+
+        Button option1 = new Button("Bike");
+        option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        //option1.setOnAction(e ->());
+
+        Button option2 = new Button("Public transport");
+        option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        //option2.setOnAction(e ->());
+
+        buttons.getChildren().addAll(option1, option2);
 
         Label transportTitle = new Label("Transport");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Using bike instead of car",
-                "Using public transport instead of car");
-        choiceBox.setValue("Using bike instead of car");
-
-        Button addOption = new Button("Add");
-        //add something that updates the database
-
-
-
-
-        center.getChildren().addAll(transportTitle, choiceBox, addOption);
+        center.getChildren().addAll(transportTitle, buttons);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
@@ -380,18 +508,29 @@ public class GuiMain extends Application {
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+
+        // Set up buttons
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPrefWidth(180);
+        buttons.setPrefHeight(180);
+        buttons.setSpacing(20);
+
+        Button option1 = new Button("Home Temperature");
+        option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        //option1.setOnAction(e ->());
+
+        Button option2 = new Button("Solar Panels");
+        option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        //option2.setOnAction(e ->());
+
+        buttons.getChildren().addAll(option1, option2);
+
 
         Label energyTitle = new Label("Home energy");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Lowering the temperature of your home",
-                "Installing solar panels");
-        choiceBox.setValue("Lowering the temperature of your home");
-
-        Button addOption = new Button("Add");
-        //add something that updates the database
-
-        center.getChildren().addAll(energyTitle, choiceBox, addOption);
+        center.getChildren().addAll(energyTitle, buttons);
 
         //set up border pane
         BorderPane energyPane = new BorderPane();
@@ -545,8 +684,57 @@ public class GuiMain extends Application {
     }
 
     /**
+     * With this slider you can select the size of your meal.
+     * @return meal size.
+     */
+    private Slider sizeSlider() {
+        Slider slider = new Slider(0, 3, 0);
+        slider.setMin(0);
+        slider.setMax(3);
+        slider.setMinorTickCount(0);
+        slider.setMajorTickUnit(1);
+        slider.setSnapToTicks(true);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+
+        slider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double value) {
+                if (value < 0.5) {
+                    return "None";
+                }
+                if (value < 1.5) {
+                    return "Small";
+                }
+                if (value < 2.5) {
+                    return "Medium";
+                }
+                return "Large";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                switch (string) {
+                    case "None":
+                        return 0d;
+                    case "Small":
+                        return 1d;
+                    case "Medium":
+                        return 2d;
+                    case "Large":
+                        return 3d;
+                    default:
+                        return 3d;
+                }
+            }
+        });
+
+        slider.setMinWidth(300);
+        return slider;
+    }
+
+    /**
      * NOT GUI.
-     *
      * @param username - the username
      * @param password - the password
      */
