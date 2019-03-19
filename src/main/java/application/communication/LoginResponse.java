@@ -11,7 +11,7 @@ public class LoginResponse extends ServerMessage {
     public LoginResponse() {}
 
     /**
-     * A message that contains a boolean to let the client know if a loginRequest succeeded
+     * A message that contains a boolean to let the client know if a loginRequest succeeded.
      * @param success loginRequest succeeded true or false
      */
     public LoginResponse(boolean success) {

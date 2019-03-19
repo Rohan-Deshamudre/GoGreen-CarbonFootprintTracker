@@ -20,7 +20,7 @@ public class CO2 {
 
     public CO2(String cusername, int co2reduc) {
         this.cusername = cusername;
-        this.co2reduc=co2reduc;
+        this.co2reduc = co2reduc;
     }
 
     public String getCusername() {

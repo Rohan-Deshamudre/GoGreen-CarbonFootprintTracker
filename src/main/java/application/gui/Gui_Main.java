@@ -26,7 +26,6 @@ public class Gui_Main extends Application {
     /**
      * Main method of the class, launches the application.
      *
-     * @param args: the input
      */
     public static void main(String[] args) {
         launch(args);
@@ -35,10 +34,8 @@ public class Gui_Main extends Application {
     /**
      * This method starts the window.
      *
-     * @param primaryStage: this is the window of the application.
-     * @throws Exception: in case of an exception.
      */
-    public void start(Stage primaryStage)throws Exception{
+    public void start(Stage primaryStage)throws Exception {
         window = primaryStage;
 
         loginPage();
@@ -130,6 +127,7 @@ public class Gui_Main extends Application {
      *
      * @throws Exception - in case of an Exception.
      */
+
     private void registrationPage() {
         window.setTitle("Registration");
         // TOP
@@ -283,20 +281,22 @@ public class Gui_Main extends Application {
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
-        Label foodTitle = new Label("Food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll(CarbonUtil.FOOD_OPTION1,
                 CarbonUtil.FOOD_OPTION2);
         //choiceBox.setValue("Ate a vegetarian meal");
-        Label usernameLabel = new Label("Username: ");
 
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
 
+        Label foodTitle = new Label("Food");
+        Label usernameLabel = new Label("Username: ");
+
         Button addOption = new Button("Add");
-//       addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
+        //addOption.setOnAction(e ->ConfirmBox.add("Changes to your CO2 reduction",
+        //choiceBox.getValue()));
         addOption.setOnAction(e -> {
             foodAddButtonAction(choiceBox.getValue(), usernameField.getText());
             usernameField.setText("");
@@ -407,8 +407,6 @@ public class Gui_Main extends Application {
         userChoice.getItems().addAll("User1", "User", "User3");
         userChoice.setValue("User1");
 
-        Label whitespace = new Label("");
-
         //left buttons
         VBox left = new VBox();
         left.setPrefSize(70, 70);
@@ -419,6 +417,8 @@ public class Gui_Main extends Application {
         react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
         Button react2 = new Button("Reaction 2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+
+        Label whitespace = new Label("");
 
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
@@ -533,7 +533,7 @@ public class Gui_Main extends Application {
     }
 
     /**
-     * NOT GUI
+     * NOT GUI.
      *
      * @param username - the username
      * @param password - the password
@@ -565,7 +565,8 @@ public class Gui_Main extends Application {
             message = ClientApplication.co2Add(choiceBoxValue,username);
         } catch (Exception e) {
             e.printStackTrace();
-            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
+            message = "We are extremely sorry!"
+                    + " There seems to be a technical issue in updating your Carbon Footprint.";
         }
         AlertBox.display(message);
         showMainMenu();
@@ -575,20 +576,22 @@ public class Gui_Main extends Application {
     }
 
     private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Closing the program", "Are you sure you want to exit?");
-        if(answer) {
+        Boolean answer = ConfirmBox.display("Closing the program",
+                "Are you sure you want to exit?");
+        if (answer) {
             window.close();
         }
     }
 
     private void logout() {
-        Boolean answer = ConfirmBox.display("Logout", "Are you sure you want to logout?");
+        Boolean answer = ConfirmBox.display("Logout",
+                "Are you sure you want to logout?");
         try {
-            if(answer) {
+            if (answer) {
                 AlertBox.display("You have logged out");
                 loginPage();
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }

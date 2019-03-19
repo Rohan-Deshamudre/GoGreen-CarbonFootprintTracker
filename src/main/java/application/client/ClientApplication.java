@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 public class ClientApplication {
 
     private static final String URL = "https://gogreen32.herokuapp.com/";
-//    private static final String URL = "http://localhost:8080/";
+    //private static final String URL = "http://localhost:8080/";
 
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
@@ -49,6 +49,14 @@ public class ClientApplication {
         return res.isSuccess();
     }
 
+    /**
+     * Adding co2 to the user.
+     * @param choiceBoxValue decide the value that will be added to the user
+     * @param username decide which user the value will be added to
+     * @return returns the message
+     * @throws URISyntaxException gives syntax exception
+     */
+
     public static String co2Add(String choiceBoxValue, String username)
             throws URISyntaxException {
         String resMessage = "";
@@ -56,16 +64,18 @@ public class ClientApplication {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String co2AddURL = URL + "carbon/add";
-        Co2Response res = restTemplate.postForObject(co2AddURL, req, Co2Response.class);
+        String co2Addurl = URL + "carbon/add";
+        Co2Response res = restTemplate.postForObject(co2Addurl, req, Co2Response.class);
         System.out.println();
         System.out.println(res);
-        if(res!=null && res.getResult()){
-            resMessage="Congratulations "+res.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
+        if (res != null && res.getResult()) {
+            resMessage = "Congratulations" + res.getUsername() + "! Your Carbon Footprint is updated from"
+                    + res.getOldCarbonfootprint()
                     + " to " + res.getNewCarbonfootprint();
         }
         else{
-            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
+            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint."
+                    + "Are you using the correct username?";
         }
         return resMessage;
     }

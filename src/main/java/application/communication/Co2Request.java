@@ -5,9 +5,15 @@ public class Co2Request extends ClientMessage {
     private String choiceBoxValue;
     private String cusername;
 
+    /**
+     * Setup the choiceBox and the cusername.
+     * @param choiceBoxValue co2 value
+     * @param cusername username
+     */
+
     public Co2Request(String choiceBoxValue,String cusername) {
-        this.choiceBoxValue=choiceBoxValue;
-        this.cusername=cusername;
+        this.choiceBoxValue = choiceBoxValue;
+        this.cusername = cusername;
 
     }
 

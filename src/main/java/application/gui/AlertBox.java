@@ -10,6 +10,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AlertBox {
+    /**
+     * Displays the string and the alert box.
+     * @param message the message being displayed
+     */
 
     public static void display(String message) {
         Stage window = new Stage();

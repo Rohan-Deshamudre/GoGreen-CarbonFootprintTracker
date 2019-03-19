@@ -8,6 +8,14 @@ import java.security.spec.KeySpec;
 public class Authentication {
 
     //Register a new user and add the salt and hashed password to the database
+
+    /**
+     * Registers the username and password.
+     * @param username the username
+     * @param password the password
+     * @return returns the result
+     * @throws Exception exception
+     */
     public boolean Register(String username, String password) throws Exception {
 
         byte[] salt = generateSalt();

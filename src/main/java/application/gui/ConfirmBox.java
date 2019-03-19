@@ -1,6 +1,5 @@
 package application.gui;
 
-import application.client.ClientApplication;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,11 +13,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.net.URISyntaxException;
 
 public class ConfirmBox {
 
     private static boolean answer;
+
+    /**
+     * Displays the ConfirmBox and the message on it.
+     * @param title title of the ConfirmBox
+     * @param message message shown on the ConfirmBox
+     * @return
+     */
 
     public static boolean display(String title, String message) {
         Stage window = new Stage();
@@ -60,6 +65,12 @@ public class ConfirmBox {
         return answer;
     }
 
+    /**
+     * Add string on the ConfirmBox.
+     * @param title add title to the ConfirmBox
+     * @param option add option on the ConfirmBox
+     */
+
     public static void add(String title, String option) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -73,7 +84,8 @@ public class ConfirmBox {
 
         Button add = new Button("add");
         add.setOnAction(e -> {
-            //call method in ServerApplication to update the database with username as a parameter, application.ServerApplication.method(username.getText();
+            //call method in ServerApplication to update the database with username as a parameter,
+            // application.ServerApplication.method(username.getText();
             window.close();
         });
 

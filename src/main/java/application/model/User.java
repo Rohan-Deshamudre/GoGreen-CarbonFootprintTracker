@@ -18,9 +18,15 @@ public class User {
 
     protected User() {}
 
+    /**
+     * The user class containing username and password
+     * @param username username of the user
+     * @param password password of the user
+     */
+
     public User(String username,String password) {
         this.username = username;
-        this.password=password;
+        this.password = password;
 
     }
 

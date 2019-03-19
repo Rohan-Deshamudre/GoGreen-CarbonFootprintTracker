@@ -1,6 +1,5 @@
 package application.server;
 
-
 import application.communication.Co2Request;
 import application.communication.Co2Response;
 
@@ -32,13 +31,13 @@ public class Co2Controller {
     @Autowired
     private UserRepository userRepository;
     /**
-     * SpringBoot automatically wires the CO2Repository instance
+     * SpringBoot automatically wires the CO2Repository instance.
      * into this class using this setter method
      * @param co2Repository - the CO@Repository instance
      */
 
 
-    Logger log = LogManager.getLogger(Co2Controller.class.getName());
+    private Logger log = LogManager.getLogger(Co2Controller.class.getName());
 
 
 

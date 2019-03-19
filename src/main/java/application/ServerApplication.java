@@ -12,6 +12,11 @@ public class ServerApplication {
     //     return new BCryptPasswordEncoder();
     // }
 
+    /**
+     * Runs the SpringApplication.
+     * @param args main method
+     */
+
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
 
