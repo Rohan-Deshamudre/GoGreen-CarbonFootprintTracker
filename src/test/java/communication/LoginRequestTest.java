@@ -4,8 +4,7 @@ package communication;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import application.communication.LoginData;
-import application.communication.LoginRequest;
+
 import org.junit.jupiter.api.Test;
 
 class LoginRequestTest {

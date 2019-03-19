@@ -1,9 +1,8 @@
 package server;
 
-import application.server.HomeController;
 import org.junit.jupiter.api.Test;
 
-import static application.util.CarbonUtil.getCarbonfootprint;
+import static util.CarbonUtil.getCarbonfootprint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarbonUtilTest {
