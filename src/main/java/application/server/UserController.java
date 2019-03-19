@@ -1,17 +1,13 @@
 package application.server;
 
-import application.model.User;
 import application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
     @Autowired
-    private UserRepository UserRepository;
+    private UserRepository userRepository;
 
 //    @RequestMapping("/save")
 //    @ResponseBody

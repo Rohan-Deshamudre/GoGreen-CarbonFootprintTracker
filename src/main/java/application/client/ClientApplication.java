@@ -1,6 +1,10 @@
 package application.client;
 
-import application.communication.*;
+import application.communication.Co2Request;
+import application.communication.Co2Response;
+import application.communication.LoginData;
+import application.communication.LoginRequest;
+import application.communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -69,12 +73,13 @@ public class ClientApplication {
         System.out.println();
         System.out.println(res);
         if (res != null && res.getResult()) {
-            resMessage = "Congratulations" + res.getUsername() + "! Your Carbon Footprint is updated from"
+            resMessage = "Congratulations" + res.getUsername()
+                    + "! Your Carbon Footprint is updated from"
                     + res.getOldCarbonfootprint()
                     + " to " + res.getNewCarbonfootprint();
-        }
-        else{
-            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint."
+        } else {
+            resMessage = "We are extremely sorry! "
+                    + "There seems to be an issue in updating your Carbon Footprint."
                     + "Are you using the correct username?";
         }
         return resMessage;

@@ -1,15 +1,21 @@
 package application.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 @Controller
 public class HomeController {
 
     Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+    /**
+     * Home.
+     * @return returns the method
+     */
     @RequestMapping("/")
     @ResponseBody
     public String home() {

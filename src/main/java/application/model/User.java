@@ -19,7 +19,7 @@ public class User {
     protected User() {}
 
     /**
-     * The user class containing username and password
+     * The user class containing username and password.
      * @param username username of the user
      * @param password password of the user
      */

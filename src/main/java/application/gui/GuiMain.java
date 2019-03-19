@@ -7,8 +7,19 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -18,7 +29,7 @@ import javafx.stage.Stage;
 import java.net.URISyntaxException;
 
 
-public class Gui_Main extends Application {
+public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
@@ -44,7 +55,7 @@ public class Gui_Main extends Application {
     /**
      * This is the login page.
      *
-     * @throws Exception: in case of an exception.
+     * @throws Exception in case of an exception.
      */
     private void loginPage() {
         window.setTitle("Login");
@@ -563,7 +574,7 @@ public class Gui_Main extends Application {
         String message = "";
         try {
             message = ClientApplication.co2Add(choiceBoxValue,username);
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             message = "We are extremely sorry!"
                     + " There seems to be a technical issue in updating your Carbon Footprint.";
@@ -586,13 +597,10 @@ public class Gui_Main extends Application {
     private void logout() {
         Boolean answer = ConfirmBox.display("Logout",
                 "Are you sure you want to logout?");
-        try {
-            if (answer) {
-                AlertBox.display("You have logged out");
-                loginPage();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        if (answer) {
+            AlertBox.display("You have logged out");
+            loginPage();
         }
     }
 }
+
