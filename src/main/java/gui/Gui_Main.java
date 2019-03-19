@@ -85,7 +85,7 @@ public class Gui_Main extends Application {
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
         GridPane.setConstraints(passwordLabel, 0, 2);
@@ -156,7 +156,7 @@ public class Gui_Main extends Application {
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
         GridPane.setConstraints(passwordLabel, 0, 2);
@@ -164,7 +164,7 @@ public class Gui_Main extends Application {
 
         // Repeat password
         Label passwordLabel1 = new Label("Password: ");
-        TextField passwordField1 = new TextField();
+        PasswordField passwordField1 = new PasswordField();
         passwordField1.setPromptText("repeat password");
         passwordField1.setMaxWidth(300);
         GridPane.setConstraints(passwordLabel1, 0, 3);
