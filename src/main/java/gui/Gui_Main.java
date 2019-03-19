@@ -282,27 +282,34 @@ public class Gui_Main extends Application {
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
 
-        Label foodTitle = new Label("Food");
+        // Set up buttons
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPrefWidth(180);
+        buttons.setPrefHeight(180);
+        buttons.setSpacing(20);
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll(CarbonUtil.FOOD_OPTION1,
-                CarbonUtil.FOOD_OPTION2);
-        //choiceBox.setValue("Ate a vegetarian meal");
+        Button option1 = new Button(CarbonUtil.FOOD_OPTION1);
+        option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+//        option1.setOnAction(e ->());
+
+        Button option2 = new Button(CarbonUtil.FOOD_OPTION2);
+        option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+//        option2.setOnAction(e ->());
+
+        buttons.getChildren().addAll(option1, option2);
+
         Label usernameLabel = new Label("Username: ");
 
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
 
-        Button addOption = new Button("Add");
-//       addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
-        addOption.setOnAction(e -> {
-            foodAddButtonAction(choiceBox.getValue(), usernameField.getText());
-            usernameField.setText("");
-            choiceBox.setValue("");
-        });
-        center.getChildren().addAll(foodTitle, choiceBox, usernameLabel, usernameField, addOption);
+        Label foodTitle = new Label("Food");
+
+        center.getChildren().addAll(foodTitle, buttons, usernameLabel, usernameField);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
@@ -329,20 +336,26 @@ public class Gui_Main extends Application {
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
+        // Set up buttons
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPrefWidth(180);
+        buttons.setPrefHeight(180);
+        buttons.setSpacing(20);
+
+        Button option1 = new Button("Bike");
+        option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+//        option1.setOnAction(e ->());
+
+        Button option2 = new Button("Public transport");
+        option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+//        option2.setOnAction(e ->());
+
+        buttons.getChildren().addAll(option1, option2);
+
         Label transportTitle = new Label("Transport");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Using bike instead of car",
-                "Using public transport instead of car");
-        choiceBox.setValue("Using bike instead of car");
-
-        Button addOption = new Button("Add");
-        //add something that updates the database
-
-
-
-
-        center.getChildren().addAll(transportTitle, choiceBox, addOption);
+        center.getChildren().addAll(transportTitle, buttons);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
@@ -369,17 +382,27 @@ public class Gui_Main extends Application {
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
+        // Set up buttons
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPrefWidth(180);
+        buttons.setPrefHeight(180);
+        buttons.setSpacing(20);
+
+        Button option1 = new Button("Home Temperature");
+        option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+//        option1.setOnAction(e ->());
+
+        Button option2 = new Button("Solar Panels");
+        option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+//        option2.setOnAction(e ->());
+
+        buttons.getChildren().addAll(option1, option2);
+
+
         Label energyTitle = new Label("Home energy");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Lowering the temperature of your home",
-                "Installing solar panels");
-        choiceBox.setValue("Lowering the temperature of your home");
-
-        Button addOption = new Button("Add");
-        //add something that updates the database
-
-        center.getChildren().addAll(energyTitle, choiceBox, addOption);
+        center.getChildren().addAll(energyTitle, buttons);
 
         //set up border pane
         BorderPane energyPane = new BorderPane();
