@@ -1,6 +1,7 @@
 package gui;
 
 import client.ClientApplication;
+import javafx.util.StringConverter;
 import util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -293,7 +294,7 @@ public class Gui_Main extends Application {
 
         Button option1 = new Button(CarbonUtil.FOOD_OPTION1);
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-//        option1.setOnAction(e ->());
+        option1.setOnAction(e -> veggieMealPage());
 
         Button option2 = new Button(CarbonUtil.FOOD_OPTION2);
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
@@ -310,6 +311,71 @@ public class Gui_Main extends Application {
         Label foodTitle = new Label("Food");
 
         center.getChildren().addAll(foodTitle, buttons, usernameLabel, usernameField);
+
+        //set up border pane
+        BorderPane foodPane = new BorderPane();
+        menuBar(foodPane);
+        foodPane.setCenter(center);
+
+        //set up the scene
+        Scene foodPage = new Scene(foodPane, 600, 400);
+        window.setScene(foodPage);
+        window.show();
+    }
+
+    /**
+     * On this page you can enter the details of your veggetarian meal.
+     */
+    private void veggieMealPage() {
+        window.setTitle("Vegetarian Meal");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        //set up the page
+        VBox center = new VBox();
+        center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+        center.setPadding(new Insets(30));
+
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+//        addButton.setOnAction(e -> );
+
+        Slider sizeSlider1 = sizeSlider();
+        Slider sizeSlider2 = sizeSlider();
+        Slider sizeSlider3 = sizeSlider();
+        Slider sizeSlider4 = sizeSlider();
+
+        Label titleLabel = new Label("Vegetarian Meal");
+        Label sizeLabel = new Label("Size:");
+
+        Label label1 = new Label("Salad");
+        Label label2 = new Label("Fruits");
+        Label label3 = new Label("Vegetarian Meat");
+        Label label4 = new Label("Else");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,0,0);
+        centerGrid.add(label1,0,1);
+        centerGrid.add(label2,0,2);
+        centerGrid.add(label3,0,3);
+        centerGrid.add(label4,0,4);
+
+        centerGrid.add(sizeLabel,1,0);
+        centerGrid.add(sizeSlider1,1,1);
+        centerGrid.add(sizeSlider2,1,2);
+        centerGrid.add(sizeSlider3,1,3);
+        centerGrid.add(sizeSlider4,1,4);
+
+        centerGrid.add(addButton,1,5);
+
+        center.getChildren().addAll(centerGrid);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
@@ -555,6 +621,52 @@ public class Gui_Main extends Application {
         menuBar.getMenus().addAll(menu);
 
         pane.setTop(menuBar);
+    }
+
+    /**
+     * With this slider you can select the size of your meal.
+     * @return meal size.
+     */
+    private Slider sizeSlider() {
+        Slider slider = new Slider(0, 3, 0);
+        slider.setMin(0);
+        slider.setMax(3);
+        slider.setMinorTickCount(0);
+        slider.setMajorTickUnit(1);
+        slider.setSnapToTicks(true);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+
+        slider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                if (n < 0.5) return "None";
+                if (n < 1.5) return "Small";
+                if (n < 2.5) return "Medium";
+
+                return "Large";
+            }
+
+            @Override
+            public Double fromString(String s) {
+                switch (s) {
+                    case "None":
+                        return 0d;
+                    case "Small":
+                        return 1d;
+                    case "Medium":
+                        return 2d;
+                    case "Large":
+                        return 3d;
+
+                    default:
+                        return 3d;
+                }
+            }
+        });
+
+        slider.setMinWidth(300);
+        return slider;
     }
 
     /**
