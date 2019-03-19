@@ -302,15 +302,9 @@ public class Gui_Main extends Application {
 
         buttons.getChildren().addAll(option1, option2);
 
-        Label usernameLabel = new Label("Username: ");
-
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("username");
-        usernameField.setMaxWidth(300);
-
         Label foodTitle = new Label("Food");
 
-        center.getChildren().addAll(foodTitle, buttons, usernameLabel, usernameField);
+        center.getChildren().addAll(foodTitle, buttons);
 
         //set up border pane
         BorderPane foodPane = new BorderPane();
