@@ -335,6 +335,7 @@ public class Gui_Main extends Application {
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
 
         // Set up buttons
         HBox buttons = new HBox();
@@ -381,6 +382,7 @@ public class Gui_Main extends Application {
         //set up the page
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
 
         // Set up buttons
         HBox buttons = new HBox();
