@@ -298,7 +298,7 @@ public class Gui_Main extends Application {
 
         Button option2 = new Button(CarbonUtil.FOOD_OPTION2);
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-//        option2.setOnAction(e ->());
+        option2.setOnAction(e -> localStorePage());
 
         buttons.getChildren().addAll(option1, option2);
 
@@ -378,12 +378,69 @@ public class Gui_Main extends Application {
         center.getChildren().addAll(centerGrid);
 
         //set up border pane
-        BorderPane foodPane = new BorderPane();
-        menuBar(foodPane);
-        foodPane.setCenter(center);
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, 600, 400);
+        Scene foodPage = new Scene(borderPane, 600, 400);
+        window.setScene(foodPage);
+        window.show();
+    }
+
+    /**
+     * On this page you can enter the details of your veggetarian meal.
+     */
+    private void localStorePage() {
+        window.setTitle("Local Store");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        //set up the page
+        VBox center = new VBox();
+        center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+        center.setPadding(new Insets(30));
+
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+//        addButton.setOnAction(e -> );
+
+
+        Label titleLabel = new Label("Local Store");
+        Label weightLabel = new Label("Weight:");
+
+        TextField weightField = new TextField();
+        weightField.setMaxWidth(300);
+        weightField.setPromptText("weight");
+
+        CheckBox checkBox = new CheckBox("Organic");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,0,0);
+
+        centerGrid.add(weightLabel,0,1);
+        centerGrid.add(weightField,1,1);
+
+        centerGrid.add(checkBox,0,2);
+
+        centerGrid.add(addButton,1,5);
+
+        center.getChildren().addAll(centerGrid);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(center);
+
+        //set up the scene
+        Scene foodPage = new Scene(borderPane, 600, 400);
         window.setScene(foodPage);
         window.show();
     }
