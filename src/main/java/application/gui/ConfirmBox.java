@@ -22,7 +22,7 @@ public class ConfirmBox {
      * Displays the ConfirmBox and the message on it.
      * @param title title of the ConfirmBox
      * @param message message shown on the ConfirmBox
-     * @return
+     * @return returns the boolean
      */
 
     public static boolean display(String title, String message) {
