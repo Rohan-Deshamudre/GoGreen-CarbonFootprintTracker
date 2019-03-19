@@ -1,24 +1,36 @@
 package gui;
 
 import client.ClientApplication;
-import util.CarbonUtil;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import util.CarbonUtil;
 
 import java.net.URISyntaxException;
 
 
-public class Gui_Main extends Application {
+public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
@@ -26,7 +38,6 @@ public class Gui_Main extends Application {
     /**
      * Main method of the class, launches the application.
      *
-     * @param args: the input
      */
     public static void main(String[] args) {
         launch(args);
@@ -35,10 +46,8 @@ public class Gui_Main extends Application {
     /**
      * This method starts the window.
      *
-     * @param primaryStage: this is the window of the application.
-     * @throws Exception: in case of an exception.
      */
-    public void start(Stage primaryStage)throws Exception{
+    public void start(Stage primaryStage)throws Exception {
         window = primaryStage;
 
         loginPage();
@@ -47,7 +56,7 @@ public class Gui_Main extends Application {
     /**
      * This is the login page.
      *
-     * @throws Exception: in case of an exception.
+     * @throws Exception in case of an exception.
      */
     private void loginPage() {
         window.setTitle("Login");
@@ -69,7 +78,7 @@ public class Gui_Main extends Application {
         grid.setHgap(10);
 
         // Hello client label
-        String helloString = ClientApplication.getRequestHeroku() + "!";
+        String helloString = ClientApplication.getRequestHeroku();
         Label helloLabel = new Label(helloString);
         GridPane.setConstraints(helloLabel, 1, 0);
 
@@ -130,6 +139,7 @@ public class Gui_Main extends Application {
      *
      * @throws Exception - in case of an Exception.
      */
+
     private void registrationPage() {
         window.setTitle("Registration");
         // TOP
@@ -283,20 +293,22 @@ public class Gui_Main extends Application {
         VBox center = new VBox();
         center.setAlignment(Pos.CENTER);
 
-        Label foodTitle = new Label("Food");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll(CarbonUtil.FOOD_OPTION1,
                 CarbonUtil.FOOD_OPTION2);
         //choiceBox.setValue("Ate a vegetarian meal");
-        Label usernameLabel = new Label("Username: ");
 
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
 
+        Label foodTitle = new Label("Food");
+        Label usernameLabel = new Label("Username: ");
+
         Button addOption = new Button("Add");
-//       addOption.setOnAction(e -> ConfirmBox.add("Changes to your CO2 reduction", choiceBox.getValue()));
+        //addOption.setOnAction(e ->ConfirmBox.add("Changes to your CO2 reduction",
+        //choiceBox.getValue()));
         addOption.setOnAction(e -> {
             foodAddButtonAction(choiceBox.getValue(), usernameField.getText());
             usernameField.setText("");
@@ -407,8 +419,6 @@ public class Gui_Main extends Application {
         userChoice.getItems().addAll("User1", "User", "User3");
         userChoice.setValue("User1");
 
-        Label whitespace = new Label("");
-
         //left buttons
         VBox left = new VBox();
         left.setPrefSize(70, 70);
@@ -419,6 +429,8 @@ public class Gui_Main extends Application {
         react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
         Button react2 = new Button("Reaction 2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+
+        Label whitespace = new Label("");
 
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
@@ -533,7 +545,7 @@ public class Gui_Main extends Application {
     }
 
     /**
-     * NOT GUI
+     * NOT GUI.
      *
      * @param username - the username
      * @param password - the password
@@ -563,9 +575,10 @@ public class Gui_Main extends Application {
         String message = "";
         try {
             message = ClientApplication.co2Add(choiceBoxValue,username);
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
-            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
+            message = "We are extremely sorry!"
+                    + " There seems to be a technical issue in updating your Carbon Footprint.";
         }
         AlertBox.display(message);
         showMainMenu();
@@ -575,21 +588,20 @@ public class Gui_Main extends Application {
     }
 
     private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Closing the program", "Are you sure you want to exit?");
-        if(answer) {
+        Boolean answer = ConfirmBox.display("Closing the program",
+                "Are you sure you want to exit?");
+        if (answer) {
             window.close();
         }
     }
 
     private void logout() {
-        Boolean answer = ConfirmBox.display("Logout", "Are you sure you want to logout?");
-        try {
-            if(answer) {
-                AlertBox.display("You have logged out");
-                loginPage();
-            }
-        } catch(Exception ex) {
-            System.out.println(ex.getMessage());
+        Boolean answer = ConfirmBox.display("Logout",
+                "Are you sure you want to logout?");
+        if (answer) {
+            AlertBox.display("You have logged out");
+            loginPage();
         }
     }
 }
+

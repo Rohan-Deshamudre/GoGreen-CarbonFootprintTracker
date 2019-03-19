@@ -6,7 +6,7 @@ public class LoginData {
     private String password;
 
     /**
-     * Simple constructor for a loginData class used to authenticate messages
+     * Simple constructor for a loginData class used to authenticate messages.
      * @param username the users username
      * @param password the users password
      */
