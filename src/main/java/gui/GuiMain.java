@@ -226,9 +226,6 @@ public class GuiMain extends Application {
         // Show window
         window.setScene(loginScene);
         window.setTitle("Registration Page");
-
-//        window.setMaximized(false);
-//        window.setMaximized(true);
         window.show();
     }
 
@@ -242,38 +239,34 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        //left part
-        VBox left = new VBox();
-        left.setPrefWidth(160);
-        left.setPrefHeight(160);
-        left.setAlignment(Pos.CENTER);
-        left.setPadding(new Insets(10, 10, 10, 10));
+        GridPane buttons = new GridPane();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPadding(new Insets(10));
+        buttons.setVgap(10);
+        buttons.setHgap(10);
+        int buttonWidth = 160;
+        int buttonHeight = 160;
+
 
         Button food = new Button("Food");
-        food.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+        food.setMinSize(buttonWidth, buttonHeight);
         food.setOnAction(e -> showFoodPage());
+        buttons.add(food, 0, 0);
 
         Button homeE = new Button("Home");
-        homeE.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+        homeE.setMinSize(buttonWidth, buttonHeight);
         homeE.setOnAction(e -> showHomeEnergy());
-
-        left.getChildren().addAll(food, homeE);
-
-        //middle part
-        VBox middle = new VBox();
-        middle.setPrefWidth(160);
-        middle.setPrefHeight(160);
-        middle.setAlignment(Pos.CENTER_LEFT);
+        buttons.add(homeE, 0, 1);
 
         Button transport = new Button("Transport");
-        transport.setMinSize(middle.getPrefWidth(), middle.getPrefHeight());
+        transport.setMinSize(buttonWidth, buttonHeight);
         transport.setOnAction(e -> showTransportPage());
+        buttons.add(transport, 1, 0);
 
         Button share = new Button("Share");
-        share.setMinSize(middle.getPrefWidth(), middle.getPrefHeight());
+        share.setMinSize(buttonWidth, buttonHeight);
         share.setOnAction(e -> showShare());
-
-        middle.getChildren().addAll(transport, share);
+        buttons.add(share, 1, 1);
 
         //right part
         StackPane right = new StackPane();
@@ -287,8 +280,7 @@ public class GuiMain extends Application {
         //setting up the window
         BorderPane menuPane = new BorderPane();
         menuBar(menuPane);
-        menuPane.setLeft(left);
-        menuPane.setCenter(middle);
+        menuPane.setCenter(buttons);
         menuPane.setRight(right);
 
         //setting up the scene
