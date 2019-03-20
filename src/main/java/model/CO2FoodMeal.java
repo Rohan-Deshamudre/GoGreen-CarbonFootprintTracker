@@ -36,20 +36,18 @@ public class CO2FoodMeal {
 
     @Override
     public String toString() {
-        return String.format("CO2FoodMeal[musername='%s', typeOfMeal='%s', size='%s'",
+        return String.format("CO2FoodMeal[musername='%s', typeOfMeal='%s', size='%s']",
                 musername, typeOfMeal, size);
     }
 
-    public String getMusername() {
-        return this.musername;
-    }
+    public String getMusername() { return musername; }
 
     public void setMusername(String musername) {
         this.musername = musername;
     }
 
     public String getTypeOfMeal() {
-        return this.typeOfMeal;
+        return typeOfMeal;
     }
 
     public void setTypeOfMeal(String typeOfMeal) {
@@ -57,7 +55,7 @@ public class CO2FoodMeal {
     }
 
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public void setSize(int size) {
