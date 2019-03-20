@@ -22,21 +22,27 @@ test-coverage:
     - gradle test jacocoTestReport
     - gradle jacocoTestCoverageVerification
   artifacts:
-    reports:
-      junit: build/reports/jacoco/test/jacocoTestReport.xml
+    paths: build/reports/jacoco/test/jacocoTestReport.xml
 
 checkstyle-main:
   stage: analysis
   script:
     - gradle checkStyleMain
   artifacts:
-    reports:
-      junit: build/reports/checkstyle/main.xml
+    paths: build/reports/checkstyle/main.xml
 
 checkstyle-test:
   stage: analysis
   script:
     - gradle checkStyleTest
   artifacts:
+    paths: build/reports/checkstyle/test.xm
+
+testing:
+  stage: analysis
+  script:
+    - gradle test
+  artifacts:
     reports:
-      junit: build/reports/checkstyle/test.xml
+      junit: build/reports/tests/testReport.html
+  
