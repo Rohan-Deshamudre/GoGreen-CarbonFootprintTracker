@@ -371,6 +371,7 @@ public class GuiMain extends Application {
         Label label4 = new Label("Else");
 
         GridPane centerGrid = new GridPane();
+        centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
@@ -412,11 +413,10 @@ public class GuiMain extends Application {
         });
 
         //set up the page
-        VBox center = new VBox();
+        GridPane center = new GridPane();
         center.setAlignment(Pos.CENTER);
-        center.setSpacing(10);
+        center.setVgap(10);
         center.setPadding(new Insets(30));
-
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
@@ -432,6 +432,7 @@ public class GuiMain extends Application {
         Label weightLabel = new Label("Weight:");
 
         GridPane centerGrid = new GridPane();
+        centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
@@ -441,7 +442,7 @@ public class GuiMain extends Application {
         centerGrid.add(checkBox,0,2);
         centerGrid.add(addButton,1,5);
 
-        center.getChildren().addAll(centerGrid);
+        center.getChildren().addAll(titleLabel, centerGrid);
 
         //set up border pane
         BorderPane borderPane = new BorderPane();
@@ -449,8 +450,8 @@ public class GuiMain extends Application {
         borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(foodPage);
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
         window.show();
     }
 
