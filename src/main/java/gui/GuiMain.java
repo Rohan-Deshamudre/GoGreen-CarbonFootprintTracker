@@ -412,12 +412,6 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        //set up the page
-        GridPane center = new GridPane();
-        center.setAlignment(Pos.CENTER);
-        center.setVgap(10);
-        center.setPadding(new Insets(30));
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
         //addButton.setOnAction(e -> );
@@ -433,6 +427,7 @@ public class GuiMain extends Application {
 
         GridPane centerGrid = new GridPane();
         centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setPadding(new Insets(30));
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
@@ -442,12 +437,10 @@ public class GuiMain extends Application {
         centerGrid.add(checkBox,0,2);
         centerGrid.add(addButton,1,5);
 
-        center.getChildren().addAll(titleLabel, centerGrid);
-
         //set up border pane
         BorderPane borderPane = new BorderPane();
         menuBar(borderPane);
-        borderPane.setCenter(center);
+        borderPane.setCenter(centerGrid);
 
         //set up the scene
         Scene scene = new Scene(borderPane, screenWidth, screenHeight);
@@ -479,11 +472,11 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Bike");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option1.setOnAction(e ->());
+        option1.setOnAction(e -> bikeRidePage());
 
         Button option2 = new Button("Public transport");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option2.setOnAction(e ->());
+        option2.setOnAction(e -> publicTransportPage());
 
         buttons.getChildren().addAll(option1, option2);
 
@@ -499,6 +492,108 @@ public class GuiMain extends Application {
         //set up the scene
         Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
         window.setScene(foodPage);
+        window.show();
+    }
+
+    /**
+     * Bike ride page.
+     */
+    private void bikeRidePage() {
+        window.setTitle("Bike Ride");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("distance");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("times a week");
+
+
+        Label titleLabel = new Label("Bike Ride");
+        Label distanceLabel = new Label("Distance:");
+        Label timesAWeekLabel = new Label("Times a Week:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * Public transport.
+     */
+    private void publicTransportPage() {
+        window.setTitle("Public Transport");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("distance");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("times a week");
+
+
+        Label titleLabel = new Label("Public Transport");
+        Label distanceLabel = new Label("Distance:");
+        Label timesAWeekLabel = new Label("Times a Week:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
         window.show();
     }
 
