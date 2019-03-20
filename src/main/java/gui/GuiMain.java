@@ -5,6 +5,7 @@ import client.ClientApplication;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import util.CarbonUtil;
@@ -38,6 +40,8 @@ public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
+    private int screenWidth;
+    private int screenHeight;
 
     /**
      * Main method of the class, launches the application.
@@ -53,6 +57,11 @@ public class GuiMain extends Application {
      */
     public void start(Stage primaryStage)throws Exception {
         window = primaryStage;
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+        screenWidth = (int) primaryScreenBounds.getWidth();
+        screenHeight = (int) primaryScreenBounds.getHeight();
+        window.setMaximized(true);
 
         loginPage();
     }
@@ -133,7 +142,9 @@ public class GuiMain extends Application {
                 helloLabel, usernameLabel, usernameField,
                 passwordLabel, passwordField, buttons
         );
-        loginScene = new Scene(borderPane, 600, 400);
+
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+
         // Show window
         window.setScene(loginScene);
         window.show();
@@ -210,11 +221,11 @@ public class GuiMain extends Application {
                 usernameLabel, usernameField, passwordLabel,
                 passwordLabel1, passwordField, passwordField1, buttons
         );
-        loginScene = new Scene(borderPane, 600, 400);
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
         window.setScene(loginScene);
-        window.setTitle("Login Page");
+        window.setTitle("Registration Page");
         window.show();
     }
 
@@ -228,38 +239,34 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        //left part
-        VBox left = new VBox();
-        left.setPrefWidth(160);
-        left.setPrefHeight(160);
-        left.setAlignment(Pos.CENTER);
-        left.setPadding(new Insets(10, 10, 10, 10));
+        GridPane buttons = new GridPane();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPadding(new Insets(10));
+        buttons.setVgap(10);
+        buttons.setHgap(10);
+        int buttonWidth = 160;
+        int buttonHeight = 160;
+
 
         Button food = new Button("Food");
-        food.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+        food.setMinSize(buttonWidth, buttonHeight);
         food.setOnAction(e -> showFoodPage());
+        buttons.add(food, 0, 0);
 
         Button homeE = new Button("Home");
-        homeE.setMinSize(left.getPrefWidth(), left.getPrefHeight());
+        homeE.setMinSize(buttonWidth, buttonHeight);
         homeE.setOnAction(e -> showHomeEnergy());
-
-        left.getChildren().addAll(food, homeE);
-
-        //middle part
-        VBox middle = new VBox();
-        middle.setPrefWidth(160);
-        middle.setPrefHeight(160);
-        middle.setAlignment(Pos.CENTER_LEFT);
+        buttons.add(homeE, 0, 1);
 
         Button transport = new Button("Transport");
-        transport.setMinSize(middle.getPrefWidth(), middle.getPrefHeight());
+        transport.setMinSize(buttonWidth, buttonHeight);
         transport.setOnAction(e -> showTransportPage());
+        buttons.add(transport, 1, 0);
 
         Button share = new Button("Share");
-        share.setMinSize(middle.getPrefWidth(), middle.getPrefHeight());
+        share.setMinSize(buttonWidth, buttonHeight);
         share.setOnAction(e -> showShare());
-
-        middle.getChildren().addAll(transport, share);
+        buttons.add(share, 1, 1);
 
         //right part
         StackPane right = new StackPane();
@@ -273,12 +280,11 @@ public class GuiMain extends Application {
         //setting up the window
         BorderPane menuPane = new BorderPane();
         menuBar(menuPane);
-        menuPane.setLeft(left);
-        menuPane.setCenter(middle);
+        menuPane.setCenter(buttons);
         menuPane.setRight(right);
 
         //setting up the scene
-        Scene scene = new Scene(menuPane, 600, 400);
+        Scene scene = new Scene(menuPane, screenWidth, screenHeight);
         window.setScene(scene);
         window.show();
     }
@@ -325,7 +331,7 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, 600, 400);
+        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
         window.setScene(foodPage);
         window.show();
     }
@@ -365,6 +371,7 @@ public class GuiMain extends Application {
         Label label4 = new Label("Else");
 
         GridPane centerGrid = new GridPane();
+        centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
@@ -390,7 +397,7 @@ public class GuiMain extends Application {
         borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, 600, 400);
+        Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
         window.setScene(foodPage);
         window.show();
     }
@@ -404,13 +411,6 @@ public class GuiMain extends Application {
             e.consume();
             closeProgram();
         });
-
-        //set up the page
-        VBox center = new VBox();
-        center.setAlignment(Pos.CENTER);
-        center.setSpacing(10);
-        center.setPadding(new Insets(30));
-
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
@@ -426,6 +426,8 @@ public class GuiMain extends Application {
         Label weightLabel = new Label("Weight:");
 
         GridPane centerGrid = new GridPane();
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setPadding(new Insets(30));
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
@@ -435,16 +437,14 @@ public class GuiMain extends Application {
         centerGrid.add(checkBox,0,2);
         centerGrid.add(addButton,1,5);
 
-        center.getChildren().addAll(centerGrid);
-
         //set up border pane
         BorderPane borderPane = new BorderPane();
         menuBar(borderPane);
-        borderPane.setCenter(center);
+        borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, 600, 400);
-        window.setScene(foodPage);
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
         window.show();
     }
 
@@ -472,11 +472,11 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Bike");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option1.setOnAction(e ->());
+        option1.setOnAction(e -> bikeRidePage());
 
         Button option2 = new Button("Public transport");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option2.setOnAction(e ->());
+        option2.setOnAction(e -> publicTransportPage());
 
         buttons.getChildren().addAll(option1, option2);
 
@@ -490,8 +490,110 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, 600, 400);
+        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
         window.setScene(foodPage);
+        window.show();
+    }
+
+    /**
+     * Bike ride page.
+     */
+    private void bikeRidePage() {
+        window.setTitle("Bike Ride");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("distance");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("times a week");
+
+
+        Label titleLabel = new Label("Bike Ride");
+        Label distanceLabel = new Label("Distance:");
+        Label timesAWeekLabel = new Label("Times a week:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * Public transport page.
+     */
+    private void publicTransportPage() {
+        window.setTitle("Public Transport");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("distance");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("times a week");
+
+
+        Label titleLabel = new Label("Public Transport");
+        Label distanceLabel = new Label("Distance:");
+        Label timesAWeekLabel = new Label("Times a week:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
         window.show();
     }
 
@@ -519,11 +621,11 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Home Temperature");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option1.setOnAction(e ->());
+        option1.setOnAction(e -> homeTemperaturePage());
 
         Button option2 = new Button("Solar Panels");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option2.setOnAction(e ->());
+        option2.setOnAction(e -> solarPanelPage());
 
         buttons.getChildren().addAll(option1, option2);
 
@@ -538,8 +640,110 @@ public class GuiMain extends Application {
         energyPane.setCenter(center);
 
         //set up the scene
-        Scene energyPage = new Scene(energyPane, 600, 400);
+        Scene energyPage = new Scene(energyPane, screenWidth, screenHeight);
         window.setScene(energyPage);
+        window.show();
+    }
+
+    /**
+     * Home temperature page.
+     */
+    private void homeTemperaturePage() {
+        window.setTitle("Home Temperature");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("reduction");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("hours");
+
+
+        Label titleLabel = new Label("Home Temperature");
+        Label distanceLabel = new Label("Temperature reduction:");
+        Label timesAWeekLabel = new Label("Duration:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * Solar panel page.
+     */
+    private void solarPanelPage() {
+        window.setTitle("Solar Panels");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("area");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("hours");
+
+
+        Label titleLabel = new Label("Solar Panels");
+        Label distanceLabel = new Label("Total area:");
+        Label timesAWeekLabel = new Label("Sunlight:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
         window.show();
     }
 
@@ -602,7 +806,7 @@ public class GuiMain extends Application {
         sharePane.setCenter(right);
         sharePane.setRight(rightScore);
 
-        Scene shareScene = new Scene(sharePane, 600, 400);
+        Scene shareScene = new Scene(sharePane, screenWidth, screenHeight);
         window.setScene(shareScene);
         window.show();
     }
@@ -633,7 +837,7 @@ public class GuiMain extends Application {
         grid.getChildren().addAll(
                 stats
         );
-        loginScene = new Scene(borderPane, 600, 400);
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
         window.setScene(loginScene);
