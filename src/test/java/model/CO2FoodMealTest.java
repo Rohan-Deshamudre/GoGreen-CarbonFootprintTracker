@@ -14,11 +14,13 @@ public class CO2FoodMealTest {
         assertEquals(meal.getSize(), 2);
     }
 
+
     @Test
     public void toStringTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 1);
         assertTrue(meal.toString().equals("CO2FoodMeal[musername='username', typeOfMeal='type', size='1']"));
     }
+
 
     @Test
     public void getMusernameTest() {
@@ -26,11 +28,21 @@ public class CO2FoodMealTest {
         assertTrue(meal.getMusername().equals("username"));
     }
 
+
+    @Test
+    public void setMusernameTest() {
+        CO2FoodMeal meal = new CO2FoodMeal("username", "type", 1);
+        meal.setMusername("username1");
+        assertTrue(meal.getMusername().equals("username1"));
+    }
+
+
     @Test
     public void getTypeOfMealTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 1);
         assertTrue(meal.getTypeOfMeal().equals("type"));
     }
+
 
     @Test
     public void setTypeOfMealTest() {
@@ -39,11 +51,13 @@ public class CO2FoodMealTest {
         assertTrue(meal.getTypeOfMeal().equals("type1"));
     }
 
+
     @Test
     public void getSizeTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 1);
         assertEquals(meal.getSize(), 1);
     }
+
 
     @Test
     public void setSizeTest() {
@@ -51,5 +65,4 @@ public class CO2FoodMealTest {
         meal.setSize(2);
         assertEquals(meal.getSize(), 2);
     }
-
 }
