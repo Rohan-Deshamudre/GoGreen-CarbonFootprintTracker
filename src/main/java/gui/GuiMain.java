@@ -520,7 +520,7 @@ public class GuiMain extends Application {
 
         Label titleLabel = new Label("Bike Ride");
         Label distanceLabel = new Label("Distance:");
-        Label timesAWeekLabel = new Label("Times a Week:");
+        Label timesAWeekLabel = new Label("Times a week:");
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -547,7 +547,7 @@ public class GuiMain extends Application {
     }
 
     /**
-     * Public transport.
+     * Public transport page.
      */
     private void publicTransportPage() {
         window.setTitle("Public Transport");
@@ -571,7 +571,7 @@ public class GuiMain extends Application {
 
         Label titleLabel = new Label("Public Transport");
         Label distanceLabel = new Label("Distance:");
-        Label timesAWeekLabel = new Label("Times a Week:");
+        Label timesAWeekLabel = new Label("Times a week:");
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -621,11 +621,11 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Home Temperature");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option1.setOnAction(e ->());
+        option1.setOnAction(e -> homeTemperaturePage());
 
         Button option2 = new Button("Solar Panels");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        //option2.setOnAction(e ->());
+        option2.setOnAction(e -> solarPanelPage());
 
         buttons.getChildren().addAll(option1, option2);
 
@@ -642,6 +642,108 @@ public class GuiMain extends Application {
         //set up the scene
         Scene energyPage = new Scene(energyPane, screenWidth, screenHeight);
         window.setScene(energyPage);
+        window.show();
+    }
+
+    /**
+     * Home temperature page.
+     */
+    private void homeTemperaturePage() {
+        window.setTitle("Home Temperature");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("reduction");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("hours");
+
+
+        Label titleLabel = new Label("Home Temperature");
+        Label distanceLabel = new Label("Temperature reduction:");
+        Label timesAWeekLabel = new Label("Duration:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * Solar panel page.
+     */
+    private void solarPanelPage() {
+        window.setTitle("Solar Panels");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        //addButton.setOnAction(e -> );
+
+        TextField distanceField = new TextField();
+        distanceField.setMaxWidth(300);
+        distanceField.setPromptText("area");
+
+        TextField timesAWeekField = new TextField();
+        timesAWeekField.setMaxWidth(300);
+        timesAWeekField.setPromptText("hours");
+
+
+        Label titleLabel = new Label("Solar Panels");
+        Label distanceLabel = new Label("Total area:");
+        Label timesAWeekLabel = new Label("Sunlight:");
+
+        GridPane centerGrid = new GridPane();
+        centerGrid.setPadding(new Insets(30));
+        centerGrid.setAlignment(Pos.CENTER);
+        centerGrid.setHgap(30);
+        centerGrid.setVgap(20);
+
+        centerGrid.add(titleLabel,1,0);
+        centerGrid.add(distanceLabel,0,1);
+        centerGrid.add(distanceField,1,1);
+        centerGrid.add(timesAWeekLabel,0,2);
+        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(addButton,1,5);
+
+        //set up border pane
+        BorderPane borderPane = new BorderPane();
+        menuBar(borderPane);
+        borderPane.setCenter(centerGrid);
+
+        //set up the scene
+        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        window.setScene(scene);
         window.show();
     }
 
