@@ -346,12 +346,6 @@ public class GuiMain extends Application {
         center.setSpacing(10);
         center.setPadding(new Insets(30));
 
-
-        Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
-        //addButton.setOnAction(e -> foodAddButtonAction() );
-//FOOD add button action needs parameters
-
         Slider sizeSlider1 = sizeSlider();
         Slider sizeSlider2 = sizeSlider();
         Slider sizeSlider3 = sizeSlider();
@@ -364,6 +358,14 @@ public class GuiMain extends Application {
         Label label2 = new Label("Fruits");
         Label label3 = new Label("Vegetarian Meat");
         Label label4 = new Label("Else");
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        addButton.setOnAction(e -> foodAddButtonAction(
+                sizeSlider1.getValue(),
+                sizeSlider2.getValue(),
+                sizeSlider3.getValue(),
+                sizeSlider4.getValue()));
 
         GridPane centerGrid = new GridPane();
         centerGrid.setHgap(30);
@@ -760,10 +762,27 @@ public class GuiMain extends Application {
         }
     }
 
-    private void foodAddButtonAction(String choiceBoxValue, int amount) {
+    private void foodAddButtonAction(double Val1, double Val2, double Val3, double Val4) {
+
         String message = "";
+        int int1 = (int) Val1;
+        int int2 = (int) Val2;
+        int int3 = (int) Val3;
+        int int4 = (int) Val4;
+
         try {
-            message = ClientApplication.sendAddFoodRequest(choiceBoxValue, amount);
+            if(Val1 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Salad", int1);
+            }
+            if(Val2 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Fruits", int2);
+            }
+            if(Val3 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
+            }
+            if(Val4 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Else", int4);
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
             message = "We are extremely sorry!"
@@ -771,9 +790,6 @@ public class GuiMain extends Application {
         }
         AlertBox.display(message);
         showMainMenu();
-
-
-
     }
 
     private void closeProgram() {

@@ -14,8 +14,6 @@ public class ClientApplication {
     private static LoginData loginData = null;
 
     public static void main(String args[]) throws URISyntaxException {
-        boolean success = sendLoginRequest("Roy", "Donders");
-        System.out.println("Success: " + success);
     }
 
     /**
