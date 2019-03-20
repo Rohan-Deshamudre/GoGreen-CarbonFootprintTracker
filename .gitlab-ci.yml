@@ -1,0 +1,51 @@
+image: gradle:jdk11
+
+stages:
+  - build
+  - analysis
+  - verification
+
+build:
+  stage: build
+  script:
+    - gradle build
+
+version-check:
+  stage: analysis
+  script:
+    - java -version
+    - gradle --version
+
+test-coverage:
+  stage: analysis
+  script:
+    - gradle test jacocoTestReport
+    - gradle jacocoTestCoverageVerification
+  artifacts:
+    paths:
+      - build/reports/jacoco/test/jacocoTestReport.xml
+
+checkstyle-main:
+  stage: analysis
+  script:
+    - gradle checkStyleMain
+  artifacts:
+    paths:
+      - build/reports/checkstyle/main.xml
+
+checkstyle-test:
+  stage: analysis
+  script:
+    - gradle checkStyleTest
+  artifacts:
+    paths:
+      - build/reports/checkstyle/test.xml
+
+testing:
+  stage: analysis
+  script:
+    - gradle test
+  artifacts:
+    reports:
+      junit: build/test-results/test/TEST-*.xml
+  
