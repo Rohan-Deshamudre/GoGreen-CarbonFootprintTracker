@@ -5,6 +5,7 @@ import client.ClientApplication;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import util.CarbonUtil;
@@ -38,6 +40,8 @@ public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
+    private int screenWidth;
+    private int screenHeight;
 
     /**
      * Main method of the class, launches the application.
@@ -53,6 +57,11 @@ public class GuiMain extends Application {
      */
     public void start(Stage primaryStage)throws Exception {
         window = primaryStage;
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+        screenWidth = (int) primaryScreenBounds.getWidth();
+        screenHeight = (int) primaryScreenBounds.getHeight();
+        window.setMaximized(true);
 
         loginPage();
     }
@@ -133,7 +142,9 @@ public class GuiMain extends Application {
                 helloLabel, usernameLabel, usernameField,
                 passwordLabel, passwordField, buttons
         );
-        loginScene = new Scene(borderPane, 600, 400);
+
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+
         // Show window
         window.setScene(loginScene);
         window.show();
@@ -210,11 +221,14 @@ public class GuiMain extends Application {
                 usernameLabel, usernameField, passwordLabel,
                 passwordLabel1, passwordField, passwordField1, buttons
         );
-        loginScene = new Scene(borderPane, 600, 400);
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
         window.setScene(loginScene);
-        window.setTitle("Login Page");
+        window.setTitle("Registration Page");
+
+//        window.setMaximized(false);
+//        window.setMaximized(true);
         window.show();
     }
 
@@ -278,7 +292,7 @@ public class GuiMain extends Application {
         menuPane.setRight(right);
 
         //setting up the scene
-        Scene scene = new Scene(menuPane, 600, 400);
+        Scene scene = new Scene(menuPane, screenWidth, screenHeight);
         window.setScene(scene);
         window.show();
     }
@@ -325,7 +339,7 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, 600, 400);
+        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
         window.setScene(foodPage);
         window.show();
     }
@@ -390,7 +404,7 @@ public class GuiMain extends Application {
         borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, 600, 400);
+        Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
         window.setScene(foodPage);
         window.show();
     }
@@ -443,7 +457,7 @@ public class GuiMain extends Application {
         borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, 600, 400);
+        Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
         window.setScene(foodPage);
         window.show();
     }
@@ -490,7 +504,7 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, 600, 400);
+        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
         window.setScene(foodPage);
         window.show();
     }
@@ -538,7 +552,7 @@ public class GuiMain extends Application {
         energyPane.setCenter(center);
 
         //set up the scene
-        Scene energyPage = new Scene(energyPane, 600, 400);
+        Scene energyPage = new Scene(energyPane, screenWidth, screenHeight);
         window.setScene(energyPage);
         window.show();
     }
@@ -602,7 +616,7 @@ public class GuiMain extends Application {
         sharePane.setCenter(right);
         sharePane.setRight(rightScore);
 
-        Scene shareScene = new Scene(sharePane, 600, 400);
+        Scene shareScene = new Scene(sharePane, screenWidth, screenHeight);
         window.setScene(shareScene);
         window.show();
     }
@@ -633,7 +647,7 @@ public class GuiMain extends Application {
         grid.getChildren().addAll(
                 stats
         );
-        loginScene = new Scene(borderPane, 600, 400);
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
         window.setScene(loginScene);
