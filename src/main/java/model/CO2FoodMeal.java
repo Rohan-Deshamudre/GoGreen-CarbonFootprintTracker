@@ -19,6 +19,27 @@ public class CO2FoodMeal {
     @Column
     private int size;
 
+    protected CO2FoodMeal() {}
+
+    /**
+     * Contains the username, type of meal the user ate and the size of it.
+     * @param musername username
+     * @param typeOfMeal type of the meal the user ate
+     * @param size how much grams the meal weights
+     */
+
+    public CO2FoodMeal(String musername, String typeOfMeal, int size) {
+        this.musername = musername;
+        this.typeOfMeal = typeOfMeal;
+        this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("CO2FoodMeal[musername='%s', typeOfMeal='%s', size='%s'",
+                musername, typeOfMeal, size);
+    }
+
     public String getMusername() {
         return this.musername;
     }
@@ -27,7 +48,7 @@ public class CO2FoodMeal {
         this.musername = musername;
     }
 
-    public String getTypOfMeal() {
+    public String getTypeOfMeal() {
         return this.typeOfMeal;
     }
 
@@ -43,17 +64,7 @@ public class CO2FoodMeal {
         this.size = size;
     }
 
-    protected CO2FoodMeal() {}
 
-    public CO2FoodMeal(String musername, String typeOfMeal, int size) {
-        this.musername = musername;
-        this.typeOfMeal = typeOfMeal;
-        this.size = size;
-    }
 
-    @Override
-    public String toString() {
-        return String.format("CO2FoodMeal[musername='%s', typeOfMeal='%s', size='%s'",
-                musername, typeOfMeal, size);
-    }
+
 }

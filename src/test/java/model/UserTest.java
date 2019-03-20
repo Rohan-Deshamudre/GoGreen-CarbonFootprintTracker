@@ -2,8 +2,6 @@ package model;
 
 
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
@@ -14,6 +12,7 @@ public class UserTest {
         assertTrue("pwd1".equals(user.getPassword()));
     }
 
+    @Test
     public void getPassword() {
         User user = new User("user", "pwd");
         assertTrue("pwd".equals(user.getPassword()));
@@ -35,7 +34,7 @@ public class UserTest {
     @Test
     public void toStringTest() {
         User user = new User("user", "pwd");
-        assertThat(user.toString().equals("User[username='user', password='pwd']"));
+        assertTrue(user.toString().equals("User[username='user', password='pwd']")); //
     }
 }
 
