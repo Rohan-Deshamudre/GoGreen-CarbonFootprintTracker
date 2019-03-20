@@ -349,7 +349,8 @@ public class GuiMain extends Application {
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
-        // addButton.setOnAction(e -> );
+        //addButton.setOnAction(e -> foodAddButtonAction() );
+//FOOD add button action needs parameters
 
         Slider sizeSlider1 = sizeSlider();
         Slider sizeSlider2 = sizeSlider();
@@ -759,10 +760,10 @@ public class GuiMain extends Application {
         }
     }
 
-    private void foodAddButtonAction(String choiceBoxValue, String username) {
+    private void foodAddButtonAction(String choiceBoxValue, int amount) {
         String message = "";
         try {
-            message = ClientApplication.co2Add(choiceBoxValue,username);
+            message = ClientApplication.sendAddFoodRequest(choiceBoxValue, amount);
         } catch (URISyntaxException e) {
             e.printStackTrace();
             message = "We are extremely sorry!"
@@ -779,6 +780,7 @@ public class GuiMain extends Application {
         Boolean answer = ConfirmBox.display("Closing the program",
                 "Are you sure you want to exit?");
         if (answer) {
+            ClientApplication.clearLoginData();
             window.close();
         }
     }

@@ -1,25 +1,23 @@
 package communication;
 
-public class Co2Response extends ServerMessage {
+public class AddFoodResponse extends ServerMessage {
 
-    private boolean result;
-    private String username;
+    private boolean success;
     private int oldCarbonfootprint;
     private int newCarbonfootprint;
 
-    public Co2Response() {}
+    /**
+     * The default constructor.
+     */
+    public AddFoodResponse() {}
 
 
     public boolean getResult() {
-        return this.result;
+        return this.success;
     }
 
     public void setResult(boolean result) {
-        this.result = result;
-    }
-
-    public String getUsername() {
-        return username;
+        this.success = result;
     }
 
     public int getOldCarbonfootprint() {
@@ -28,10 +26,6 @@ public class Co2Response extends ServerMessage {
 
     public int getNewCarbonfootprint() {
         return newCarbonfootprint;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public void setOldCarbonfootprint(int oldCarbonfootprint) {
@@ -44,11 +38,10 @@ public class Co2Response extends ServerMessage {
 
     @Override
     public String toString() {
-        return "<Co2Response{"
-                + "\n    result: " + result
-                + "\n    username: " + username
-                + "\n    oldCarbonfootprint: " + oldCarbonfootprint
-                + "\n    newCarbonfootprint: " + newCarbonfootprint
-                + "\n}>";
+        return "\n===AddFoodResponse===\n"
+                + "   success: " + success
+                + "\n   oldCarbonfootprint: " + oldCarbonfootprint
+                + "\n   newCarbonfootprint: " + newCarbonfootprint
+                + "\n";
     }
 }

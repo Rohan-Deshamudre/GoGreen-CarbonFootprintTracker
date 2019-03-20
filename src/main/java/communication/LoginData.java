@@ -39,9 +39,8 @@ public class LoginData {
         if (password == null) {
             password = "";
         }
-        return "<LoginData{"
-                + "\n    username: " + username
-                + "\n    password: " + password
-                + "\n}>";
+        return "   username: " + username
+                + "\n   password: " + password
+                + "\n";
     }
 }

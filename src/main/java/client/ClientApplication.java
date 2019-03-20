@@ -1,10 +1,7 @@
 package client;
 
-import communication.Co2Request;
-import communication.Co2Response;
-import communication.LoginData;
-import communication.LoginRequest;
-import communication.LoginResponse;
+import communication.*;
+import communication.AddFoodResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -13,6 +10,8 @@ public class ClientApplication {
 
     private static final String URL = "https://gogreen32.herokuapp.com/";
     //private static final String URL = "http://localhost:8080/";
+
+    private static LoginData loginData = null;
 
     public static void main(String args[]) throws URISyntaxException {
         boolean success = sendLoginRequest("Roy", "Donders");
@@ -40,6 +39,7 @@ public class ClientApplication {
      */
     public static boolean sendLoginRequest(String username, String password)
             throws URISyntaxException {
+
         LoginRequest req = new LoginRequest(new LoginData(username, password));
 
         RestTemplate restTemplate = new RestTemplate();
@@ -50,30 +50,40 @@ public class ClientApplication {
         System.out.println();
         System.out.println(res);
 
+        if(res.isSuccess()) {
+            loginData = new LoginData(username, password);
+        }
+
         return res.isSuccess();
     }
 
     /**
      * Adding co2 to the user.
      * @param choiceBoxValue decide the value that will be added to the user
-     * @param username decide which user the value will be added to
+     * @param amount the amount of food added
      * @return returns the message
      * @throws URISyntaxException gives syntax exception
      */
 
-    public static String co2Add(String choiceBoxValue, String username)
+    public static String sendAddFoodRequest(String choiceBoxValue, int amount)
             throws URISyntaxException {
-        String resMessage = "";
-        Co2Request req = new Co2Request(choiceBoxValue,username);
+
+        String resMessage;
+        if(loginData == null) {
+            return "We are extremely sorry! "
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + "Try logging out and in again.";
+        }
+        AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String co2Addurl = URL + "carbon/add";
-        Co2Response res = restTemplate.postForObject(co2Addurl, req, Co2Response.class);
+        String co2Addurl = URL + "food/add";
+        AddFoodResponse res = restTemplate.postForObject(co2Addurl, req, AddFoodResponse.class);
         System.out.println();
         System.out.println(res);
         if (res != null && res.getResult()) {
-            resMessage = "Congratulations" + res.getUsername()
+            resMessage = "Congratulations" + loginData.getUsername()
                     + "! Your Carbon Footprint is updated from"
                     + res.getOldCarbonfootprint()
                     + " to " + res.getNewCarbonfootprint();
@@ -85,4 +95,7 @@ public class ClientApplication {
         return resMessage;
     }
 
+    public static void clearLoginData() {
+        loginData = null;
+    }
 }

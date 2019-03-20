@@ -17,15 +17,15 @@ class LoginResponseTest {
     @Test
     public void constructorTestEmpty() {
         LoginResponse resEmpty = new LoginResponse();
-
         assertFalse(resEmpty.isSuccess());
     }
+
     @Test
     public void toStringTest() {
         LoginResponse resTrue = new LoginResponse(true);
-        assertEquals(resTrue.toString(),"<LoginResponse{\n    success: true\n}>");
+        assertEquals("\n===LoginResponse===\n   success: true\n", resTrue.toString());
 
         LoginResponse resFalse = new LoginResponse(false);
-        assertEquals(resFalse.toString(), "<LoginResponse{\n    success: false\n}>");
-}
+        assertEquals(resFalse.toString(), "\n===LoginResponse===\n   success: false\n");
+    }
 }

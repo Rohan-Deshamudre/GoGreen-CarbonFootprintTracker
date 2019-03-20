@@ -1,7 +1,7 @@
 package server;
 
-import communication.Co2Request;
-import communication.Co2Response;
+import communication.AddFoodRequest;
+import communication.AddFoodResponse;
 import model.CO2;
 import model.User;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +22,7 @@ import java.util.List;
 
 
 @RestController
-public class Co2Controller {
+public class ActivityController {
 
     @Autowired
     private CO2Repository co2Repository;
@@ -36,7 +36,7 @@ public class Co2Controller {
      */
 
 
-    private Logger log = LogManager.getLogger(Co2Controller.class.getName());
+    private Logger log = LogManager.getLogger(ActivityController.class.getName());
 
     /**
      * Handle the addition of carbon footprint.
@@ -44,14 +44,14 @@ public class Co2Controller {
      * @return returns te method
      */
 
-    @RequestMapping(value = "/carbon/add",
+    @RequestMapping(value = "/food/add",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<Co2Response> handleCarbonAdd(@RequestBody Co2Request req) {
-        log.info("Entering check co2adddata" + req.getChoiceBoxValue());
-        Co2Response res = addCo2Data(req);
-        return new ResponseEntity<Co2Response>(res, HttpStatus.OK);
+    public ResponseEntity<AddFoodResponse> handleFoodAdd(@RequestBody AddFoodRequest req) {
+        log.info(req.toString());
+        AddFoodResponse res = addFoodData(req);
+        return new ResponseEntity<AddFoodResponse>(res, HttpStatus.OK);
     }
 
     /**
@@ -59,14 +59,13 @@ public class Co2Controller {
      * @param request Co2 request
      * @return returns the method
      */
+    public AddFoodResponse addFoodData(AddFoodRequest request) {
 
-    public Co2Response addCo2Data(Co2Request request) {
-        log.info("Entering check co2adddata" + request.getChoiceBoxValue());
-        Co2Response response = new Co2Response();
-        String cusername = request.getCusername();
-        response.setUsername(cusername);
+        AddFoodResponse response = new AddFoodResponse();
+        String user = request.getLoginData().getUsername();
+
         //Validate whether the input user exists in the user table
-        List<User> userList = userRepository.findByUsername(cusername);
+        List<User> userList = userRepository.findByUsername(user);
         if (userList == null || userList.isEmpty()) {
             //This condition gets executed if user is not available in the system.
             //Hence the carbon footprint cannot be added.
@@ -76,7 +75,7 @@ public class Co2Controller {
         //Calculate the pre-defined carbon footprint
         int currentCarbonfootprint = CarbonUtil.getCarbonfootprint(request.getChoiceBoxValue());
 
-        List<CO2> dbUserList = co2Repository.findByCusername(cusername);
+        List<CO2> dbUserList = co2Repository.findByCusername(user);
         if (dbUserList != null && !dbUserList.isEmpty()) {
             //This condition gets executed if a user is already having a carbon footprint
             CO2 dbUser = dbUserList.get(0);
@@ -91,7 +90,7 @@ public class Co2Controller {
             //This condition gets executed if user is creating their first carbon footprint
             int oldCarbonfootprint = 0;
             int newCarbonfootprint = oldCarbonfootprint + currentCarbonfootprint;
-            co2Repository.save(new CO2(cusername, newCarbonfootprint));
+            co2Repository.save(new CO2(user, newCarbonfootprint));
             response.setNewCarbonfootprint(newCarbonfootprint);
             response.setOldCarbonfootprint(oldCarbonfootprint);
             response.setResult(true);

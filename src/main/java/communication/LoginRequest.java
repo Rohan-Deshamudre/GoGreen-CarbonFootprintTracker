@@ -2,21 +2,19 @@ package communication;
 
 public class LoginRequest extends ClientMessage {
 
-    private LoginData loginData;
-
+    /**
+     * A LoginRequest Message for now is just a simple clientMessage.
+     * It only contains the users credentials for authentication.
+     * @param loginData The users credentials.
+     */
     public LoginRequest(LoginData loginData) {
-        this.loginData = loginData;
+        super(loginData);
     }
 
     /**
-     * This class needs to have a default constructor.
-     * Otherwise resttemplate.postForObject(...) does not work.
+     * The default constructor.
      */
     public LoginRequest() {
-    }
-
-    public LoginData getLoginData() {
-        return loginData;
     }
 
     @Override
@@ -24,6 +22,7 @@ public class LoginRequest extends ClientMessage {
         if (loginData == null) {
             loginData = new LoginData("", "");
         }
-        return this.loginData.toString();
+        return "\n===LoginRequest===\n"
+                + this.loginData.toString();
     }
 }

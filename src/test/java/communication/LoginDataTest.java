@@ -21,26 +21,14 @@ class LoginDataTest {
     }
 
     @Test
-    void getUsername() {
-        LoginData login = new LoginData("user", "pwd");
-        assertEquals("user", login.getUsername());
-    }
-
-    @Test
-    void getPassword() {
-        LoginData login = new LoginData("user", "pwd");
-        assertEquals("pwd", login.getPassword());
-    }
-
-    @Test
     void toStringTest() {
         LoginData req = new LoginData("user", "pwd");
-        assertEquals(req.toString(),"<LoginData{\n    username: user\n    password: pwd\n}>");
+        assertEquals(req.toString(),"   username: user\n   password: pwd\n");
     }
 
     @Test
     void toStringTestNull() {
         LoginData req = new LoginData(null, null);
-        assertEquals(req.toString(), "<LoginData{\n    username: \n    password: \n}>");
+        assertEquals("   username: \n   password: \n", req.toString());
     }
 }

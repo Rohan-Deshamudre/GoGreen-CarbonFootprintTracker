@@ -1,6 +1,5 @@
 package communication;
 
-
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -25,12 +24,12 @@ class LoginRequestTest {
     @Test
     public void toStringTest() {
         LoginRequest req = new LoginRequest(loginData);
-        assertEquals(req.toString(),"<LoginData{\n    username: user\n    password: pwd\n}>");
+        assertEquals(req.toString(),"\n===LoginRequest===\n   username: user\n   password: pwd\n");
     }
 
     @Test
     public void toStringTestNull() {
         LoginRequest req = new LoginRequest();
-        assertEquals(req.toString(), "<LoginData{\n    username: \n    password: \n}>");
+        assertEquals("\n===LoginRequest===\n   username: \n   password: \n", req.toString());
     }
 }
