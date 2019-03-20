@@ -24,6 +24,14 @@ public class CO2FoodStore {
 
     protected CO2FoodStore() {}
 
+    /**
+     * Makes a CO2FoodStore object with the provided username, weight of the meal, whether the meal is organic or not
+     * and the amount of co2 saved.
+     * @param susername username of the user
+     * @param weight weight of the meal
+     * @param organic whether the meal is organic or not
+     * @param amountco2 the amount of co2 saved
+     */
     public CO2FoodStore(String susername, int weight, boolean organic, int amountco2) {
         this.susername = susername;
         this.weight = weight;
