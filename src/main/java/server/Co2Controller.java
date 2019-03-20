@@ -91,7 +91,7 @@ public class Co2Controller {
             //This condition gets executed if user is creating their first carbon footprint
             int oldCarbonfootprint = 0;
             int newCarbonfootprint = oldCarbonfootprint + currentCarbonfootprint;
-            co2Repository.save(new CO2(cusername, newCarbonfootprint));
+            co2Repository.save(new CO2(cusername, 0, 0, 0, newCarbonfootprint));
             response.setNewCarbonfootprint(newCarbonfootprint);
             response.setOldCarbonfootprint(oldCarbonfootprint);
             response.setResult(true);

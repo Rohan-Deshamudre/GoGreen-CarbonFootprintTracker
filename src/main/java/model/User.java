@@ -30,6 +30,13 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "User[username='%s', password='%s']",
+                username,password);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -46,10 +53,4 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "User[username='%s', password='%s']",
-                username,password);
-    }
 }

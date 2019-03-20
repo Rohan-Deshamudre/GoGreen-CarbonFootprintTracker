@@ -6,6 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     @Test
+    public void getPassword() {
+        User user = new User("user", "pwd");
+        assertTrue("pwd".equals(user.getPassword()));
+    }
+
+    @Test
     public void setPassword() {
         User user = new User("user", "pwd");
         user.setPassword("pwd1");
@@ -13,9 +19,9 @@ public class UserTest {
     }
 
     @Test
-    public void getPassword() {
-        User user = new User("user", "pwd");
-        assertTrue("pwd".equals(user.getPassword()));
+    public void getUsernameTest() {
+        User get = new User("user", "pwd");
+        assertTrue(get.getUsername().equals("user"));
     }
 
     @Test
@@ -26,9 +32,10 @@ public class UserTest {
     }
 
     @Test
-    public void getUsernameTest() {
-        User get = new User("user", "pwd");
-        assertTrue(get.getUsername().equals("user"));
+    public void UserConstructorTest() {
+        User user = new User("user", "pwd");
+        assertTrue(user.getUsername().equals("user"));
+        assertTrue(user.getPassword().equals("pwd"));
     }
 
     @Test

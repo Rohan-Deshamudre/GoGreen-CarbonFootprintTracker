@@ -10,22 +10,22 @@ import javax.persistence.Table;
 public class CO2FoodMeal {
 
     @Id
-    @Column
+    @Column(name = "musername")
     private String musername;
 
-    @Column
+    @Column(name = "typemeal")
     private String typeOfMeal;
 
-    @Column
+    @Column(name = "size")
     private int size;
 
     protected CO2FoodMeal() {}
 
     /**
-     * Contains the username, type of meal the user ate and the size of it.
-     * @param musername username
+     * Makes a CO2FoodMeal object with the provided username, type of meal, and size of the meal
+     * @param musername username of the user
      * @param typeOfMeal type of the meal the user ate
-     * @param size how much grams the meal weights
+     * @param size the size of the meal
      */
 
     public CO2FoodMeal(String musername, String typeOfMeal, int size) {
@@ -63,8 +63,4 @@ public class CO2FoodMeal {
     public void setSize(int size) {
         this.size = size;
     }
-
-
-
-
 }
