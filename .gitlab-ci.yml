@@ -44,5 +44,5 @@ testing:
     - gradle test
   artifacts:
     reports:
-      junit: build\test-results\test\binary\
+      junit: build/test-results/test/TEST-*.xml
   
