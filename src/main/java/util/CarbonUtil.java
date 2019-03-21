@@ -28,10 +28,14 @@ public class CarbonUtil {
 
     public static int getCarbonfootprint(String checkBoxValue) {
         int carbonFootprint = 0;
-        if (FOOD_OPTION1.equalsIgnoreCase(checkBoxValue)) {
+        if (checkBoxValue.equalsIgnoreCase("salad")) {
             carbonFootprint = 100;
-        } else if (FOOD_OPTION2.equalsIgnoreCase(checkBoxValue)) {
-            carbonFootprint = 50;
+        } else if (checkBoxValue.equalsIgnoreCase("Vegetarian Meat")) {
+            carbonFootprint = 200;
+        } else if (checkBoxValue.equalsIgnoreCase("Fruit")) {
+            carbonFootprint = 80;
+        } else if (checkBoxValue.equalsIgnoreCase("Else")) {
+            carbonFootprint = 150;
         }
         return carbonFootprint;
     }

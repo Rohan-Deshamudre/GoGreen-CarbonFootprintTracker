@@ -352,11 +352,6 @@ public class GuiMain extends Application {
         center.setSpacing(10);
         center.setPadding(new Insets(30));
 
-
-        Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
-        // addButton.setOnAction(e -> );
-
         Slider sizeSlider1 = sizeSlider();
         Slider sizeSlider2 = sizeSlider();
         Slider sizeSlider3 = sizeSlider();
@@ -369,6 +364,14 @@ public class GuiMain extends Application {
         Label label2 = new Label("Fruits");
         Label label3 = new Label("Vegetarian Meat");
         Label label4 = new Label("Else");
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        addButton.setOnAction(e -> foodAddButtonAction(
+                sizeSlider1.getValue(),
+                sizeSlider2.getValue(),
+                sizeSlider3.getValue(),
+                sizeSlider4.getValue()));
 
         GridPane centerGrid = new GridPane();
         centerGrid.setAlignment(Pos.CENTER);
@@ -963,10 +966,27 @@ public class GuiMain extends Application {
         }
     }
 
-    private void foodAddButtonAction(String choiceBoxValue, String username) {
+    private void foodAddButtonAction(double Val1, double Val2, double Val3, double Val4) {
+
         String message = "";
+        int int1 = (int) Val1;
+        int int2 = (int) Val2;
+        int int3 = (int) Val3;
+        int int4 = (int) Val4;
+
         try {
-            message = ClientApplication.co2Add(choiceBoxValue,username);
+            if(Val1 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Salad", int1);
+            }
+            if(Val2 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Fruits", int2);
+            }
+            if(Val3 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
+            }
+            if(Val4 != 0) {
+                message = ClientApplication.sendAddFoodRequest("Else", int4);
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
             message = "We are extremely sorry!"
@@ -974,15 +994,13 @@ public class GuiMain extends Application {
         }
         AlertBox.display(message);
         showMainMenu();
-
-
-
     }
 
     private void closeProgram() {
         Boolean answer = ConfirmBox.display("Closing the program",
                 "Are you sure you want to exit?");
         if (answer) {
+            ClientApplication.clearLoginData();
             window.close();
         }
     }
