@@ -22,7 +22,7 @@ public class CO2FoodMeal {
     protected CO2FoodMeal() {}
 
     /**
-     * Makes a CO2FoodMeal object with the provided username, type of meal, and size of the meal
+     * Makes a CO2FoodMeal object with the provided username, type of meal, and size of the meal.
      * @param musername username of the user
      * @param typeOfMeal type of the meal the user ate
      * @param size the size of the meal
@@ -40,7 +40,9 @@ public class CO2FoodMeal {
                 musername, typeOfMeal, size);
     }
 
-    public String getMusername() { return musername; }
+    public String getMusername() {
+        return musername;
+    }
 
     public void setMusername(String musername) {
         this.musername = musername;

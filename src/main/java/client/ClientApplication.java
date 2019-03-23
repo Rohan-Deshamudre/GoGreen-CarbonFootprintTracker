@@ -1,7 +1,10 @@
 package client;
 
-import communication.*;
+import communication.AddFoodRequest;
 import communication.AddFoodResponse;
+import communication.LoginData;
+import communication.LoginRequest;
+import communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -48,7 +51,7 @@ public class ClientApplication {
         System.out.println();
         System.out.println(res);
 
-        if(res.isSuccess()) {
+        if (res.isSuccess()) {
             loginData = new LoginData(username, password);
         }
 
@@ -67,7 +70,7 @@ public class ClientApplication {
             throws URISyntaxException {
 
         String resMessage;
-        if(loginData == null) {
+        if (loginData == null) {
             return "We are extremely sorry! "
                     + "There seems to be an issue in updating your Carbon Footprint."
                     + "Try logging out and in again.";

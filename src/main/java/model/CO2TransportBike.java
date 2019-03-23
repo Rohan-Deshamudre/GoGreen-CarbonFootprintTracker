@@ -19,6 +19,13 @@ public class CO2TransportBike {
     @Column(name = "timesaweek")
     private int timesaweek;
 
+    /**
+     * Makes a CO2TransportBIke object with the busername, distance and timesawwek values.
+     * @param busername username
+     * @param distance distance by bike
+     * @param timesaweek number of times in a week
+     */
+
     public CO2TransportBike(String busername, int distance, int timesaweek) {
         this.busername = busername;
         this.distance = distance;
@@ -31,15 +38,27 @@ public class CO2TransportBike {
                 busername, distance, timesaweek);
     }
 
-    public String getBusername() { return busername; }
+    public String getBusername() {
+        return busername;
+    }
 
-    public void setBusername(String busername) { this.busername = busername; }
+    public void setBusername(String busername) {
+        this.busername = busername;
+    }
 
-    public int getDistance() { return distance; }
+    public int getDistance() {
+        return distance;
+    }
 
-    public void setDistance(int distance) { this.distance = distance; }
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
 
-    public int getTimesaweek() { return timesaweek; }
+    public int getTimesaweek() {
+        return timesaweek;
+    }
 
-    public void setTimesaweek(int timesaweek) { this.timesaweek = timesaweek; }
+    public void setTimesaweek(int timesaweek) {
+        this.timesaweek = timesaweek;
+    }
 }

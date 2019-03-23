@@ -27,6 +27,14 @@ public class CO2 {
 
     protected CO2() {}
 
+    /**
+     * CO2 class containing the CO2 for individual user.
+     * @param cusername username
+     * @param co2food co2 for food
+     * @param co2transport co2 for transport
+     * @param co2energy co2 for energy
+     * @param co2reduc co2 reduction
+     */
     public CO2(String cusername, int co2food, int co2transport, int co2energy, int co2reduc) {
         this.cusername = cusername;
         this.co2food = co2food;
@@ -38,7 +46,8 @@ public class CO2 {
     @Override
     public String toString() {
         return String.format(
-                "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', Co2Energy='%s', Co2Reduction='%d']",
+                "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s'"
+                        + ", Co2Energy='%s', Co2Reduction='%d']",
                 cusername, co2food, co2transport, co2energy, co2reduc);
     }
 
@@ -46,19 +55,33 @@ public class CO2 {
         return cusername;
     }
 
-    public void setCusername(String cusername) { this.cusername = cusername; }
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
 
-    public int getCo2food() { return co2food; }
+    public int getCo2food() {
+        return co2food;
+    }
 
-    public void setCo2food(int co2food) { this.co2food = co2food; }
+    public void setCo2food(int co2food) {
+        this.co2food = co2food;
+    }
 
-    public int getCo2transport() { return co2transport; }
+    public int getCo2transport() {
+        return co2transport;
+    }
 
-    public void setCo2transport(int co2transport) { this.co2transport = co2transport; }
+    public void setCo2transport(int co2transport) {
+        this.co2transport = co2transport;
+    }
 
-    public int getCo2energy() { return co2energy; }
+    public int getCo2energy() {
+        return co2energy;
+    }
 
-    public void setCo2energy(int co2energy) { this.co2energy = co2energy; }
+    public void setCo2energy(int co2energy) {
+        this.co2energy = co2energy;
+    }
 
     public int getCo2reduc() {
         return co2reduc;

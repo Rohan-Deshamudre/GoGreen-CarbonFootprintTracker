@@ -352,18 +352,11 @@ public class GuiMain extends Application {
         center.setSpacing(10);
         center.setPadding(new Insets(30));
 
+
         Slider sizeSlider1 = sizeSlider();
         Slider sizeSlider2 = sizeSlider();
         Slider sizeSlider3 = sizeSlider();
         Slider sizeSlider4 = sizeSlider();
-
-        Label titleLabel = new Label("Vegetarian Meal");
-        Label sizeLabel = new Label("Size:");
-
-        Label label1 = new Label("Salad");
-        Label label2 = new Label("Fruits");
-        Label label3 = new Label("Vegetarian Meat");
-        Label label4 = new Label("Else");
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
@@ -378,11 +371,19 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
+        Label titleLabel = new Label("Vegetarian Meal");
+        Label label1 = new Label("Salad");
+        Label label2 = new Label("Fruits");
+        Label label3 = new Label("Vegetarian Meat");
+        Label label4 = new Label("Else");
+
         centerGrid.add(titleLabel,0,0);
         centerGrid.add(label1,0,1);
         centerGrid.add(label2,0,2);
         centerGrid.add(label3,0,3);
         centerGrid.add(label4,0,4);
+
+        Label sizeLabel = new Label("Size:");
 
         centerGrid.add(sizeLabel,1,0);
         centerGrid.add(sizeSlider1,1,1);
@@ -966,25 +967,25 @@ public class GuiMain extends Application {
         }
     }
 
-    private void foodAddButtonAction(double Val1, double Val2, double Val3, double Val4) {
+    private void foodAddButtonAction(double val1, double val2, double val3, double val4) {
 
         String message = "";
-        int int1 = (int) Val1;
-        int int2 = (int) Val2;
-        int int3 = (int) Val3;
-        int int4 = (int) Val4;
+        int int1 = (int) val1;
+        int int2 = (int) val2;
+        int int3 = (int) val3;
+        int int4 = (int) val4;
 
         try {
-            if(Val1 != 0) {
+            if (val1 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Salad", int1);
             }
-            if(Val2 != 0) {
+            if (val2 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Fruits", int2);
             }
-            if(Val3 != 0) {
+            if (val3 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
             }
-            if(Val4 != 0) {
+            if (val4 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Else", int4);
             }
         } catch (URISyntaxException e) {
