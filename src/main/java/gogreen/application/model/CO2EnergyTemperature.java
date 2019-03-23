@@ -1,7 +1,5 @@
 package gogreen.application.model;
 
-import com.sun.javafx.beans.IDProperty;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,6 +19,14 @@ public class CO2EnergyTemperature {
     @Column(name = "duration")
     private int duration;
 
+    protected CO2EnergyTemperature() {}
+
+    /**
+     * Makes a CO2EnergyTemperature object with the provided parameters.
+     * @param tusername the username of the user
+     * @param reduction the reduction of the temperature
+     * @param duration the duration of the reduction
+     */
     public CO2EnergyTemperature(String tusername, int reduction, int duration) {
         this.tusername = tusername;
         this.reduction = reduction;
@@ -33,15 +39,27 @@ public class CO2EnergyTemperature {
                 tusername, reduction, duration);
     }
 
-    public String getTusername() { return tusername; }
+    public String getTusername() {
+        return tusername;
+    }
 
-    public void setTusername(String tusername) { this.tusername = tusername; }
+    public void setTusername(String tusername) {
+        this.tusername = tusername;
+    }
 
-    public int getReduction() { return reduction; }
+    public int getReduction() {
+        return reduction;
+    }
 
-    public void setReduction(int reduction) { this.reduction = reduction; }
+    public void setReduction(int reduction) {
+        this.reduction = reduction;
+    }
 
-    public int getDuration() { return duration; }
+    public int getDuration() {
+        return duration;
+    }
 
-    public void setDuration(int duration) { this.duration = duration; }
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }

@@ -3,6 +3,7 @@ package gogreen.application.controller;
 import gogreen.application.communication.LoginRequest;
 import gogreen.application.communication.LoginResponse;
 import gogreen.application.model.User;
+import gogreen.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import gogreen.application.repository.UserRepository;
 
 import java.util.logging.Logger;
 

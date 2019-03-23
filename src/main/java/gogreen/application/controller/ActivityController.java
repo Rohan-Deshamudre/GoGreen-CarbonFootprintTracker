@@ -4,6 +4,9 @@ import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddFoodResponse;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
+import gogreen.application.repository.CO2Repository;
+import gogreen.application.repository.UserRepository;
+import gogreen.application.util.CarbonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import gogreen.application.repository.CO2Repository;
-import gogreen.application.repository.UserRepository;
-import gogreen.application.util.CarbonUtil;
 
 import java.util.List;
 

@@ -27,6 +27,14 @@ public class CO2 {
 
     protected CO2() {}
 
+    /**
+     * Makes a CO2 object with the provided parameters.
+     * @param cusername the username of the user
+     * @param co2food the total for co2food
+     * @param co2transport the total for co2transport
+     * @param co2energy the total for co2energy
+     * @param co2reduc the total of all co2
+     */
     public CO2(String cusername, int co2food, int co2transport, int co2energy, int co2reduc) {
         this.cusername = cusername;
         this.co2food = co2food;
@@ -38,7 +46,8 @@ public class CO2 {
     @Override
     public String toString() {
         return String.format(
-                "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', Co2Energy='%s', Co2Reduction='%d']",
+                "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
+                       + "Co2Energy='%s', Co2Reduction='%d']",
                 cusername, co2food, co2transport, co2energy, co2reduc);
     }
 
@@ -46,19 +55,33 @@ public class CO2 {
         return cusername;
     }
 
-    public void setCusername(String cusername) { this.cusername = cusername; }
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
 
-    public int getCo2food() { return co2food; }
+    public int getCo2food() {
+        return co2food;
+    }
 
-    public void setCo2food(int co2food) { this.co2food = co2food; }
+    public void setCo2food(int co2food) {
+        this.co2food = co2food;
+    }
 
-    public int getCo2transport() { return co2transport; }
+    public int getCo2transport() {
+        return co2transport;
+    }
 
-    public void setCo2transport(int co2transport) { this.co2transport = co2transport; }
+    public void setCo2transport(int co2transport) {
+        this.co2transport = co2transport;
+    }
 
-    public int getCo2energy() { return co2energy; }
+    public int getCo2energy() {
+        return co2energy;
+    }
 
-    public void setCo2energy(int co2energy) { this.co2energy = co2energy; }
+    public void setCo2energy(int co2energy) {
+        this.co2energy = co2energy;
+    }
 
     public int getCo2reduc() {
         return co2reduc;

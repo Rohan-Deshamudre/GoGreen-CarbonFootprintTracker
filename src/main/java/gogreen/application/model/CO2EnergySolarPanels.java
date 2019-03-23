@@ -19,6 +19,14 @@ public class CO2EnergySolarPanels {
     @Column(name = "sunlightamount")
     private int sunlightamount;
 
+    protected CO2EnergySolarPanels() {}
+
+    /**
+     * Makes a Co2EnergySolarPanels object with the provided parameters.
+     * @param spusername the username of the user
+     * @param area the area of the solar panels
+     * @param sunlightamount the amount of sunlight
+     */
     public CO2EnergySolarPanels(String spusername, int area, int sunlightamount) {
         this.spusername = spusername;
         this.area = area;
@@ -31,15 +39,27 @@ public class CO2EnergySolarPanels {
                 spusername, area, sunlightamount);
     }
 
-    public String getSpusername() { return spusername; }
+    public String getSpusername() {
+        return spusername;
+    }
 
-    public void setSpusername(String spusername) { this.spusername = spusername; }
+    public void setSpusername(String spusername) {
+        this.spusername = spusername;
+    }
 
-    public int getArea() { return area; }
+    public int getArea() {
+        return area;
+    }
 
-    public void setArea(int area) { this.area = area; }
+    public void setArea(int area) {
+        this.area = area;
+    }
 
-    public int getSunlightamount() { return sunlightamount; }
+    public int getSunlightamount() {
+        return sunlightamount;
+    }
 
-    public void setSunlightamount(int sunlightamount) { this.sunlightamount = sunlightamount; }
+    public void setSunlightamount(int sunlightamount) {
+        this.sunlightamount = sunlightamount;
+    }
 }

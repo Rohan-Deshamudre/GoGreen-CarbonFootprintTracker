@@ -1,7 +1,7 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
-
+import gogreen.application.util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,7 +31,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import gogreen.application.util.CarbonUtil;
 
 import java.net.URISyntaxException;
 
@@ -975,16 +974,16 @@ public class GuiMain extends Application {
         int int4 = (int) Val4;
 
         try {
-            if(Val1 != 0) {
+            if (Val1 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Salad", int1);
             }
-            if(Val2 != 0) {
+            if (Val2 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Fruits", int2);
             }
-            if(Val3 != 0) {
+            if (Val3 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
             }
-            if(Val4 != 0) {
+            if (Val4 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Else", int4);
             }
         } catch (URISyntaxException e) {

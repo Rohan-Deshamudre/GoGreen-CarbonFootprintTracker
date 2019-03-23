@@ -1,13 +1,17 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.*;
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddFoodResponse;
+import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginRequest;
+import gogreen.application.communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-//    private static final String URL = "https://gogreen32.herokuapp.com/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
     private static final String URL = "http://localhost:8080/";
 
     private static LoginData loginData = null;
@@ -47,10 +51,9 @@ public class ClientApplication {
         System.out.println();
         System.out.println(res);
 
-        if(res.isSuccess()) {
+        if (res.isSuccess()) {
             loginData = new LoginData(username, password);
         }
-
         return res.isSuccess();
     }
 
@@ -64,13 +67,13 @@ public class ClientApplication {
 
     public static String sendAddFoodRequest(String choiceBoxValue, int amount)
             throws URISyntaxException {
-
         String resMessage;
-        if(loginData == null) {
+        if (loginData == null) {
             return "We are extremely sorry! "
                     + "There seems to be an issue in updating your Carbon Footprint."
                     + "Try logging out and in again.";
         }
+
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -89,6 +92,7 @@ public class ClientApplication {
                     + "There seems to be an issue in updating your Carbon Footprint."
                     + "Are you using the correct username?";
         }
+
         return resMessage;
     }
 

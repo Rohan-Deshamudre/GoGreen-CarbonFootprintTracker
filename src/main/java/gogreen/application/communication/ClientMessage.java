@@ -20,7 +20,7 @@ public abstract class ClientMessage extends Message {
 
     /**
      * The getter for LoginData.
-     * @return
+     * @return returns the loginData object
      */
     public LoginData getLoginData() {
         return loginData;
