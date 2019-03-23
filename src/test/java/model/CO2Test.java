@@ -1,5 +1,6 @@
 package model;
 
+import gogreen.application.model.CO2;
 import org.junit.jupiter.api.Test;
 
 import static junit.framework.TestCase.assertEquals;

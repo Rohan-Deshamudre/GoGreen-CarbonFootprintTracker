@@ -1,5 +1,6 @@
 package model;
 
+import gogreen.application.model.CO2FoodMeal;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

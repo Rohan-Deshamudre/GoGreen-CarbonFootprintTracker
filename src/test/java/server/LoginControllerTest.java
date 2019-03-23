@@ -1,8 +1,9 @@
 package server;
 
-import communication.LoginData;
-import communication.LoginRequest;
-import communication.LoginResponse;
+import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginRequest;
+import gogreen.application.communication.LoginResponse;
+import gogreen.application.controller.LoginController;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

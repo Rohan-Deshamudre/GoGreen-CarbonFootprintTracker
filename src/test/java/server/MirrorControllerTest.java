@@ -2,6 +2,7 @@ package server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import gogreen.application.controller.MirrorController;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

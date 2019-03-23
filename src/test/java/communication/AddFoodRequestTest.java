@@ -1,5 +1,7 @@
 package communication;
 
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.LoginData;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

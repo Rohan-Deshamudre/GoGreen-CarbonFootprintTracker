@@ -2,7 +2,7 @@ package server;
 
 import org.junit.jupiter.api.Test;
 
-import static util.CarbonUtil.getCarbonfootprint;
+import static gogreen.application.util.CarbonUtil.getCarbonfootprint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarbonUtilTest {
