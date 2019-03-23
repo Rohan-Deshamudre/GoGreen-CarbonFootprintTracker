@@ -2,11 +2,15 @@ package model;
 
 
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
+    @Test
+    public void getPassword() {
+        User user = new User("user", "pwd");
+        assertTrue("pwd".equals(user.getPassword()));
+    }
+
     @Test
     public void setPassword() {
         User user = new User("user", "pwd");
@@ -14,9 +18,10 @@ public class UserTest {
         assertTrue("pwd1".equals(user.getPassword()));
     }
 
-    public void getPassword() {
-        User user = new User("user", "pwd");
-        assertTrue("pwd".equals(user.getPassword()));
+    @Test
+    public void getUsernameTest() {
+        User get = new User("user", "pwd");
+        assertTrue(get.getUsername().equals("user"));
     }
 
     @Test
@@ -27,15 +32,16 @@ public class UserTest {
     }
 
     @Test
-    public void getUsernameTest() {
-        User get = new User("user", "pwd");
-        assertTrue(get.getUsername().equals("user"));
+    public void UserConstructorTest() {
+        User user = new User("user", "pwd");
+        assertTrue(user.getUsername().equals("user"));
+        assertTrue(user.getPassword().equals("pwd"));
     }
 
     @Test
     public void toStringTest() {
         User user = new User("user", "pwd");
-        assertThat(user.toString().equals("User[username='user', password='pwd']"));
+        assertTrue(user.toString().equals("User[username='user', password='pwd']")); //
     }
 }
 
