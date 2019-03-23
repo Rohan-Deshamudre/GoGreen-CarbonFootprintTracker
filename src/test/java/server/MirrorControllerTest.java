@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 class MirrorControllerTest {
-    public static ResponseEntity<String> responseBuilder(String res){
+    public static ResponseEntity<String> responseBuilder(String res) {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

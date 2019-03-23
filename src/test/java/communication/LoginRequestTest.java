@@ -23,6 +23,7 @@ class LoginRequestTest {
         LoginRequest req = new LoginRequest();
         assertNull(req.getLoginData());
     }
+
     @Test
     public void toStringTest() {
         LoginRequest req = new LoginRequest(loginData);
