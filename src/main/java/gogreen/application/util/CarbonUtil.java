@@ -26,7 +26,7 @@ public class CarbonUtil {
      * @return returns the method
      */
 
-    public static int getCarbonfootprint(String checkBoxValue) {
+    public static int getFoodCarbonfootprint(String checkBoxValue) {
         int carbonFootprint = 0;
         if (checkBoxValue.equalsIgnoreCase("salad")) {
             carbonFootprint = 100;
@@ -40,6 +40,11 @@ public class CarbonUtil {
         return carbonFootprint;
     }
 
+
+    public static int getTransportCarbonfootprint(int distance, int timesaweek){
+        int transportCarbonFootPrint = distance*timesaweek+50;
+        return transportCarbonFootPrint;
+    }
     /**
      * The encrypt AES password.
      * @param password password

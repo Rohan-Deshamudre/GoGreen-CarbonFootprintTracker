@@ -310,11 +310,11 @@ public class GuiMain extends Application {
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
-        Button option1 = new Button(CarbonUtil.FOOD_OPTION1);
+        Button option1 = new Button("Ate a vegetarian meal");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> veggieMealPage());
 
-        Button option2 = new Button(CarbonUtil.FOOD_OPTION2);
+        Button option2 = new Button("Bought from a biological store");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> localStorePage());
 
@@ -507,10 +507,6 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
-        //addButton.setOnAction(e -> );
-
         TextField distanceField = new TextField();
         distanceField.setMaxWidth(300);
         distanceField.setPromptText("distance");
@@ -523,6 +519,14 @@ public class GuiMain extends Application {
         Label titleLabel = new Label("Bike Ride");
         Label distanceLabel = new Label("Distance:");
         Label timesAWeekLabel = new Label("Times a week:");
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        addButton.setOnAction(e -> {
+            transportAddButtonAction(Integer.parseInt(distanceField.getText()), Integer.parseInt(timesAWeekField.getText()));
+            distanceField.setText("");
+            timesAWeekField.setText("");
+        });
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -558,10 +562,6 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
-        //addButton.setOnAction(e -> );
-
         TextField distanceField = new TextField();
         distanceField.setMaxWidth(300);
         distanceField.setPromptText("distance");
@@ -574,6 +574,14 @@ public class GuiMain extends Application {
         Label titleLabel = new Label("Public Transport");
         Label distanceLabel = new Label("Distance:");
         Label timesAWeekLabel = new Label("Times a week:");
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        addButton.setOnAction(e -> {
+            transportAddButtonAction(Integer.parseInt(distanceField.getText()), Integer.parseInt(timesAWeekField.getText()));
+            distanceField.setText("");
+            timesAWeekField.setText("");
+        });
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -993,6 +1001,20 @@ public class GuiMain extends Application {
         }
         AlertBox.display(message);
         showMainMenu();
+    }
+
+    public void transportAddButtonAction(int distance, int timesaweek){
+        String message="";
+        try{
+            message = ClientApplication.sendAddTransportRequest(distance, timesaweek);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
+        }
+        AlertBox.display(message);
+        showMainMenu();
+
     }
 
     private void closeProgram() {

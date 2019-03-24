@@ -1,6 +1,6 @@
 package gogreen.application.communication;
 
-public class AddFoodResponse extends ServerMessage {
+public class CO2Response extends ServerMessage {
 
     private boolean success;
     private int oldCarbonfootprint;
@@ -9,7 +9,7 @@ public class AddFoodResponse extends ServerMessage {
     /**
      * The default constructor.
      */
-    public AddFoodResponse() {}
+    public CO2Response() {}
 
 
     public boolean getResult() {
@@ -38,7 +38,7 @@ public class AddFoodResponse extends ServerMessage {
 
     @Override
     public String toString() {
-        return "\n===AddFoodResponse===\n"
+        return "\n===CO2Response===\n"
                 + "   success: " + success
                 + "\n   oldCarbonfootprint: " + oldCarbonfootprint
                 + "\n   newCarbonfootprint: " + newCarbonfootprint

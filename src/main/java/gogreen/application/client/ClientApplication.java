@@ -1,10 +1,7 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddFoodResponse;
-import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginRequest;
-import gogreen.application.communication.LoginResponse;
+import gogreen.application.communication.*;
+import gogreen.application.communication.CO2Response;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -79,7 +76,7 @@ public class ClientApplication {
         RestTemplate restTemplate = new RestTemplate();
 
         String co2Addurl = URL + "food/add";
-        AddFoodResponse res = restTemplate.postForObject(co2Addurl, req, AddFoodResponse.class);
+        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
         System.out.println();
         System.out.println(res);
         if (res != null && res.getResult()) {
@@ -95,6 +92,36 @@ public class ClientApplication {
 
         return resMessage;
     }
+
+    public static String sendAddTransportRequest(int distance, int timesaweek)
+            throws URISyntaxException  {
+        String resMessage;
+        if (loginData == null) {
+            return "We are extremely sorry! "
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + "Try logging out and in again.";
+        }
+        AddTransportRequest req = new AddTransportRequest(loginData,distance,timesaweek);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String co2AddURL = URL + "transport/add";
+        CO2Response res = restTemplate.postForObject(co2AddURL, req, CO2Response.class);
+        System.out.println();
+        System.out.println(res);
+        if (res != null && res.getResult()) {
+            resMessage = "Congratulations" + loginData.getUsername()
+                    + "! Your Carbon Footprint is updated from"
+                    + res.getOldCarbonfootprint()
+                    + " to " + res.getNewCarbonfootprint();
+        } else {
+            resMessage = "We are extremely sorry! "
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + "Are you using the correct username?";
+        }
+        return resMessage;
+    }
+
 
     public static void clearLoginData() {
         loginData = null;
