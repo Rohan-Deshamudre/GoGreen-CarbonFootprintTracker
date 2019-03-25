@@ -1,11 +1,6 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddTransportRequest;
-import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginRequest;
-import gogreen.application.communication.LoginResponse;
+import gogreen.application.communication.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;

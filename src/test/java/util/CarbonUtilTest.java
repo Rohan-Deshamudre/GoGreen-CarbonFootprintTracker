@@ -20,8 +20,4 @@ public class CarbonUtilTest {
         assertEquals(CarbonUtil.getTransportCarbonfootprint(1, 2),52);
     }
 
-
-
-
-
 }
