@@ -1,7 +1,6 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
-import gogreen.application.util.CarbonUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -523,7 +522,8 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
         addButton.setOnAction(e -> {
-            transportAddButtonAction(Integer.parseInt(distanceField.getText()), Integer.parseInt(timesAWeekField.getText()));
+            transportAddButtonAction(Integer.parseInt(distanceField.getText()),
+                    Integer.parseInt(timesAWeekField.getText()));
             distanceField.setText("");
             timesAWeekField.setText("");
         });
@@ -578,7 +578,8 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
         addButton.setOnAction(e -> {
-            transportAddButtonAction(Integer.parseInt(distanceField.getText()), Integer.parseInt(timesAWeekField.getText()));
+            transportAddButtonAction(Integer.parseInt(distanceField.getText()),
+                    Integer.parseInt(timesAWeekField.getText()));
             distanceField.setText("");
             timesAWeekField.setText("");
         });
@@ -973,25 +974,25 @@ public class GuiMain extends Application {
         }
     }
 
-    private void foodAddButtonAction(double Val1, double Val2, double Val3, double Val4) {
+    private void foodAddButtonAction(double val1, double val2, double val3, double val4) {
 
         String message = "";
-        int int1 = (int) Val1;
-        int int2 = (int) Val2;
-        int int3 = (int) Val3;
-        int int4 = (int) Val4;
+        int int1 = (int) val1;
+        int int2 = (int) val2;
+        int int3 = (int) val3;
+        int int4 = (int) val4;
 
         try {
-            if (Val1 != 0) {
+            if (val1 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Salad", int1);
             }
-            if (Val2 != 0) {
+            if (val2 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Fruits", int2);
             }
-            if (Val3 != 0) {
+            if (val3 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
             }
-            if (Val4 != 0) {
+            if (val4 != 0) {
                 message = ClientApplication.sendAddFoodRequest("Else", int4);
             }
         } catch (URISyntaxException e) {
@@ -1003,18 +1004,17 @@ public class GuiMain extends Application {
         showMainMenu();
     }
 
-    public void transportAddButtonAction(int distance, int timesaweek){
-        String message="";
-        try{
+    public void transportAddButtonAction(int distance, int timesaweek) {
+        String message = "";
+        try {
             message = ClientApplication.sendAddTransportRequest(distance, timesaweek);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
+            message = "We are extremely sorry! "
+                    + "There seems to be a technical issue in updating your Carbon Footprint.";
         }
         AlertBox.display(message);
         showMainMenu();
-
     }
 
     private void closeProgram() {

@@ -1,14 +1,14 @@
 package gogreen.application.communication;
 
-public class AddTransportRequest extends ClientMessage{
+public class AddTransportRequest extends ClientMessage {
 
     private int distance;
     private int timesaweek;
 
-    public AddTransportRequest(LoginData loginData, int distance, int timesaweek){
+    public AddTransportRequest(LoginData loginData, int distance, int timesaweek) {
         super(loginData);
-        this.distance=distance;
-        this.timesaweek=timesaweek;
+        this.distance = distance;
+        this.timesaweek = timesaweek;
     }
 
     public AddTransportRequest(){}
