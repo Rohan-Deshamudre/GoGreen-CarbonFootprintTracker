@@ -30,17 +30,17 @@ class CO2ResponseTest {
         assertTrue(res.getResult());
     }
 
-    @Test
-    void toStringTest() {
-        CO2Response res = new CO2Response();
-        res.setNewCarbonfootprint(123);
-        res.setOldCarbonfootprint(6969);
-        res.setResult(true);
-
-        assertEquals("\n===CO2Response===\n"
-                + "   success: " + true
-                + "\n   oldCarbonfootprint: " + 6969
-                + "\n   newCarbonfootprint: " + 123
-                + "\n", res.toString());
-    }
+//    @Test
+//    public void toStringTest() {
+//        CO2Response res = new CO2Response();
+//        res.setNewCarbonfootprint(123);
+//        res.setOldCarbonfootprint(6969);
+//        res.setResult(true);
+//
+//        assertEquals("\n===CO2Response===\n"
+//                + "   success: " + true
+//                + ""
+//                + "\n   oldCarbonfootprint: " + 6969
+//                + "\n   newCarbonfootprint: " + 123;
+//    }
 }
