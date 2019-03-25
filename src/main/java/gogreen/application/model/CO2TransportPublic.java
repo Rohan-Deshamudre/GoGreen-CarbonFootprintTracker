@@ -29,7 +29,7 @@ public class CO2TransportPublic {
 
     @Override
     public String toString() {
-        return String.format("CO2TransportBike[busername='%s', distance='%s', timesaweek='%s']",
+        return String.format("CO2TransportPublic[pusername='%s', distance='%s', timesaweek='%s']",
                 pusername, distance, timesaweek);
     }
 

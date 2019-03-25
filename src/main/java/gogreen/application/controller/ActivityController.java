@@ -1,6 +1,8 @@
 package gogreen.application.controller;
 
-import gogreen.application.communication.*;
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.CO2Response;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
@@ -36,22 +38,6 @@ public class ActivityController {
 
 
     private Logger log = LogManager.getLogger(ActivityController.class.getName());
-
-    /**
-     * Handle the addition of carbon footprint.
-     * @param req requests the co2
-     * @return returns te method
-     */
-
-    @RequestMapping(value = "/food/add",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddFoodRequest req) {
-        log.info(req.toString());
-        CO2Response res = addFoodData(req);
-        return new ResponseEntity<CO2Response>(res, HttpStatus.OK);
-    }
 
     /**
      * Add the data of co2.
@@ -98,11 +84,33 @@ public class ActivityController {
         return response;
     }
 
+    /**
+     * Handle the addition of carbon footprint.
+     * @param req requests the co2
+     * @return returns te method
+     */
+
+    @RequestMapping(value = "/food/add",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddFoodRequest req) {
+        log.info(req.toString());
+        CO2Response res = addFoodData(req);
+        return new ResponseEntity<CO2Response>(res, HttpStatus.OK);
+    }
+
+
+    /**
+     * Handles requests to add transport data to the users co2 score.
+     * @param req - addTransportRequest object containing the data to add.
+     * @return response containing the updates done to the server.
+     */
     @RequestMapping(value = "/transport/add",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddTransportRequest req) {
+    public ResponseEntity<CO2Response> handleTransportAdd(@RequestBody AddTransportRequest req) {
         log.info(req.toString());
         CO2Response res = addTransportData(req);
         return new ResponseEntity<CO2Response>(res, HttpStatus.OK);
@@ -111,82 +119,35 @@ public class ActivityController {
     public CO2Response addTransportData(AddTransportRequest request) {
         CO2Response response = new CO2Response();
         String user = request.getLoginData().getUsername();
-        response.getLoginData().setUsername(user);
-
+        
         //Validate whether the input user exists in the user table
-        List<User> userList=userRepository.findByUsername(user);
-        if(userList==null|| userList.isEmpty()){
-            //This condition gets executed if user is not available in the system. Hence the carbon footprint cannot be added.
+        List<User> userList = userRepository.findByUsername(user);
+        if (userList == null || userList.isEmpty()) {
+            //This condition gets executed if user is not available in the system.
+            // Hence the carbon footprint cannot be added.
             response.setResult(false);
             return response;
         }
-        int currentCarbonfootprint = CarbonUtil.getTransportCarbonfootprint(request.getDistance(),request.getTimesaweek());
+        int currentCarbonfootprint = CarbonUtil
+                .getTransportCarbonfootprint(request.getDistance(),request.getTimesaweek());
 
         List<CO2> dbUserList = co2Repository.findByCusername(user);
-        if(dbUserList!=null&& !dbUserList.isEmpty()){
+        if (dbUserList != null && !dbUserList.isEmpty()) {
             //This condition gets executed if a user is already having a carbon footprint
             CO2 dbUser = dbUserList.get(0);
-            int oldCarbonfootprint = dbUser.getCo2reduc();
-            int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
-            dbUser.setCo2reduc(newCarbonfootprint);
+            int oldCarbonfootprint = dbUser.getCo2food();
+            int newCarbonfootprint = oldCarbonfootprint + currentCarbonfootprint;
+            dbUser.setCo2food(newCarbonfootprint);
             co2Repository.save(dbUser);
             response.setNewCarbonfootprint(newCarbonfootprint);
             response.setOldCarbonfootprint(oldCarbonfootprint);
             response.setResult(true);
-        }
-        else{
+        } else {
             //This condition gets executed if user is creating their first carbon footprint
             int oldCarbonfootprint = 0;
-            int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
-            co2Repository.save(new CO2(user, 0, 0, 0, newCarbonfootprint));
-            response.setOldCarbonfootprint(oldCarbonfootprint);
-            response.setResult(true);
-        }
-
-        return response;
-    }
-
-    @RequestMapping(value = "/homeTemp/add",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<CO2Response> handleHomeTempAdd(@RequestBody AddHomeTempRequest req) {
-        log.info(req.toString());
-        CO2Response res = addHomeTempData(req);
-        return new ResponseEntity<CO2Response>(res, HttpStatus.OK);
-    }
-
-    public CO2Response addHomeTempData(AddHomeTempRequest request) {
-        CO2Response response = new CO2Response();
-        String user = request.getLoginData().getUsername();
-        response.getLoginData().setUsername(user);
-
-        //Validate whether the input user exists in the user table
-        List<User> userList=userRepository.findByUsername(user);
-        if(userList==null|| userList.isEmpty()){
-            //This condition gets executed if user is not available in the system. Hence the carbon footprint cannot be added.
-            response.setResult(false);
-            return response;
-        }
-        int currentCarbonfootprint = CarbonUtil.getTransportCarbonfootprint(request.getTemperature(),request.getDuration());
-
-        List<CO2> dbUserList = co2Repository.findByCusername(user);
-        if(dbUserList!=null&& !dbUserList.isEmpty()){
-            //This condition gets executed if a user is already having a carbon footprint
-            CO2 dbUser = dbUserList.get(0);
-            int oldCarbonfootprint = dbUser.getCo2reduc();
-            int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
-            dbUser.setCo2reduc(newCarbonfootprint);
-            co2Repository.save(dbUser);
+            int newCarbonfootprint = oldCarbonfootprint + currentCarbonfootprint;
+            co2Repository.save(new CO2(user, newCarbonfootprint, 0, 0, 0));
             response.setNewCarbonfootprint(newCarbonfootprint);
-            response.setOldCarbonfootprint(oldCarbonfootprint);
-            response.setResult(true);
-        }
-        else{
-            //This condition gets executed if user is creating their first carbon footprint
-            int oldCarbonfootprint = 0;
-            int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
-            co2Repository.save(new CO2(user, 0, 0, 0, newCarbonfootprint));
             response.setOldCarbonfootprint(oldCarbonfootprint);
             response.setResult(true);
         }

@@ -41,8 +41,8 @@ public class CarbonUtil {
     }
 
 
-    public static int getTransportCarbonfootprint(int distance, int timesaweek){
-        int transportCarbonFootPrint = distance*timesaweek+50;
+    public static int getTransportCarbonfootprint(int distance, int timesaweek) {
+        int transportCarbonFootPrint = distance * timesaweek + 50;
         return transportCarbonFootPrint;
     }
     /**
