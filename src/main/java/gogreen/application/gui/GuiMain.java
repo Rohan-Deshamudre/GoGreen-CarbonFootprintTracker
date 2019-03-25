@@ -666,22 +666,26 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
-        //addButton.setOnAction(e -> );
+        TextField temperatureField = new TextField();
+        temperatureField.setMaxWidth(300);
+        temperatureField.setPromptText("reduction");
 
-        TextField distanceField = new TextField();
-        distanceField.setMaxWidth(300);
-        distanceField.setPromptText("reduction");
-
-        TextField timesAWeekField = new TextField();
-        timesAWeekField.setMaxWidth(300);
-        timesAWeekField.setPromptText("hours");
+        TextField durationField = new TextField();
+        durationField.setMaxWidth(300);
+        durationField.setPromptText("hours");
 
 
         Label titleLabel = new Label("Home Temperature");
-        Label distanceLabel = new Label("Temperature reduction:");
-        Label timesAWeekLabel = new Label("Duration:");
+        Label temperatureLabel = new Label("Temperature reduction:");
+        Label durationLabel = new Label("Duration:");
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100,50);
+        addButton.setOnAction(e -> {
+            homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()), Integer.parseInt(durationField.getText()));
+            temperatureField.setText("");
+            durationField.setText("");
+        });
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -690,10 +694,10 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         centerGrid.add(titleLabel,1,0);
-        centerGrid.add(distanceLabel,0,1);
-        centerGrid.add(distanceField,1,1);
-        centerGrid.add(timesAWeekLabel,0,2);
-        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(temperatureLabel,0,1);
+        centerGrid.add(temperatureField,1,1);
+        centerGrid.add(durationLabel,0,2);
+        centerGrid.add(durationField,1,2);
         centerGrid.add(addButton,1,5);
 
         //set up border pane
@@ -1015,6 +1019,20 @@ public class GuiMain extends Application {
         }
         AlertBox.display(message);
         showMainMenu();
+    }
+
+    public void homeTempAddButtonAction(int temperature, int duration){
+        String message="";
+        try{
+            message = ClientApplication.sendAddHomeTempRequest(temperature, duration);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            message="We are extremely sorry! There seems to be a technical issue in updating your Carbon Footprint.";
+        }
+        AlertBox.display(message);
+        showMainMenu();
+
     }
 
     private void closeProgram() {
