@@ -8,7 +8,6 @@ import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.LoginData;
 import org.junit.jupiter.api.Test;
 
-
 public class AddFoodRequestTest {
     @Test
     public void constructorTest() {

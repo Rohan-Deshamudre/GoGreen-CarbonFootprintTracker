@@ -12,12 +12,12 @@ import org.springframework.http.ResponseEntity;
 
 
 class LoginControllerTest {
-    public static ResponseEntity<String> responseBuilder(String res) {
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
+//    public static ResponseEntity<String> responseBuilder(String res) {
+//        return new ResponseEntity<>(res, HttpStatus.OK);
+//    }
 
     @Test
-    public void loginTest() {
+    void loginTest() {
         LoginRequest req1 = new LoginRequest(new LoginData("John", "Wick"));
         LoginController mc1 = new LoginController();
         LoginResponse res1 = new LoginResponse(false);

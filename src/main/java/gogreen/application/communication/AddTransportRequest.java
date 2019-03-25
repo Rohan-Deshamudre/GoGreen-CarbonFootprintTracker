@@ -21,14 +21,6 @@ public class AddTransportRequest extends ClientMessage {
         return timesaweek;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public void setTimesaweek(int timesaweek) {
-        this.timesaweek = timesaweek;
-    }
-
     @Override
     public String toString() {
 
