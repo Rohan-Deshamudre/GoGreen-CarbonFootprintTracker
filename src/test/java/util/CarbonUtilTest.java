@@ -9,7 +9,10 @@ public class CarbonUtilTest {
 
     @Test
     public void getFoodCarbonfootprintTest() {
-
+        assertEquals(CarbonUtil.getFoodCarbonfootprint("salad"), 100);
+        assertEquals(CarbonUtil.getFoodCarbonfootprint("Vegetarian Meat"), 200);
+        assertEquals(CarbonUtil.getFoodCarbonfootprint("Fruit"), 80);
+        assertEquals(CarbonUtil.getFoodCarbonfootprint("Else"), 150);
     }
 
     @Test
