@@ -5,6 +5,7 @@ public class CO2Response extends ServerMessage {
     private boolean success;
     private int oldCarbonfootprint;
     private int newCarbonfootprint;
+    private LoginData loginData;
 
     /**
      * The default constructor.
@@ -36,10 +37,19 @@ public class CO2Response extends ServerMessage {
         this.newCarbonfootprint = newCarbonfootprint;
     }
 
+    public LoginData getLoginData() {
+        return loginData;
+    }
+
+    public void setLoginData(LoginData loginData) {
+        this.loginData = loginData;
+    }
+
     @Override
     public String toString() {
         return "\n===CO2Response===\n"
                 + "   success: " + success
+                + "\n   username: " + loginData.getUsername()
                 + "\n   oldCarbonfootprint: " + oldCarbonfootprint
                 + "\n   newCarbonfootprint: " + newCarbonfootprint
                 + "\n";

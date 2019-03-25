@@ -355,14 +355,6 @@ public class GuiMain extends Application {
         Slider sizeSlider3 = sizeSlider();
         Slider sizeSlider4 = sizeSlider();
 
-        Label titleLabel = new Label("Vegetarian Meal");
-        Label sizeLabel = new Label("Size:");
-
-        Label label1 = new Label("Salad");
-        Label label2 = new Label("Fruits");
-        Label label3 = new Label("Vegetarian Meat");
-        Label label4 = new Label("Else");
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
         addButton.setOnAction(e -> foodAddButtonAction(
@@ -375,6 +367,14 @@ public class GuiMain extends Application {
         centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
+
+        Label titleLabel = new Label("Vegetarian Meal");
+        Label sizeLabel = new Label("Size:");
+        Label label1 = new Label("Salad");
+        Label label2 = new Label("Fruits");
+        Label label3 = new Label("Vegetarian Meat");
+        Label label4 = new Label("Else");
+
 
         centerGrid.add(titleLabel,0,0);
         centerGrid.add(label1,0,1);
@@ -514,11 +514,6 @@ public class GuiMain extends Application {
         timesAWeekField.setMaxWidth(300);
         timesAWeekField.setPromptText("times a week");
 
-
-        Label titleLabel = new Label("Bike Ride");
-        Label distanceLabel = new Label("Distance:");
-        Label timesAWeekLabel = new Label("Times a week:");
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
         addButton.setOnAction(e -> {
@@ -533,6 +528,9 @@ public class GuiMain extends Application {
         centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
+        Label titleLabel = new Label("Bike Ride");
+        Label distanceLabel = new Label("Distance:");
+        Label timesAWeekLabel = new Label("Times a week:");
 
         centerGrid.add(titleLabel,1,0);
         centerGrid.add(distanceLabel,0,1);
@@ -570,11 +568,6 @@ public class GuiMain extends Application {
         timesAWeekField.setMaxWidth(300);
         timesAWeekField.setPromptText("times a week");
 
-
-        Label titleLabel = new Label("Public Transport");
-        Label distanceLabel = new Label("Distance:");
-        Label timesAWeekLabel = new Label("Times a week:");
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
         addButton.setOnAction(e -> {
@@ -589,6 +582,9 @@ public class GuiMain extends Application {
         centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
+        Label titleLabel = new Label("Public Transport");
+        Label distanceLabel = new Label("Distance:");
+        Label timesAWeekLabel = new Label("Times a week:");
 
         centerGrid.add(titleLabel,1,0);
         centerGrid.add(distanceLabel,0,1);
@@ -666,34 +662,37 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
+        TextField temperatureField = new TextField();
+        temperatureField.setMaxWidth(300);
+        temperatureField.setPromptText("reduction");
+
+        TextField durationField = new TextField();
+        durationField.setMaxWidth(300);
+        durationField.setPromptText("hours");
+
         Button addButton = new Button("Add");
         addButton.setMinSize(100,50);
-        //addButton.setOnAction(e -> );
-
-        TextField distanceField = new TextField();
-        distanceField.setMaxWidth(300);
-        distanceField.setPromptText("reduction");
-
-        TextField timesAWeekField = new TextField();
-        timesAWeekField.setMaxWidth(300);
-        timesAWeekField.setPromptText("hours");
-
-
-        Label titleLabel = new Label("Home Temperature");
-        Label distanceLabel = new Label("Temperature reduction:");
-        Label timesAWeekLabel = new Label("Duration:");
+        addButton.setOnAction(e -> {
+            homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
+                    Integer.parseInt(durationField.getText()));
+            temperatureField.setText("");
+            durationField.setText("");
+        });
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
         centerGrid.setAlignment(Pos.CENTER);
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
+        Label titleLabel = new Label("Home Temperature");
+        Label temperatureLabel = new Label("Temperature reduction:");
+        Label durationLabel = new Label("Duration:");
 
         centerGrid.add(titleLabel,1,0);
-        centerGrid.add(distanceLabel,0,1);
-        centerGrid.add(distanceField,1,1);
-        centerGrid.add(timesAWeekLabel,0,2);
-        centerGrid.add(timesAWeekField,1,2);
+        centerGrid.add(temperatureLabel,0,1);
+        centerGrid.add(temperatureField,1,1);
+        centerGrid.add(durationLabel,0,2);
+        centerGrid.add(durationField,1,2);
         centerGrid.add(addButton,1,5);
 
         //set up border pane
@@ -1004,17 +1003,41 @@ public class GuiMain extends Application {
         showMainMenu();
     }
 
+    /**
+     * Button for adding action for transport.
+     * @param distance distance of using transportation
+     * @param timesaweek amount of times a week
+     */
     public void transportAddButtonAction(int distance, int timesaweek) {
         String message = "";
         try {
             message = ClientApplication.sendAddTransportRequest(distance, timesaweek);
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             message = "We are extremely sorry! "
                     + "There seems to be a technical issue in updating your Carbon Footprint.";
         }
         AlertBox.display(message);
         showMainMenu();
+    }
+
+    /**
+     * Button for adding action for homeTemp.
+     * @param temperature the home temperature parameter
+     * @param duration the parameter for duration of lowing the temperature
+     */
+    public void homeTempAddButtonAction(int temperature, int duration) {
+        String message = "";
+        try {
+            message = ClientApplication.sendAddHomeTempRequest(temperature, duration);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            message = "We are extremely sorry!"
+                    + " There seems to be a technical issue in updating your Carbon Footprint.";
+        }
+        AlertBox.display(message);
+        showMainMenu();
+
     }
 
     private void closeProgram() {

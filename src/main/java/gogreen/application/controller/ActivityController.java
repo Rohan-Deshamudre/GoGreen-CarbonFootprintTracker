@@ -116,6 +116,11 @@ public class ActivityController {
         return new ResponseEntity<CO2Response>(res, HttpStatus.OK);
     }
 
+    /**
+     * Description for the method.
+     * @param request the request
+     * @return CO2 response
+     */
     public CO2Response addTransportData(AddTransportRequest request) {
         CO2Response response = new CO2Response();
         String user = request.getLoginData().getUsername();

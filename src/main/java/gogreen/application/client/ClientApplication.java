@@ -1,6 +1,7 @@
 package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
@@ -97,6 +98,14 @@ public class ClientApplication {
         return resMessage;
     }
 
+    /**
+     * Send a request to add values to the database.
+     * @param distance the distance using transportation
+     * @param timesaweek the amount this has been done
+     * @return returns a string
+     * @throws URISyntaxException throws an exception
+     */
+
     public static String sendAddTransportRequest(int distance, int timesaweek)
             throws URISyntaxException  {
         String resMessage;
@@ -109,8 +118,8 @@ public class ClientApplication {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String co2AddURL = URL + "transport/add";
-        CO2Response res = restTemplate.postForObject(co2AddURL, req, CO2Response.class);
+        String co2AddUrl = URL + "transport/add";
+        CO2Response res = restTemplate.postForObject(co2AddUrl, req, CO2Response.class);
         System.out.println();
         System.out.println(res);
         if (res != null && res.getResult()) {
@@ -122,6 +131,43 @@ public class ClientApplication {
             resMessage = "We are extremely sorry! "
                     + "There seems to be an issue in updating your Carbon Footprint."
                     + "Are you using the correct username?";
+        }
+        return resMessage;
+    }
+
+    /**
+     * Description for this method.
+     * @param temperature the temperature
+     * @param duration the duration
+     * @return a string
+     * @throws URISyntaxException throws an exception
+     */
+    public static String sendAddHomeTempRequest(int temperature, int duration)
+            throws URISyntaxException {
+        String resMessage = "";
+        if (loginData == null) {
+            return "We are extremely sorry! "
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + "Try logging out and in again.";
+        }
+
+        AddHomeTempRequest req = new AddHomeTempRequest(loginData,temperature,duration);
+        RestTemplate restTemplate = new RestTemplate();
+
+        String co2Addurl = URL + "homeTemp/add";
+
+        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
+        System.out.println();
+        System.out.println(res);
+        if (res != null && res.getResult()) {
+            resMessage = "Congratulations " + loginData.getUsername()
+                    + "! Your Carbon Footprint is updated from "
+                    + res.getOldCarbonfootprint()
+                    + " to " + res.getNewCarbonfootprint();
+        } else {
+            resMessage = "We are extremely sorry!"
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + " Are you using the correct username?";
         }
         return resMessage;
     }
