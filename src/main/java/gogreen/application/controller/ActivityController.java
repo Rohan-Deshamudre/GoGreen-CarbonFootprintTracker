@@ -1,8 +1,6 @@
 package gogreen.application.controller;
 
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddTransportRequest;
-import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.*;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
@@ -113,7 +111,8 @@ public class ActivityController {
     public CO2Response addTransportData(AddTransportRequest request) {
         CO2Response response = new CO2Response();
         String user = request.getLoginData().getUsername();
-        
+        response.getLoginData().setUsername(user);
+
         //Validate whether the input user exists in the user table
         List<User> userList=userRepository.findByUsername(user);
         if(userList==null|| userList.isEmpty()){
@@ -127,9 +126,9 @@ public class ActivityController {
         if(dbUserList!=null&& !dbUserList.isEmpty()){
             //This condition gets executed if a user is already having a carbon footprint
             CO2 dbUser = dbUserList.get(0);
-            int oldCarbonfootprint = dbUser.getCo2food();
+            int oldCarbonfootprint = dbUser.getCo2reduc();
             int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
-            dbUser.setCo2food(newCarbonfootprint);
+            dbUser.setCo2reduc(newCarbonfootprint);
             co2Repository.save(dbUser);
             response.setNewCarbonfootprint(newCarbonfootprint);
             response.setOldCarbonfootprint(oldCarbonfootprint);
@@ -139,18 +138,59 @@ public class ActivityController {
             //This condition gets executed if user is creating their first carbon footprint
             int oldCarbonfootprint = 0;
             int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
-            co2Repository.save(new CO2(user, newCarbonfootprint, 0, 0, 0));
-            response.setNewCarbonfootprint(newCarbonfootprint);
+            co2Repository.save(new CO2(user, 0, 0, 0, newCarbonfootprint));
             response.setOldCarbonfootprint(oldCarbonfootprint);
             response.setResult(true);
         }
 
         return response;
+    }
 
+    @RequestMapping(value = "/homeTemp/add",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<CO2Response> handleHomeTempAdd(@RequestBody AddHomeTempRequest req) {
+        log.info(req.toString());
+        CO2Response res = addHomeTempData(req);
+        return new ResponseEntity<CO2Response>(res, HttpStatus.OK);
+    }
 
+    public CO2Response addHomeTempData(AddHomeTempRequest request) {
+        CO2Response response = new CO2Response();
+        String user = request.getLoginData().getUsername();
+        response.getLoginData().setUsername(user);
 
+        //Validate whether the input user exists in the user table
+        List<User> userList=userRepository.findByUsername(user);
+        if(userList==null|| userList.isEmpty()){
+            //This condition gets executed if user is not available in the system. Hence the carbon footprint cannot be added.
+            response.setResult(false);
+            return response;
+        }
+        int currentCarbonfootprint = CarbonUtil.getTransportCarbonfootprint(request.getTemperature(),request.getDuration());
 
-
+        List<CO2> dbUserList = co2Repository.findByCusername(user);
+        if(dbUserList!=null&& !dbUserList.isEmpty()){
+            //This condition gets executed if a user is already having a carbon footprint
+            CO2 dbUser = dbUserList.get(0);
+            int oldCarbonfootprint = dbUser.getCo2reduc();
+            int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
+            dbUser.setCo2reduc(newCarbonfootprint);
+            co2Repository.save(dbUser);
+            response.setNewCarbonfootprint(newCarbonfootprint);
+            response.setOldCarbonfootprint(oldCarbonfootprint);
+            response.setResult(true);
+        }
+        else{
+            //This condition gets executed if user is creating their first carbon footprint
+            int oldCarbonfootprint = 0;
+            int newCarbonfootprint=oldCarbonfootprint+currentCarbonfootprint;
+            co2Repository.save(new CO2(user, 0, 0, 0, newCarbonfootprint));
+            response.setOldCarbonfootprint(oldCarbonfootprint);
+            response.setResult(true);
+        }
+        return response;
     }
 
 

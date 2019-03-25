@@ -30,6 +30,10 @@ public class LoginData {
         return password;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
 

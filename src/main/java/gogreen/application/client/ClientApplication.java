@@ -122,6 +122,33 @@ public class ClientApplication {
         return resMessage;
     }
 
+    public static String sendAddHomeTempRequest(int temperature, int duration)
+            throws URISyntaxException{
+        String resMessage = "";
+        if (loginData == null) {
+            return "We are extremely sorry! "
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + "Try logging out and in again.";
+        }
+
+        AddHomeTempRequest req = new AddHomeTempRequest(loginData,temperature,duration);
+        RestTemplate restTemplate = new RestTemplate();
+
+        String co2AddURL = URL + "homeTemp/add";
+
+        CO2Response res = restTemplate.postForObject(co2AddURL, req, CO2Response.class);
+        System.out.println();
+        System.out.println(res);
+        if(res!=null && res.getResult()){
+            resMessage="Congratulations "+loginData.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
+                    + " to " + res.getNewCarbonfootprint();
+        }
+        else{
+            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
+        }
+        return resMessage;
+    }
+
 
     public static void clearLoginData() {
         loginData = null;
