@@ -13,8 +13,8 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    //private static final String URL = "https://gogreen32.herokuapp.com/";
-    private static final String URL = "http://localhost:8080/";
+    private static final String URL = "https://gogreen32.herokuapp.com/";
+    //private static final String URL = "http://localhost:8080/";
 
     private static LoginData loginData = null;
 
