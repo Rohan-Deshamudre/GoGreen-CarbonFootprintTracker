@@ -5,10 +5,17 @@ public class AddHomeTempRequest extends ClientMessage {
     private int temperature;
     private int duration;
 
-    public AddHomeTempRequest(LoginData loginData, int temperature, int duration){
+    /**
+     * The object which contains the login data of the user, temperature and the duration.
+     * @param loginData login data of the user
+     * @param temperature temperature which has been reduced
+     * @param duration the amount of time
+     */
+
+    public AddHomeTempRequest(LoginData loginData, int temperature, int duration) {
         super(loginData);
-        this.temperature=temperature;
-        this.duration=duration;
+        this.temperature = temperature;
+        this.duration = duration;
     }
 
     public AddHomeTempRequest(){}
