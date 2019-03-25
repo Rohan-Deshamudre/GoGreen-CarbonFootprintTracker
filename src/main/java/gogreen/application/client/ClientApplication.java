@@ -98,6 +98,14 @@ public class ClientApplication {
         return resMessage;
     }
 
+    /**
+     * Send a request to add values to the database.
+     * @param distance the distance using transportation
+     * @param timesaweek the amount this has been done
+     * @return returns a string
+     * @throws URISyntaxException throws an exception
+     */
+
     public static String sendAddTransportRequest(int distance, int timesaweek)
             throws URISyntaxException  {
         String resMessage;
@@ -132,7 +140,7 @@ public class ClientApplication {
      * @param temperature the temperature
      * @param duration the duration
      * @return a string
-     * @throws URISyntaxException
+     * @throws URISyntaxException throws an exception
      */
     public static String sendAddHomeTempRequest(int temperature, int duration)
             throws URISyntaxException {
@@ -146,16 +154,20 @@ public class ClientApplication {
         AddHomeTempRequest req = new AddHomeTempRequest(loginData,temperature,duration);
         RestTemplate restTemplate = new RestTemplate();
 
-        String co2AddURL = URL + "homeTemp/add";
+        String co2Addurl = URL + "homeTemp/add";
 
-        CO2Response res = restTemplate.postForObject(co2AddURL, req, CO2Response.class);
+        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
         System.out.println();
         System.out.println(res);
-        if (res!=null && res.getResult()) {
-            resMessage = "Congratulations "+loginData.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
+        if (res != null && res.getResult()) {
+            resMessage = "Congratulations " + loginData.getUsername()
+                    + "! Your Carbon Footprint is updated from "
+                    + res.getOldCarbonfootprint()
                     + " to " + res.getNewCarbonfootprint();
         } else {
-            resMessage = "We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
+            resMessage = "We are extremely sorry!"
+                    + "There seems to be an issue in updating your Carbon Footprint."
+                    + " Are you using the correct username?";
         }
         return resMessage;
     }

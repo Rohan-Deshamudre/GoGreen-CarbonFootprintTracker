@@ -20,14 +20,7 @@ import java.util.logging.Logger;
 @RestController
 public class LoginController {
 
-
     static Logger log = Logger.getLogger(LoginController.class.getName());
-
-
-    /**
-     * SpringBoot automatically wires the UserRepository instance.
-     * into this class using this setter method
-     */
 
     @Autowired
     private UserRepository userRepository;
