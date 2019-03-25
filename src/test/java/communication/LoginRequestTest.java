@@ -4,6 +4,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginRequest;
 import org.junit.jupiter.api.Test;
 
 class LoginRequestTest {
@@ -21,6 +23,7 @@ class LoginRequestTest {
         LoginRequest req = new LoginRequest();
         assertNull(req.getLoginData());
     }
+
     @Test
     public void toStringTest() {
         LoginRequest req = new LoginRequest(loginData);

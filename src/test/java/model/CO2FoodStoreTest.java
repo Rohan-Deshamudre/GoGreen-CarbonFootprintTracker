@@ -1,12 +1,15 @@
 package model;
 
-import org.junit.jupiter.api.Test;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import static org.junit.jupiter.api.Assertions.*;
+import gogreen.application.model.CO2FoodStore;
+import org.junit.jupiter.api.Test;
 
 public class CO2FoodStoreTest {
     @Test
-    public void CO2FoodStoreTest() {
+    public void CO2FoodStoreConstructorTest() {
         CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         assertTrue(store.getSusername().equals("username"));
         assertEquals(store.getWeight(), 1);
@@ -18,7 +21,8 @@ public class CO2FoodStoreTest {
     @Test
     public void toStringTest() {
         CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
-        assertTrue(store.toString().equals("CO2FoodStore[susername='username', weight='1', organic='true', amountco2='2']"));
+        assertTrue(store.toString().equals("CO2FoodStore[susername='username', weight='1', "
+                + "organic='true', amountco2='2']"));
     }
 
 

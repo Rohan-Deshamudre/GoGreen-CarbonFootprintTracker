@@ -1,24 +1,27 @@
 package model;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import gogreen.application.model.CO2FoodMeal;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CO2FoodMealTest {
 
     @Test
-    public void CO2FoodMealTest() {
+    public void CO2FoodMealConstructorTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 2);
         assertTrue(meal.getMusername().equals("username"));
         assertTrue(meal.getTypeOfMeal().equals("type"));
         assertEquals(meal.getSize(), 2);
     }
 
-
     @Test
     public void toStringTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 1);
-        assertTrue(meal.toString().equals("CO2FoodMeal[musername='username', typeOfMeal='type', size='1']"));
+        assertTrue(meal.toString().equals("CO2FoodMeal[musername='username', "
+                + "typeOfMeal='type', size='1']"));
     }
 
 

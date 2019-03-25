@@ -35,7 +35,7 @@ apply plugin: 'io.spring.dependency-management'
 
 repositories {
     // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
+    // You can declare any Maven/Ivy/file gogreen.application.repository here.
     jcenter()
 }
 
@@ -112,8 +112,8 @@ jacocoTestCoverageVerification {
 }
 
 // Define the main class for the application
-//mainClassName = 'server.ServerApplication'
+//mainClassName = 'gogreen.application.ServerApplication'
 //mainClassName = 'client.ClientApplication'
-mainClassName = 'gui.GuiMain'
+mainClassName = 'gogreen.application.gui.GuiMain'
 //mainClassName = 'Database.controller.UserController'
 //mainClassName = 'util.CarbonUtil'

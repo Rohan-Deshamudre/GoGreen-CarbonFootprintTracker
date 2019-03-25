@@ -1,7 +1,12 @@
 package communication;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.LoginData;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class AddFoodRequestTest {
     @Test
@@ -26,11 +31,11 @@ public class AddFoodRequestTest {
     public void toStringTest() {
         LoginData login = new LoginData("user", "psw");
         AddFoodRequest req = new AddFoodRequest(login, "choice", 2);
-        assertEquals("\n===AddFoodRequest===\n" +
-                "   username: user\n" +
-                "   password: psw\n" +
-                "   choiceBoxValue: choice\n" +
-                "   amount: 2\n",
+        assertEquals("\n===AddFoodRequest===\n"
+                + "   username: user\n"
+                + "   password: psw\n"
+                + "   choiceBoxValue: choice\n"
+                + "   amount: 2\n",
                 req.toString());
     }
 }

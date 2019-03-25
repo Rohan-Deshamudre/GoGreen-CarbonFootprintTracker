@@ -1,8 +1,9 @@
 package model;
 
+import static junit.framework.TestCase.assertTrue;
 
+import gogreen.application.model.User;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     @Test

@@ -1,14 +1,15 @@
 package model;
 
-import org.junit.jupiter.api.Test;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import gogreen.application.model.CO2;
+import org.junit.jupiter.api.Test;
+
 
 public class CO2Test {
     @Test
-    public void getCusernameTest(){
+    public void getCusernameTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
         assertTrue(user.getCusername().equals("user"));
     }
@@ -85,7 +86,8 @@ public class CO2Test {
     @Test
     public void toStringTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertTrue(user.toString().equals("CO2[cusername='user', Co2Food='10', Co2Transport='11', Co2Energy='12', Co2Reduction='13']"));
+        assertTrue(user.toString().equals("CO2[cusername='user', Co2Food='10', "
+                + "Co2Transport='11', Co2Energy='12', Co2Reduction='13']"));
     }
 }
 

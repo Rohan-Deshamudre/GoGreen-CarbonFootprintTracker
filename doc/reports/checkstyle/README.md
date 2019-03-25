@@ -6,7 +6,7 @@ Make sure that the file follows the naming convention; `20190213_checkstyle.xyz`
 
 # Instructions
 
-* Make sure your local repository is up to date with the gitlab repository.
+* Make sure your local gogreen.application.repository is up to date with the gitlab gogreen.application.repository.
 * Run 'gradle checkStyleMain', 'gradle checkStyleTest', 'gradle jacocoTestReport' in the terminal in the project directory.
 * Open 'build/reports/checkstyle/main.html', 'build/reports/checkstyle/test.html', 'build/reports/jacoco/test/html/index.html' in a web browser of your choice.
 * Take screenshots of the relevant sections of each report (look at the previous reports to see which sections are relevant).
