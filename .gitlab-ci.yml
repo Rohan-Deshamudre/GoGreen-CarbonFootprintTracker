@@ -20,6 +20,7 @@ test-coverage:
   stage: analysis
   script:
     - gradle test jacocoTestReport
+    - gradle jacocoTestCoverageAnalysis
   artifacts:
     paths:
       - build/reports/jacoco/test/jacocoTestReport.xml
