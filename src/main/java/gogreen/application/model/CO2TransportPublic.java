@@ -21,6 +21,12 @@ public class CO2TransportPublic {
 
     protected CO2TransportPublic(){}
 
+    /**
+     * Makes a CO2TransportPublic object with the provided parameters.
+     * @param pusername the username of the user
+     * @param distance the distance
+     * @param timesaweek times per week
+     */
     public CO2TransportPublic(String pusername, int distance, int timesaweek) {
         this.pusername = pusername;
         this.distance = distance;

@@ -1,6 +1,12 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.*;
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginRequest;
+import gogreen.application.communication.LoginResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -104,8 +110,8 @@ public class ClientApplication {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String co2AddURL = URL + "transport/add";
-        CO2Response res = restTemplate.postForObject(co2AddURL, req, CO2Response.class);
+        String co2AddUrl = URL + "transport/add";
+        CO2Response res = restTemplate.postForObject(co2AddUrl, req, CO2Response.class);
         System.out.println();
         System.out.println(res);
         if (res != null && res.getResult()) {
@@ -121,8 +127,15 @@ public class ClientApplication {
         return resMessage;
     }
 
+    /**
+     * Description for this method.
+     * @param temperature the temperature
+     * @param duration the duration
+     * @return a string
+     * @throws URISyntaxException
+     */
     public static String sendAddHomeTempRequest(int temperature, int duration)
-            throws URISyntaxException{
+            throws URISyntaxException {
         String resMessage = "";
         if (loginData == null) {
             return "We are extremely sorry! "
@@ -138,12 +151,11 @@ public class ClientApplication {
         CO2Response res = restTemplate.postForObject(co2AddURL, req, CO2Response.class);
         System.out.println();
         System.out.println(res);
-        if(res!=null && res.getResult()){
-            resMessage="Congratulations "+loginData.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
+        if (res!=null && res.getResult()) {
+            resMessage = "Congratulations "+loginData.getUsername()+"! Your Carbon Footprint is updated from "+res.getOldCarbonfootprint()
                     + " to " + res.getNewCarbonfootprint();
-        }
-        else{
-            resMessage="We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
+        } else {
+            resMessage = "We are extremely sorry! There seems to be an issue in updating your Carbon Footprint. Are you using the correct username?";
         }
         return resMessage;
     }
