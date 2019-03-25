@@ -5,6 +5,13 @@ public class AddTransportRequest extends ClientMessage {
     private int distance;
     private int timesaweek;
 
+    /**
+     * Making an object which contains the login data, the distance and the timesaweek parameters.
+     * @param loginData the login data of the user
+     * @param distance the distance of transportation
+     * @param timesaweek the amount this has been done in a week
+     */
+
     public AddTransportRequest(LoginData loginData, int distance, int timesaweek) {
         super(loginData);
         this.distance = distance;
