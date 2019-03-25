@@ -10,7 +10,7 @@ public class CO2TransportPublicTest {
 
     @Test
     public void CO2TransportPublicConstructorTest() {
-        CO2TransportPublic pub = new CO2TransportPublic("username", 1, 1);
+        CO2TransportPublic pub = new CO2TransportPublic("username", 1, 2);
         assertTrue(pub.getPusername().equals("username"));
         assertEquals(pub.getDistance(), 1);
         assertEquals(pub.getTimesaweek(), 2);
@@ -36,7 +36,7 @@ public class CO2TransportPublicTest {
 
     @Test
     public void getTimesaweekTest() {
-        CO2TransportPublic pub = new CO2TransportPublic("username", 1, 1);
+        CO2TransportPublic pub = new CO2TransportPublic("username", 1, 2);
         assertEquals(pub.getTimesaweek(), 2);
     }
 
