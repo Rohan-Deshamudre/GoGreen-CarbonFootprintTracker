@@ -1,6 +1,8 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
+import gogreen.application.client.Leaderboard;
+import gogreen.application.model.CO2;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 
 public class GuiMain extends Application {
@@ -261,25 +264,20 @@ public class GuiMain extends Application {
         transport.setOnAction(e -> showTransportPage());
         buttons.add(transport, 1, 0);
 
-        Button share = new Button("Share");
+        Button share = new Button("Stats");
         share.setMinSize(buttonWidth, buttonHeight);
-        share.setOnAction(e -> showShare());
+        share.setOnAction(e -> userPage());
         buttons.add(share, 1, 1);
 
-        //right part
-        StackPane right = new StackPane();
-        right.setAlignment(Pos.CENTER_RIGHT);
-
-        Label scoreboard = new Label("Scoreboard");
-        scoreboard.setMinSize(128, 320);
-
-        right.getChildren().addAll(scoreboard);
+        Leaderboard leaderboard = new Leaderboard();
+        VBox scoreboard = leaderboard(leaderboard.getUsers());
+        scoreboard.setAlignment(Pos.CENTER_RIGHT);
 
         //setting up the window
         BorderPane menuPane = new BorderPane();
         menuBar(menuPane);
         menuPane.setCenter(buttons);
-        menuPane.setRight(right);
+        menuPane.setRight(scoreboard);
 
         //setting up the scene
         Scene scene = new Scene(menuPane, screenWidth, screenHeight);
@@ -761,7 +759,7 @@ public class GuiMain extends Application {
      * Page for the share page.
      */
     private void showShare() {
-        window.setTitle("Share");
+        window.setTitle("Stats");
         window.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
@@ -842,11 +840,36 @@ public class GuiMain extends Application {
 
         // Stats
         Label stats = new Label("Stats");
+        // Username and username_value
+        Label Username = new Label("Username:");
+        Label username_value = new Label("value for username");
+        // totalCO2 and totalCO2_value
+        Label totalCO2 = new Label("Total CO2 reduction:");
+        Label totalCO2_value = new Label("totalCO2_value");
+        // CO2food and CO2food_value
+        Label CO2food = new Label("CO2 reduction for food:");
+        Label CO2food_value = new Label("CO2food_value");
+        //CO2transport and CO2transport_value
+        Label CO2transport = new Label("CO2 reduction for transport:");
+        Label CO2transport_value = new Label("CO2transport_value");
+        //CO2energy and CO2energy_value
+        Label CO2energy = new Label("CO2 reduction for energy:");
+        Label CO2energy_value = new Label("CO2reduction_value");
 
-        // Make scene
-        grid.getChildren().addAll(
-                stats
-        );
+
+        grid.add(stats, 0, 0);
+        grid.add(Username, 0, 3);
+        grid.add(username_value, 4, 3);
+        grid.add(totalCO2, 0, 6);
+        grid.add(totalCO2_value, 4, 6);
+        grid.add(CO2food, 0, 9);
+        grid.add(CO2food_value, 4, 9);
+        grid.add(CO2transport, 0, 12);
+        grid.add(CO2transport_value, 4, 12);
+        grid.add(CO2energy, 0, 15);
+        grid.add(CO2energy_value, 4, 15);
+
+
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
@@ -1038,6 +1061,30 @@ public class GuiMain extends Application {
         AlertBox.display(message);
         showMainMenu();
 
+    }
+
+    /**
+     * leaderboard containing the username and the total co2 reduction.
+     * @param user
+     * @return
+     */
+    public GridPane leaderboardTile(CO2 user) {
+        GridPane gridtile = new GridPane();
+        gridtile.setPadding(new Insets(10));
+        Label username = new Label(user.getCusername());
+        Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
+        gridtile.add(username, 1, 1);
+        gridtile.add(co2reduc, 2, 1);
+        return gridtile;
+    }
+
+    public VBox leaderboard(ArrayList<CO2> users) {
+        VBox vBox = new VBox();
+        for (CO2 user: users) {
+            GridPane tile = leaderboardTile(user);
+            vBox.getChildren().add(tile);
+        }
+        return vBox;
     }
 
     private void closeProgram() {

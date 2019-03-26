@@ -22,11 +22,9 @@ public class Leaderboard {
     }
 
     /**
-     * The main method. FOR TESTING ONLY.
-     * @param args - the args.
+     * This method is temporary, just for testing.
      */
-
-    public static void main(String[] args) {
+    public Leaderboard() {
         CO2 a1 = new CO2("a1", 1, 2, 3, 4);
         CO2 b2 = new CO2("b2", 1, 2, 3 ,4);
         CO2 c3 = new CO2("c3", 1, 2, 3, 4);
@@ -37,13 +35,8 @@ public class Leaderboard {
         al.add(a1);
         al.add(b2);
         al.add(c3);
-
-
-        Leaderboard leaderboard = new Leaderboard(al);
-        leaderboard.sortLeaderboard();
-        System.out.println(leaderboard);
+        users = al;
     }
-
 
     /**
      * Sorts the users field by co2reduc.
