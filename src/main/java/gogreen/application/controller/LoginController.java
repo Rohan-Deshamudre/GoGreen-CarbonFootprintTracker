@@ -1,20 +1,22 @@
 package gogreen.application.controller;
 
+import gogreen.application.communication.LoginData;
 import gogreen.application.communication.LoginRequest;
 import gogreen.application.communication.LoginResponse;
 import gogreen.application.model.User;
 import gogreen.application.repository.UserRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
-
 
 
 @RestController
@@ -25,50 +27,52 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    public LoginController(){
+    public LoginController() {
 
     }
 
     /**
      * Adds a page /login which handles responding to login requests.
+     *
+     * @param req - LoginRequest object containing login data
+     * @return - responds either with 'HTTP 200 OK' or 'HTTP 401 Unauthorized' on an authorization
+     * success or failure respectively.
      */
-
-    @RequestMapping(value = "/login",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/login",
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<LoginResponse> handleLoginRequest(@RequestBody LoginRequest req) {
-        log.info("Entering check handleLoginRequest");
-        boolean result = checkLoginData(req.getLoginData().getUsername(),
-                req.getLoginData().getPassword());
-        LoginResponse res = new LoginResponse(result);
-        return new ResponseEntity<LoginResponse>(res, HttpStatus.OK);
+    public ResponseEntity handleLoginRequest(@RequestBody LoginRequest req) {
+        if (checkLoginData(req.getLoginData(), userRepository)){
+            // login successful
+            return new ResponseEntity(HttpStatus.OK);
+        }
+
+        // login unsuccessful
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
     /**
      * Checks the login username and password.
-     * @param username the username of the user
-     * @param password the password of the user
-     * @return returns the method
+     *
+     * @param loginData - LoginData object containing the users login credentials.
+     * @param userRepository - the repository storing users to check.
+     * @return returns true iff the user/password combination exists in the database.
      */
+    public static boolean checkLoginData(LoginData loginData, UserRepository userRepository) {
+        List<User> userDB = userRepository.findByUsername(loginData.getUsername());
 
-    public boolean checkLoginData(String username, String password) {
-        System.out.println("Entering check logindata" + username);
-        log.info("Entering check loginDataMethod");
-        for (User user : userRepository.findByUsername(username)) {
-            if (user == null) {
-                return false;
-            } else {
-                System.out.println(user.getUsername());
-                System.out.println(user.getPassword());
-                if (username.equalsIgnoreCase(user.getUsername())
-                        && password.equals(user.getPassword())) {
-                    return true;
-                }
-            }
-
+        if (userDB == null || userDB.isEmpty()) {
+            // user does not have a valid record the database
+            return false;
         }
+
+        for (User user : userDB) {
+            if (loginData.getPassword().equals(user.getPassword())) {
+                return true;
+            }
+        }
+
         return false;
     }
-
 }

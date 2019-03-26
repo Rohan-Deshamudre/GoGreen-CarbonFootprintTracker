@@ -7,19 +7,24 @@ import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
 import gogreen.application.communication.LoginRequest;
 import gogreen.application.communication.LoginResponse;
+import gogreen.application.controller.ActivityController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
-    //private static final String URL = "http://localhost:8080/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
+
+    private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
 
     private static LoginData loginData = null;
-
-    public static void main(String args[]) throws URISyntaxException {
-    }
 
     /**
      * get requests index page of our heroku server.
@@ -37,26 +42,23 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @return - returns true if login successful.
-     * @throws URISyntaxException - can throw exception.
+     * @return - returns true iff login successful.
      */
-    public static boolean sendLoginRequest(String username, String password)
-            throws URISyntaxException {
+    public static boolean sendLoginRequest(String username, String password) {
 
-        LoginRequest req = new LoginRequest(new LoginData(username, password));
+        LoginData curLoginData = new LoginData(username, password);
 
+        log.info("Logging in...");
         RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity res = restTemplate.postForEntity(URL + "login", new LoginRequest(curLoginData), ResponseBody.class);
 
-        String loginUrl = URL + "login";
-        LoginResponse res = restTemplate.postForObject(loginUrl, req, LoginResponse.class);
-
-        System.out.println();
-        System.out.println(res);
-
-        if (res.isSuccess()) {
-            loginData = new LoginData(username, password);
+        if (res.getStatusCode().equals(HttpStatus.OK)) {
+            log.info("Login successful!");
+            loginData = curLoginData;
+            return true;
         }
-        return res.isSuccess();
+
+        return false;
     }
 
     /**
