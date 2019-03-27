@@ -1,7 +1,7 @@
 package model;
 
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 import gogreen.application.model.FriendList;
 import org.junit.jupiter.api.Test;

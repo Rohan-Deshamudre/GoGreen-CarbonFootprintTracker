@@ -20,7 +20,8 @@ public class CO2EnergyTemperatureTest {
     @Test
     public void toStringTest() {
         CO2EnergyTemperature tem = new CO2EnergyTemperature("username", 1, 2);
-        assertThat(tem.toString().equals("CO2EnergyTemperature[tusername='username', reduction='1', duration='2']"));
+        assertThat(tem.toString().equals("CO2EnergyTemperature[tusername='username', "
+                + "reduction='1', duration='2']"));
     }
 
     @Test

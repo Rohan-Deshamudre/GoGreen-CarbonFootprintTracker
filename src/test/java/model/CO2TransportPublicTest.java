@@ -19,7 +19,8 @@ public class CO2TransportPublicTest {
     @Test
     public void toStringTest() {
         CO2TransportPublic pub = new CO2TransportPublic("username", 1, 2);
-        assertTrue(pub.toString().equals("CO2TransportPublic[pusername='username', distance='1', timesaweek='2']"));
+        assertTrue(pub.toString().equals("CO2TransportPublic[pusername='username', distance='1', "
+                + "timesaweek='2']"));
     }
 
     @Test
