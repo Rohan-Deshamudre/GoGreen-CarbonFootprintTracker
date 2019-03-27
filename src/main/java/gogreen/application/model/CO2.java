@@ -48,8 +48,8 @@ public class CO2 {
     @Override
     public String toString() {
         return String.format(
-            "CO2[cusername='%s', CO2Food='%s', CO2Transport='%s', "
-                + "CO2Energy='%s', CO2Reduction='%d']",
+            "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
+                + "Co2Energy='%s', Co2Reduction='%d']",
             cUsername, CO2Food, CO2Transport, CO2Energy, CO2Reduc);
     }
 
