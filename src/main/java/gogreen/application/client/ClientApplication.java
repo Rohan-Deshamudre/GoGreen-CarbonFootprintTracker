@@ -5,13 +5,11 @@ import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginRequest;
 import java.net.URISyntaxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 public class ClientApplication {
@@ -42,13 +40,12 @@ public class ClientApplication {
      * @return - returns true iff login successful.
      */
     public static boolean sendLoginRequest(String username, String password) {
-
         LoginData curLoginData = new LoginData(username, password);
 
-        log.info("Logging in...");
+        log.info("Logging in to " + username);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity res = restTemplate
-            .postForEntity(URL + "login", new LoginRequest(curLoginData), ResponseBody.class);
+            .postForEntity(URL + "login", curLoginData, ResponseEntity.class);
 
         if (res.getStatusCode().equals(HttpStatus.OK)) {
             log.info("Login successful!");
@@ -64,17 +61,40 @@ public class ClientApplication {
     }
 
     /**
-     * Adding co2 to the user.
+     * This method sends a POST request to the server with login credentials for the creation of a
+     * new account.
      *
-     * @param choiceBoxValue decide the value that will be added to the user
-     * @param amount the amount of food added
-     * @return returns the message
-     * @throws URISyntaxException gives syntax exception
+     * @param username - the username.
+     * @param password - the password.
+     * @return - returns "SUCCESS" iff registration successful. Else returns the error message
+     * returned by the server.
      */
+    public static String sendRegisterRequest(String username, String password) {
+        LoginData curLoginData = new LoginData(username, password);
 
-    public static String sendAddFoodRequest(String choiceBoxValue, int amount)
-        throws URISyntaxException {
-        String resMessage;
+        log.info("Attempting to register a new account for " + username);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> res = restTemplate
+            .postForEntity(URL + "login/register", curLoginData, String.class);
+
+        if (res.getStatusCode().equals(HttpStatus.OK)) {
+            log.info("Account registration successful!");
+            loginData = curLoginData;
+            return "SUCCESS";
+        }
+
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about their
+     * eating habits.
+     *
+     * @param choiceBoxValue - decide the value that will be added to the user.
+     * @param amount - the amount of food added.
+     * @return - returns an error message if something went wrong.
+     */
+    public static String sendAddFoodRequest(String choiceBoxValue, int amount) {
         if (loginData == null) {
             return "We are extremely sorry! "
                 + "There seems to be an issue in updating your Carbon Footprint."
@@ -83,24 +103,22 @@ public class ClientApplication {
 
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
 
+        log.info("");
         RestTemplate restTemplate = new RestTemplate();
+        CO2Response res = restTemplate
+            .postForObject(URL + "activity/food/add", req, CO2Response.class);
+        log.info(res);
 
-        String co2Addurl = URL + "food/add";
-        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
-        System.out.println();
-        System.out.println(res);
         if (res != null && res.getResult()) {
-            resMessage = "Congratulations" + loginData.getUsername()
+            return "Congratulations" + loginData.getUsername()
                 + "! Your Carbon Footprint is updated from"
                 + res.getOldCarbonfootprint()
                 + " to " + res.getNewCarbonfootprint();
         } else {
-            resMessage = "We are extremely sorry! "
+            return "We are extremely sorry! "
                 + "There seems to be an issue in updating your Carbon Footprint."
                 + "Are you using the correct username?";
         }
-
-        return resMessage;
     }
 
     /**
@@ -111,7 +129,6 @@ public class ClientApplication {
      * @return returns a string
      * @throws URISyntaxException throws an exception
      */
-
     public static String sendAddTransportRequest(int distance, int timesaweek)
         throws URISyntaxException {
         String resMessage;
