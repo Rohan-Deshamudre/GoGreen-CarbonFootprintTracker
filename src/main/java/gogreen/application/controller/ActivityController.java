@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -181,9 +182,9 @@ public class ActivityController {
         return result;
     }
 
-    public List<CO2List> showRank() {
+    public ArrayList<CO2List> showRank() {
         List<CO2> all = co2Repository.findAll();
-        List<CO2List> ranking = null;
+        ArrayList<CO2List> ranking = new ArrayList<>();
 
         for(CO2 user : all) {
             CO2List newRank = new CO2List(user.getCusername(), user.getCo2reduc());
@@ -192,9 +193,9 @@ public class ActivityController {
         return ranking;
     }
 
-    public List<FriendList> showFriends(String username) {
+    public ArrayList<FriendList> showFriends(String username) {
         List<Friend> all = friendRepository.findByFusername(username);
-        List<FriendList> friends = null;
+        ArrayList<FriendList> friends = new ArrayList<>();
 
         for(Friend friend : all) {
             List<CO2> user = co2Repository.findByCusername(friend.getFriend());

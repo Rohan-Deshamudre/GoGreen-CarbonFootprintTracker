@@ -2,20 +2,20 @@ package gogreen.application.client;
 
 import gogreen.application.model.CO2;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Leaderboard {
 
 
-    private List<CO2> users;
+    private ArrayList<CO2> users;
 
     /**
      * Constructor of the class.
      * @param users - List of users.
      */
 
-    public Leaderboard(List<CO2> users) {
+    public Leaderboard(ArrayList<CO2> users) {
         this.users = users;
     }
 
@@ -29,7 +29,7 @@ public class Leaderboard {
         a1.setCo2reduc(50);
         b2.setCo2reduc(10);
         c3.setCo2reduc(500);
-        List<CO2> al = null;
+        ArrayList<CO2> al = new ArrayList<>();
         al.add(a1);
         al.add(b2);
         al.add(c3);
@@ -48,7 +48,7 @@ public class Leaderboard {
      * @return - returns the users field.
      */
 
-    public List<CO2> getUsers() {
+    public ArrayList<CO2> getUsers() {
         return this.users;
     }
 
