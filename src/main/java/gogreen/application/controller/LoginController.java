@@ -1,5 +1,6 @@
 package gogreen.application.controller;
 
+import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
@@ -57,10 +58,10 @@ public class LoginController {
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<String> handleRegisterRequest(@RequestBody LoginData cred) {
+    public ResponseEntity<ErrorMessage> handleRegisterRequest(@RequestBody LoginData cred) {
         if (!userRepository.findByUsername(cred.getUsername()).isEmpty()) {
             // Username is taken
-            return new ResponseEntity<>("Username is taken!", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(new ErrorMessage("Username is taken!"), HttpStatus.FORBIDDEN);
         }
 
         // Register new account

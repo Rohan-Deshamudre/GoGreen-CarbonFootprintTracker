@@ -8,6 +8,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
@@ -21,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -34,6 +37,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 class LoginControllerTest {
 
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @InjectMocks
     LoginController loginController;
@@ -130,7 +136,10 @@ class LoginControllerTest {
             .andExpect(status().isForbidden())
             .andReturn();
 
-        assertEquals("Username is taken!", res.getResponse().getContentAsString());
+        // validate error message is correct.
+        ErrorMessage errorMessage = objectMapper
+            .readValue(res.getResponse().getContentAsString(), ErrorMessage.class);
+        assertEquals("Username is taken!", errorMessage.getMessage());
     }
 
     /**

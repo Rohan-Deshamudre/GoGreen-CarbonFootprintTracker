@@ -4,6 +4,7 @@ import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
 import java.net.URISyntaxException;
 import org.apache.logging.log4j.LogManager;
@@ -74,8 +75,8 @@ public class ClientApplication {
 
         log.info("Attempting to register a new account for " + username);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> res = restTemplate
-            .postForEntity(URL + "login/register", curLoginData, String.class);
+        ResponseEntity<ErrorMessage> res = restTemplate
+            .postForEntity(URL + "login/register", curLoginData, ErrorMessage.class);
 
         if (res.getStatusCode().equals(HttpStatus.OK)) {
             log.info("Account registration successful!");
@@ -83,7 +84,7 @@ public class ClientApplication {
             return "SUCCESS";
         }
 
-        return res.getBody();
+        return res.getBody().getMessage();
     }
 
     /**
@@ -95,12 +96,6 @@ public class ClientApplication {
      * @return - returns an error message if something went wrong.
      */
     public static String sendAddFoodRequest(String choiceBoxValue, int amount) {
-        if (loginData == null) {
-            return "We are extremely sorry! "
-                + "There seems to be an issue in updating your Carbon Footprint."
-                + "Try logging out and in again.";
-        }
-
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
 
         log.info("");
