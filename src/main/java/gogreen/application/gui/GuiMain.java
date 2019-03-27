@@ -272,6 +272,7 @@ public class GuiMain extends Application {
         Leaderboard leaderboard = new Leaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
+        BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
 
         //setting up the window
         BorderPane menuPane = new BorderPane();
@@ -841,33 +842,33 @@ public class GuiMain extends Application {
         // Stats
         Label stats = new Label("Stats");
         // Username and username_value
-        Label Username = new Label("Username:");
-        Label username_value = new Label("value for username");
+        Label username = new Label("Username:");
+        Label usernameValue = new Label("value for username");
         // totalCO2 and totalCO2_value
         Label totalCO2 = new Label("Total CO2 reduction:");
-        Label totalCO2_value = new Label("totalCO2_value");
+        Label totalCO2Value = new Label("totalCO2_value");
         // CO2food and CO2food_value
-        Label CO2food = new Label("CO2 reduction for food:");
-        Label CO2food_value = new Label("CO2food_value");
+        Label co2food = new Label("CO2 reduction for food:");
+        Label co2foodValue = new Label("CO2food_value");
         //CO2transport and CO2transport_value
-        Label CO2transport = new Label("CO2 reduction for transport:");
-        Label CO2transport_value = new Label("CO2transport_value");
+        Label co2transport = new Label("CO2 reduction for transport:");
+        Label co2transportValue = new Label("CO2transport_value");
         //CO2energy and CO2energy_value
-        Label CO2energy = new Label("CO2 reduction for energy:");
-        Label CO2energy_value = new Label("CO2reduction_value");
+        Label co2energy = new Label("CO2 reduction for energy:");
+        Label co2energyValue = new Label("CO2reduction_value");
 
 
         grid.add(stats, 0, 0);
-        grid.add(Username, 0, 3);
-        grid.add(username_value, 4, 3);
+        grid.add(username, 0, 3);
+        grid.add(usernameValue, 4, 3);
         grid.add(totalCO2, 0, 6);
-        grid.add(totalCO2_value, 4, 6);
-        grid.add(CO2food, 0, 9);
-        grid.add(CO2food_value, 4, 9);
-        grid.add(CO2transport, 0, 12);
-        grid.add(CO2transport_value, 4, 12);
-        grid.add(CO2energy, 0, 15);
-        grid.add(CO2energy_value, 4, 15);
+        grid.add(totalCO2Value, 4, 6);
+        grid.add(co2food, 0, 9);
+        grid.add(co2foodValue, 4, 9);
+        grid.add(co2transport, 0, 12);
+        grid.add(co2transportValue, 4, 12);
+        grid.add(co2energy, 0, 15);
+        grid.add(co2energyValue, 4, 15);
 
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
@@ -1064,27 +1065,57 @@ public class GuiMain extends Application {
     }
 
     /**
+     * The tile for the string "username" and "co2reuduction".
+     * @return The string
+     */
+    public GridPane nameTile() {
+        GridPane nametile = new GridPane();
+        nametile.setPadding(new Insets(10, 10, 10 ,10));
+        nametile.setHgap(20);
+
+        Label username = new Label("username");
+        Label co2reduc = new Label("co2Reduction");
+
+        nametile.add(username, 1, 1);
+        nametile.add(co2reduc, 2, 1);
+
+        return nametile;
+    }
+
+    /**
      * leaderboard containing the username and the total co2 reduction.
-     * @param user
+     * @param user username
      * @return
      */
     public GridPane leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
-        gridtile.setPadding(new Insets(10));
-        Label username = new Label(user.getCusername());
+        gridtile.setPadding(new Insets(10, 10, 10, 10));
+        gridtile.setHgap(20);
+
+        Label cusername = new Label(user.getCusername());
         Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
-        gridtile.add(username, 1, 1);
-        gridtile.add(co2reduc, 2, 1);
+
+        gridtile.add(cusername, 3, 1);
+        gridtile.add(co2reduc, 6, 1);
         return gridtile;
     }
 
+
+    /**
+     * The VBox showing the leaderboard of an arraylist of users in CO2 class.
+     * @param users username
+     * @return return the vBox
+     */
     public VBox leaderboard(ArrayList<CO2> users) {
-        VBox vBox = new VBox();
+        VBox vbox = new VBox();
+        GridPane nametile = nameTile();
+        vbox.getChildren().add(nametile);
+
         for (CO2 user: users) {
             GridPane tile = leaderboardTile(user);
-            vBox.getChildren().add(tile);
+            vbox.getChildren().add(tile);
         }
-        return vBox;
+        return vbox;
     }
 
     private void closeProgram() {
