@@ -2,6 +2,7 @@ package gogreen.application.controller;
 
 import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginResponse;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
@@ -37,14 +38,17 @@ public class LoginController {
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity handleLoginRequest(@RequestBody LoginData cred) {
-        if (checkLoginData(cred, userRepository)) {
+    public ResponseEntity<LoginResponse> handleLoginRequest(@RequestBody LoginData cred) {
+        try {
+            checkLoginData(cred, userRepository);
             // login successful
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ErrorMessage errorMessage) {
+            // login unsuccessful
+            LoginResponse res = new LoginResponse();
+            res.setErrorMessage(errorMessage);
+            return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
         }
-
-        // login unsuccessful
-        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -58,10 +62,13 @@ public class LoginController {
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<ErrorMessage> handleRegisterRequest(@RequestBody LoginData cred) {
+    public ResponseEntity<LoginResponse> handleRegisterRequest(@RequestBody LoginData cred) {
         if (!userRepository.findByUsername(cred.getUsername()).isEmpty()) {
             // Username is taken
-            return new ResponseEntity<>(new ErrorMessage("Username is taken!"), HttpStatus.FORBIDDEN);
+            LoginResponse res = new LoginResponse();
+            res.setErrorMessage(new ErrorMessage(ErrorMessage.LOGIN_WRONG_USER));
+            return new ResponseEntity<>(res,
+                HttpStatus.FORBIDDEN);
         }
 
         // Register new account
@@ -72,26 +79,27 @@ public class LoginController {
     }
 
     /**
-     * Checks the login username and password.
+     * Checks the login credentials.
      *
      * @param loginData - LoginData object containing the users login credentials.
      * @param userRepository - the repository storing users to check.
-     * @return returns true iff the user/password combination exists in the database.
+     * @throws ErrorMessage - error if login is unsuccessful
      */
-    public static boolean checkLoginData(LoginData loginData, UserRepository userRepository) {
+    public static void checkLoginData(LoginData loginData, UserRepository userRepository)
+        throws ErrorMessage {
         List<User> userDB = userRepository.findByUsername(loginData.getUsername());
 
         if (userDB.isEmpty()) {
-            // user does not have a valid record the database
-            return false;
+            // username does not have an entry in the database.
+            throw new ErrorMessage(ErrorMessage.LOGIN_WRONG_USER);
         }
 
         for (User user : userDB) {
             if (loginData.getPassword().equals(user.getPassword())) {
-                return true;
+                return;
             }
         }
 
-        return false;
+        throw new ErrorMessage(ErrorMessage.LOGIN_WRONG_PASS);
     }
 }

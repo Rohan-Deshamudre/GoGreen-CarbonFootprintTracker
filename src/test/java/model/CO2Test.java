@@ -9,78 +9,43 @@ import org.junit.jupiter.api.Test;
 
 public class CO2Test {
     @Test
-    public void getCusernameTest() {
+    public void getCUsernameTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertTrue(user.getCusername().equals("user"));
+        assertTrue(user.getCUsername().equals("user"));
     }
 
     @Test
-    public void setCusernameTest() {
+    public void getCO2FoodTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        user.setCusername("user1");
-        assertTrue(user.getCusername().equals("user1"));
+        assertEquals(user.getCO2Food(), 10);
     }
 
     @Test
-    public void getCo2foodTest() {
+    public void getCO2Transport() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(user.getCo2food(), 10);
+        assertEquals(user.getCO2Transport(), 11);
     }
 
     @Test
-    public void setCo2foodTest() {
+    public void getCO2Energy() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        user.setCo2food(11);
-        assertEquals(user.getCo2food(), 11);
+        assertEquals(user.getCO2Energy(), 12);
     }
 
     @Test
-    public void getCo2transport() {
+    public void getCO2ReducTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(user.getCo2transport(), 11);
-    }
-
-    @Test
-    public void setCo2transport() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
-        user.setCo2transport(12);
-        assertEquals(user.getCo2transport(), 12);
-    }
-
-    @Test
-    public void getCo2energy() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(user.getCo2energy(), 12);
-    }
-
-    @Test
-    public void setCo2energy() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
-        user.setCo2energy(13);
-        assertEquals(user.getCo2energy(), 13);
-    }
-
-    @Test
-    public void getCo2reducTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(13, user.getCo2reduc());
-    }
-
-    @Test
-    public void setCo2reducTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
-        user.setCo2reduc(14);
-        assertEquals(14, user.getCo2reduc());
+        assertEquals(13, user.getCO2Reduc());
     }
 
     @Test
     public void CO2ConstructorTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertTrue(user.getCusername().equals("user"));
-        assertEquals(user.getCo2food(), 10);
-        assertEquals(user.getCo2transport(), 11);
-        assertEquals(user.getCo2energy(), 12);
-        assertEquals(user.getCo2reduc(), 13);
+        assertTrue(user.getCUsername().equals("user"));
+        assertEquals(user.getCO2Food(), 10);
+        assertEquals(user.getCO2Transport(), 11);
+        assertEquals(user.getCO2Energy(), 12);
+        assertEquals(user.getCO2Reduc(), 13);
     }
 
     @Test

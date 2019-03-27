@@ -1,11 +1,10 @@
 package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddHomeTempRequest;
-import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginResponse;
 import java.net.URISyntaxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +18,7 @@ public class ClientApplication {
     private static final String URL = "http://localhost:8080/";
 
     private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
+    private static RestTemplate restTemplate = new RestTemplate();
 
     private static LoginData loginData = null;
 
@@ -28,7 +28,6 @@ public class ClientApplication {
      * @return the text response from the server.
      */
     public static String getRequestHeroku() {
-        RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject(URL, String.class);
         return quote;
     }
@@ -38,23 +37,21 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @return - returns true iff login successful.
+     * @throws ErrorMessage - iff login is unsuccessful.
      */
-    public static boolean sendLoginRequest(String username, String password) {
+    public static void sendLoginRequest(String username, String password) throws ErrorMessage {
         LoginData curLoginData = new LoginData(username, password);
 
         log.info("Logging in to " + username);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity res = restTemplate
-            .postForEntity(URL + "login", curLoginData, ResponseEntity.class);
+        ResponseEntity<LoginResponse> res = restTemplate
+            .postForEntity(URL + "login", curLoginData, LoginResponse.class);
 
-        if (res.getStatusCode().equals(HttpStatus.OK)) {
-            log.info("Login successful!");
-            loginData = curLoginData;
-            return true;
+        if (!res.getStatusCode().equals(HttpStatus.OK)) {
+            throw res.getBody().getErrorMessage();
         }
 
-        return false;
+        log.info("Login successful!");
+        loginData = curLoginData;
     }
 
     public static void clearLoginData() {
@@ -67,53 +64,44 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @return - returns "SUCCESS" iff registration successful. Else returns the error message
-     * returned by the server.
+     * @throws ErrorMessage - if the registration was unsuccessful.
      */
-    public static String sendRegisterRequest(String username, String password) {
+    public static void sendRegisterRequest(String username, String password) throws ErrorMessage {
         LoginData curLoginData = new LoginData(username, password);
 
         log.info("Attempting to register a new account for " + username);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ErrorMessage> res = restTemplate
-            .postForEntity(URL + "login/register", curLoginData, ErrorMessage.class);
+        ResponseEntity<LoginResponse> res = restTemplate
+            .postForEntity(URL + "login/register", curLoginData, LoginResponse.class);
 
-        if (res.getStatusCode().equals(HttpStatus.OK)) {
-            log.info("Account registration successful!");
-            loginData = curLoginData;
-            return "SUCCESS";
+        if (!res.getStatusCode().equals(HttpStatus.OK)) {
+            throw res.getBody().getErrorMessage();
         }
 
-        return res.getBody().getMessage();
+        log.info("Account registration successful!");
+        loginData = curLoginData;
     }
 
     /**
      * This method sends a post request to the server with data provided by the user about their
-     * eating habits.
+     * diet.
      *
      * @param choiceBoxValue - decide the value that will be added to the user.
      * @param amount - the amount of food added.
-     * @return - returns an error message if something went wrong.
+     * @throws ErrorMessage - an error message if something went wrong.
      */
-    public static String sendAddFoodRequest(String choiceBoxValue, int amount) {
+    public static CO2Response sendAddFoodRequest(String choiceBoxValue, int amount)
+        throws ErrorMessage {
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
 
-        log.info("");
-        RestTemplate restTemplate = new RestTemplate();
-        CO2Response res = restTemplate
-            .postForObject(URL + "activity/food/add", req, CO2Response.class);
+        log.info("Sending add food request for: " + loginData.getUsername());
+        ResponseEntity<CO2Response> res = restTemplate
+            .postForEntity(URL + "activity/food/add", req, CO2Response.class);
         log.info(res);
 
-        if (res != null && res.getResult()) {
-            return "Congratulations" + loginData.getUsername()
-                + "! Your Carbon Footprint is updated from"
-                + res.getOldCarbonfootprint()
-                + " to " + res.getNewCarbonfootprint();
-        } else {
-            return "We are extremely sorry! "
-                + "There seems to be an issue in updating your Carbon Footprint."
-                + "Are you using the correct username?";
+        if (!res.getStatusCode().equals(HttpStatus.OK)) {
+            throw res.getBody().getErrorMessage();
         }
+        return res.getBody();
     }
 
     /**
@@ -122,34 +110,32 @@ public class ClientApplication {
      * @param distance the distance using transportation
      * @param timesaweek the amount this has been done
      * @return returns a string
-     * @throws URISyntaxException throws an exception
      */
-    public static String sendAddTransportRequest(int distance, int timesaweek)
-        throws URISyntaxException {
-        String resMessage;
-        if (loginData == null) {
-            return "We are extremely sorry! "
-                + "There seems to be an issue in updating your Carbon Footprint."
-                + "Try logging out and in again.";
-        }
-        AddTransportRequest req = new AddTransportRequest(loginData, distance, timesaweek);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        String co2AddUrl = URL + "transport/add";
-        CO2Response res = restTemplate.postForObject(co2AddUrl, req, CO2Response.class);
-        System.out.println();
-        System.out.println(res);
-        if (res != null && res.getResult()) {
-            resMessage = "Congratulations" + loginData.getUsername()
-                + "! Your Carbon Footprint is updated from"
-                + res.getOldCarbonfootprint()
-                + " to " + res.getNewCarbonfootprint();
-        } else {
-            resMessage = "We are extremely sorry! "
-                + "There seems to be an issue in updating your Carbon Footprint."
-                + "Are you using the correct username?";
-        }
+    public static String sendAddTransportRequest(int distance, int timesaweek) {
+        String resMessage = "";
+//        if (loginData == null) {
+//            return "We are extremely sorry! "
+//                + "There seems to be an issue in updating your Carbon Footprint."
+//                + "Try logging out and in again.";
+//        }
+//        AddTransportRequest req = new AddTransportRequest(loginData, distance, timesaweek);
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        String co2AddUrl = URL + "transport/add";
+//        CO2Response res = restTemplate.postForObject(co2AddUrl, req, CO2Response.class);
+//        System.out.println();
+//        System.out.println(res);
+//        if (res != null && res.getResult()) {
+//            resMessage = "Congratulations" + loginData.getUsername()
+//                + "! Your Carbon Footprint is updated from"
+//                + res.getOldCarbonfootprint()
+//                + " to " + res.getNewCarbonfootprint();
+//        } else {
+//            resMessage = "We are extremely sorry! "
+//                + "There seems to be an issue in updating your Carbon Footprint."
+//                + "Are you using the correct username?";
+//        }
         return resMessage;
     }
 
@@ -161,33 +147,32 @@ public class ClientApplication {
      * @return a string
      * @throws URISyntaxException throws an exception
      */
-    public static String sendAddHomeTempRequest(int temperature, int duration)
-        throws URISyntaxException {
+    public static String sendAddHomeTempRequest(int temperature, int duration) {
         String resMessage = "";
-        if (loginData == null) {
-            return "We are extremely sorry! "
-                + "There seems to be an issue in updating your Carbon Footprint."
-                + "Try logging out and in again.";
-        }
-
-        AddHomeTempRequest req = new AddHomeTempRequest(loginData, temperature, duration);
-        RestTemplate restTemplate = new RestTemplate();
-
-        String co2Addurl = URL + "homeTemp/add";
-
-        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
-        System.out.println();
-        System.out.println(res);
-        if (res != null && res.getResult()) {
-            resMessage = "Congratulations " + loginData.getUsername()
-                + "! Your Carbon Footprint is updated from "
-                + res.getOldCarbonfootprint()
-                + " to " + res.getNewCarbonfootprint();
-        } else {
-            resMessage = "We are extremely sorry!"
-                + "There seems to be an issue in updating your Carbon Footprint."
-                + " Are you using the correct username?";
-        }
+//        if (loginData == null) {
+//            return "We are extremely sorry! "
+//                + "There seems to be an issue in updating your Carbon Footprint."
+//                + "Try logging out and in again.";
+//        }
+//
+//        AddHomeTempRequest req = new AddHomeTempRequest(loginData, temperature, duration);
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        String co2Addurl = URL + "homeTemp/add";
+//
+//        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
+//        System.out.println();
+//        System.out.println(res);
+//        if (res != null && res.getResult()) {
+//            resMessage = "Congratulations " + loginData.getUsername()
+//                + "! Your Carbon Footprint is updated from "
+//                + res.getOldCarbonfootprint()
+//                + " to " + res.getNewCarbonfootprint();
+//        } else {
+//            resMessage = "We are extremely sorry!"
+//                + "There seems to be an issue in updating your Carbon Footprint."
+//                + " Are you using the correct username?";
+//        }
         return resMessage;
     }
 }

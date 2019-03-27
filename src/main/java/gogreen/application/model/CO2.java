@@ -6,89 +6,82 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "co2", schema = "public")
+@Table(name = "CO2", schema = "public")
 public class CO2 {
 
     @Id
     @Column(name = "cusername")
-    private String cusername;
+    private String cUsername;
 
-    @Column(name = "co2food")
-    private int co2food;
+    @Column(name = "CO2food")
+    private int CO2Food;
 
-    @Column(name = "co2transport")
-    private int co2transport;
+    @Column(name = "CO2transport")
+    private int CO2Transport;
 
-    @Column(name = "co2energy")
-    private int co2energy;
+    @Column(name = "CO2energy")
+    private int CO2Energy;
 
-    @Column(name = "co2reduc")
-    private int co2reduc;
+    @Column(name = "CO2reduc")
+    private int CO2Reduc;
 
-    protected CO2() {}
+    protected CO2() {
+    }
 
     /**
      * Makes a CO2 object with the provided parameters.
-     * @param cusername the username of the user
-     * @param co2food the total for co2food
-     * @param co2transport the total for co2transport
-     * @param co2energy the total for co2energy
-     * @param co2reduc the total of all co2
+     *
+     * @param cUsername the username of the user.
+     * @param CO2Food the total CO2 reduced by diet.
+     * @param CO2Transport the total CO2 reduced by transport.
+     * @param CO2Energy the total CO2 reduced by energy.
+     * @param CO2Reduc the total CO2 reduced by the user.
      */
-    public CO2(String cusername, int co2food, int co2transport, int co2energy, int co2reduc) {
-        this.cusername = cusername;
-        this.co2food = co2food;
-        this.co2transport = co2transport;
-        this.co2energy = co2energy;
-        this.co2reduc = co2reduc;
+    public CO2(String cUsername, int CO2Food, int CO2Transport, int CO2Energy, int CO2Reduc) {
+        this.cUsername = cUsername;
+        this.CO2Food = CO2Food;
+        this.CO2Transport = CO2Transport;
+        this.CO2Energy = CO2Energy;
+        this.CO2Reduc = CO2Reduc;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
-                       + "Co2Energy='%s', Co2Reduction='%d']",
-                cusername, co2food, co2transport, co2energy, co2reduc);
+            "CO2[cusername='%s', CO2Food='%s', CO2Transport='%s', "
+                + "CO2Energy='%s', CO2Reduction='%d']",
+            cUsername, CO2Food, CO2Transport, CO2Energy, CO2Reduc);
     }
 
-    public String getCusername() {
-        return cusername;
+    public String getCUsername() {
+        return cUsername;
     }
 
-    public void setCusername(String cusername) {
-        this.cusername = cusername;
+    public int getCO2Food() {
+        return CO2Food;
     }
 
-    public int getCo2food() {
-        return co2food;
+    public void addCO2Food(int CO2Food) {
+        this.CO2Food += CO2Food;
     }
 
-    public void setCo2food(int co2food) {
-        this.co2food = co2food;
+    public int getCO2Transport() {
+        return CO2Transport;
     }
 
-    public int getCo2transport() {
-        return co2transport;
+    public int getCO2Energy() {
+        return CO2Energy;
     }
 
-    public void setCo2transport(int co2transport) {
-        this.co2transport = co2transport;
+    public int getCO2Reduc() {
+        return CO2Reduc;
     }
 
-    public int getCo2energy() {
-        return co2energy;
+    /**
+     * Adds a more CO2 to the total reduction.
+     * @param CO2Reduc - the amount of CO2 to add to the total.
+     */
+    public void addCO2Reduc(int CO2Reduc) {
+        this.CO2Reduc += CO2Reduc;
     }
-
-    public void setCo2energy(int co2energy) {
-        this.co2energy = co2energy;
-    }
-
-    public int getCo2reduc() {
-        return co2reduc;
-    }
-
-    public void setCo2reduc(int co2reduc) {
-        this.co2reduc = co2reduc;
-    }
-
 }

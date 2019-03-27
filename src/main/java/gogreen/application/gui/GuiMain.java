@@ -1,6 +1,8 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
+import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ErrorMessage;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,8 +33,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.net.URISyntaxException;
-
 
 public class GuiMain extends Application {
 
@@ -43,7 +43,6 @@ public class GuiMain extends Application {
 
     /**
      * Main method of the class, launches the application.
-     *
      */
     public static void main(String[] args) {
         launch(args);
@@ -51,9 +50,8 @@ public class GuiMain extends Application {
 
     /**
      * This method starts the window.
-     *
      */
-    public void start(Stage primaryStage)throws Exception {
+    public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
@@ -101,7 +99,6 @@ public class GuiMain extends Application {
         GridPane.setConstraints(usernameLabel, 0, 1);
         GridPane.setConstraints(usernameField, 1, 1);
 
-
         // Enter password
         Label passwordLabel = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
@@ -134,11 +131,10 @@ public class GuiMain extends Application {
         borderPane.setTop(topGroup);
         borderPane.setCenter(grid);
 
-
         // Make scene
         grid.getChildren().addAll(
-                helloLabel, usernameLabel, usernameField,
-                passwordLabel, passwordField, buttons
+            helloLabel, usernameLabel, usernameField,
+            passwordLabel, passwordField, buttons
         );
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
@@ -147,6 +143,7 @@ public class GuiMain extends Application {
         window.setScene(loginScene);
         window.show();
     }
+
     /**
      * GUI of the Registration page.
      *
@@ -174,7 +171,6 @@ public class GuiMain extends Application {
         usernameField.setMaxWidth(300);
         GridPane.setConstraints(usernameLabel, 0, 1);
         GridPane.setConstraints(usernameField, 1, 1);
-
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
@@ -216,8 +212,8 @@ public class GuiMain extends Application {
 
         // Make scene
         grid.getChildren().addAll(
-                usernameLabel, usernameField, passwordLabel,
-                passwordLabel1, passwordField, passwordField1, buttons
+            usernameLabel, usernameField, passwordLabel,
+            passwordLabel1, passwordField, passwordField1, buttons
         );
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -244,7 +240,6 @@ public class GuiMain extends Application {
         buttons.setHgap(10);
         int buttonWidth = 160;
         int buttonHeight = 160;
-
 
         Button food = new Button("Food");
         food.setMinSize(buttonWidth, buttonHeight);
@@ -356,12 +351,12 @@ public class GuiMain extends Application {
         Slider sizeSlider4 = sizeSlider();
 
         Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
+        addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> foodAddButtonAction(
-                sizeSlider1.getValue(),
-                sizeSlider2.getValue(),
-                sizeSlider3.getValue(),
-                sizeSlider4.getValue()));
+            sizeSlider1.getValue(),
+            sizeSlider2.getValue(),
+            sizeSlider3.getValue(),
+            sizeSlider4.getValue()));
 
         GridPane centerGrid = new GridPane();
         centerGrid.setAlignment(Pos.CENTER);
@@ -375,20 +370,19 @@ public class GuiMain extends Application {
         Label label3 = new Label("Vegetarian Meat");
         Label label4 = new Label("Else");
 
+        centerGrid.add(titleLabel, 0, 0);
+        centerGrid.add(label1, 0, 1);
+        centerGrid.add(label2, 0, 2);
+        centerGrid.add(label3, 0, 3);
+        centerGrid.add(label4, 0, 4);
 
-        centerGrid.add(titleLabel,0,0);
-        centerGrid.add(label1,0,1);
-        centerGrid.add(label2,0,2);
-        centerGrid.add(label3,0,3);
-        centerGrid.add(label4,0,4);
+        centerGrid.add(sizeLabel, 1, 0);
+        centerGrid.add(sizeSlider1, 1, 1);
+        centerGrid.add(sizeSlider2, 1, 2);
+        centerGrid.add(sizeSlider3, 1, 3);
+        centerGrid.add(sizeSlider4, 1, 4);
 
-        centerGrid.add(sizeLabel,1,0);
-        centerGrid.add(sizeSlider1,1,1);
-        centerGrid.add(sizeSlider2,1,2);
-        centerGrid.add(sizeSlider3,1,3);
-        centerGrid.add(sizeSlider4,1,4);
-
-        centerGrid.add(addButton,1,5);
+        centerGrid.add(addButton, 1, 5);
 
         center.getChildren().addAll(centerGrid);
 
@@ -414,7 +408,7 @@ public class GuiMain extends Application {
         });
 
         Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
+        addButton.setMinSize(100, 50);
         //addButton.setOnAction(e -> );
 
         TextField weightField = new TextField();
@@ -432,11 +426,11 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
-        centerGrid.add(titleLabel,0,0);
-        centerGrid.add(weightLabel,0,1);
-        centerGrid.add(weightField,1,1);
-        centerGrid.add(checkBox,0,2);
-        centerGrid.add(addButton,1,5);
+        centerGrid.add(titleLabel, 0, 0);
+        centerGrid.add(weightLabel, 0, 1);
+        centerGrid.add(weightField, 1, 1);
+        centerGrid.add(checkBox, 0, 2);
+        centerGrid.add(addButton, 1, 5);
 
         //set up border pane
         BorderPane borderPane = new BorderPane();
@@ -515,10 +509,10 @@ public class GuiMain extends Application {
         timesAWeekField.setPromptText("times a week");
 
         Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
+        addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             transportAddButtonAction(Integer.parseInt(distanceField.getText()),
-                    Integer.parseInt(timesAWeekField.getText()));
+                Integer.parseInt(timesAWeekField.getText()));
             distanceField.setText("");
             timesAWeekField.setText("");
         });
@@ -532,12 +526,12 @@ public class GuiMain extends Application {
         Label distanceLabel = new Label("Distance:");
         Label timesAWeekLabel = new Label("Times a week:");
 
-        centerGrid.add(titleLabel,1,0);
-        centerGrid.add(distanceLabel,0,1);
-        centerGrid.add(distanceField,1,1);
-        centerGrid.add(timesAWeekLabel,0,2);
-        centerGrid.add(timesAWeekField,1,2);
-        centerGrid.add(addButton,1,5);
+        centerGrid.add(titleLabel, 1, 0);
+        centerGrid.add(distanceLabel, 0, 1);
+        centerGrid.add(distanceField, 1, 1);
+        centerGrid.add(timesAWeekLabel, 0, 2);
+        centerGrid.add(timesAWeekField, 1, 2);
+        centerGrid.add(addButton, 1, 5);
 
         //set up border pane
         BorderPane borderPane = new BorderPane();
@@ -569,10 +563,10 @@ public class GuiMain extends Application {
         timesAWeekField.setPromptText("times a week");
 
         Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
+        addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             transportAddButtonAction(Integer.parseInt(distanceField.getText()),
-                    Integer.parseInt(timesAWeekField.getText()));
+                Integer.parseInt(timesAWeekField.getText()));
             distanceField.setText("");
             timesAWeekField.setText("");
         });
@@ -586,12 +580,12 @@ public class GuiMain extends Application {
         Label distanceLabel = new Label("Distance:");
         Label timesAWeekLabel = new Label("Times a week:");
 
-        centerGrid.add(titleLabel,1,0);
-        centerGrid.add(distanceLabel,0,1);
-        centerGrid.add(distanceField,1,1);
-        centerGrid.add(timesAWeekLabel,0,2);
-        centerGrid.add(timesAWeekField,1,2);
-        centerGrid.add(addButton,1,5);
+        centerGrid.add(titleLabel, 1, 0);
+        centerGrid.add(distanceLabel, 0, 1);
+        centerGrid.add(distanceField, 1, 1);
+        centerGrid.add(timesAWeekLabel, 0, 2);
+        centerGrid.add(timesAWeekField, 1, 2);
+        centerGrid.add(addButton, 1, 5);
 
         //set up border pane
         BorderPane borderPane = new BorderPane();
@@ -636,7 +630,6 @@ public class GuiMain extends Application {
 
         buttons.getChildren().addAll(option1, option2);
 
-
         Label energyTitle = new Label("Home energy");
 
         center.getChildren().addAll(energyTitle, buttons);
@@ -671,10 +664,10 @@ public class GuiMain extends Application {
         durationField.setPromptText("hours");
 
         Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
+        addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
-                    Integer.parseInt(durationField.getText()));
+                Integer.parseInt(durationField.getText()));
             temperatureField.setText("");
             durationField.setText("");
         });
@@ -688,12 +681,12 @@ public class GuiMain extends Application {
         Label temperatureLabel = new Label("Temperature reduction:");
         Label durationLabel = new Label("Duration:");
 
-        centerGrid.add(titleLabel,1,0);
-        centerGrid.add(temperatureLabel,0,1);
-        centerGrid.add(temperatureField,1,1);
-        centerGrid.add(durationLabel,0,2);
-        centerGrid.add(durationField,1,2);
-        centerGrid.add(addButton,1,5);
+        centerGrid.add(titleLabel, 1, 0);
+        centerGrid.add(temperatureLabel, 0, 1);
+        centerGrid.add(temperatureField, 1, 1);
+        centerGrid.add(durationLabel, 0, 2);
+        centerGrid.add(durationField, 1, 2);
+        centerGrid.add(addButton, 1, 5);
 
         //set up border pane
         BorderPane borderPane = new BorderPane();
@@ -717,7 +710,7 @@ public class GuiMain extends Application {
         });
 
         Button addButton = new Button("Add");
-        addButton.setMinSize(100,50);
+        addButton.setMinSize(100, 50);
         //addButton.setOnAction(e -> );
 
         TextField distanceField = new TextField();
@@ -727,7 +720,6 @@ public class GuiMain extends Application {
         TextField timesAWeekField = new TextField();
         timesAWeekField.setMaxWidth(300);
         timesAWeekField.setPromptText("hours");
-
 
         Label titleLabel = new Label("Solar Panels");
         Label distanceLabel = new Label("Total area:");
@@ -739,12 +731,12 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
 
-        centerGrid.add(titleLabel,1,0);
-        centerGrid.add(distanceLabel,0,1);
-        centerGrid.add(distanceField,1,1);
-        centerGrid.add(timesAWeekLabel,0,2);
-        centerGrid.add(timesAWeekField,1,2);
-        centerGrid.add(addButton,1,5);
+        centerGrid.add(titleLabel, 1, 0);
+        centerGrid.add(distanceLabel, 0, 1);
+        centerGrid.add(distanceField, 1, 1);
+        centerGrid.add(timesAWeekLabel, 0, 2);
+        centerGrid.add(timesAWeekField, 1, 2);
+        centerGrid.add(addButton, 1, 5);
 
         //set up border pane
         BorderPane borderPane = new BorderPane();
@@ -845,7 +837,7 @@ public class GuiMain extends Application {
 
         // Make scene
         grid.getChildren().addAll(
-                stats
+            stats
         );
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -885,10 +877,9 @@ public class GuiMain extends Application {
         SeparatorMenuItem sep2 = new SeparatorMenuItem();
         SeparatorMenuItem sep3 = new SeparatorMenuItem();
 
-
         menu.getItems().addAll(
-                goToHomeScreen, sep1, goToFood, goToTransport,
-                goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
+            goToHomeScreen, sep1, goToFood, goToTransport,
+            goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
         );
 
         MenuBar menuBar = new MenuBar();
@@ -899,6 +890,7 @@ public class GuiMain extends Application {
 
     /**
      * With this slider you can select the size of your meal.
+     *
      * @return meal size.
      */
     private Slider sizeSlider() {
@@ -949,24 +941,20 @@ public class GuiMain extends Application {
 
     /**
      * NOT GUI.
+     *
      * @param username - the username
      * @param password - the password
      */
     private void loginButtonAction(String username, String password) {
-        boolean ok = false;
         try {
-            ok = ClientApplication.sendLoginRequest(username, password);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        if (ok) {
+            ClientApplication.sendLoginRequest(username, password);
             System.out.println("LOGIN SUCCESFULL");
             System.out.println("username: " + username);
             System.out.println("password: " + password);
             System.out.println();
             showMainMenu();
-        } else {
-            System.out.println("WRONG USERNAME OR PASSWORD");
+        } catch (ErrorMessage errorMessage) {
+            System.out.println(errorMessage.getMessage());
             System.out.println("username: " + username);
             System.out.println("password: " + password);
             System.out.println();
@@ -975,7 +963,7 @@ public class GuiMain extends Application {
 
     private void foodAddButtonAction(double val1, double val2, double val3, double val4) {
 
-        String message = "";
+        CO2Response co2Response;
         int int1 = (int) val1;
         int int2 = (int) val2;
         int int3 = (int) val3;
@@ -983,58 +971,47 @@ public class GuiMain extends Application {
 
         try {
             if (val1 != 0) {
-                message = ClientApplication.sendAddFoodRequest("Salad", int1);
+                co2Response = ClientApplication.sendAddFoodRequest("Salad", int1);
             }
             if (val2 != 0) {
-                message = ClientApplication.sendAddFoodRequest("Fruits", int2);
+                co2Response = ClientApplication.sendAddFoodRequest("Fruits", int2);
             }
             if (val3 != 0) {
-                message = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
+                co2Response = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
             }
             if (val4 != 0) {
-                message = ClientApplication.sendAddFoodRequest("Else", int4);
+                co2Response = ClientApplication.sendAddFoodRequest("Else", int4);
             }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            message = "We are extremely sorry!"
-                    + " There seems to be a technical issue in updating your Carbon Footprint.";
+
+            AlertBox.display("done");
+        } catch (ErrorMessage errorMessage) {
+            AlertBox.display(errorMessage.getMessage());
         }
-        AlertBox.display(message);
         showMainMenu();
     }
 
     /**
      * Button for adding action for transport.
+     *
      * @param distance distance of using transportation
      * @param timesaweek amount of times a week
      */
     public void transportAddButtonAction(int distance, int timesaweek) {
         String message = "";
-        try {
-            message = ClientApplication.sendAddTransportRequest(distance, timesaweek);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            message = "We are extremely sorry! "
-                    + "There seems to be a technical issue in updating your Carbon Footprint.";
-        }
+        message = ClientApplication.sendAddTransportRequest(distance, timesaweek);
         AlertBox.display(message);
         showMainMenu();
     }
 
     /**
      * Button for adding action for homeTemp.
+     *
      * @param temperature the home temperature parameter
      * @param duration the parameter for duration of lowing the temperature
      */
     public void homeTempAddButtonAction(int temperature, int duration) {
         String message = "";
-        try {
-            message = ClientApplication.sendAddHomeTempRequest(temperature, duration);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            message = "We are extremely sorry!"
-                    + " There seems to be a technical issue in updating your Carbon Footprint.";
-        }
+        message = ClientApplication.sendAddHomeTempRequest(temperature, duration);
         AlertBox.display(message);
         showMainMenu();
 
@@ -1042,7 +1019,7 @@ public class GuiMain extends Application {
 
     private void closeProgram() {
         Boolean answer = ConfirmBox.display("Closing the program",
-                "Are you sure you want to exit?");
+            "Are you sure you want to exit?");
         if (answer) {
             ClientApplication.clearLoginData();
             window.close();
@@ -1051,7 +1028,7 @@ public class GuiMain extends Application {
 
     private void logout() {
         Boolean answer = ConfirmBox.display("Logout",
-                "Are you sure you want to logout?");
+            "Are you sure you want to logout?");
         if (answer) {
             AlertBox.display("You have logged out");
             loginPage();

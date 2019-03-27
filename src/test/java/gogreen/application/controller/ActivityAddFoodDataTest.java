@@ -2,8 +2,7 @@ package gogreen.application.controller;
 
 import static gogreen.application.controller.MockitoTestHelper.toJSONString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
@@ -55,204 +55,163 @@ public class ActivityAddFoodDataTest {
     @MockBean
     public CO2Repository co2Repository;
 
-    private final LoginData fakeLogin = new LoginData("Gucci", "Mane");
+    private final LoginData fakeLoginData = new LoginData("Gucci", "Mane");
     private final String fakeCheckBoxValue = "salad";
     private final int fakeCO2Reduction = CarbonUtil.getFoodCarbonfootprint(fakeCheckBoxValue);
 
     @BeforeEach
-    private void init() {
+    void init() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(activityController).build();
     }
 
     /**
-     * This test tests sending a valid add food request for a user that does not exist within the
-     * database.
+     * Test correct post request for an unregistered username. Result to pass: HTTP 401
+     * Unauthorized
      */
     @Test
-    void addFoodDataNullUserTest() throws Exception {
-        when(userRepository.findByUsername(fakeLogin.getUsername())).thenReturn(null);
+    void unregisteredUser() throws Exception {
+        // invalid username returns an empty list.
+        when(userRepository.findByUsername(fakeLoginData.getUsername()))
+            .thenReturn(new ArrayList<>());
 
-        AddFoodRequest testReq = new AddFoodRequest(fakeLogin, fakeCheckBoxValue, 1);
+        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         MvcResult res = mockMvc.perform(
-            post("/food/add")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(toJSONString(testReq)))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            post("/activity/food/add")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJSONString(req)))
+            .andExpect(status().isUnauthorized())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
 
-        // verify that the response from the server is correct
+        // validate error message is correct.
         CO2Response co2Response = objectMapper
             .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertFalse(co2Response.getResult());
-    }
-
-
-    /**
-     * This test tests sending a valid add food request for a user that has empty data in the
-     * database.
-     */
-    @Test
-    void addFoodDataInvalidUserTest() throws Exception {
-        setUserExists(false);
-
-        AddFoodRequest testReq = new AddFoodRequest(fakeLogin, fakeCheckBoxValue, 1);
-        MvcResult res = mockMvc.perform(
-            post("/food/add")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(toJSONString(testReq)))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andReturn();
-
-        // verify that the response from the server is correct
-        CO2Response co2Response = objectMapper
-            .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertFalse(co2Response.getResult());
+        assertEquals(ErrorMessage.LOGIN_WRONG_USER, co2Response.getErrorMessage().getMessage());
     }
 
     /**
-     * This test tests sending a valid add food request for a user that already has carbon footprint
-     * data saved.
+     * Test correct post request for a user supplying a wrong password. Result to pass: HTTP 401
+     * Unauthorized
      */
     @Test
-    void addFoodDataExistingTest() throws Exception {
-        setUserExists(true);
-        List<CO2> dbUserListMock = setUserHasCarbonRecord(true);
+    void wrongPassword() throws Exception {
+        // same username but different password.
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"));
 
-        AddFoodRequest testReq = new AddFoodRequest(fakeLogin, fakeCheckBoxValue, 1);
+        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         MvcResult res = mockMvc.perform(
-            post("/food/add")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(toJSONString(testReq)))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            post("/activity/food/add")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJSONString(req)))
+            .andExpect(status().isUnauthorized())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
 
-        int fakeOldCarbonfootprint = dbUserListMock.get(0).getCo2reduc();
-        int fakeNewCarbonfootprint = fakeOldCarbonfootprint + fakeCO2Reduction;
-
-        // verify that the response from the server is correct
+        // validate error message is correct.
         CO2Response co2Response = objectMapper
             .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertTrue(co2Response.getResult());
-        assertEquals(fakeOldCarbonfootprint, co2Response.getOldCarbonfootprint());
-        assertEquals(fakeNewCarbonfootprint, co2Response.getNewCarbonfootprint());
+        assertEquals(ErrorMessage.LOGIN_WRONG_PASS, co2Response.getErrorMessage().getMessage());
+    }
 
-        // verify that the correct value has been set to the dbUser
-        verify(dbUserListMock.get(0)).setCo2reduc(fakeNewCarbonfootprint);
+    /**
+     * Test a correct food carbon reduction update for a user with an empty record. Result to pass:
+     * HTTP 200 OK, with a correct CO2Response.
+     */
+    @Test
+    void emptyCarbonRequest() throws Exception {
+        setUserValid(fakeLoginData);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0));
 
-        // verify that the data saved to the co2 repository is correct
+        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        MvcResult res = mockMvc.perform(
+            post("/activity/food/add")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJSONString(req)))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andReturn();
+
+        // validate CO2 response
+        CO2Response co2Response = objectMapper
+            .readValue(res.getResponse().getContentAsString(), CO2Response.class);
+        assertEquals(fakeCO2Reduction, co2Response.getCO2Reduction());
+
+        // validate CO2Repository updated correctly
         ArgumentCaptor<CO2> co2ArgumentCaptor = ArgumentCaptor.forClass(CO2.class);
         verify(co2Repository).save(co2ArgumentCaptor.capture());
-        CO2 dataSaved = co2ArgumentCaptor.getValue();
-        verify(dataSaved).setCo2reduc(fakeNewCarbonfootprint);
+        CO2 savedCO2 = co2ArgumentCaptor.getValue();
+        assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
+        assertEquals(fakeCO2Reduction, savedCO2.getCO2Food());
+        assertEquals(0, savedCO2.getCO2Transport());
+        assertEquals(0, savedCO2.getCO2Energy());
+        assertEquals(fakeCO2Reduction, savedCO2.getCO2Reduc());
+
+        // validate no error message is sent
+        assertNull(co2Response.getErrorMessage());
     }
 
     /**
-     * This test tests sending a valid add food request for a user that does not have carbon
-     * footprint data yet.
+     * Test a correct food carbon reduction update for a user who already has a carbon record.
+     * Result to pass: HTTP 200 OK, with a correct CO2Response.
      */
     @Test
-    void addFoodDataNewNullTest() throws Exception {
-        setUserExists(true);
-        when(co2Repository.findByCusername(fakeLogin.getUsername())).thenReturn(null);
+    void dataCarbonRequest() throws Exception {
+        setUserValid(fakeLoginData);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        setCarbonRecord(fakeCO2);
 
-        AddFoodRequest testReq = new AddFoodRequest(fakeLogin, fakeCheckBoxValue, 1);
+        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         MvcResult res = mockMvc.perform(
-            post("/food/add")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(toJSONString(testReq)))
+            post("/activity/food/add")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJSONString(req)))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
 
-        // verify that the response from the server is correct
+        // validate CO2 response
         CO2Response co2Response = objectMapper
             .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertTrue(co2Response.getResult());
-        assertEquals(0, co2Response.getOldCarbonfootprint());
-        assertEquals(fakeCO2Reduction, co2Response.getNewCarbonfootprint());
+        assertEquals(fakeCO2Reduction, co2Response.getCO2Reduction());
 
-        // verify that the data saved to the co2 repository is correct
+        // validate CO2Repository updated correctly
         ArgumentCaptor<CO2> co2ArgumentCaptor = ArgumentCaptor.forClass(CO2.class);
         verify(co2Repository).save(co2ArgumentCaptor.capture());
-        CO2 dataSaved = co2ArgumentCaptor.getValue();
-        assertEquals(fakeLogin.getUsername(), dataSaved.getCusername());
-        assertEquals(0, dataSaved.getCo2food());
-        assertEquals(0, dataSaved.getCo2transport());
-        assertEquals(0, dataSaved.getCo2energy());
-        assertEquals(fakeCO2Reduction, dataSaved.getCo2reduc());
+        CO2 savedCO2 = co2ArgumentCaptor.getValue();
+        assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
+        assertEquals(fakeCO2.getCO2Food() + fakeCO2Reduction, savedCO2.getCO2Food());
+        assertEquals(fakeCO2.getCO2Transport(), savedCO2.getCO2Transport());
+        assertEquals(fakeCO2.getCO2Energy(), savedCO2.getCO2Energy());
+        assertEquals(fakeCO2.getCO2Reduc() + fakeCO2Reduction, savedCO2.getCO2Reduc());
+
+        // validate no error message is sent
+        assertNull(co2Response.getErrorMessage());
     }
 
     /**
-     * This test tests sending a valid add food request for a user that has empty carbon
-     * footprint data.
-     */
-    @Test
-    void addFoodDataNewTest() throws Exception {
-        setUserExists(true);
-        setUserHasCarbonRecord(false);
-
-        AddFoodRequest testReq = new AddFoodRequest(fakeLogin, fakeCheckBoxValue, 1);
-        MvcResult res = mockMvc.perform(
-            post("/food/add")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(toJSONString(testReq)))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andReturn();
-
-        // verify that the response from the server is correct
-        CO2Response co2Response = objectMapper
-            .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertTrue(co2Response.getResult());
-        assertEquals(0, co2Response.getOldCarbonfootprint());
-        assertEquals(fakeCO2Reduction, co2Response.getNewCarbonfootprint());
-
-        // verify that the data saved to the co2 repository is correct
-        ArgumentCaptor<CO2> co2ArgumentCaptor = ArgumentCaptor.forClass(CO2.class);
-        verify(co2Repository).save(co2ArgumentCaptor.capture());
-        CO2 dataSaved = co2ArgumentCaptor.getValue();
-        assertEquals(fakeLogin.getUsername(), dataSaved.getCusername());
-        assertEquals(0, dataSaved.getCo2food());
-        assertEquals(0, dataSaved.getCo2transport());
-        assertEquals(0, dataSaved.getCo2energy());
-        assertEquals(fakeCO2Reduction, dataSaved.getCo2reduc());
-    }
-
-    /**
-     * Sets up the mocks so that the fake user will either pass or fail the database check.
+     * Updates the mocks so that the provided user will pass the authorization test.
      *
-     * @param exists - result of the database check.
-     * @return - the mocked userList.
+     * @param loginData - login credentials for the user.
      */
-    private List<User> setUserExists(boolean exists) {
-        List<User> userList = mock(ArrayList.class);
-        when(userList.isEmpty()).thenReturn(!exists);
-        when(userRepository.findByUsername(fakeLogin.getUsername())).thenReturn(userList);
-        return userList;
+    private void setUserValid(LoginData loginData) {
+        User fakeUser = mock(User.class);
+        when(fakeUser.getPassword()).thenReturn(loginData.getPassword());
+        List<User> fakeUserList = new ArrayList<>();
+        fakeUserList.add(fakeUser);
+        when(userRepository.findByUsername(loginData.getUsername())).thenReturn(fakeUserList);
     }
 
     /**
-     * Sets up mocks defining whether the fake user will have a fake carbon data record or not;
+     * Adds a co2 record to the mocked co2repository.
      *
-     * @param hasRecord - defines if a fake carbon record should be added or not.
-     * @return - the mocked dbUserList.
+     * @param co2 - the CO2 record to add to the mocked repository.
      */
-    private List<CO2> setUserHasCarbonRecord(boolean hasRecord) {
-        List<CO2> dbUserList = mock(ArrayList.class);
-        when(dbUserList.isEmpty()).thenReturn(!hasRecord);
-
-        if (hasRecord) {
-            CO2 fakeRecord = mock(CO2.class);
-            when(fakeRecord.getCo2reduc()).thenReturn(69);
-            when(dbUserList.get(0)).thenReturn(fakeRecord);
-        }
-
-        when(co2Repository.findByCusername(fakeLogin.getUsername())).thenReturn(dbUserList);
-
-        return dbUserList;
+    private void setCarbonRecord(CO2 co2) {
+        List<CO2> dbUserCO2List = new ArrayList<>();
+        dbUserCO2List.add(
+            new CO2(co2.getCUsername(), co2.getCO2Food(), co2.getCO2Transport(), co2.getCO2Energy(),
+                co2.getCO2Reduc()));
+        when(co2Repository.findByCusername(co2.getCUsername())).thenReturn(dbUserCO2List);
     }
 }
