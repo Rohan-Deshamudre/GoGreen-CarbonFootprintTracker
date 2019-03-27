@@ -248,7 +248,6 @@ public class GuiMain extends Application {
         int buttonWidth = 160;
         int buttonHeight = 160;
 
-
         Button food = new Button("Food");
         food.setMinSize(buttonWidth, buttonHeight);
         food.setOnAction(e -> showFoodPage());
@@ -269,7 +268,10 @@ public class GuiMain extends Application {
         share.setOnAction(e -> userPage());
         buttons.add(share, 1, 1);
 
+        // Leaderboard
+        // The leaderboard should be made from the database.
         Leaderboard leaderboard = new Leaderboard();
+        leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
         BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
@@ -1084,8 +1086,8 @@ public class GuiMain extends Application {
 
     /**
      * leaderboard containing the username and the total co2 reduction.
-     * @param user username
-     * @return
+     * @param user username.
+     * @return a tile of the leaderboard.
      */
     public GridPane leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
