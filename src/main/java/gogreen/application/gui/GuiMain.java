@@ -411,10 +411,6 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        Button addButton = new Button("Add");
-        addButton.setMinSize(100, 50);
-        //addButton.setOnAction(e -> );
-
         TextField weightField = new TextField();
         weightField.setMaxWidth(300);
         weightField.setPromptText("weight");
@@ -423,6 +419,14 @@ public class GuiMain extends Application {
 
         Label titleLabel = new Label("Local Store");
         Label weightLabel = new Label("Weight:");
+
+        Button addButton = new Button("Add");
+        addButton.setMinSize(100, 50);
+        addButton.setOnAction(e -> {
+            localProduceAction(Integer.parseInt(weightField.getText()), checkBox.isSelected());
+            weightField.setText("");
+            checkBox.setSelected(false);
+        });
 
         GridPane centerGrid = new GridPane();
         centerGrid.setAlignment(Pos.CENTER);
@@ -987,6 +991,21 @@ public class GuiMain extends Application {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
         }
         showMainMenu();
+    }
+
+    /**
+     * Action for adding local produce.
+     *
+     * @param weight - the weight of produce bought.
+     * @param organic - true iff the produce is organic produce.
+     */
+    public void localProduceAction(int weight, boolean organic) {
+        try {
+            CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
+            AlertBox.display("CO2 reduced with: " + res.getCO2Reduction() + ". Good job!");
+        } catch (RestClientException e) {
+            AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
+        }
     }
 
     /**

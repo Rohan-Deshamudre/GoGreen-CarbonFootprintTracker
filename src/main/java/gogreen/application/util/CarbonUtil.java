@@ -11,6 +11,7 @@ public class CarbonUtil {
 
     /**
      * Saves the carbon footprint.
+     *
      * @param checkBoxValue the value of the check box
      * @return returns the method
      */
@@ -29,9 +30,16 @@ public class CarbonUtil {
         return carbonFootprint;
     }
 
+    public static int getLocalProduceCarbonReduction(int weight, boolean organic) {
+        if (organic) {
+            return (int) (weight * 2.3);
+        }
+        return (int) (weight * 1.7);
+    }
+
 
     public static int getTransportCarbonReduction(TravelType travelType, int distance) {
-        switch (travelType){
+        switch (travelType) {
             case BIKE:
                 return distance * 5;
             case PUB_TRANSPORT:

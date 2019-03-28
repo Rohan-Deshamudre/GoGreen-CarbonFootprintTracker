@@ -2,6 +2,7 @@ package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddLocalProduceRequest;
 import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.AddTransportRequest.TravelType;
@@ -121,6 +122,21 @@ public class ClientApplication {
         throws RestClientException {
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
         return sendActivityAddRequest("activity/food/add", req);
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about the local
+     * produce they bought.
+     *
+     * @param weight - the weight of the local produce bought.
+     * @param organic - true iff the produce is organic produce.
+     * @return CO2Response - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddLocalProduceRequest(int weight, boolean organic)
+        throws RestClientException {
+        AddLocalProduceRequest req = new AddLocalProduceRequest(loginData, weight, organic);
+        return sendActivityAddRequest("activity/localproduce/add", req);
     }
 
     /**

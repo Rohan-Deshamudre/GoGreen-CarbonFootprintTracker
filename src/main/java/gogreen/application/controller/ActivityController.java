@@ -4,6 +4,7 @@ import static gogreen.application.controller.LoginController.checkLoginData;
 
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddLocalProduceRequest;
 import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
@@ -56,6 +57,35 @@ public class ActivityController {
         // Update user's carbon food footprint reduction
         CO2 userCO2 = co2Repository.findByCusername(req.getLoginData().getUsername()).get(0);
         int carbonReducFood = CarbonUtil.getFoodCarbonReduction(req.getChoiceBoxValue());
+        userCO2.addCO2Food(carbonReducFood);
+        userCO2.addCO2Reduc(carbonReducFood);
+        co2Repository.save(userCO2);
+
+        return new ResponseEntity<>(new CO2Response(carbonReducFood), HttpStatus.OK);
+    }
+
+    /**
+     * Handle add local produce requests.
+     *
+     * @param req - addLocalProduceRequest containing the data for the request.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
+     *      CO2Response describing the amount the user's CO2 has been reduced.
+     */
+    @PostMapping(value = "/activity/localproduce/add",
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddLocalProduceRequest req) {
+        log.info(req.toString());
+
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Update user's carbon food footprint reduction
+        CO2 userCO2 = co2Repository.findByCusername(req.getLoginData().getUsername()).get(0);
+        int carbonReducFood = CarbonUtil.getLocalProduceCarbonReduction(req.getWeight(), req.isOrganic());
         userCO2.addCO2Food(carbonReducFood);
         userCO2.addCO2Reduc(carbonReducFood);
         co2Repository.save(userCO2);
