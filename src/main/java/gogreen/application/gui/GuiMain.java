@@ -270,7 +270,16 @@ public class GuiMain extends Application {
 
         // Leaderboard
         // The leaderboard should be made from the database.
+
+//        Leaderboard leaderboard = new Leaderboard();
         Leaderboard leaderboard = new Leaderboard();
+        try {
+            leaderboard = new Leaderboard(ClientApplication.sendGetFriendListRequest());
+            System.out.println(leaderboard.getUsers().get(0));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
@@ -1101,7 +1110,6 @@ public class GuiMain extends Application {
         gridtile.add(co2reduc, 6, 1);
         return gridtile;
     }
-
 
     /**
      * The VBox showing the leaderboard of an arraylist of users in CO2 class.

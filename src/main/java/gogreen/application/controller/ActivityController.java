@@ -3,6 +3,7 @@ package gogreen.application.controller;
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.LoginRequest;
 import gogreen.application.model.*;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
@@ -182,14 +183,45 @@ public class ActivityController {
         return result;
     }
 
-    public ArrayList<CO2> showFriends(String username) {
-        List<Friend> all = friendRepository.findByFusername(username);
-        ArrayList<CO2> friends = new ArrayList<>();
 
-        for(Friend friend : all) {
-            List<CO2> user = co2Repository.findByCusername(friend.getFriend());
-            friends.add(user.get(0));
+    /**
+     * Makes a list of friends.
+     * @param req the LoginRequest.
+     * @return all the friends of that user.
+     */
+    @RequestMapping(value = "/friendlist",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ArrayList<CO2> showFriends(@RequestBody LoginRequest req) {
+
+        // TODO: check login data.
+
+        boolean result = true;
+
+
+        if (result) {
+            System.out.println("\n\n\nShow Friends\n"+ req +"\n\n\n\n\n");
+            String username = req.getLoginData().getUsername();
+            List<Friend> all = friendRepository.findByFusername(username);
+            ArrayList<CO2> friends = new ArrayList<>();
+            System.out.println("\n\n\n");
+            System.out.println("Username: " + username);
+            System.out.println("amount of friends: " + all.size());
+            System.out.println("\n\n\n");
+
+            for (Friend friend : all) {
+                List<CO2> user = co2Repository.findByCusername(friend.getFriend());
+                friends.add(user.get(0));
+            }
+            System.out.println("\n\n\nShow Friends friends\n"+ friends +"\n\n\n\n\n");
+            return friends;
+        } else {
+            throw new IllegalArgumentException();
         }
-        return friends;
     }
+
+
+
+
 }

@@ -7,14 +7,17 @@ import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
 import gogreen.application.communication.LoginRequest;
 import gogreen.application.communication.LoginResponse;
+import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
-    //private static final String URL = "http://localhost:8080/";
+//    private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
 
     private static LoginData loginData = null;
 
@@ -57,6 +60,30 @@ public class ClientApplication {
             loginData = new LoginData(username, password);
         }
         return res.isSuccess();
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request friend list.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static ArrayList<CO2> sendGetFriendListRequest()
+            throws URISyntaxException {
+
+        LoginRequest req = new LoginRequest(loginData);
+        System.out.println(req);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "friendlist";
+        ArrayList<CO2> res = restTemplate.postForObject(loginUrl, req, ArrayList.class);
+
+        System.out.println();
+        System.out.println(res);
+
+        return res;
     }
 
     /**
