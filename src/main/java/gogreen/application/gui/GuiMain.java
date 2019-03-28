@@ -9,17 +9,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -832,13 +822,19 @@ public class GuiMain extends Application {
 
         // CENTER
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
+
+        Leaderboard leaderboard = new Leaderboard();
+        leaderboard.sortLeaderboard();
+        VBox allFriends = showFriends(leaderboard.getUsers());
+        allFriends.setPadding(new Insets(100));
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(grid);
+        borderPane.setRight(allFriends);
         menuBar(borderPane);
 
         // Stats
@@ -1076,7 +1072,7 @@ public class GuiMain extends Application {
         nametile.setHgap(20);
 
         Label username = new Label("username");
-        Label co2reduc = new Label("co2Reduction");
+        Label co2reduc = new Label("CO2 Reduction");
 
         nametile.add(username, 1, 1);
         nametile.add(co2reduc, 2, 1);
@@ -1101,8 +1097,7 @@ public class GuiMain extends Application {
         gridtile.add(co2reduc, 6, 1);
         return gridtile;
     }
-
-
+    
     /**
      * The VBox showing the leaderboard of an arraylist of users in CO2 class.
      * @param users username
@@ -1118,6 +1113,29 @@ public class GuiMain extends Application {
             vbox.getChildren().add(tile);
         }
         return vbox;
+    }
+
+    /**
+     * This method makes a list of all of your friends.
+     * @param friends
+     * @return
+     */
+    public VBox showFriends(ArrayList<CO2> friends) {
+        VBox total = new VBox();
+        ScrollPane scrollPane = new ScrollPane();
+
+        VBox leaderboard = leaderboard(friends);
+        scrollPane.setContent(leaderboard);
+        
+        Label friendLabel = new Label("Friends: ");
+        Label addFriendLabel = new Label("\nAdd friend: ");
+        TextField addFriendField = new TextField();
+        Button addFriendButton = new Button("Add");
+        HBox addFriendBox = new HBox();
+        addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
+        
+        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
+        return total;
     }
 
     private void closeProgram() {
