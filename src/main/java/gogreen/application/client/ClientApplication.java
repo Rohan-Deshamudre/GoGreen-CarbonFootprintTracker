@@ -2,7 +2,9 @@ package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.LoginData;
@@ -126,13 +128,13 @@ public class ClientApplication {
      * transportation habits.
      *
      * @param distance - average distance travelled.
-     * @param timesaweek - times a week this distance gets travelled.
+     * @param travelType - the type of travel.
      * @return CO2Response - response object containing data returned by server.
      * @throws RestClientException - on request unsuccessful.
      */
-    public static CO2Response sendAddTransportRequest(int distance, int timesaweek)
+    public static CO2Response sendAddTransportRequest(TravelType travelType, int distance)
         throws RestClientException {
-        AddTransportRequest req = new AddTransportRequest(loginData, distance, timesaweek);
+        AddTransportRequest req = new AddTransportRequest(loginData, travelType, distance);
         return sendActivityAddRequest("activity/transport/add", req);
     }
 
@@ -149,5 +151,20 @@ public class ClientApplication {
         throws RestClientException {
         AddHomeTempRequest req = new AddHomeTempRequest(loginData, temperature, duration);
         return sendActivityAddRequest("activity/hometemp/add", req);
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about their
+     * solar panels.
+     *
+     * @param area - the m2 of solar panel added.
+     * @param hoursSunlight - hours of sunlight these solar panels received.
+     * @return - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddSolarPanelRequest(int area, int hoursSunlight)
+        throws RestClientException {
+        AddSolarPanelRequest req = new AddSolarPanelRequest(loginData, area, hoursSunlight);
+        return sendActivityAddRequest("activity/solarpanel/add", req);
     }
 }

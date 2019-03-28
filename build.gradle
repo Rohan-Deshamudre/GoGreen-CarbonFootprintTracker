@@ -112,7 +112,4 @@ jacocoTestCoverageVerification {
 
 // Define the main class for the application
 //mainClassName = 'gogreen.application.ServerApplication'
-//mainClassName = 'client.ClientApplication'
 mainClassName = 'gogreen.application.gui.GuiMain'
-//mainClassName = 'Database.controller.UserController'
-//mainClassName = 'util.CarbonUtil'

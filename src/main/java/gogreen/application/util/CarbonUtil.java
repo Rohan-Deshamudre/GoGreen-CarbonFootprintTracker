@@ -1,5 +1,7 @@
 package gogreen.application.util;
 
+import gogreen.application.communication.AddTransportRequest.TravelType;
+
 public class CarbonUtil {
 
     public static final String AES_ENCRYPTION_SECRETKEY = "Bar12345Bar12345";
@@ -28,12 +30,22 @@ public class CarbonUtil {
     }
 
 
-    public static int getTransportCarbonReduction(int distance, int timesaweek) {
-        int transportCarbonFootPrint = distance * timesaweek + 50;
-        return transportCarbonFootPrint;
+    public static int getTransportCarbonReduction(TravelType travelType, int distance) {
+        switch (travelType){
+            case BIKE:
+                return distance * 5;
+            case PUB_TRANSPORT:
+                return distance * 2;
+            default:
+                return 0;
+        }
     }
 
     public static int getHomeTempCarbonReduction(int temp, int duration) {
-        return temp * (duration / 8) + 31;
+        return (int) ((20 - temp) * duration * 0.3);
+    }
+
+    public static int getSolarPanelCarbonReduction(int area, int hoursSunlight) {
+        return (int) (area * hoursSunlight * 0.4);
     }
 }

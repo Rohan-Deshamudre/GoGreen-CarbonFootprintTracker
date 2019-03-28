@@ -1,6 +1,7 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
+import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -507,17 +508,11 @@ public class GuiMain extends Application {
         distanceField.setMaxWidth(300);
         distanceField.setPromptText("distance");
 
-        TextField timesAWeekField = new TextField();
-        timesAWeekField.setMaxWidth(300);
-        timesAWeekField.setPromptText("times a week");
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            transportAddButtonAction(Integer.parseInt(distanceField.getText()),
-                Integer.parseInt(timesAWeekField.getText()));
+            transportAddButtonAction(TravelType.BIKE, Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
-            timesAWeekField.setText("");
         });
 
         GridPane centerGrid = new GridPane();
@@ -526,14 +521,11 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Bike Ride");
-        Label distanceLabel = new Label("Distance:");
-        Label timesAWeekLabel = new Label("Times a week:");
+        Label distanceLabel = new Label("Total distance:");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
         centerGrid.add(distanceField, 1, 1);
-        centerGrid.add(timesAWeekLabel, 0, 2);
-        centerGrid.add(timesAWeekField, 1, 2);
         centerGrid.add(addButton, 1, 5);
 
         //set up border pane
@@ -561,17 +553,12 @@ public class GuiMain extends Application {
         distanceField.setMaxWidth(300);
         distanceField.setPromptText("distance");
 
-        TextField timesAWeekField = new TextField();
-        timesAWeekField.setMaxWidth(300);
-        timesAWeekField.setPromptText("times a week");
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            transportAddButtonAction(Integer.parseInt(distanceField.getText()),
-                Integer.parseInt(timesAWeekField.getText()));
+            transportAddButtonAction(TravelType.PUB_TRANSPORT,
+                Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
-            timesAWeekField.setText("");
         });
 
         GridPane centerGrid = new GridPane();
@@ -580,14 +567,11 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Public Transport");
-        Label distanceLabel = new Label("Distance:");
-        Label timesAWeekLabel = new Label("Times a week:");
+        Label distanceLabel = new Label("Total distance:");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
         centerGrid.add(distanceField, 1, 1);
-        centerGrid.add(timesAWeekLabel, 0, 2);
-        centerGrid.add(timesAWeekField, 1, 2);
         centerGrid.add(addButton, 1, 5);
 
         //set up border pane
@@ -712,21 +696,26 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
+        TextField areaField = new TextField();
+        areaField.setMaxWidth(300);
+        areaField.setPromptText("area");
+
+        TextField hoursSunlightField = new TextField();
+        hoursSunlightField.setMaxWidth(300);
+        hoursSunlightField.setPromptText("hours");
+
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
-        //addButton.setOnAction(e -> );
-
-        TextField distanceField = new TextField();
-        distanceField.setMaxWidth(300);
-        distanceField.setPromptText("area");
-
-        TextField timesAWeekField = new TextField();
-        timesAWeekField.setMaxWidth(300);
-        timesAWeekField.setPromptText("hours");
+        addButton.setOnAction(e -> {
+            solarPanelAction(Integer.parseInt(areaField.getText()),
+                Integer.parseInt(hoursSunlightField.getText()));
+            areaField.setText("");
+            hoursSunlightField.setText("");
+        });
 
         Label titleLabel = new Label("Solar Panels");
-        Label distanceLabel = new Label("Total area:");
-        Label timesAWeekLabel = new Label("Sunlight:");
+        Label areaLabel = new Label("Total area:");
+        Label hoursSunlightLabel = new Label("Sunlight:");
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -735,10 +724,10 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         centerGrid.add(titleLabel, 1, 0);
-        centerGrid.add(distanceLabel, 0, 1);
-        centerGrid.add(distanceField, 1, 1);
-        centerGrid.add(timesAWeekLabel, 0, 2);
-        centerGrid.add(timesAWeekField, 1, 2);
+        centerGrid.add(areaLabel, 0, 1);
+        centerGrid.add(areaField, 1, 1);
+        centerGrid.add(hoursSunlightLabel, 0, 2);
+        centerGrid.add(hoursSunlightField, 1, 2);
         centerGrid.add(addButton, 1, 5);
 
         //set up border pane
@@ -1003,12 +992,12 @@ public class GuiMain extends Application {
     /**
      * Button for adding action for transport.
      *
-     * @param distance distance of using transportation
-     * @param timesaweek amount of times a week
+     * @param travelType the type of travel done.
+     * @param distance distance of using transportation.
      */
-    public void transportAddButtonAction(int distance, int timesaweek) {
+    public void transportAddButtonAction(TravelType travelType, int distance) {
         try {
-            CO2Response res = ClientApplication.sendAddTransportRequest(distance, timesaweek);
+            CO2Response res = ClientApplication.sendAddTransportRequest(travelType, distance);
             AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
@@ -1025,6 +1014,22 @@ public class GuiMain extends Application {
     public void homeTempAddButtonAction(int temperature, int duration) {
         try {
             CO2Response res = ClientApplication.sendAddHomeTempRequest(temperature, duration);
+            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+        } catch (RestClientException e) {
+            AlertBox.display("An error occurred:\n" + e.getMessage());
+        }
+        showMainMenu();
+    }
+
+    /**
+     * Button for adding action for solar panel.
+     *
+     * @param area - m2 of solar panel added.
+     * @param hoursSunlight - hours of sunlight these solar panels received.
+     */
+    public void solarPanelAction(int area, int hoursSunlight) {
+        try {
+            CO2Response res = ClientApplication.sendAddSolarPanelRequest(area, hoursSunlight);
             AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());

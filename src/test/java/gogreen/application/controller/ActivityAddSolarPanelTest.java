@@ -11,8 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gogreen.application.communication.AddTransportRequest;
-import gogreen.application.communication.AddTransportRequest.TravelType;
+import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
@@ -38,7 +37,7 @@ import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
-public class ActivityAddTransportDataTest {
+public class ActivityAddSolarPanelTest {
 
     private MockMvc mockMvc;
 
@@ -54,11 +53,11 @@ public class ActivityAddTransportDataTest {
     @MockBean
     private CO2Repository co2Repository;
 
-    private final LoginData fakeLoginData = new LoginData("Max", "v3rSt@ppEn");
-    private final TravelType fakeTravelType = TravelType.BIKE;
-    private final int fakeDistance = 11;
+    private final LoginData fakeLoginData = new LoginData("Versace", "g0d");
+    private final int fakeArea = 25;
+    private final int fakeHoursSunlight = 3;
     private final int fakeCO2Reduction = CarbonUtil
-        .getTransportCarbonReduction(fakeTravelType, fakeDistance);
+        .getSolarPanelCarbonReduction(fakeArea, fakeHoursSunlight);
 
     @BeforeEach
     void init() {
@@ -76,10 +75,9 @@ public class ActivityAddTransportDataTest {
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
             .thenReturn(new ArrayList<>());
 
-        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
-            fakeDistance);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
         mockMvc.perform(
-            post("/activity/transport/add")
+            post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(req)))
             .andExpect(status().isUnauthorized())
@@ -95,10 +93,9 @@ public class ActivityAddTransportDataTest {
         // same username but different password.
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
-        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
-            fakeDistance);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
         mockMvc.perform(
-            post("/activity/transport/add")
+            post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(req)))
             .andExpect(status().isUnauthorized())
@@ -114,10 +111,9 @@ public class ActivityAddTransportDataTest {
         setUserValid(fakeLoginData, userRepository);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
-        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
-            fakeDistance);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
         MvcResult res = mockMvc.perform(
-            post("/activity/transport/add")
+            post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(req)))
             .andExpect(status().isOk())
@@ -135,8 +131,8 @@ public class ActivityAddTransportDataTest {
         CO2 savedCO2 = co2ArgumentCaptor.getValue();
         assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
         assertEquals(0, savedCO2.getCO2food());
-        assertEquals(fakeCO2Reduction, savedCO2.getCO2transport());
-        assertEquals(0, savedCO2.getCO2energy());
+        assertEquals(0, savedCO2.getCO2transport());
+        assertEquals(fakeCO2Reduction, savedCO2.getCO2energy());
         assertEquals(fakeCO2Reduction, savedCO2.getCO2reduc());
     }
 
@@ -150,10 +146,9 @@ public class ActivityAddTransportDataTest {
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 
-        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
-            fakeDistance);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
         MvcResult res = mockMvc.perform(
-            post("/activity/transport/add")
+            post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(req)))
             .andExpect(status().isOk())
@@ -171,8 +166,8 @@ public class ActivityAddTransportDataTest {
         CO2 savedCO2 = co2ArgumentCaptor.getValue();
         assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
         assertEquals(fakeCO2.getCO2food(), savedCO2.getCO2food());
-        assertEquals(fakeCO2.getCO2transport() + fakeCO2Reduction, savedCO2.getCO2transport());
-        assertEquals(fakeCO2.getCO2energy(), savedCO2.getCO2energy());
+        assertEquals(fakeCO2.getCO2transport(), savedCO2.getCO2transport());
+        assertEquals(fakeCO2.getCO2energy() + fakeCO2Reduction, savedCO2.getCO2energy());
         assertEquals(fakeCO2.getCO2reduc() + fakeCO2Reduction, savedCO2.getCO2reduc());
     }
 }
