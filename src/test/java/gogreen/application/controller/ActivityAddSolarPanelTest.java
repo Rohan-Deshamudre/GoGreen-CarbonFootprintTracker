@@ -75,7 +75,8 @@ public class ActivityAddSolarPanelTest {
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
             .thenReturn(new ArrayList<>());
 
-        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
+            fakeHoursSunlight);
         mockMvc.perform(
             post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -93,7 +94,8 @@ public class ActivityAddSolarPanelTest {
         // same username but different password.
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
-        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
+            fakeHoursSunlight);
         mockMvc.perform(
             post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -111,7 +113,8 @@ public class ActivityAddSolarPanelTest {
         setUserValid(fakeLoginData, userRepository);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
-        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
+            fakeHoursSunlight);
         MvcResult res = mockMvc.perform(
             post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -146,7 +149,8 @@ public class ActivityAddSolarPanelTest {
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 
-        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea, fakeHoursSunlight);
+        AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
+            fakeHoursSunlight);
         MvcResult res = mockMvc.perform(
             post("/activity/solarpanel/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

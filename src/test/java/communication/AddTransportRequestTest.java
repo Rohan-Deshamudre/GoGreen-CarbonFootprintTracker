@@ -13,7 +13,7 @@ class AddTransportRequestTest {
     @Test
     void constructorTest() {
         AddTransportRequest tr = new AddTransportRequest(
-                new LoginData(), TravelType.BIKE, 3);
+                new LoginData(), TravelType.BIKE, 20);
         assertEquals(20, tr.getDistance());
         assertEquals(TravelType.BIKE, tr.getTravelType());
     }
@@ -28,7 +28,7 @@ class AddTransportRequestTest {
     @Test
     void toStringTest() {
         AddTransportRequest tr = new AddTransportRequest(
-                new LoginData(), TravelType.PUB_TRANSPORT, 3);
+                new LoginData(), TravelType.PUB_TRANSPORT, 20);
         assertEquals("<Co2Request{"
                 + "\n    distance: " + 20
                 + "\n    type: " + TravelType.PUB_TRANSPORT

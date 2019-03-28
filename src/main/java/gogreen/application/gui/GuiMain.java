@@ -417,9 +417,6 @@ public class GuiMain extends Application {
 
         CheckBox checkBox = new CheckBox("Organic");
 
-        Label titleLabel = new Label("Local Store");
-        Label weightLabel = new Label("Weight:");
-
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
@@ -433,6 +430,9 @@ public class GuiMain extends Application {
         centerGrid.setPadding(new Insets(30));
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
+
+        Label titleLabel = new Label("Local Store");
+        Label weightLabel = new Label("Weight:");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(weightLabel, 0, 1);

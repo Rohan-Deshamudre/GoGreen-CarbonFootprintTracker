@@ -75,7 +75,8 @@ public class ActivityAddLocalProduceTest {
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
             .thenReturn(new ArrayList<>());
 
-        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight, fakeOrganic);
+        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
+            fakeOrganic);
         mockMvc.perform(
             post("/activity/localproduce/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -93,7 +94,8 @@ public class ActivityAddLocalProduceTest {
         // same username but different password.
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
-        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight, fakeOrganic);
+        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
+            fakeOrganic);
         mockMvc.perform(
             post("/activity/localproduce/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -111,7 +113,8 @@ public class ActivityAddLocalProduceTest {
         setUserValid(fakeLoginData, userRepository);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
-        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight, fakeOrganic);
+        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
+            fakeOrganic);
         MvcResult res = mockMvc.perform(
             post("/activity/localproduce/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -146,7 +149,8 @@ public class ActivityAddLocalProduceTest {
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 
-        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight, fakeOrganic);
+        AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
+            fakeOrganic);
         MvcResult res = mockMvc.perform(
             post("/activity/localproduce/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

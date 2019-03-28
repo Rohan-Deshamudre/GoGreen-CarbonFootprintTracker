@@ -11,7 +11,9 @@ public class AddTransportRequest extends ClientMessage {
     private int distance;
 
     /**
-     * Making an object which contains the login data, the type of travel and the distance travelled.
+     * Making an object which contains the login data, the type of travel and the distance
+     * travelled.
+     *
      * @param loginData the login data of the user
      * @param travelType the type of travel
      * @param distance the distance of transportation
@@ -23,7 +25,8 @@ public class AddTransportRequest extends ClientMessage {
         this.distance = distance;
     }
 
-    public AddTransportRequest(){}
+    public AddTransportRequest() {
+    }
 
     public int getDistance() {
         return distance;
@@ -36,11 +39,10 @@ public class AddTransportRequest extends ClientMessage {
     @Override
     public String toString() {
 
-
         return "<Co2Request{"
-                + "\n    distance: " + distance
-                + "\n    type: " + travelType
-                + "\n}>";
+            + "\n    distance: " + distance
+            + "\n    type: " + travelType
+            + "\n}>";
     }
 
 }
