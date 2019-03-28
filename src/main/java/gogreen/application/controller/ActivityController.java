@@ -182,12 +182,13 @@ public class ActivityController {
         return result;
     }
 
-    public ArrayList<ShowUser> showRank() {
+    public ArrayList<CO2> showRank() {
         List<CO2> all = co2Repository.findAll();
-        ArrayList<ShowUser> ranking = new ArrayList<>();
+        ArrayList<CO2> ranking = new ArrayList<>();
 
         for(CO2 user : all) {
-            ShowUser newRank = new ShowUser(user.getCusername(), user.getCo2reduc());
+            CO2 newRank = new CO2(user.getCusername(), user.getCo2food(), user.getCo2transport(),
+                    user.getCo2transport(), user.getCo2reduc());
             ranking.add(newRank);
         }
         return ranking;
