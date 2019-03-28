@@ -137,7 +137,7 @@ class LoginControllerTest {
     }
 
     /**
-     * Test registration for a new user. Result to pass: HTTP 200 OK
+     * Test registration for a new user. Result to pass: HTTP 201 Created
      */
     @Test
     void newUserRegistrationTest() throws Exception {

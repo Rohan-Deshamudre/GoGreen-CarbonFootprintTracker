@@ -69,8 +69,24 @@ public class CO2 {
         return CO2transport;
     }
 
+    /**
+     * Adds more CO2 to the total reduction by transport.
+     * @param CO2transport - amount of CO2 to add.
+     */
+    public void addCO2Transport(int CO2transport) {
+        this.CO2transport += CO2transport;
+    }
+
     public int getCO2energy() {
         return CO2energy;
+    }
+
+    /**
+     * Adds more CO2 to the total reduction by energy usage.
+     * @param CO2energy - amount of CO2 to add.
+     */
+    public void addCO2Energy(int CO2energy) {
+        this.CO2energy += CO2energy;
     }
 
     public int getCO2reduc() {
@@ -78,7 +94,7 @@ public class CO2 {
     }
 
     /**
-     * Adds a more CO2 to the total reduction.
+     * Adds more CO2 to the total reduction.
      * @param CO2Reduc - the amount of CO2 to add to the total.
      */
     public void addCO2Reduc(int CO2Reduc) {

@@ -1,8 +1,12 @@
 package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.LoginData;
+import gogreen.application.model.CO2;
 import java.net.URISyntaxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -87,6 +91,24 @@ public class ClientApplication {
     }
 
     /**
+     * Generic implementation of sending a post request containing activity add data to the server
+     *
+     * @param URLPath - path leading to correct api function.
+     * @param requestData - body of the request.
+     * @return - CO2Response describing the change in CO2 made.
+     * @throws RestClientException - iff the status code received is not positive.
+     */
+    private static <T extends ClientMessage> CO2Response sendActivityAddRequest(String URLPath,
+        T requestData) throws RestClientException {
+        log.info("sending activity add request for: " + URLPath);
+        ResponseEntity<CO2Response> res = restTemplate
+            .postForEntity(URL + URLPath, requestData, CO2Response.class);
+        log.info(res);
+
+        return res.getBody();
+    }
+
+    /**
      * This method sends a post request to the server with data provided by the user about their
      * diet.
      *
@@ -98,84 +120,36 @@ public class ClientApplication {
     public static CO2Response sendAddFoodRequest(String choiceBoxValue, int amount)
         throws RestClientException {
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
-
-        log.info("Sending add food request for: " + loginData.getUsername());
-        ResponseEntity<CO2Response> res = restTemplate
-            .postForEntity(URL + "activity/food/add", req, CO2Response.class);
-        log.info(res);
-
-        return res.getBody();
+        return sendActivityAddRequest("activity/food/add", req);
     }
 
     /**
-     * Send a request to add values to the database.
+     * This method sends a post request to the server with data provided by the user about their
+     * transportation habits.
      *
-     * @param distance the distance using transportation
-     * @param timesaweek the amount this has been done
-     * @return returns a string
+     * @param distance - average distance travelled.
+     * @param timesaweek - times a week this distance gets travelled.
+     * @return CO2Response - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
      */
-    public static String sendAddTransportRequest(int distance, int timesaweek) {
-        String resMessage = "";
-//        if (loginData == null) {
-//            return "We are extremely sorry! "
-//                + "There seems to be an issue in updating your Carbon Footprint."
-//                + "Try logging out and in again.";
-//        }
-//        AddTransportRequest req = new AddTransportRequest(loginData, distance, timesaweek);
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        String co2AddUrl = URL + "transport/add";
-//        CO2Response res = restTemplate.postForObject(co2AddUrl, req, CO2Response.class);
-//        System.out.println();
-//        System.out.println(res);
-//        if (res != null && res.getResult()) {
-//            resMessage = "Congratulations" + loginData.getUsername()
-//                + "! Your Carbon Footprint is updated from"
-//                + res.getOldCarbonfootprint()
-//                + " to " + res.getNewCarbonfootprint();
-//        } else {
-//            resMessage = "We are extremely sorry! "
-//                + "There seems to be an issue in updating your Carbon Footprint."
-//                + "Are you using the correct username?";
-//        }
-        return resMessage;
+    public static CO2Response sendAddTransportRequest(int distance, int timesaweek)
+        throws RestClientException {
+        AddTransportRequest req = new AddTransportRequest(loginData, distance, timesaweek);
+        return sendActivityAddRequest("activity/transport/add", req);
     }
 
     /**
-     * Description for this method.
+     * This method sends a post request to the server with data provided by the user about their
+     * transportation habits.
      *
-     * @param temperature the temperature
-     * @param duration the duration
-     * @return a string
-     * @throws URISyntaxException throws an exception
+     * @param temperature - the temperature the thermostat is set to.
+     * @param duration - the duration this temperature is set.
+     * @return - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
      */
-    public static String sendAddHomeTempRequest(int temperature, int duration) {
-        String resMessage = "";
-//        if (loginData == null) {
-//            return "We are extremely sorry! "
-//                + "There seems to be an issue in updating your Carbon Footprint."
-//                + "Try logging out and in again.";
-//        }
-//
-//        AddHomeTempRequest req = new AddHomeTempRequest(loginData, temperature, duration);
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        String co2Addurl = URL + "homeTemp/add";
-//
-//        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
-//        System.out.println();
-//        System.out.println(res);
-//        if (res != null && res.getResult()) {
-//            resMessage = "Congratulations " + loginData.getUsername()
-//                + "! Your Carbon Footprint is updated from "
-//                + res.getOldCarbonfootprint()
-//                + " to " + res.getNewCarbonfootprint();
-//        } else {
-//            resMessage = "We are extremely sorry!"
-//                + "There seems to be an issue in updating your Carbon Footprint."
-//                + " Are you using the correct username?";
-//        }
-        return resMessage;
+    public static CO2Response sendAddHomeTempRequest(int temperature, int duration)
+        throws RestClientException {
+        AddHomeTempRequest req = new AddHomeTempRequest(loginData, temperature, duration);
+        return sendActivityAddRequest("activity/hometemp/add", req);
     }
 }

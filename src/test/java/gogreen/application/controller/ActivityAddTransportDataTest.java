@@ -1,5 +1,6 @@
 package gogreen.application.controller;
 
+
 import static gogreen.application.controller.MockitoTestHelper.setCarbonRecord;
 import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJSONString;
@@ -11,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
-public class ActivityAddFoodDataTest {
+public class ActivityAddTransportDataTest {
 
     private MockMvc mockMvc;
 
@@ -52,9 +53,11 @@ public class ActivityAddFoodDataTest {
     @MockBean
     public CO2Repository co2Repository;
 
-    private final LoginData fakeLoginData = new LoginData("Gucci", "Mane");
-    private final String fakeCheckBoxValue = "salad";
-    private final int fakeCO2Reduction = CarbonUtil.getFoodCarbonReduction(fakeCheckBoxValue);
+    private final LoginData fakeLoginData = new LoginData("Max", "v3rSt@ppEn");
+    private final int fakeDistance = 10;
+    private final int fakeTimesaweek = 3;
+    private final int fakeCO2Reduction = CarbonUtil
+        .getTransportCarbonReduction(fakeDistance, fakeTimesaweek);
 
     @BeforeEach
     void init() {
@@ -72,9 +75,10 @@ public class ActivityAddFoodDataTest {
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
             .thenReturn(new ArrayList<>());
 
-        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeDistance,
+            fakeTimesaweek);
         mockMvc.perform(
-            post("/activity/food/add")
+            post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(req)))
             .andExpect(status().isUnauthorized())
@@ -90,9 +94,10 @@ public class ActivityAddFoodDataTest {
         // same username but different password.
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
-        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeDistance,
+            fakeTimesaweek);
         mockMvc.perform(
-            post("/activity/food/add")
+            post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(req)))
             .andExpect(status().isUnauthorized())
@@ -108,9 +113,10 @@ public class ActivityAddFoodDataTest {
         setUserValid(fakeLoginData, userRepository);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
-        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeDistance,
+            fakeTimesaweek);
         MvcResult res = mockMvc.perform(
-            post("/activity/food/add")
+            post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(req)))
             .andExpect(status().isOk())
@@ -127,8 +133,8 @@ public class ActivityAddFoodDataTest {
         verify(co2Repository).save(co2ArgumentCaptor.capture());
         CO2 savedCO2 = co2ArgumentCaptor.getValue();
         assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
-        assertEquals(fakeCO2Reduction, savedCO2.getCO2food());
-        assertEquals(0, savedCO2.getCO2transport());
+        assertEquals(0, savedCO2.getCO2food());
+        assertEquals(fakeCO2Reduction, savedCO2.getCO2transport());
         assertEquals(0, savedCO2.getCO2energy());
         assertEquals(fakeCO2Reduction, savedCO2.getCO2reduc());
     }
@@ -143,9 +149,10 @@ public class ActivityAddFoodDataTest {
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 
-        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeDistance,
+            fakeTimesaweek);
         MvcResult res = mockMvc.perform(
-            post("/activity/food/add")
+            post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(req)))
             .andExpect(status().isOk())
@@ -162,8 +169,8 @@ public class ActivityAddFoodDataTest {
         verify(co2Repository).save(co2ArgumentCaptor.capture());
         CO2 savedCO2 = co2ArgumentCaptor.getValue();
         assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
-        assertEquals(fakeCO2.getCO2food() + fakeCO2Reduction, savedCO2.getCO2food());
-        assertEquals(fakeCO2.getCO2transport(), savedCO2.getCO2transport());
+        assertEquals(fakeCO2.getCO2food(), savedCO2.getCO2food());
+        assertEquals(fakeCO2.getCO2transport() + fakeCO2Reduction, savedCO2.getCO2transport());
         assertEquals(fakeCO2.getCO2energy(), savedCO2.getCO2energy());
         assertEquals(fakeCO2.getCO2reduc() + fakeCO2Reduction, savedCO2.getCO2reduc());
     }

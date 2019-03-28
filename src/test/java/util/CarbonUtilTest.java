@@ -9,15 +9,15 @@ class CarbonUtilTest {
 
     @Test
     void getDefaultFoodCarbonfootprints() {
-        assertEquals(100, CarbonUtil.getFoodCarbonfootprint("salad"));
-        assertEquals(200, CarbonUtil.getFoodCarbonfootprint("vegetarian meat"));
-        assertEquals(80, CarbonUtil.getFoodCarbonfootprint("fruit"));
-        assertEquals(150, CarbonUtil.getFoodCarbonfootprint("else"));
-        assertEquals(0, CarbonUtil.getFoodCarbonfootprint("not a valid checkbox value"));
+        assertEquals(100, CarbonUtil.getFoodCarbonReduction("salad"));
+        assertEquals(200, CarbonUtil.getFoodCarbonReduction("vegetarian meat"));
+        assertEquals(80, CarbonUtil.getFoodCarbonReduction("fruit"));
+        assertEquals(150, CarbonUtil.getFoodCarbonReduction("else"));
+        assertEquals(0, CarbonUtil.getFoodCarbonReduction("not a valid checkbox value"));
     }
 
     @Test
     void getTransportCarbonfootprint() {
-        assertEquals(5 * 3 + 50, CarbonUtil.getTransportCarbonfootprint(5, 3));
+        assertEquals(5 * 3 + 50, CarbonUtil.getTransportCarbonReduction(5, 3));
     }
 }
