@@ -7,14 +7,14 @@ import gogreen.application.communication.LoginRequest;
 import gogreen.application.communication.LoginResponse;
 import gogreen.application.controller.LoginController;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
 
 
 class LoginControllerTest {
-//    public static ResponseEntity<String> responseBuilder(String res) {
-//        return new ResponseEntity<>(res, HttpStatus.OK);
-//    }
+    //public static ResponseEntity<String> responseBuilder(String res) {
+    //    return new ResponseEntity<>(res, HttpStatus.OK);
+    //}
 
     @Test
     void loginTest() {

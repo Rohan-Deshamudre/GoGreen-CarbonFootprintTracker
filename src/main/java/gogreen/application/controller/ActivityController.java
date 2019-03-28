@@ -3,9 +3,9 @@ package gogreen.application.controller;
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.model.CO2;
-import gogreen.application.model.User;
+import gogreen.application.model.*;
 import gogreen.application.repository.CO2Repository;
+import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.UserRepository;
 import gogreen.application.util.CarbonUtil;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,6 +31,10 @@ public class ActivityController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
+
     /**
      * SpringBoot automatically wires the CO2Repository instance.
      * into this class using this setter method
@@ -177,5 +182,14 @@ public class ActivityController {
         return result;
     }
 
+    public ArrayList<CO2> showFriends(String username) {
+        List<Friend> all = friendRepository.findByFusername(username);
+        ArrayList<CO2> friends = new ArrayList<>();
 
+        for(Friend friend : all) {
+            List<CO2> user = co2Repository.findByCusername(friend.getFriend());
+            friends.add(user.get(0));
+        }
+        return friends;
+    }
 }

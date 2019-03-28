@@ -20,7 +20,8 @@ public class CO2TransportBikeTest {
     @Test
     public void toStringTest() {
         CO2TransportBike bike = new CO2TransportBike("username", 1, 2);
-        assertThat(bike.toString().equals("CO2TransoirtBike[busername='username', distance='1', timesaweek='2']"));
+        assertThat(bike.toString().equals("CO2TransoirtBike[busername='username', distance='1', "
+                + "timesaweek='2']"));
     }
 
     @Test

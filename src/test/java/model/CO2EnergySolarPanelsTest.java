@@ -20,7 +20,8 @@ public class CO2EnergySolarPanelsTest {
     @Test
     public void toStringTest() {
         CO2EnergySolarPanels solar = new CO2EnergySolarPanels("username", 1, 2);
-        assertThat(solar.toString().equals("CO2EnergySolarPanels[spusername='username', area='1', sunlight='2']"));
+        assertThat(solar.toString().equals("CO2EnergySolarPanels[spusername='username', "
+                + "area='1', sunlight='2']"));
     }
 
     @Test
