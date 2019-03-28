@@ -9,7 +9,18 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -1117,8 +1128,8 @@ public class GuiMain extends Application {
 
     /**
      * This method makes a list of all of your friends.
-     * @param friends
-     * @return
+     * @param friends a list of all the friends.
+     * @return a VBox with a representation of all the friends and an option to add new friends.
      */
     public VBox showFriends(ArrayList<CO2> friends) {
         VBox total = new VBox();
