@@ -37,8 +37,8 @@ public class ActivityController {
      * Handle add food requests.
      *
      * @param req - addFoodRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' when the credentials supplied in the request are
-     * invalid. Else returns a CO2Response containing the changes made to the user's CO2 records.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
+     *      CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/food/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -66,8 +66,8 @@ public class ActivityController {
      * Handle add food requests.
      *
      * @param req - addFoodRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' when the credentials supplied in the request are
-     * invalid. Else returns a CO2Response containing the changes made to the user's CO2 records.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
+     *      CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/transport/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -83,7 +83,8 @@ public class ActivityController {
 
         // Update user's carbon food footprint reduction
         CO2 userCO2 = co2Repository.findByCusername(req.getLoginData().getUsername()).get(0);
-        int carbonReducTransport = CarbonUtil.getTransportCarbonReduction(req.getDistance(), req.getTimesaweek());
+        int carbonReducTransport = CarbonUtil
+            .getTransportCarbonReduction(req.getDistance(), req.getTimesaweek());
         userCO2.addCO2Transport(carbonReducTransport);
         userCO2.addCO2Reduc(carbonReducTransport);
         co2Repository.save(userCO2);
@@ -95,8 +96,8 @@ public class ActivityController {
      * Handle add home temperature requests.
      *
      * @param req - addFoodRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' when the credentials supplied in the request are
-     * invalid. Else returns a CO2Response containing the changes made to the user's CO2 records.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
+     *      CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/hometemp/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -112,7 +113,8 @@ public class ActivityController {
 
         // Update user's carbon food footprint reduction
         CO2 userCO2 = co2Repository.findByCusername(req.getLoginData().getUsername()).get(0);
-        int carbonReducHomeTemp = CarbonUtil.getHomeTempCarbonReduction(req.getTemperature(), req.getDuration());
+        int carbonReducHomeTemp = CarbonUtil
+            .getHomeTempCarbonReduction(req.getTemperature(), req.getDuration());
         userCO2.addCO2Energy(carbonReducHomeTemp);
         userCO2.addCO2Reduc(carbonReducHomeTemp);
         co2Repository.save(userCO2);

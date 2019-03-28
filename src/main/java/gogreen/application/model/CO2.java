@@ -31,11 +31,11 @@ public class CO2 {
     /**
      * Makes a CO2 object with the provided parameters.
      *
-     * @param cusername the username of the user.
-     * @param CO2food the total CO2 reduced by diet.
+     * @param cusername    the username of the user.
+     * @param CO2food      the total CO2 reduced by diet.
      * @param CO2transport the total CO2 reduced by transport.
-     * @param CO2Energy the total CO2 reduced by energy.
-     * @param CO2reduc the total CO2 reduced by the user.
+     * @param CO2energy    the total CO2 reduced by energy.
+     * @param CO2reduc     the total CO2 reduced by the user.
      */
     public CO2(String cusername, int CO2food, int CO2transport, int CO2energy, int CO2reduc) {
         this.cusername = cusername;
@@ -61,8 +61,13 @@ public class CO2 {
         return CO2food;
     }
 
-    public void addCO2Food(int CO2Food) {
-        this.CO2food += CO2Food;
+    /**
+     * Adds more CO2 to the total reduction by food.
+     *
+     * @param co2Food - amount of CO2 to add.
+     */
+    public void addCO2Food(int co2Food) {
+        this.CO2food += co2Food;
     }
 
     public int getCO2transport() {
@@ -71,10 +76,11 @@ public class CO2 {
 
     /**
      * Adds more CO2 to the total reduction by transport.
-     * @param CO2transport - amount of CO2 to add.
+     *
+     * @param co2Transport - amount of CO2 to add.
      */
-    public void addCO2Transport(int CO2transport) {
-        this.CO2transport += CO2transport;
+    public void addCO2Transport(int co2Transport) {
+        this.CO2transport += co2Transport;
     }
 
     public int getCO2energy() {
@@ -83,10 +89,11 @@ public class CO2 {
 
     /**
      * Adds more CO2 to the total reduction by energy usage.
-     * @param CO2energy - amount of CO2 to add.
+     *
+     * @param co2Energy - amount of CO2 to add.
      */
-    public void addCO2Energy(int CO2energy) {
-        this.CO2energy += CO2energy;
+    public void addCO2Energy(int co2Energy) {
+        this.CO2energy += co2Energy;
     }
 
     public int getCO2reduc() {
@@ -95,9 +102,10 @@ public class CO2 {
 
     /**
      * Adds more CO2 to the total reduction.
-     * @param CO2Reduc - the amount of CO2 to add to the total.
+     *
+     * @param co2Reduc - the amount of CO2 to add to the total.
      */
-    public void addCO2Reduc(int CO2Reduc) {
-        this.CO2reduc += CO2Reduc;
+    public void addCO2Reduc(int co2Reduc) {
+        this.CO2reduc += co2Reduc;
     }
 }

@@ -1,35 +1,33 @@
 package gogreen.application.controller;
 
-import static gogreen.application.controller.MockitoTestHelper.toJSONString;
+import static gogreen.application.controller.MockitoTestHelper.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(LoginController.class)
@@ -38,13 +36,13 @@ class LoginControllerTest {
     private MockMvc mockMvc;
 
     @InjectMocks
-    LoginController loginController;
+    private LoginController loginController;
 
     @MockBean
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @MockBean
-    CO2Repository co2Repository;
+    private CO2Repository co2Repository;
 
     @BeforeEach
     void init() {
@@ -64,7 +62,7 @@ class LoginControllerTest {
         mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(fakeLoginData)))
+                .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -75,12 +73,12 @@ class LoginControllerTest {
     @Test
     void emptyUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserDB(fakeLoginData, false);
+        setUserDb(fakeLoginData, false);
 
         mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(fakeLoginData)))
+                .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -92,12 +90,12 @@ class LoginControllerTest {
     @Test
     void passwordUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserDB(new LoginData(fakeLoginData.getUsername(), "boogie"), true);
+        setUserDb(new LoginData(fakeLoginData.getUsername(), "boogie"), true);
 
         mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(fakeLoginData)))
+                .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -108,12 +106,12 @@ class LoginControllerTest {
     @Test
     void validUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserDB(fakeLoginData, true);
+        setUserDb(fakeLoginData, true);
 
         mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(fakeLoginData)))
+                .content(toJsonString(fakeLoginData)))
             .andExpect(status().isOk());
     }
 
@@ -126,12 +124,12 @@ class LoginControllerTest {
     @Test
     void usernameTakenRegistrationTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Bob", "R0$$");
-        setUserDB(new LoginData(fakeLoginData.getUsername(), "marl3y"), true);
+        setUserDb(new LoginData(fakeLoginData.getUsername(), "marl3y"), true);
 
         mockMvc.perform(
             post("/login/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(fakeLoginData)))
+                .content(toJsonString(fakeLoginData)))
             .andExpect(status().isForbidden())
             .andReturn();
     }
@@ -146,7 +144,7 @@ class LoginControllerTest {
         mockMvc.perform(
             post("/login/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(fakeLoginData)))
+                .content(toJsonString(fakeLoginData)))
             .andExpect(status().isCreated());
 
         // verify that the user is correctly saved to the userRepository
@@ -175,7 +173,7 @@ class LoginControllerTest {
      * @param loginData - login credentials to set to a state.
      * @param valid - whether the provided login credentials should be valid or not
      */
-    private void setUserDB(LoginData loginData, boolean valid) {
+    private void setUserDb(LoginData loginData, boolean valid) {
         User fakeUser = mock(User.class);
 
         if (valid) {

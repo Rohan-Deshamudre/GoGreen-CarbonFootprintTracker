@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class CO2EnergyTemperatureTest {
 
     @Test
-    public void CO2EnergyTemperatureConstructorTest() {
+    public void co2EnergyTemperatureConstructorTest() {
         CO2EnergyTemperature tem = new CO2EnergyTemperature("username", 1, 2);
         assertTrue(tem.getTusername().equals("username"));
         assertEquals(tem.getReduction(), 1);
@@ -20,7 +20,8 @@ public class CO2EnergyTemperatureTest {
     @Test
     public void toStringTest() {
         CO2EnergyTemperature tem = new CO2EnergyTemperature("username", 1, 2);
-        assertThat(tem.toString().equals("CO2EnergyTemperature[tusername='username', reduction='1', duration='2']"));
+        assertThat(tem.toString()
+            .equals("CO2EnergyTemperature[tusername='username', reduction='1', duration='2']"));
     }
 
     @Test

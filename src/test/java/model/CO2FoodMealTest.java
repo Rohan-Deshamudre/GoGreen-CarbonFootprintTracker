@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class CO2FoodMealTest {
 
     @Test
-    public void CO2FoodMealConstructorTest() {
+    public void co2FoodMealConstructorTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 2);
         assertTrue(meal.getMusername().equals("username"));
         assertTrue(meal.getTypeOfMeal().equals("type"));
@@ -21,7 +21,7 @@ public class CO2FoodMealTest {
     public void toStringTest() {
         CO2FoodMeal meal = new CO2FoodMeal("username", "type", 1);
         assertTrue(meal.toString().equals("CO2FoodMeal[musername='username', "
-                + "typeOfMeal='type', size='1']"));
+            + "typeOfMeal='type', size='1']"));
     }
 
 

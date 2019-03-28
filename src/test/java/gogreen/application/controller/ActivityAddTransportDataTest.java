@@ -1,9 +1,8 @@
 package gogreen.application.controller;
 
-
 import static gogreen.application.controller.MockitoTestHelper.setCarbonRecord;
 import static gogreen.application.controller.MockitoTestHelper.setUserValid;
-import static gogreen.application.controller.MockitoTestHelper.toJSONString;
+import static gogreen.application.controller.MockitoTestHelper.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,7 +18,6 @@ import gogreen.application.model.CO2;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.UserRepository;
 import gogreen.application.util.CarbonUtil;
-import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +33,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
 public class ActivityAddTransportDataTest {
@@ -48,10 +48,10 @@ public class ActivityAddTransportDataTest {
     private ActivityController activityController;
 
     @MockBean
-    public UserRepository userRepository;
+    private UserRepository userRepository;
 
     @MockBean
-    public CO2Repository co2Repository;
+    private CO2Repository co2Repository;
 
     private final LoginData fakeLoginData = new LoginData("Max", "v3rSt@ppEn");
     private final int fakeDistance = 10;
@@ -80,7 +80,7 @@ public class ActivityAddTransportDataTest {
         mockMvc.perform(
             post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(req)))
+                .content(toJsonString(req)))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -99,7 +99,7 @@ public class ActivityAddTransportDataTest {
         mockMvc.perform(
             post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(req)))
+                .content(toJsonString(req)))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -118,7 +118,7 @@ public class ActivityAddTransportDataTest {
         MvcResult res = mockMvc.perform(
             post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(req)))
+                .content(toJsonString(req)))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
@@ -154,7 +154,7 @@ public class ActivityAddTransportDataTest {
         MvcResult res = mockMvc.perform(
             post("/activity/transport/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJSONString(req)))
+                .content(toJsonString(req)))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();

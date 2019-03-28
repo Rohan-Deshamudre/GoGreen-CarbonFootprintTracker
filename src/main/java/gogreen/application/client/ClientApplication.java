@@ -6,8 +6,6 @@ import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.LoginData;
-import gogreen.application.model.CO2;
-import java.net.URISyntaxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -93,16 +91,16 @@ public class ClientApplication {
     /**
      * Generic implementation of sending a post request containing activity add data to the server
      *
-     * @param URLPath - path leading to correct api function.
+     * @param urlPath - path leading to correct api function.
      * @param requestData - body of the request.
      * @return - CO2Response describing the change in CO2 made.
      * @throws RestClientException - iff the status code received is not positive.
      */
-    private static <T extends ClientMessage> CO2Response sendActivityAddRequest(String URLPath,
+    private static <T extends ClientMessage> CO2Response sendActivityAddRequest(String urlPath,
         T requestData) throws RestClientException {
-        log.info("sending activity add request for: " + URLPath);
+        log.info("sending activity add request for: " + urlPath);
         ResponseEntity<CO2Response> res = restTemplate
-            .postForEntity(URL + URLPath, requestData, CO2Response.class);
+            .postForEntity(URL + urlPath, requestData, CO2Response.class);
         log.info(res);
 
         return res.getBody();

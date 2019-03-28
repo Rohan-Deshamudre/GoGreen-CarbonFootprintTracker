@@ -10,6 +10,7 @@ import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.UserRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MockitoTestHelper {
      * @param obj - an arbitrary object to convert.
      * @return - a string representation of the given object.
      */
-    public static String toJSONString(Object obj) {
+    public static String toJsonString(Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (JsonProcessingException e) {

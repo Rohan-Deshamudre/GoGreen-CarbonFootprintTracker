@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 
 public class CO2Test {
+
     @Test
     public void getCUsernameTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
@@ -39,7 +40,7 @@ public class CO2Test {
     }
 
     @Test
-    public void CO2ConstructorTest() {
+    public void co2ConstructorTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
         assertTrue(user.getCUsername().equals("user"));
         assertEquals(user.getCO2food(), 10);
@@ -52,7 +53,7 @@ public class CO2Test {
     public void toStringTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
         assertTrue(user.toString().equals("CO2[cusername='user', Co2Food='10', "
-                + "Co2Transport='11', Co2Energy='12', Co2Reduction='13']"));
+            + "Co2Transport='11', Co2Energy='12', Co2Reduction='13']"));
     }
 }
 

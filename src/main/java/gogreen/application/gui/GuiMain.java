@@ -1026,7 +1026,7 @@ public class GuiMain extends Application {
         try {
             CO2Response res = ClientApplication.sendAddHomeTempRequest(temperature, duration);
             AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
-        } catch (RestClientException e){
+        } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }
         showMainMenu();
