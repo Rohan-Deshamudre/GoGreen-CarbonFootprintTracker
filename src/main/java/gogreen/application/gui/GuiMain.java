@@ -2,7 +2,6 @@ package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.ErrorMessage;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,6 +31,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.springframework.web.client.RestClientException;
 
 
 public class GuiMain extends Application {
@@ -196,8 +196,11 @@ public class GuiMain extends Application {
         Button registrationButton = new Button("Register");
         registrationButton.setOnAction(e -> {
             // Register
+            registerButtonAction(usernameField.getText(), passwordField.getText(),
+                passwordField1.getText());
             usernameField.setText("");
             passwordField.setText("");
+            passwordField1.setText("");
         });
         HBox buttons = new HBox();
         buttons.setSpacing(10);
@@ -946,30 +949,37 @@ public class GuiMain extends Application {
      * @param password - the password
      */
     private void loginButtonAction(String username, String password) {
-        try {
-            ClientApplication.sendLoginRequest(username, password);
-            System.out.println("LOGIN SUCCESFULL");
-            System.out.println("username: " + username);
-            System.out.println("password: " + password);
+        if (
+            ClientApplication.sendLoginRequest(username, password)) {
+            System.out.println("LOGIN SUCCESSFUL");
             System.out.println();
             showMainMenu();
-        } catch (ErrorMessage errorMessage) {
-            System.out.println(errorMessage.getMessage());
-            System.out.println("username: " + username);
-            System.out.println("password: " + password);
+        } else {
+            AlertBox.display("Wrong username/password combination. Please try again.");
+            System.out.println("LOGIN UNSUCCESSFUL");
             System.out.println();
         }
     }
 
-    private void foodAddButtonAction(double val1, double val2, double val3, double val4) {
+    private void registerButtonAction(String username, String password, String passwordConfirm) {
+        if (!password.equals(passwordConfirm)) {
+            AlertBox.display("Passwords do not match!");
+        } else if (ClientApplication.sendRegisterRequest(username, password)) {
+            AlertBox.display("Successfully registered.");
+            showMainMenu();
+        } else {
+            AlertBox.display("Username already taken!");
+        }
+    }
 
-        CO2Response co2Response;
+    private void foodAddButtonAction(double val1, double val2, double val3, double val4) {
         int int1 = (int) val1;
         int int2 = (int) val2;
         int int3 = (int) val3;
         int int4 = (int) val4;
 
         try {
+            CO2Response co2Response = new CO2Response(0);
             if (val1 != 0) {
                 co2Response = ClientApplication.sendAddFoodRequest("Salad", int1);
             }
@@ -983,9 +993,9 @@ public class GuiMain extends Application {
                 co2Response = ClientApplication.sendAddFoodRequest("Else", int4);
             }
 
-            AlertBox.display("done");
-        } catch (ErrorMessage errorMessage) {
-            AlertBox.display(errorMessage.getMessage());
+            AlertBox.display("CO2 reduced with: " + co2Response.getCO2Reduction() + ". Good job!");
+        } catch (RestClientException e) {
+            AlertBox.display(e.getMessage());
         }
         showMainMenu();
     }

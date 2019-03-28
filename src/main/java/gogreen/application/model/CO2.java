@@ -11,19 +11,19 @@ public class CO2 {
 
     @Id
     @Column(name = "cusername")
-    private String cUsername;
+    private String cusername;
 
     @Column(name = "CO2food")
-    private int CO2Food;
+    private int CO2food;
 
     @Column(name = "CO2transport")
-    private int CO2Transport;
+    private int CO2transport;
 
     @Column(name = "CO2energy")
-    private int CO2Energy;
+    private int CO2energy;
 
     @Column(name = "CO2reduc")
-    private int CO2Reduc;
+    private int CO2reduc;
 
     protected CO2() {
     }
@@ -31,18 +31,18 @@ public class CO2 {
     /**
      * Makes a CO2 object with the provided parameters.
      *
-     * @param cUsername the username of the user.
-     * @param CO2Food the total CO2 reduced by diet.
-     * @param CO2Transport the total CO2 reduced by transport.
+     * @param cusername the username of the user.
+     * @param CO2food the total CO2 reduced by diet.
+     * @param CO2transport the total CO2 reduced by transport.
      * @param CO2Energy the total CO2 reduced by energy.
-     * @param CO2Reduc the total CO2 reduced by the user.
+     * @param CO2reduc the total CO2 reduced by the user.
      */
-    public CO2(String cUsername, int CO2Food, int CO2Transport, int CO2Energy, int CO2Reduc) {
-        this.cUsername = cUsername;
-        this.CO2Food = CO2Food;
-        this.CO2Transport = CO2Transport;
-        this.CO2Energy = CO2Energy;
-        this.CO2Reduc = CO2Reduc;
+    public CO2(String cusername, int CO2food, int CO2transport, int CO2energy, int CO2reduc) {
+        this.cusername = cusername;
+        this.CO2food = CO2food;
+        this.CO2transport = CO2transport;
+        this.CO2energy = CO2energy;
+        this.CO2reduc = CO2reduc;
     }
 
     @Override
@@ -50,31 +50,31 @@ public class CO2 {
         return String.format(
             "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
                 + "Co2Energy='%s', Co2Reduction='%d']",
-            cUsername, CO2Food, CO2Transport, CO2Energy, CO2Reduc);
+            cusername, CO2food, CO2transport, CO2energy, CO2reduc);
     }
 
     public String getCUsername() {
-        return cUsername;
+        return cusername;
     }
 
-    public int getCO2Food() {
-        return CO2Food;
+    public int getCO2food() {
+        return CO2food;
     }
 
     public void addCO2Food(int CO2Food) {
-        this.CO2Food += CO2Food;
+        this.CO2food += CO2Food;
     }
 
-    public int getCO2Transport() {
-        return CO2Transport;
+    public int getCO2transport() {
+        return CO2transport;
     }
 
-    public int getCO2Energy() {
-        return CO2Energy;
+    public int getCO2energy() {
+        return CO2energy;
     }
 
-    public int getCO2Reduc() {
-        return CO2Reduc;
+    public int getCO2reduc() {
+        return CO2reduc;
     }
 
     /**
@@ -82,6 +82,6 @@ public class CO2 {
      * @param CO2Reduc - the amount of CO2 to add to the total.
      */
     public void addCO2Reduc(int CO2Reduc) {
-        this.CO2Reduc += CO2Reduc;
+        this.CO2reduc += CO2Reduc;
     }
 }

@@ -2,7 +2,6 @@ package gogreen.application.controller;
 
 import static gogreen.application.controller.MockitoTestHelper.toJSONString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
@@ -76,18 +74,12 @@ public class ActivityAddFoodDataTest {
             .thenReturn(new ArrayList<>());
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
-        MvcResult res = mockMvc.perform(
+        mockMvc.perform(
             post("/activity/food/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(req)))
             .andExpect(status().isUnauthorized())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
-
-        // validate error message is correct.
-        CO2Response co2Response = objectMapper
-            .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertEquals(ErrorMessage.LOGIN_WRONG_USER, co2Response.getErrorMessage().getMessage());
     }
 
     /**
@@ -100,18 +92,12 @@ public class ActivityAddFoodDataTest {
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"));
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
-        MvcResult res = mockMvc.perform(
+        mockMvc.perform(
             post("/activity/food/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(req)))
             .andExpect(status().isUnauthorized())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
-
-        // validate error message is correct.
-        CO2Response co2Response = objectMapper
-            .readValue(res.getResponse().getContentAsString(), CO2Response.class);
-        assertEquals(ErrorMessage.LOGIN_WRONG_PASS, co2Response.getErrorMessage().getMessage());
     }
 
     /**
@@ -142,13 +128,10 @@ public class ActivityAddFoodDataTest {
         verify(co2Repository).save(co2ArgumentCaptor.capture());
         CO2 savedCO2 = co2ArgumentCaptor.getValue();
         assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
-        assertEquals(fakeCO2Reduction, savedCO2.getCO2Food());
-        assertEquals(0, savedCO2.getCO2Transport());
-        assertEquals(0, savedCO2.getCO2Energy());
-        assertEquals(fakeCO2Reduction, savedCO2.getCO2Reduc());
-
-        // validate no error message is sent
-        assertNull(co2Response.getErrorMessage());
+        assertEquals(fakeCO2Reduction, savedCO2.getCO2food());
+        assertEquals(0, savedCO2.getCO2transport());
+        assertEquals(0, savedCO2.getCO2energy());
+        assertEquals(fakeCO2Reduction, savedCO2.getCO2reduc());
     }
 
     /**
@@ -180,13 +163,10 @@ public class ActivityAddFoodDataTest {
         verify(co2Repository).save(co2ArgumentCaptor.capture());
         CO2 savedCO2 = co2ArgumentCaptor.getValue();
         assertEquals(fakeLoginData.getUsername(), savedCO2.getCUsername());
-        assertEquals(fakeCO2.getCO2Food() + fakeCO2Reduction, savedCO2.getCO2Food());
-        assertEquals(fakeCO2.getCO2Transport(), savedCO2.getCO2Transport());
-        assertEquals(fakeCO2.getCO2Energy(), savedCO2.getCO2Energy());
-        assertEquals(fakeCO2.getCO2Reduc() + fakeCO2Reduction, savedCO2.getCO2Reduc());
-
-        // validate no error message is sent
-        assertNull(co2Response.getErrorMessage());
+        assertEquals(fakeCO2.getCO2food() + fakeCO2Reduction, savedCO2.getCO2food());
+        assertEquals(fakeCO2.getCO2transport(), savedCO2.getCO2transport());
+        assertEquals(fakeCO2.getCO2energy(), savedCO2.getCO2energy());
+        assertEquals(fakeCO2.getCO2reduc() + fakeCO2Reduction, savedCO2.getCO2reduc());
     }
 
     /**
@@ -210,8 +190,8 @@ public class ActivityAddFoodDataTest {
     private void setCarbonRecord(CO2 co2) {
         List<CO2> dbUserCO2List = new ArrayList<>();
         dbUserCO2List.add(
-            new CO2(co2.getCUsername(), co2.getCO2Food(), co2.getCO2Transport(), co2.getCO2Energy(),
-                co2.getCO2Reduc()));
+            new CO2(co2.getCUsername(), co2.getCO2food(), co2.getCO2transport(), co2.getCO2energy(),
+                co2.getCO2reduc()));
         when(co2Repository.findByCusername(co2.getCUsername())).thenReturn(dbUserCO2List);
     }
 }

@@ -17,35 +17,35 @@ public class CO2Test {
     @Test
     public void getCO2FoodTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(user.getCO2Food(), 10);
+        assertEquals(user.getCO2food(), 10);
     }
 
     @Test
     public void getCO2Transport() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(user.getCO2Transport(), 11);
+        assertEquals(user.getCO2transport(), 11);
     }
 
     @Test
     public void getCO2Energy() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(user.getCO2Energy(), 12);
+        assertEquals(user.getCO2energy(), 12);
     }
 
     @Test
     public void getCO2ReducTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
-        assertEquals(13, user.getCO2Reduc());
+        assertEquals(13, user.getCO2reduc());
     }
 
     @Test
     public void CO2ConstructorTest() {
         CO2 user = new CO2("user", 10, 11, 12, 13);
         assertTrue(user.getCUsername().equals("user"));
-        assertEquals(user.getCO2Food(), 10);
-        assertEquals(user.getCO2Transport(), 11);
-        assertEquals(user.getCO2Energy(), 12);
-        assertEquals(user.getCO2Reduc(), 13);
+        assertEquals(user.getCO2food(), 10);
+        assertEquals(user.getCO2transport(), 11);
+        assertEquals(user.getCO2energy(), 12);
+        assertEquals(user.getCO2reduc(), 13);
     }
 
     @Test

@@ -10,9 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginResponse;
 import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
@@ -31,7 +29,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(SpringRunner.class)
@@ -39,9 +36,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 class LoginControllerTest {
 
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @InjectMocks
     LoginController loginController;
@@ -67,17 +61,12 @@ class LoginControllerTest {
     void nonExistentUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
 
-        MvcResult res = mockMvc.perform(
+        mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
-
-        // validate error message is correct.
-        LoginResponse loginResponse = objectMapper
-            .readValue(res.getResponse().getContentAsString(), LoginResponse.class);
-        assertEquals(ErrorMessage.LOGIN_WRONG_USER, loginResponse.getErrorMessage().getMessage());
     }
 
     /**
@@ -88,17 +77,12 @@ class LoginControllerTest {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
         setUserDB(fakeLoginData, false);
 
-        MvcResult res = mockMvc.perform(
+        mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
-
-        // validate error message is correct.
-        LoginResponse loginResponse = objectMapper
-            .readValue(res.getResponse().getContentAsString(), LoginResponse.class);
-        assertEquals(ErrorMessage.LOGIN_WRONG_PASS, loginResponse.getErrorMessage().getMessage());
     }
 
     /**
@@ -110,17 +94,12 @@ class LoginControllerTest {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
         setUserDB(new LoginData(fakeLoginData.getUsername(), "boogie"), true);
 
-        MvcResult res = mockMvc.perform(
+        mockMvc.perform(
             post("/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
-
-        // validate error message is correct.
-        LoginResponse loginResponse = objectMapper
-            .readValue(res.getResponse().getContentAsString(), LoginResponse.class);
-        assertEquals(ErrorMessage.LOGIN_WRONG_PASS, loginResponse.getErrorMessage().getMessage());
     }
 
     /**
@@ -149,18 +128,12 @@ class LoginControllerTest {
         LoginData fakeLoginData = new LoginData("Bob", "R0$$");
         setUserDB(new LoginData(fakeLoginData.getUsername(), "marl3y"), true);
 
-        MvcResult res = mockMvc.perform(
+        mockMvc.perform(
             post("/login/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(fakeLoginData)))
             .andExpect(status().isForbidden())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn();
-
-        // validate error message is correct.
-        LoginResponse loginResponse = objectMapper
-            .readValue(res.getResponse().getContentAsString(), LoginResponse.class);
-        assertEquals(ErrorMessage.LOGIN_WRONG_USER, loginResponse.getErrorMessage().getMessage());
     }
 
     /**
@@ -174,7 +147,7 @@ class LoginControllerTest {
             post("/login/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJSONString(fakeLoginData)))
-            .andExpect(status().isOk());
+            .andExpect(status().isCreated());
 
         // verify that the user is correctly saved to the userRepository
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
@@ -190,10 +163,10 @@ class LoginControllerTest {
         CO2 co2Saved = co2ArgumentCaptor.getValue();
 
         assertEquals(fakeLoginData.getUsername(), co2Saved.getCUsername());
-        assertEquals(0, co2Saved.getCO2Food());
-        assertEquals(0, co2Saved.getCO2Energy());
-        assertEquals(0, co2Saved.getCO2Transport());
-        assertEquals(0, co2Saved.getCO2Reduc());
+        assertEquals(0, co2Saved.getCO2food());
+        assertEquals(0, co2Saved.getCO2energy());
+        assertEquals(0, co2Saved.getCO2transport());
+        assertEquals(0, co2Saved.getCO2reduc());
     }
 
     /**

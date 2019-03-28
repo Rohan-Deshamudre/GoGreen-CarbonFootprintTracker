@@ -2,14 +2,12 @@ package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.ErrorMessage;
 import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginResponse;
 import java.net.URISyntaxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class ClientApplication {
@@ -37,23 +35,28 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @throws ErrorMessage - iff login is unsuccessful.
+     * @returns - true iff login is successful.
      */
-    public static void sendLoginRequest(String username, String password) throws ErrorMessage {
+    public static boolean sendLoginRequest(String username, String password) {
         LoginData curLoginData = new LoginData(username, password);
 
-        log.info("Logging in to " + username);
-        ResponseEntity<LoginResponse> res = restTemplate
-            .postForEntity(URL + "login", curLoginData, LoginResponse.class);
-
-        if (!res.getStatusCode().equals(HttpStatus.OK)) {
-            throw res.getBody().getErrorMessage();
+        try {
+            log.info("Logging in to " + username);
+            restTemplate
+                .postForLocation(URL + "login", curLoginData);
+        } catch (RestClientException e) {
+            // server returned a http error code
+            return false;
         }
 
         log.info("Login successful!");
         loginData = curLoginData;
+        return true;
     }
 
+    /**
+     * Clears the currently stored login data.
+     */
     public static void clearLoginData() {
         loginData = null;
     }
@@ -64,21 +67,23 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @throws ErrorMessage - if the registration was unsuccessful.
+     * @return - true iff the registration was successful.
      */
-    public static void sendRegisterRequest(String username, String password) throws ErrorMessage {
+    public static boolean sendRegisterRequest(String username, String password) {
         LoginData curLoginData = new LoginData(username, password);
 
         log.info("Attempting to register a new account for " + username);
-        ResponseEntity<LoginResponse> res = restTemplate
-            .postForEntity(URL + "login/register", curLoginData, LoginResponse.class);
-
-        if (!res.getStatusCode().equals(HttpStatus.OK)) {
-            throw res.getBody().getErrorMessage();
+        try {
+            restTemplate
+                .postForLocation(URL + "login/register", curLoginData);
+        } catch (RestClientException e) {
+            // registration unsuccessful.
+            return false;
         }
 
         log.info("Account registration successful!");
         loginData = curLoginData;
+        return true;
     }
 
     /**
@@ -87,10 +92,11 @@ public class ClientApplication {
      *
      * @param choiceBoxValue - decide the value that will be added to the user.
      * @param amount - the amount of food added.
-     * @throws ErrorMessage - an error message if something went wrong.
+     * @return CO2Response - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
      */
     public static CO2Response sendAddFoodRequest(String choiceBoxValue, int amount)
-        throws ErrorMessage {
+        throws RestClientException {
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
 
         log.info("Sending add food request for: " + loginData.getUsername());
@@ -98,9 +104,6 @@ public class ClientApplication {
             .postForEntity(URL + "activity/food/add", req, CO2Response.class);
         log.info(res);
 
-        if (!res.getStatusCode().equals(HttpStatus.OK)) {
-            throw res.getBody().getErrorMessage();
-        }
         return res.getBody();
     }
 

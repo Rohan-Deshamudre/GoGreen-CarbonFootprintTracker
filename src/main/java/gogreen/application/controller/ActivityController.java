@@ -4,7 +4,6 @@ import static gogreen.application.controller.LoginController.checkLoginData;
 
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.ErrorMessage;
 import gogreen.application.model.CO2;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.UserRepository;
@@ -46,13 +45,9 @@ public class ActivityController {
     public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddFoodRequest req) {
         log.info(req.toString());
 
-        // validate session
-        try {
-            checkLoginData(req.getLoginData(), userRepository);
-        } catch (ErrorMessage errorMessage) {
-            CO2Response res = new CO2Response();
-            res.setErrorMessage(errorMessage);
-            return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         // Update user's carbon food footprint reduction
