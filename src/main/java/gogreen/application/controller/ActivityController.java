@@ -182,27 +182,13 @@ public class ActivityController {
         return result;
     }
 
-    public ArrayList<CO2> showRank() {
-        List<CO2> all = co2Repository.findAll();
-        ArrayList<CO2> ranking = new ArrayList<>();
-
-        for(CO2 user : all) {
-            CO2 newRank = new CO2(user.getCusername(), user.getCo2food(), user.getCo2transport(),
-                    user.getCo2transport(), user.getCo2reduc());
-            ranking.add(newRank);
-        }
-        return ranking;
-    }
-
-    public ArrayList<FriendList> showFriends(String username) {
+    public ArrayList<CO2> showFriends(String username) {
         List<Friend> all = friendRepository.findByFusername(username);
-        ArrayList<FriendList> friends = new ArrayList<>();
+        ArrayList<CO2> friends = new ArrayList<>();
 
         for(Friend friend : all) {
             List<CO2> user = co2Repository.findByCusername(friend.getFriend());
-            CO2 user1 = user.get(0);
-            FriendList newFriend = new FriendList(friend.getFriend(), user1.getCo2reduc());
-            friends.add(newFriend);
+            friends.add(user.get(0));
         }
         return friends;
     }
