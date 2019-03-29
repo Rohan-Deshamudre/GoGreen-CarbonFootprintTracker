@@ -202,7 +202,6 @@ public class ActivityController {
         // TODO: check login data.
 
         boolean result = true;
-        Leaderboard leaderboard = null;
 
         if (result) {
             String username = req.getLoginData().getUsername();
@@ -214,7 +213,7 @@ public class ActivityController {
                 CO2 adding = user.get(0);
                 friends.add(adding);
             }
-            leaderboard.addList(friends);
+            Leaderboard leaderboard = new Leaderboard();
             return leaderboard;
         } else {
             throw new IllegalArgumentException();
@@ -239,8 +238,8 @@ public class ActivityController {
 
 
         if (result) {
-            CO2 user = new CO2("TestUser123", 1, 2, 3, 6);
-            return user;
+            List<CO2> user = co2Repository.findByCusername(req.getLoginData().getUsername());
+            return user.get(0);
 
         } else {
             throw new IllegalArgumentException();
