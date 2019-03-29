@@ -86,6 +86,28 @@ public class ClientApplication {
     }
 
     /**
+     * This method sends a POST request to the server with the login information.
+     * Request friend list.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static CO2 sendGetUserStatsRequest()
+            throws URISyntaxException {
+
+        LoginRequest req = new LoginRequest(loginData);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "user";
+        CO2 res = restTemplate.postForObject(loginUrl, req, CO2.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
      * Adding co2 to the user.
      * @param choiceBoxValue decide the value that will be added to the user
      * @param amount the amount of food added

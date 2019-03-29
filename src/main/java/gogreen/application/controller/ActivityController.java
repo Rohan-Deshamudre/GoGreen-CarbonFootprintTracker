@@ -1,5 +1,6 @@
 package gogreen.application.controller;
 
+import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddTransportRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,6 +222,28 @@ public class ActivityController {
     }
 
 
+    /**
+     * Makes a list of friends.
+     * @param req the LoginRequest.
+     * @return all the friends of that user.
+     */
+    @RequestMapping(value = "/user",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public CO2 userStats(@RequestBody LoginRequest req) {
+
+        // TODO: check login data.
+
+        boolean result = true;
 
 
+        if (result) {
+            CO2 user = new CO2("TestUser123", 1, 2, 3, 6);
+            return user;
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 }
