@@ -206,6 +206,7 @@ public class ActivityController {
         if (result) {
             String username = req.getLoginData().getUsername();
             List<Friend> all = friendRepository.findByFusername(username);
+            System.out.println(all);
             ArrayList<CO2> friends = new ArrayList<>();
 
             for (Friend friend : all) {
@@ -213,7 +214,8 @@ public class ActivityController {
                 CO2 adding = user.get(0);
                 friends.add(adding);
             }
-            Leaderboard leaderboard = new Leaderboard();
+
+            Leaderboard leaderboard = new Leaderboard(friends);
             return leaderboard;
         } else {
             throw new IllegalArgumentException();
