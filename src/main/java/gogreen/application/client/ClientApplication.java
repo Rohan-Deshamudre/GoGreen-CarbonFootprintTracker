@@ -69,7 +69,7 @@ public class ClientApplication {
      * @return - returns true if method was successful.
      * @throws URISyntaxException - can throw exception.
      */
-    public static ArrayList<CO2> sendGetFriendListRequest()
+    public static Leaderboard sendGetFriendListRequest()
             throws URISyntaxException {
 
         LoginRequest req = new LoginRequest(loginData);
@@ -78,9 +78,8 @@ public class ClientApplication {
         RestTemplate restTemplate = new RestTemplate();
 
         String loginUrl = URL + "friendlist";
-        ArrayList<CO2> res = restTemplate.postForObject(loginUrl, req, ArrayList.class);
+        Leaderboard res = restTemplate.postForObject(loginUrl, req, Leaderboard.class);
 
-        System.out.println();
         System.out.println(res);
 
         return res;

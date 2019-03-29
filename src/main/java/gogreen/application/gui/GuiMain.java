@@ -269,16 +269,18 @@ public class GuiMain extends Application {
         buttons.add(share, 1, 1);
 
         // Leaderboard
-        // The leaderboard should be made from the database.
-
-//        Leaderboard leaderboard = new Leaderboard();
-        Leaderboard leaderboard = new Leaderboard();
+        Leaderboard leaderboard = null;
         try {
-            leaderboard = new Leaderboard(ClientApplication.sendGetFriendListRequest());
+            leaderboard = ClientApplication.sendGetFriendListRequest();
             System.out.println(leaderboard.getUsers().get(0));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        System.out.println(leaderboard.getUsers().size());
+        System.out.println(leaderboard.getUsers().get(0));
+        System.out.println(leaderboard.getUsers().get(1));
+        System.out.println();
 
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
