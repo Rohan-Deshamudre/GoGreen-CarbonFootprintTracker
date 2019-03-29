@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -199,19 +200,19 @@ public class ActivityController {
 
         boolean result = true;
 
-
         if (result) {
             String username = req.getLoginData().getUsername();
             List<Friend> all = friendRepository.findByFusername(username);
-            ArrayList<CO2> friends = new ArrayList<CO2>();
+            System.out.println(all);
+            ArrayList<CO2> friends = new ArrayList<>();
 
-//            for (Friend friend : all) {
-//                List<CO2> user = co2Repository.findByCusername(friend.getFriend());
-//                friends.add(user.get(0));
-//            }
+            for (Friend friend : all) {
+                List<CO2> user = co2Repository.findByCusername(friend.getFriend());
+                CO2 adding = user.get(0);
+                friends.add(adding);
+            }
 
-           Leaderboard leaderboard = new Leaderboard();
-
+            Leaderboard leaderboard = new Leaderboard(friends);
             return leaderboard;
         } else {
             throw new IllegalArgumentException();
@@ -236,8 +237,8 @@ public class ActivityController {
 
 
         if (result) {
-            CO2 user = new CO2("TestUser123", 1, 2, 3, 6);
-            return user;
+            List<CO2> user = co2Repository.findByCusername(req.getLoginData().getUsername());
+            return user.get(0);
 
         } else {
             throw new IllegalArgumentException();

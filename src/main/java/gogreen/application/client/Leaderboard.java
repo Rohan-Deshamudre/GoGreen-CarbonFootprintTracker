@@ -52,6 +52,12 @@ public class Leaderboard {
         return this.users;
     }
 
+    public void addList(ArrayList<CO2> list) {
+        for(CO2 co2 : list) {
+            users.add(co2);
+        }
+    }
+
     /**
      * ToString method.
      * @return - a String representation of the object.
