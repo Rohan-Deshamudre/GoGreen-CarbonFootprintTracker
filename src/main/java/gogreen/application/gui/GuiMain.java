@@ -855,10 +855,17 @@ public class GuiMain extends Application {
         VBox allFriends = showFriends(leaderboard.getUsers());
         allFriends.setPadding(new Insets(100));
 
+        // Show friend requests
+        Leaderboard friendRequests = new Leaderboard();
+        friendRequests.sortLeaderboard();
+        VBox allFriendRequests = friendRequestTable(friendRequests.getUsers());
+        allFriendRequests.setPadding(new Insets(100));
+
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(grid);
-        borderPane.setRight(allFriends);
+        borderPane.setLeft(grid);
+        borderPane.setCenter(allFriends);
+        borderPane.setRight(allFriendRequests);
         menuBar(borderPane);
 
         // Stats
@@ -1141,6 +1148,43 @@ public class GuiMain extends Application {
     }
 
     /**
+     * leaderboard containing the username and the total co2 reduction.
+     * @param user username.
+     * @return a tile of the leaderboard.
+     */
+    public GridPane friendRequestTile(CO2 user) {
+        GridPane gridtile = new GridPane();
+        gridtile.setPadding(new Insets(10));
+        gridtile.setHgap(20);
+
+        Label cusername = new Label(user.getCusername());
+        Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
+        Button accept = new Button("Accept");
+        Button decline = new Button("Decline");
+
+        gridtile.add(cusername, 0, 0);
+        gridtile.add(co2reduc, 1, 0);
+        gridtile.add(accept, 2, 0);
+        gridtile.add(decline, 3, 0);
+        return gridtile;
+    }
+
+    /**
+     * The VBox showing the friend requests of an arraylist of users in CO2 class.
+     * @param users username
+     * @return return the vBox
+     */
+    public VBox friendRequestTable(ArrayList<CO2> users) {
+        VBox vbox = new VBox();
+
+        for (CO2 user: users) {
+            GridPane tile = friendRequestTile(user);
+            vbox.getChildren().add(tile);
+        }
+        return vbox;
+    }
+
+    /**
      * This method makes a list of all of your friends.
      * @param friends a list of all the friends.
      * @return a VBox with a representation of all the friends and an option to add new friends.
@@ -1190,7 +1234,6 @@ public class GuiMain extends Application {
         Boolean answer = ConfirmBox.display("Logout",
                 "Are you sure you want to logout?");
         if (answer) {
-            AlertBox.display("You have logged out");
             ClientApplication.clearLoginData();
             loginPage();
         }
