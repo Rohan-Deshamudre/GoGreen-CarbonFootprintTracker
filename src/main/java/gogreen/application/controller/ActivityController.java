@@ -1,6 +1,5 @@
 package gogreen.application.controller;
 
-import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.*;
 import gogreen.application.model.*;
@@ -14,13 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -289,6 +286,7 @@ public class ActivityController {
         if (result) {
             // Leaderboard can be reused to show the friend requests as well.
             Leaderboard leaderboard = new Leaderboard();
+            System.out.println("<See FR>");
             System.out.println(req.getLoginData().getUsername());
             return leaderboard;
 
@@ -314,6 +312,7 @@ public class ActivityController {
 
         if (result) {
             // Connect to the database.
+            System.out.println("<FR Response>");
             System.out.println(req.getFriendUsername());
             System.out.println(req.isAccepted());
             return true;

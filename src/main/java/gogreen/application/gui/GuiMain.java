@@ -1,6 +1,5 @@
 package gogreen.application.gui;
 
-import ch.qos.logback.core.net.server.Client;
 import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.model.CO2;
@@ -856,7 +855,12 @@ public class GuiMain extends Application {
         allFriends.setPadding(new Insets(100));
 
         // Show friend requests
-        Leaderboard friendRequests = new Leaderboard();
+        Leaderboard friendRequests = null;
+        try {
+            friendRequests = ClientApplication.getFriendRequests();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         friendRequests.sortLeaderboard();
         VBox allFriendRequests = friendRequestTable(friendRequests.getUsers());
         allFriendRequests.setPadding(new Insets(100));
@@ -899,7 +903,6 @@ public class GuiMain extends Application {
         grid.add(co2transportValue, 4, 12);
         grid.add(co2energy, 0, 15);
         grid.add(co2energyValue, 4, 15);
-
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -1160,7 +1163,21 @@ public class GuiMain extends Application {
         Label cusername = new Label(user.getCusername());
         Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
         Button accept = new Button("Accept");
+        accept.setOnAction(e -> {
+            try {
+                ClientApplication.respondToFriendRequest(user.getCusername(), true);
+            } catch (URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+        });
         Button decline = new Button("Decline");
+        decline.setOnAction(e -> {
+            try {
+                ClientApplication.respondToFriendRequest(user.getCusername(), false);
+            } catch (URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         gridtile.add(cusername, 0, 0);
         gridtile.add(co2reduc, 1, 0);
