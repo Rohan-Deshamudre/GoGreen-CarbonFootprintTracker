@@ -17,6 +17,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -838,17 +839,28 @@ public class GuiMain extends Application {
 
         // CENTER
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
+
+        // Show friends
+        Leaderboard leaderboard = null;
+        try {
+            leaderboard = ClientApplication.sendGetFriendListRequest();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        leaderboard.sortLeaderboard();
+        VBox allFriends = showFriends(leaderboard.getUsers());
+        allFriends.setPadding(new Insets(100));
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(grid);
+        borderPane.setRight(allFriends);
         menuBar(borderPane);
 
         // Stats
-//        CO2 user = new CO2("TestUser", 1, 2, 3, 6);
         CO2 user = null;
         try {
             user = ClientApplication.sendGetUserStatsRequest();
@@ -867,7 +879,6 @@ public class GuiMain extends Application {
         Label co2transportValue = new Label(Integer.toString(user.getCo2transport()));
         Label co2energy = new Label("CO2 reduction for energy:");
         Label co2energyValue = new Label(Integer.toString(user.getCo2energy()));
-
 
         grid.add(stats, 0, 0);
         grid.add(username, 0, 3);
@@ -912,7 +923,7 @@ public class GuiMain extends Application {
 
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
-            loginPage();
+            logout();
         });
 
         Menu menu = new Menu("Menu");
@@ -1128,20 +1139,46 @@ public class GuiMain extends Application {
         return vbox;
     }
 
-    private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Closing the program",
-                "Are you sure you want to exit?");
-        if (answer) {
-            ClientApplication.clearLoginData();
-            window.close();
-        }
+    /**
+     * This method makes a list of all of your friends.
+     * @param friends a list of all the friends.
+     * @return a VBox with a representation of all the friends and an option to add new friends.
+     */
+    public VBox showFriends(ArrayList<CO2> friends) {
+        VBox total = new VBox();
+        ScrollPane scrollPane = new ScrollPane();
+
+        VBox leaderboard = leaderboard(friends);
+        scrollPane.setContent(leaderboard);
+
+        Label friendLabel = new Label("Friends: ");
+        Label addFriendLabel = new Label("\nAdd friend: ");
+        TextField addFriendField = new TextField();
+        Button addFriendButton = new Button("Add");
+        HBox addFriendBox = new HBox();
+        addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
+
+        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
+        return total;
     }
 
+    /**
+     * This method closes the program.
+     */
+    private void closeProgram() {
+        ClientApplication.clearLoginData();
+        window.close();
+    }
+
+    /**
+     * This method logs you out.
+     */
     private void logout() {
         Boolean answer = ConfirmBox.display("Logout",
                 "Are you sure you want to logout?");
         if (answer) {
             AlertBox.display("You have logged out");
+            ClientApplication.clearLoginData();
             loginPage();
         }
     }
