@@ -116,3 +116,4 @@ jacocoTestCoverageVerification {
 //mainClassName = 'client.ClientApplication'
 mainClassName = 'gogreen.application.gui.GuiMain'
 //mainClassName = 'gogreen.application.ServerApplication'
+

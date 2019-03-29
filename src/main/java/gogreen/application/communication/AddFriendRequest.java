@@ -15,6 +15,14 @@ public class AddFriendRequest extends ClientMessage {
     }
 
     /**
+     * Getter of the friendUsername.
+     * @return the friendUsername.
+     */
+    public String getFriendUsername() {
+        return friendUsername;
+    }
+
+    /**
      * To string method of the class.
      * @return a String representation of the class.
      */

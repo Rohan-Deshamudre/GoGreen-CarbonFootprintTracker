@@ -1,5 +1,6 @@
 package gogreen.application.gui;
 
+import ch.qos.logback.core.net.server.Client;
 import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.model.CO2;
@@ -1155,6 +1156,18 @@ public class GuiMain extends Application {
         Label addFriendLabel = new Label("\nAdd friend: ");
         TextField addFriendField = new TextField();
         Button addFriendButton = new Button("Add");
+
+        addFriendButton.setOnAction(e -> {
+            String friendUsername = addFriendField.getText();
+            addFriendField.setText("");
+            System.out.println(friendUsername);
+            try {
+                ClientApplication.sendAddFriendRequest(friendUsername);
+            } catch (URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+        });
+
         HBox addFriendBox = new HBox();
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 

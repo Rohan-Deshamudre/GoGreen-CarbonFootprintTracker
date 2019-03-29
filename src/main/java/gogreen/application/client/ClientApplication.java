@@ -1,12 +1,6 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddHomeTempRequest;
-import gogreen.application.communication.AddTransportRequest;
-import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginRequest;
-import gogreen.application.communication.LoginResponse;
+import gogreen.application.communication.*;
 import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
 
@@ -101,6 +95,28 @@ public class ClientApplication {
 
         String loginUrl = URL + "user";
         CO2 res = restTemplate.postForObject(loginUrl, req, CO2.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request adding a friend.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static boolean sendAddFriendRequest(String username)
+            throws URISyntaxException {
+
+        AddFriendRequest req = new AddFriendRequest(loginData, username);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "addfriend";
+        boolean res = restTemplate.postForObject(loginUrl, req, boolean.class);
 
         System.out.println(res);
 

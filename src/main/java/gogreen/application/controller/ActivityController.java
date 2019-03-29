@@ -250,7 +250,7 @@ public class ActivityController {
      * @param req the LoginRequest.
      * @return is method successful.
      */
-    @RequestMapping(value = "/user",
+    @RequestMapping(value = "/addfriend",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -261,6 +261,7 @@ public class ActivityController {
         boolean result = true;
 
         if (result) {
+            System.out.println("Friend USERNAME: " + req.getFriendUsername());
             boolean success = true;
             return true;
 
