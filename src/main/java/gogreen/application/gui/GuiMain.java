@@ -277,11 +277,6 @@ public class GuiMain extends Application {
             e.printStackTrace();
         }
 
-        System.out.println(leaderboard.getUsers().size());
-        System.out.println(leaderboard.getUsers().get(0));
-        System.out.println(leaderboard.getUsers().get(1));
-        System.out.println();
-
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
@@ -853,22 +848,25 @@ public class GuiMain extends Application {
         menuBar(borderPane);
 
         // Stats
+//        CO2 user = new CO2("TestUser", 1, 2, 3, 6);
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
         Label stats = new Label("Stats");
-        // Username and username_value
         Label username = new Label("Username:");
-        Label usernameValue = new Label("value for username");
-        // totalCO2 and totalCO2_value
+        Label usernameValue = new Label(user.getCusername());
         Label totalCO2 = new Label("Total CO2 reduction:");
-        Label totalCO2Value = new Label("totalCO2_value");
-        // CO2food and CO2food_value
+        Label totalCO2Value = new Label(Integer.toString(user.getCo2reduc()));
         Label co2food = new Label("CO2 reduction for food:");
-        Label co2foodValue = new Label("CO2food_value");
-        //CO2transport and CO2transport_value
+        Label co2foodValue = new Label(Integer.toString(user.getCo2food()));
         Label co2transport = new Label("CO2 reduction for transport:");
-        Label co2transportValue = new Label("CO2transport_value");
-        //CO2energy and CO2energy_value
+        Label co2transportValue = new Label(Integer.toString(user.getCo2transport()));
         Label co2energy = new Label("CO2 reduction for energy:");
-        Label co2energyValue = new Label("CO2reduction_value");
+        Label co2energyValue = new Label(Integer.toString(user.getCo2energy()));
 
 
         grid.add(stats, 0, 0);
