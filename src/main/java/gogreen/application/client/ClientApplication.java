@@ -153,7 +153,6 @@ public class ClientApplication {
      * @return returns a string
      * @throws URISyntaxException throws an exception
      */
-
     public static String sendAddTransportRequest(int distance, int timesaweek)
             throws URISyntaxException  {
         String resMessage;

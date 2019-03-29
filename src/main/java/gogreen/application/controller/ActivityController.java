@@ -2,10 +2,7 @@ package gogreen.application.controller;
 
 import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddTransportRequest;
-import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.LoginRequest;
+import gogreen.application.communication.*;
 import gogreen.application.model.*;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
@@ -246,4 +243,30 @@ public class ActivityController {
             throw new IllegalArgumentException();
         }
     }
+
+
+    /**
+     * Makes a list of friends.
+     * @param req the LoginRequest.
+     * @return is method successful.
+     */
+    @RequestMapping(value = "/user",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public boolean addFriend(@RequestBody AddFriendRequest req) {
+
+        // TODO: check login data.
+
+        boolean result = true;
+
+        if (result) {
+            boolean success = true;
+            return true;
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
 }
