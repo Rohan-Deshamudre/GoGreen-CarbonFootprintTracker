@@ -1176,6 +1176,7 @@ public class GuiMain extends Application {
      */
     public VBox friendRequestTable(ArrayList<CO2> users) {
         VBox vbox = new VBox();
+        vbox.getChildren().add(new Label("Friend requests: "));
 
         for (CO2 user: users) {
             GridPane tile = friendRequestTile(user);
