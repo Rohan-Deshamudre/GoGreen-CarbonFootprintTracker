@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -201,6 +202,7 @@ public class ActivityController {
         // TODO: check login data.
 
         boolean result = true;
+        Leaderboard leaderboard = null;
 
         if (result) {
             String username = req.getLoginData().getUsername();
@@ -208,15 +210,15 @@ public class ActivityController {
             ArrayList<CO2> friends = new ArrayList<>();
 
             for (Friend friend : all) {
-                System.out.println(co2Repository.findByCusername(friend.getFriend()));
                 List<CO2> user = co2Repository.findByCusername(friend.getFriend());
-                friends.add(user.get(0));
+                CO2 adding = user.get(0);
+                friends.add(adding);
             }
-            Leaderboard leaderboard = new Leaderboard(friends);
-
+            leaderboard.addList(friends);
             return leaderboard;
+        } else {
+            throw new IllegalArgumentException();
         }
-        return new Leaderboard();
     }
 
 
