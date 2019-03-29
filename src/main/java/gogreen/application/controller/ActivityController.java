@@ -200,23 +200,21 @@ public class ActivityController {
 
         boolean result = true;
 
-
         if (result) {
             String username = req.getLoginData().getUsername();
             List<Friend> all = friendRepository.findByFusername(username);
-            ArrayList<CO2> friends = new ArrayList<CO2>();
+            ArrayList<CO2> friends = new ArrayList<>();
 
-//            for (Friend friend : all) {
-//                List<CO2> user = co2Repository.findByCusername(friend.getFriend());
-//                friends.add(user.get(0));
-//            }
-
-           Leaderboard leaderboard = new Leaderboard();
+            for (Friend friend : all) {
+                System.out.println(co2Repository.findByCusername(friend.getFriend()));
+                List<CO2> user = co2Repository.findByCusername(friend.getFriend());
+                friends.add(user.get(0));
+            }
+            Leaderboard leaderboard = new Leaderboard(friends);
 
             return leaderboard;
-        } else {
-            throw new IllegalArgumentException();
         }
+        return new Leaderboard();
     }
 
 

@@ -272,7 +272,7 @@ public class GuiMain extends Application {
         Leaderboard leaderboard = null;
         try {
             leaderboard = ClientApplication.sendGetFriendListRequest();
-            System.out.println(leaderboard.getUsers().get(0));
+            System.out.println(leaderboard);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
