@@ -2,24 +2,28 @@ package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddLocalProduceRequest;
+import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.LoginData;
-import gogreen.application.communication.LoginRequest;
-import gogreen.application.communication.LoginResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
-    //private static final String URL = "http://localhost:8080/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
+
+    private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
+    private static RestTemplate restTemplate = new RestTemplate();
 
     private static LoginData loginData = null;
-
-    public static void main(String args[]) throws URISyntaxException {
-    }
 
     /**
      * get requests index page of our heroku server.
@@ -27,7 +31,6 @@ public class ClientApplication {
      * @return the text response from the server.
      */
     public static String getRequestHeroku() {
-        RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject(URL, String.class);
         return quote;
     }
@@ -37,143 +40,147 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @return - returns true if login successful.
-     * @throws URISyntaxException - can throw exception.
+     * @returns - true iff login is successful.
      */
-    public static boolean sendLoginRequest(String username, String password)
-            throws URISyntaxException {
+    public static boolean sendLoginRequest(String username, String password) {
+        LoginData curLoginData = new LoginData(username, password);
 
-        LoginRequest req = new LoginRequest(new LoginData(username, password));
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        String loginUrl = URL + "login";
-        LoginResponse res = restTemplate.postForObject(loginUrl, req, LoginResponse.class);
-
-        System.out.println();
-        System.out.println(res);
-
-        if (res.isSuccess()) {
-            loginData = new LoginData(username, password);
+        try {
+            log.info("Logging in to " + username);
+            restTemplate
+                .postForLocation(URL + "login", curLoginData);
+        } catch (RestClientException e) {
+            // server returned a http error code
+            return false;
         }
-        return res.isSuccess();
+
+        log.info("Login successful!");
+        loginData = curLoginData;
+        return true;
     }
 
     /**
-     * Adding co2 to the user.
-     * @param choiceBoxValue decide the value that will be added to the user
-     * @param amount the amount of food added
-     * @return returns the message
-     * @throws URISyntaxException gives syntax exception
+     * Clears the currently stored login data.
      */
-
-    public static String sendAddFoodRequest(String choiceBoxValue, int amount)
-            throws URISyntaxException {
-        String resMessage;
-        if (loginData == null) {
-            return "We are extremely sorry! "
-                    + "There seems to be an issue in updating your Carbon Footprint."
-                    + "Try logging out and in again.";
-        }
-
-        AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        String co2Addurl = URL + "food/add";
-        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
-        System.out.println();
-        System.out.println(res);
-        if (res != null && res.getResult()) {
-            resMessage = "Congratulations" + loginData.getUsername()
-                    + "! Your Carbon Footprint is updated from"
-                    + res.getOldCarbonfootprint()
-                    + " to " + res.getNewCarbonfootprint();
-        } else {
-            resMessage = "We are extremely sorry! "
-                    + "There seems to be an issue in updating your Carbon Footprint."
-                    + "Are you using the correct username?";
-        }
-
-        return resMessage;
-    }
-
-    /**
-     * Send a request to add values to the database.
-     * @param distance the distance using transportation
-     * @param timesaweek the amount this has been done
-     * @return returns a string
-     * @throws URISyntaxException throws an exception
-     */
-
-    public static String sendAddTransportRequest(int distance, int timesaweek)
-            throws URISyntaxException  {
-        String resMessage;
-        if (loginData == null) {
-            return "We are extremely sorry! "
-                    + "There seems to be an issue in updating your Carbon Footprint."
-                    + "Try logging out and in again.";
-        }
-        AddTransportRequest req = new AddTransportRequest(loginData,distance,timesaweek);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        String co2AddUrl = URL + "transport/add";
-        CO2Response res = restTemplate.postForObject(co2AddUrl, req, CO2Response.class);
-        System.out.println();
-        System.out.println(res);
-        if (res != null && res.getResult()) {
-            resMessage = "Congratulations" + loginData.getUsername()
-                    + "! Your Carbon Footprint is updated from"
-                    + res.getOldCarbonfootprint()
-                    + " to " + res.getNewCarbonfootprint();
-        } else {
-            resMessage = "We are extremely sorry! "
-                    + "There seems to be an issue in updating your Carbon Footprint."
-                    + "Are you using the correct username?";
-        }
-        return resMessage;
-    }
-
-    /**
-     * Description for this method.
-     * @param temperature the temperature
-     * @param duration the duration
-     * @return a string
-     * @throws URISyntaxException throws an exception
-     */
-    public static String sendAddHomeTempRequest(int temperature, int duration)
-            throws URISyntaxException {
-        String resMessage = "";
-        if (loginData == null) {
-            return "We are extremely sorry! "
-                    + "There seems to be an issue in updating your Carbon Footprint."
-                    + "Try logging out and in again.";
-        }
-
-        AddHomeTempRequest req = new AddHomeTempRequest(loginData,temperature,duration);
-        RestTemplate restTemplate = new RestTemplate();
-
-        String co2Addurl = URL + "homeTemp/add";
-
-        CO2Response res = restTemplate.postForObject(co2Addurl, req, CO2Response.class);
-        System.out.println();
-        System.out.println(res);
-        if (res != null && res.getResult()) {
-            resMessage = "Congratulations " + loginData.getUsername()
-                    + "! Your Carbon Footprint is updated from "
-                    + res.getOldCarbonfootprint()
-                    + " to " + res.getNewCarbonfootprint();
-        } else {
-            resMessage = "We are extremely sorry!"
-                    + "There seems to be an issue in updating your Carbon Footprint."
-                    + " Are you using the correct username?";
-        }
-        return resMessage;
-    }
-
-
     public static void clearLoginData() {
         loginData = null;
+    }
+
+    /**
+     * This method sends a POST request to the server with login credentials for the creation of a
+     * new account.
+     *
+     * @param username - the username.
+     * @param password - the password.
+     * @return - true iff the registration was successful.
+     */
+    public static boolean sendRegisterRequest(String username, String password) {
+        LoginData curLoginData = new LoginData(username, password);
+
+        log.info("Attempting to register a new account for " + username);
+        try {
+            restTemplate
+                .postForLocation(URL + "login/register", curLoginData);
+        } catch (RestClientException e) {
+            // registration unsuccessful.
+            return false;
+        }
+
+        log.info("Account registration successful!");
+        loginData = curLoginData;
+        return true;
+    }
+
+    /**
+     * Generic implementation of sending a post request containing activity add data to the server
+     *
+     * @param urlPath - path leading to correct api function.
+     * @param requestData - body of the request.
+     * @return - CO2Response describing the change in CO2 made.
+     * @throws RestClientException - iff the status code received is not positive.
+     */
+    private static <T extends ClientMessage> CO2Response sendActivityAddRequest(String urlPath,
+        T requestData) throws RestClientException {
+        log.info("sending activity add request for: " + urlPath);
+        ResponseEntity<CO2Response> res = restTemplate
+            .postForEntity(URL + urlPath, requestData, CO2Response.class);
+        log.info(res);
+
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about their
+     * diet.
+     *
+     * @param choiceBoxValue - decide the value that will be added to the user.
+     * @param amount - the amount of food added.
+     * @return CO2Response - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddFoodRequest(String choiceBoxValue, int amount)
+        throws RestClientException {
+        AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
+        return sendActivityAddRequest("activity/food/add", req);
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about the local
+     * produce they bought.
+     *
+     * @param weight - the weight of the local produce bought.
+     * @param organic - true iff the produce is organic produce.
+     * @return CO2Response - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddLocalProduceRequest(int weight, boolean organic)
+        throws RestClientException {
+        AddLocalProduceRequest req = new AddLocalProduceRequest(loginData, weight, organic);
+        return sendActivityAddRequest("activity/localproduce/add", req);
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about their
+     * transportation habits.
+     *
+     * @param distance - average distance travelled.
+     * @param travelType - the type of travel.
+     * @return CO2Response - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddTransportRequest(TravelType travelType, int distance)
+        throws RestClientException {
+        AddTransportRequest req = new AddTransportRequest(loginData, travelType, distance);
+        return sendActivityAddRequest("activity/transport/add", req);
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about their
+     * transportation habits.
+     *
+     * @param temperature - the temperature the thermostat is set to.
+     * @param duration - the duration this temperature is set.
+     * @return - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddHomeTempRequest(int temperature, int duration)
+        throws RestClientException {
+        AddHomeTempRequest req = new AddHomeTempRequest(loginData, temperature, duration);
+        return sendActivityAddRequest("activity/hometemp/add", req);
+    }
+
+    /**
+     * This method sends a post request to the server with data provided by the user about their
+     * solar panels.
+     *
+     * @param area - the m2 of solar panel added.
+     * @param hoursSunlight - hours of sunlight these solar panels received.
+     * @return - response object containing data returned by server.
+     * @throws RestClientException - on request unsuccessful.
+     */
+    public static CO2Response sendAddSolarPanelRequest(int area, int hoursSunlight)
+        throws RestClientException {
+        AddSolarPanelRequest req = new AddSolarPanelRequest(loginData, area, hoursSunlight);
+        return sendActivityAddRequest("activity/solarpanel/add", req);
     }
 }

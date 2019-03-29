@@ -6,6 +6,7 @@ import gogreen.application.model.User;
 import org.junit.jupiter.api.Test;
 
 public class UserTest {
+
     @Test
     public void getPassword() {
         User user = new User("user", "pwd");
@@ -33,7 +34,7 @@ public class UserTest {
     }
 
     @Test
-    public void UserConstructorTest() {
+    public void userConstructorTest() {
         User user = new User("user", "pwd");
         assertTrue(user.getUsername().equals("user"));
         assertTrue(user.getPassword().equals("pwd"));

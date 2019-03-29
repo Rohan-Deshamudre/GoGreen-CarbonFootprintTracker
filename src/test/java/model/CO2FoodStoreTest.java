@@ -8,8 +8,9 @@ import gogreen.application.model.CO2FoodStore;
 import org.junit.jupiter.api.Test;
 
 public class CO2FoodStoreTest {
+
     @Test
-    public void CO2FoodStoreConstructorTest() {
+    public void co2FoodStoreConstructorTest() {
         CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         assertTrue(store.getSusername().equals("username"));
         assertEquals(store.getWeight(), 1);
@@ -22,12 +23,12 @@ public class CO2FoodStoreTest {
     public void toStringTest() {
         CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         assertTrue(store.toString().equals("CO2FoodStore[susername='username', weight='1', "
-                + "organic='true', amountco2='2']"));
+            + "organic='true', amountco2='2']"));
     }
 
 
     @Test
-    public  void getSusernameTest() {
+    public void getSusernameTest() {
         CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         assertTrue(store.getSusername().equals("username"));
     }
@@ -43,14 +44,14 @@ public class CO2FoodStoreTest {
 
     @Test
     public void getWeightTest() {
-        CO2FoodStore store = new CO2FoodStore("username", 1 ,true, 2);
+        CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         assertEquals(store.getWeight(), 1);
     }
 
 
     @Test
     public void setWeightTest() {
-        CO2FoodStore store = new CO2FoodStore("username", 1, true,2);
+        CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         store.setWeight(2);
         assertEquals(store.getWeight(), 2);
     }
@@ -65,7 +66,7 @@ public class CO2FoodStoreTest {
 
     @Test
     public void setOrganicTest() {
-        CO2FoodStore store = new CO2FoodStore("username", 1 ,true, 2);
+        CO2FoodStore store = new CO2FoodStore("username", 1, true, 2);
         store.setOrganic(false);
         assertFalse(store.isOrganic());
     }

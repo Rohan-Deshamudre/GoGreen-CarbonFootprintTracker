@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class CO2EnergySolarPanelsTest {
 
     @Test
-    public void CO2EnergySolarPanelsConstructorTest() {
+    public void co2EnergySolarPanelsConstructorTest() {
         CO2EnergySolarPanels solar = new CO2EnergySolarPanels("username", 1, 2);
         assertTrue(solar.getSpusername().equals("username"));
         assertEquals(solar.getArea(), 1);
@@ -20,7 +20,8 @@ public class CO2EnergySolarPanelsTest {
     @Test
     public void toStringTest() {
         CO2EnergySolarPanels solar = new CO2EnergySolarPanels("username", 1, 2);
-        assertThat(solar.toString().equals("CO2EnergySolarPanels[spusername='username', area='1', sunlight='2']"));
+        assertThat(solar.toString()
+            .equals("CO2EnergySolarPanels[spusername='username', area='1', sunlight='2']"));
     }
 
     @Test

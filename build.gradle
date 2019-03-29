@@ -69,7 +69,6 @@ checkstyle {
     toolVersion = '7.6.1'
     configFile = rootProject.file('CSE1105.checkstyle.xml')
     maxErrors = 20
-    maxWarnings = 20
 }
 
 test {
@@ -89,7 +88,7 @@ jacocoTestReport {
 
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: "${project.buildDir}/classes/java/main", exclude: ['**/gui/**', '**/server/**', '**/client/**'])
+            fileTree(dir: "${project.buildDir}/classes/java/main", exclude: ['**/gui/**'])
         })
     }
 }
@@ -106,14 +105,11 @@ jacocoTestCoverageVerification {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: "${project.buildDir}/classes/java/main", exclude: ['**/gui/**', '**/server/**', '**/client/**'])
+            fileTree(dir: "${project.buildDir}/classes/java/main", exclude: ['**/gui/**'])
         })
     }
 }
 
 // Define the main class for the application
 //mainClassName = 'gogreen.application.ServerApplication'
-//mainClassName = 'client.ClientApplication'
 mainClassName = 'gogreen.application.gui.GuiMain'
-//mainClassName = 'Database.controller.UserController'
-//mainClassName = 'util.CarbonUtil'

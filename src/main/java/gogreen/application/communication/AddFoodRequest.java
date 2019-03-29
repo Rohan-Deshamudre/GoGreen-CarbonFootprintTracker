@@ -7,7 +7,7 @@ public class AddFoodRequest extends ClientMessage {
 
     /**
      * A request message that contains the amount and type of food.
-     * @param loginData username
+     * @param loginData login credentials
      * @param choiceBoxValue The type of food.
      * @param amount The amount.
      */
