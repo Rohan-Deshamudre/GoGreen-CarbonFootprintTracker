@@ -271,4 +271,56 @@ public class ActivityController {
         }
     }
 
+    /**
+     * Shows a list of friend requests.
+     * @param req the LoginRequest.
+     * @return a Leaderboard with the friend requests.
+     */
+    @RequestMapping(value = "/seefriendrequests",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public Leaderboard seeFriendRequests(@RequestBody LoginRequest req) {
+
+        // TODO: check login data.
+
+        boolean result = true;
+
+        if (result) {
+            // Leaderboard can be reused to show the friend requests as well.
+            Leaderboard leaderboard = new Leaderboard();
+            System.out.println(req.getLoginData().getUsername());
+            return leaderboard;
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * Handles the response to a friend request.
+     * @param req the FriendRequestResponse.
+     * @return if method was successful.
+     */
+    @RequestMapping(value = "/respondtofriendrequest",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public boolean respondToFriendRequest(@RequestBody FriendRequestResponse req) {
+
+        // TODO: check login data.
+
+        boolean result = true;
+
+        if (result) {
+            // Connect to the database.
+            System.out.println(req.getFriendUsername());
+            System.out.println(req.isAccepted());
+            return true;
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
 }

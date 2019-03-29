@@ -124,13 +124,55 @@ public class ClientApplication {
     }
 
     /**
+     * Requests all your friend requests.
+     *
+     * @return Leaderboard with the users that sent you friend requests.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static Leaderboard getFriendRequests()
+            throws URISyntaxException {
+
+        LoginRequest req = new LoginRequest(loginData);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "seefriendrequests";
+        Leaderboard res = restTemplate.postForObject(loginUrl, req, Leaderboard.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request adding a friend.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static boolean respondToFriendRequest(String username, boolean success)
+            throws URISyntaxException {
+
+        FriendRequestResponse req = new FriendRequestResponse(loginData, username, success);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "respondtofriendrequest";
+        boolean res = restTemplate.postForObject(loginUrl, req, boolean.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
      * Adding co2 to the user.
      * @param choiceBoxValue decide the value that will be added to the user
      * @param amount the amount of food added
      * @return returns the message
      * @throws URISyntaxException gives syntax exception
      */
-
     public static String sendAddFoodRequest(String choiceBoxValue, int amount)
             throws URISyntaxException {
         String resMessage;
