@@ -5,6 +5,7 @@ import gogreen.application.communication.*;
 import gogreen.application.model.*;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
+import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
 import gogreen.application.util.CarbonUtil;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +34,9 @@ public class ActivityController {
 
     @Autowired
     private FriendRepository friendRepository;
+
+    @Autowired
+    private FriendRequestRepository friendRequestRepository;
 
     /**
      * SpringBoot automatically wires the CO2Repository instance.
@@ -259,10 +263,13 @@ public class ActivityController {
         boolean result = true;
 
         if (result) {
-            System.out.println("Friend USERNAME: " + req.getFriendUsername());
-            boolean success = true;
-            return true;
-
+            List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
+            if(exist != null) {
+                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(), req.getFriendUsername());
+                friendRequestRepository.save(newRequest);
+                return true;
+            }
+            return false;
         } else {
             throw new IllegalArgumentException();
         }
