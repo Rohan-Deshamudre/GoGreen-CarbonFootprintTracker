@@ -312,7 +312,7 @@ public class GuiMain extends Application {
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> veggieMealPage());
 
-        Button option2 = new Button("Bought from a biological store");
+        Button option2 = new Button("Bought from a local store");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> localStorePage());
 
@@ -1011,7 +1011,7 @@ public class GuiMain extends Application {
     public void localProduceAction(int weight, boolean organic) {
         try {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
-            AlertBox.display("CO2 reduced with: " + res.getCO2Reduction() + ". Good job!");
+            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() +"kgs. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
         }
