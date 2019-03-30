@@ -252,6 +252,7 @@ public class ActivityController {
 
         if (result) {
             List<CO2> user = co2Repository.findByCusername(req.getUsername());
+            System.out.println(user);
             return user.get(0);
 
         } else {
