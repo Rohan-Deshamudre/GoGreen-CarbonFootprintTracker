@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -1143,14 +1144,15 @@ public class GuiMain extends Application {
      */
     public GridPane nameTile() {
         GridPane nametile = new GridPane();
-        nametile.setPadding(new Insets(10, 10, 10 ,10));
+        nametile.setPadding(new Insets(10));
         nametile.setHgap(20);
 
-        Label username = new Label("username");
-        Label co2reduc = new Label("co2Reduction");
+        Label username = new Label("Name");
+        username.setPrefWidth(150);
+        Label co2reduc = new Label("Score");
 
-        nametile.add(username, 1, 1);
-        nametile.add(co2reduc, 2, 1);
+        nametile.add(username, 0, 0);
+        nametile.add(co2reduc, 1, 0);
 
         return nametile;
     }
@@ -1162,10 +1164,11 @@ public class GuiMain extends Application {
      */
     public Button leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
-        gridtile.setPadding(new Insets(10, 10, 10, 10));
+        gridtile.setPadding(new Insets(10));
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCusername());
+        cusername.setPrefWidth(150);
         Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
 
         gridtile.add(cusername, 0, 0);
@@ -1189,6 +1192,7 @@ public class GuiMain extends Application {
         for (CO2 user: users) {
             Button tile = leaderboardTile(user);
             tile.setOnAction(e -> showUserPage(user));
+            tile.setPrefWidth(300);
             vbox.getChildren().add(tile);
         }
         return vbox;
@@ -1205,7 +1209,9 @@ public class GuiMain extends Application {
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCusername());
+        cusername.setPrefWidth(120);
         Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
+        co2reduc.setPrefWidth(50);
         Button accept = new Button("Accept");
         accept.setOnAction(e -> {
             try {
@@ -1265,6 +1271,7 @@ public class GuiMain extends Application {
         for (CO2 user: friendRequests.getUsers()) {
             Button tile = friendRequestTile(user, borderPane);
             tile.setOnAction(e -> showUserPage(user));
+            tile.setPrefWidth(400);
             vbox.getChildren().add(tile);
         }
         return vbox;
