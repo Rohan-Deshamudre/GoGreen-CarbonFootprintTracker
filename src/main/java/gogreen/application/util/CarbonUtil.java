@@ -4,10 +4,6 @@ import gogreen.application.communication.AddTransportRequest.TravelType;
 
 public class CarbonUtil {
 
-    public static final String AES_ENCRYPTION_SECRETKEY = "Bar12345Bar12345";
-
-    public static final String FOOD_OPTION1 = "Ate a vegetarian meal";
-    public static final String FOOD_OPTION2 = "Bought from a biological store";
 
     /**
      * Returns the amount of carbon reduced in kgs by diet choices.
