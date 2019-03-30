@@ -881,7 +881,16 @@ public class GuiMain extends Application {
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu);
 
-        pane.setTop(menuBar);
+        Button homeButton = new Button("Home");
+        homeButton.setOnAction(e -> showMainMenu());
+        homeButton.setFocusTraversable(false);
+
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().addAll(homeButton);
+
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(menuBar, buttonBox);
+        pane.setTop(vbox);
     }
 
     /**
