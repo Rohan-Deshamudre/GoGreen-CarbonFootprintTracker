@@ -1,6 +1,14 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.*;
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddFriendRequest;
+import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.FriendRequestResponse;
+import gogreen.application.communication.LoginData;
+import gogreen.application.communication.LoginRequest;
+import gogreen.application.communication.LoginResponse;
 import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
 

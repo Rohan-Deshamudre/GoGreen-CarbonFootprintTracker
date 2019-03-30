@@ -24,7 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -1290,7 +1289,6 @@ public class GuiMain extends Application {
      * @return a VBox with a representation of all the friends and an option to add new friends.
      */
     public VBox showFriends(ArrayList<CO2> friends) {
-        VBox total = new VBox();
         ScrollPane scrollPane = new ScrollPane();
 
         VBox leaderboard = leaderboard(friends);
@@ -1315,6 +1313,7 @@ public class GuiMain extends Application {
         HBox addFriendBox = new HBox();
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
+        VBox total = new VBox();
         total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
         return total;
     }

@@ -10,6 +10,8 @@ import java.util.List;
 public interface FriendRequestRepository extends CrudRepository<FriendRequest, Long> {
 
     List<FriendRequest> findAll();
+
     List<FriendRequest> findByRequestTo(String friendUsername);
+
     List<FriendRequest> findByUsernameAndRequestTo(String username, String requestTo);
 }
