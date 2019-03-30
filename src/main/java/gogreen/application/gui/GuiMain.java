@@ -1203,9 +1203,8 @@ public class GuiMain extends Application {
      * @param user username.
      * @return a tile of the leaderboard.
      */
-    public Button friendRequestTile(CO2 user, BorderPane borderPane) {
+    public GridPane friendRequestTile(CO2 user, BorderPane borderPane) {
         GridPane gridtile = new GridPane();
-        gridtile.setPadding(new Insets(10));
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCusername());
@@ -1221,6 +1220,8 @@ public class GuiMain extends Application {
                 e1.printStackTrace();
             }
         });
+        accept.setPadding(new Insets(10));
+
         Button decline = new Button("Decline");
         decline.setOnAction(e -> {
             try {
@@ -1230,14 +1231,21 @@ public class GuiMain extends Application {
                 e1.printStackTrace();
             }
         });
+        decline.setPadding(new Insets(10));
 
-        gridtile.add(cusername, 0, 0);
-        gridtile.add(co2reduc, 1, 0);
-        gridtile.add(accept, 2, 0);
-        gridtile.add(decline, 3, 0);
+        GridPane friendTile = new GridPane();
+        friendTile.add(cusername,0,0);
+        friendTile.add(co2reduc,1,0);
 
-        Button tile = new Button("", gridtile);
-        return tile;
+        Button friend = new Button("", friendTile);
+        friend.setOnAction(e -> showUserPage(user));
+        friend.setPadding(new Insets(10));
+
+        gridtile.add(friend, 0, 0);
+        gridtile.add(accept, 1, 0);
+        gridtile.add(decline, 2, 0);
+
+        return gridtile;
     }
 
     /**
@@ -1269,8 +1277,7 @@ public class GuiMain extends Application {
         vbox.getChildren().add(new Label("Friend requests: "));
 
         for (CO2 user: friendRequests.getUsers()) {
-            Button tile = friendRequestTile(user, borderPane);
-            tile.setOnAction(e -> showUserPage(user));
+            GridPane tile = friendRequestTile(user, borderPane);
             tile.setPrefWidth(400);
             vbox.getChildren().add(tile);
         }
