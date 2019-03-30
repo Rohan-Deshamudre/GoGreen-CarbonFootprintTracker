@@ -1109,7 +1109,7 @@ public class GuiMain extends Application {
      * @param user username.
      * @return a tile of the leaderboard.
      */
-    public GridPane leaderboardTile(CO2 user) {
+    public Button leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
         gridtile.setPadding(new Insets(10, 10, 10, 10));
         gridtile.setHgap(20);
@@ -1117,9 +1117,12 @@ public class GuiMain extends Application {
         Label cusername = new Label(user.getCusername());
         Label co2reduc = new Label(Integer.toString(user.getCo2reduc()));
 
-        gridtile.add(cusername, 3, 1);
-        gridtile.add(co2reduc, 6, 1);
-        return gridtile;
+        gridtile.add(cusername, 0, 0);
+        gridtile.add(co2reduc, 1, 0);
+
+        Button tile = new Button("", gridtile);
+
+        return tile;
     }
 
     /**
@@ -1133,7 +1136,7 @@ public class GuiMain extends Application {
         vbox.getChildren().add(nametile);
 
         for (CO2 user: users) {
-            GridPane tile = leaderboardTile(user);
+            Button tile = leaderboardTile(user);
             vbox.getChildren().add(tile);
         }
         return vbox;
