@@ -1,6 +1,7 @@
 package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddFriendRequest;
 import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddLocalProduceRequest;
 import gogreen.application.communication.AddSolarPanelRequest;
@@ -13,7 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
+import gogreen.application.communication.FriendRequestResponse;
+import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URISyntaxException;
 
 public class ClientApplication {
 
@@ -60,6 +65,7 @@ public class ClientApplication {
     }
 
     /**
+<<<<<<< HEAD
      * Clears the currently stored login data.
      */
     public static void clearLoginData() {
@@ -80,7 +86,7 @@ public class ClientApplication {
         log.info("Attempting to register a new account for " + username);
         try {
             restTemplate
-                .postForLocation(URL + "login/register", curLoginData);
+                    .postForLocation(URL + "login/register", curLoginData);
         } catch (RestClientException e) {
             // registration unsuccessful.
             return false;
@@ -90,6 +96,112 @@ public class ClientApplication {
         loginData = curLoginData;
         return true;
     }
+
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request friend list.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static Leaderboard sendGetFriendListRequest()
+            throws URISyntaxException {
+
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "friendlist";
+        Leaderboard res = restTemplate.postForObject(loginUrl, loginData, Leaderboard.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request friend list.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static CO2 sendGetUserStatsRequest()
+            throws URISyntaxException {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "user";
+        CO2 res = restTemplate.postForObject(loginUrl, loginData, CO2.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request adding a friend.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static boolean sendAddFriendRequest(String username)
+            throws URISyntaxException {
+
+        AddFriendRequest req = new AddFriendRequest(loginData, username);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "addfriend";
+        boolean res = restTemplate.postForObject(loginUrl, req, boolean.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
+     * Requests all your friend requests.
+     *
+     * @return Leaderboard with the users that sent you friend requests.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static Leaderboard getFriendRequests()
+            throws URISyntaxException {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "seefriendrequests";
+        Leaderboard res = restTemplate.postForObject(loginUrl, loginData, Leaderboard.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request adding a friend.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static boolean respondToFriendRequest(String username, boolean success)
+            throws URISyntaxException {
+
+        FriendRequestResponse req = new FriendRequestResponse(loginData, username, success);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String loginUrl = URL + "respondtofriendrequest";
+        boolean res = restTemplate.postForObject(loginUrl, req, boolean.class);
+
+        System.out.println(res);
+
+        return res;
+    }
+
 
     /**
      * Generic implementation of sending a post request containing activity add data to the server
@@ -123,6 +235,7 @@ public class ClientApplication {
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
         return sendActivityAddRequest("activity/food/add", req);
     }
+
 
     /**
      * This method sends a post request to the server with data provided by the user about the local
