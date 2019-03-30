@@ -854,22 +854,11 @@ public class GuiMain extends Application {
         VBox allFriends = showFriends(leaderboard.getUsers());
         allFriends.setPadding(new Insets(100));
 
-        // Show friend requests
-        Leaderboard friendRequests = null;
-        try {
-            friendRequests = ClientApplication.getFriendRequests();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        friendRequests.sortLeaderboard();
-        VBox allFriendRequests = friendRequestTable(friendRequests.getUsers());
-        allFriendRequests.setPadding(new Insets(100));
-
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
         borderPane.setLeft(grid);
         borderPane.setCenter(allFriends);
-        borderPane.setRight(allFriendRequests);
+        makeFriendRequestTable(borderPane);
         menuBar(borderPane);
 
         // Stats
@@ -1155,7 +1144,7 @@ public class GuiMain extends Application {
      * @param user username.
      * @return a tile of the leaderboard.
      */
-    public GridPane friendRequestTile(CO2 user) {
+    public GridPane friendRequestTile(CO2 user, BorderPane borderPane) {
         GridPane gridtile = new GridPane();
         gridtile.setPadding(new Insets(10));
         gridtile.setHgap(20);
@@ -1166,6 +1155,7 @@ public class GuiMain extends Application {
         accept.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCusername(), true);
+                makeFriendRequestTable(borderPane);
             } catch (URISyntaxException e1) {
                 e1.printStackTrace();
             }
@@ -1174,6 +1164,7 @@ public class GuiMain extends Application {
         decline.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCusername(), false);
+                makeFriendRequestTable(borderPane);
             } catch (URISyntaxException e1) {
                 e1.printStackTrace();
             }
@@ -1187,16 +1178,35 @@ public class GuiMain extends Application {
     }
 
     /**
+     * This method makes a friend request table for the user stat page.
+     * It puts the table on the right in the borderpane.
+     * @param borderPane the borderpane in which to put the table.
+     */
+    public void makeFriendRequestTable(BorderPane borderPane) {
+        VBox table  = friendRequestTable(borderPane);
+        table.setPadding(new Insets(100));
+        borderPane.setRight(table);
+    }
+
+
+    /**
      * The VBox showing the friend requests of an arraylist of users in CO2 class.
-     * @param users username
      * @return return the vBox
      */
-    public VBox friendRequestTable(ArrayList<CO2> users) {
+    public VBox friendRequestTable(BorderPane borderPane) {
+        Leaderboard friendRequests = null;
+        try {
+            friendRequests = ClientApplication.getFriendRequests();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        friendRequests.sortLeaderboard();
+
         VBox vbox = new VBox();
         vbox.getChildren().add(new Label("Friend requests: "));
 
-        for (CO2 user: users) {
-            GridPane tile = friendRequestTile(user);
+        for (CO2 user: friendRequests.getUsers()) {
+            GridPane tile = friendRequestTile(user, borderPane);
             vbox.getChildren().add(tile);
         }
         return vbox;
