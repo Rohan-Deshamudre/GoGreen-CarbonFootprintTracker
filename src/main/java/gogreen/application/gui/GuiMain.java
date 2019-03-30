@@ -1011,7 +1011,7 @@ public class GuiMain extends Application {
     public void localProduceAction(int weight, boolean organic) {
         try {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() +"kgs. Good job!");
+            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
         }

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ActivityController {
 
+    LoginController loginController = new LoginController();
+
     @Autowired
     private CO2Repository co2Repository;
 
@@ -33,7 +35,7 @@ public class ActivityController {
 
     private Logger log = LogManager.getLogger(ActivityController.class.getName());
 
-    LoginController loginController = new LoginController();
+
 
     /**
      * Handle add food requests.

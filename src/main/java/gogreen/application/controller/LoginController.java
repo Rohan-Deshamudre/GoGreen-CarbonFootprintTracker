@@ -85,7 +85,6 @@ public class LoginController {
         List<User> userDb = userRepository.findByUsername(loginData.getUsername());
 
         for (User user : userDb) {
-//            String encryptedPassword = passwordEncoder.encode(loginData.getPassword());
 
             if (passwordEncoder.matches(loginData.getPassword(), user.getPassword())) {
                 return true;
