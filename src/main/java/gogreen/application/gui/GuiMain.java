@@ -1203,7 +1203,7 @@ public class GuiMain extends Application {
      * @param user username.
      * @return a tile of the leaderboard.
      */
-    public GridPane friendRequestTile(CO2 user, BorderPane borderPane) {
+    public GridPane friendRequestTile(CO2 user) {
         GridPane gridtile = new GridPane();
         gridtile.setHgap(20);
 
@@ -1215,7 +1215,7 @@ public class GuiMain extends Application {
         accept.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCusername(), true);
-                makeFriendRequestTable(borderPane);
+                userPage();
             } catch (URISyntaxException e1) {
                 e1.printStackTrace();
             }
@@ -1226,7 +1226,7 @@ public class GuiMain extends Application {
         decline.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCusername(), false);
-                makeFriendRequestTable(borderPane);
+                userPage();
             } catch (URISyntaxException e1) {
                 e1.printStackTrace();
             }
@@ -1254,7 +1254,7 @@ public class GuiMain extends Application {
      * @param borderPane the borderpane in which to put the table.
      */
     public void makeFriendRequestTable(BorderPane borderPane) {
-        VBox table  = friendRequestTable(borderPane);
+        VBox table  = friendRequestTable();
         table.setPadding(new Insets(100));
         borderPane.setRight(table);
     }
@@ -1264,7 +1264,7 @@ public class GuiMain extends Application {
      * The VBox showing the friend requests of an arraylist of users in CO2 class.
      * @return return the vBox
      */
-    public VBox friendRequestTable(BorderPane borderPane) {
+    public VBox friendRequestTable() {
         Leaderboard friendRequests = null;
         try {
             friendRequests = ClientApplication.getFriendRequests();
@@ -1277,7 +1277,7 @@ public class GuiMain extends Application {
         vbox.getChildren().add(new Label("Friend requests: "));
 
         for (CO2 user: friendRequests.getUsers()) {
-            GridPane tile = friendRequestTile(user, borderPane);
+            GridPane tile = friendRequestTile(user);
             tile.setPrefWidth(400);
             vbox.getChildren().add(tile);
         }
