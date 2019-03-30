@@ -837,13 +837,13 @@ public class GuiMain extends Application {
     private void userPage() {
         window.setTitle("User");
 
-        // CENTER
+        // LEFT: Stats
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
 
-        // Show friends
+        // CENTER: Show friends
         Leaderboard leaderboard = null;
         try {
             leaderboard = ClientApplication.sendGetFriendListRequest();
@@ -868,6 +868,57 @@ public class GuiMain extends Application {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        Label stats = new Label("Stats");
+        Label username = new Label("Username:");
+        Label usernameValue = new Label(user.getCusername());
+        Label totalCO2 = new Label("Total CO2 reduction:");
+        Label totalCO2Value = new Label(Integer.toString(user.getCo2reduc()));
+        Label co2food = new Label("CO2 reduction for food:");
+        Label co2foodValue = new Label(Integer.toString(user.getCo2food()));
+        Label co2transport = new Label("CO2 reduction for transport:");
+        Label co2transportValue = new Label(Integer.toString(user.getCo2transport()));
+        Label co2energy = new Label("CO2 reduction for energy:");
+        Label co2energyValue = new Label(Integer.toString(user.getCo2energy()));
+
+        grid.add(stats, 0, 0);
+        grid.add(username, 0, 3);
+        grid.add(usernameValue, 4, 3);
+        grid.add(totalCO2, 0, 6);
+        grid.add(totalCO2Value, 4, 6);
+        grid.add(co2food, 0, 9);
+        grid.add(co2foodValue, 4, 9);
+        grid.add(co2transport, 0, 12);
+        grid.add(co2transportValue, 4, 12);
+        grid.add(co2energy, 0, 15);
+        grid.add(co2energyValue, 4, 15);
+
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+
+        // Show window
+        window.setScene(loginScene);
+        window.show();
+    }
+
+    /**
+     * This is the user page.
+     *
+     * @throws Exception - in case of an exception.
+     */
+    private void showUserPage(CO2 user) {
+        window.setTitle("User");
+
+        // CENTER
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(100));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+
+        // Make BorderPane layout
+        BorderPane borderPane = new BorderPane();
+        borderPane.setLeft(grid);
+        menuBar(borderPane);
 
         Label stats = new Label("Stats");
         Label username = new Label("Username:");
@@ -1137,6 +1188,7 @@ public class GuiMain extends Application {
 
         for (CO2 user: users) {
             Button tile = leaderboardTile(user);
+            tile.setOnAction(e -> showUserPage(user));
             vbox.getChildren().add(tile);
         }
         return vbox;
@@ -1147,7 +1199,7 @@ public class GuiMain extends Application {
      * @param user username.
      * @return a tile of the leaderboard.
      */
-    public GridPane friendRequestTile(CO2 user, BorderPane borderPane) {
+    public Button friendRequestTile(CO2 user, BorderPane borderPane) {
         GridPane gridtile = new GridPane();
         gridtile.setPadding(new Insets(10));
         gridtile.setHgap(20);
@@ -1177,7 +1229,9 @@ public class GuiMain extends Application {
         gridtile.add(co2reduc, 1, 0);
         gridtile.add(accept, 2, 0);
         gridtile.add(decline, 3, 0);
-        return gridtile;
+
+        Button tile = new Button("", gridtile);
+        return tile;
     }
 
     /**
@@ -1209,7 +1263,8 @@ public class GuiMain extends Application {
         vbox.getChildren().add(new Label("Friend requests: "));
 
         for (CO2 user: friendRequests.getUsers()) {
-            GridPane tile = friendRequestTile(user, borderPane);
+            Button tile = friendRequestTile(user, borderPane);
+            tile.setOnAction(e -> showUserPage(user));
             vbox.getChildren().add(tile);
         }
         return vbox;
