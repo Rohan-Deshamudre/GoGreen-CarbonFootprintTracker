@@ -39,7 +39,7 @@ public class FriendRequestResponse extends ClientMessage {
      */
     @Override
     public String toString() {
-        return "<FriendRequestResponse[friendUsername:" + friendUsername +
-                ", accepted: " + accepted + "]>";
+        return "<FriendRequestResponse[friendUsername:" + friendUsername
+                + ", accepted: " + accepted + "]>";
     }
 }

@@ -4,9 +4,7 @@ import gogreen.application.communication.*;
 import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class ClientApplication {
 

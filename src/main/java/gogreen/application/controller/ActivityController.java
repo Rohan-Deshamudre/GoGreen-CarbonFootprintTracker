@@ -264,8 +264,9 @@ public class ActivityController {
 
         if (result) {
             List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
-            if(exist != null) {
-                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(), req.getFriendUsername());
+            if (exist != null) {
+                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+                        req.getFriendUsername());
                 friendRequestRepository.save(newRequest);
                 return true;
             }
@@ -291,10 +292,11 @@ public class ActivityController {
         boolean result = true;
 
         if (result) {
-            List<FriendRequest> list = friendRequestRepository.findByRequestTo(req.getLoginData().getUsername());
-            if(list != null) {
+            List<FriendRequest> list = friendRequestRepository.
+                    findByRequestTo(req.getLoginData().getUsername());
+            if (list != null) {
                 ArrayList<CO2> allReq = new ArrayList<>();
-                for(FriendRequest request: list) {
+                for (FriendRequest request: list) {
                     List<CO2> friend = co2Repository.findByCusername(request.getUsername());
                     CO2 user = friend.get(0);
                     allReq.add(user);
@@ -325,17 +327,20 @@ public class ActivityController {
         boolean result = true;
 
         if (result) {
-            if(req.isAccepted()) {
-                Friend newFriend = new Friend(0, req.getLoginData().getUsername(), req.getFriendUsername());
+            if (req.isAccepted()) {
+                Friend newFriend = new Friend(0, req.getLoginData().getUsername(),
+                        req.getFriendUsername());
                 friendRepository.save(newFriend);
 
-                List<FriendRequest> old = friendRequestRepository.findByUsernameAndRequestTo(req.getFriendUsername(),
+                List<FriendRequest> old = friendRequestRepository.
+                        findByUsernameAndRequestTo(req.getFriendUsername(),
                         req.getLoginData().getUsername());
                 FriendRequest remove = old.get(0);
                 friendRequestRepository.delete(remove);
                 return true;
             }
-            List<FriendRequest> old = friendRequestRepository.findByUsernameAndRequestTo(req.getFriendUsername(),
+            List<FriendRequest> old = friendRequestRepository.
+                    findByUsernameAndRequestTo(req.getFriendUsername(),
                     req.getLoginData().getUsername());
             FriendRequest remove = old.get(0);
             friendRequestRepository.delete(remove);

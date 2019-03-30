@@ -20,7 +20,7 @@ public class FriendRequest {
     protected FriendRequest() {}
 
     /**
-     * Make a FriendRequest object with the provided parameters
+     * Make a FriendRequest object with the provided parameters.
      * @param id the id of the request
      * @param username the username of the sender
      * @param requestTo the user in the request
