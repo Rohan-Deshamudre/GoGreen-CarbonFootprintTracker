@@ -11,4 +11,5 @@ public interface FriendRequestRepository extends CrudRepository<FriendRequest, L
 
     List<FriendRequest> findAll();
     List<FriendRequest> findByRequestTo(String friendUsername);
+    List<FriendRequest> findByUsernameAndRequestTo(String username, String requestTo);
 }

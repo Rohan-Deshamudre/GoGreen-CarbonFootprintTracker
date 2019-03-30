@@ -291,11 +291,18 @@ public class ActivityController {
         boolean result = true;
 
         if (result) {
-            // Leaderboard can be reused to show the friend requests as well.
-            Leaderboard leaderboard = new Leaderboard();
-            System.out.println("<See FR>");
-            System.out.println(req.getLoginData().getUsername());
-            return leaderboard;
+            List<FriendRequest> list = friendRequestRepository.findByRequestTo(req.getLoginData().getUsername());
+            if(list != null) {
+                ArrayList<CO2> allReq = new ArrayList<>();
+                for(FriendRequest request: list) {
+                    List<CO2> friend = co2Repository.findByCusername(request.getUsername());
+                    CO2 user = friend.get(0);
+                    allReq.add(user);
+                }
+                Leaderboard leaderboard = new Leaderboard(allReq);
+                return leaderboard;
+            }
+            return null;
 
         } else {
             throw new IllegalArgumentException();
@@ -318,11 +325,21 @@ public class ActivityController {
         boolean result = true;
 
         if (result) {
-            // Connect to the database.
-            System.out.println("<FR Response>");
-            System.out.println(req.getFriendUsername());
-            System.out.println(req.isAccepted());
-            return true;
+            if(req.isAccepted()) {
+                Friend newFriend = new Friend(0, req.getLoginData().getUsername(), req.getFriendUsername());
+                friendRepository.save(newFriend);
+
+                List<FriendRequest> old = friendRequestRepository.findByUsernameAndRequestTo(req.getFriendUsername(),
+                        req.getLoginData().getUsername());
+                FriendRequest remove = old.get(0);
+                friendRequestRepository.delete(remove);
+                return true;
+            }
+            List<FriendRequest> old = friendRequestRepository.findByUsernameAndRequestTo(req.getFriendUsername(),
+                    req.getLoginData().getUsername());
+            FriendRequest remove = old.get(0);
+            friendRequestRepository.delete(remove);
+            return false;
 
         } else {
             throw new IllegalArgumentException();
