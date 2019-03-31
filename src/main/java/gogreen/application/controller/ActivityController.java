@@ -44,11 +44,6 @@ public class ActivityController {
     @Autowired
     private FriendRequestRepository friendRequestRepository;
 
-    /**
-     * SpringBoot automatically wires the CO2Repository instance.
-     * into this class using this setter method
-     * @param co2Repository - the CO@Repository instance
-     */
     private Logger log = LogManager.getLogger(ActivityController.class.getName());
 
     /**
