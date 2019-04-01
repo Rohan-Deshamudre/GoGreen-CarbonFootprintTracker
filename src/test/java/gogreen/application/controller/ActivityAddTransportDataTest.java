@@ -17,6 +17,8 @@ import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.repository.CO2Repository;
+import gogreen.application.repository.FriendRepository;
+import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
 import gogreen.application.util.CarbonUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +55,12 @@ public class ActivityAddTransportDataTest {
 
     @MockBean
     private CO2Repository co2Repository;
+
+    @MockBean
+    private FriendRepository friendRepository;
+
+    @MockBean
+    private FriendRequestRepository friendRequestRepository;
 
     private final LoginData fakeLoginData = new LoginData("Max", "v3rSt@ppEn");
     private final TravelType fakeTravelType = TravelType.BIKE;

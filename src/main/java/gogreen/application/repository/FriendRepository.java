@@ -1,15 +1,12 @@
 package gogreen.application.repository;
 
-import gogreen.application.model.CO2;
+import gogreen.application.model.Friend;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CO2Repository extends CrudRepository<CO2, Long>  {
-    List<CO2> findByCusername(String cusername);
-
-    List<CO2> findAll();
-
+public interface FriendRepository extends CrudRepository<Friend, Long> {
+    List<Friend> findByFusername(String fusername);
 }

@@ -6,23 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CO2", schema = "public")
+@Table(name = "co2", schema = "public")
 public class CO2 {
 
     @Id
     @Column(name = "cusername")
     private String cusername;
 
-    @Column(name = "CO2food")
+    @Column(name = "co2food")
     private int CO2food;
 
-    @Column(name = "CO2transport")
+    @Column(name = "co2transport")
     private int CO2transport;
 
-    @Column(name = "CO2energy")
+    @Column(name = "co2energy")
     private int CO2energy;
 
-    @Column(name = "CO2reduc")
+    @Column(name = "co2reduc")
     private int CO2reduc;
 
     protected CO2() {
@@ -57,8 +57,16 @@ public class CO2 {
         return cusername;
     }
 
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
+
     public int getCO2food() {
         return CO2food;
+    }
+
+    public void setCO2food(int co2food) {
+        this.CO2food = co2food;
     }
 
     /**
@@ -74,6 +82,10 @@ public class CO2 {
         return CO2transport;
     }
 
+    public void setCO2transport(int co2transport) {
+        this.CO2transport = co2transport;
+    }
+
     /**
      * Adds more CO2 to the total reduction by transport.
      *
@@ -87,6 +99,10 @@ public class CO2 {
         return CO2energy;
     }
 
+    public void setCO2energy(int co2energy) {
+        this.CO2energy = co2energy;
+    }
+
     /**
      * Adds more CO2 to the total reduction by energy usage.
      *
@@ -98,6 +114,10 @@ public class CO2 {
 
     public int getCO2reduc() {
         return CO2reduc;
+    }
+
+    public void setCO2reduc(int co2reduc) {
+        this.CO2reduc = co2reduc;
     }
 
     /**

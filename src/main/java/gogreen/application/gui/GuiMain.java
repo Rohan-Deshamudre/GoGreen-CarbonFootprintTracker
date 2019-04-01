@@ -3,6 +3,8 @@ package gogreen.application.gui;
 import gogreen.application.client.ClientApplication;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.client.Leaderboard;
+import gogreen.application.model.CO2;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +19,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -33,6 +36,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.springframework.web.client.RestClientException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 
 public class GuiMain extends Application {
@@ -260,25 +265,30 @@ public class GuiMain extends Application {
         transport.setOnAction(e -> showTransportPage());
         buttons.add(transport, 1, 0);
 
-        Button share = new Button("Share");
+        Button share = new Button("Stats");
         share.setMinSize(buttonWidth, buttonHeight);
-        share.setOnAction(e -> showShare());
+        share.setOnAction(e -> userPage());
         buttons.add(share, 1, 1);
 
-        //right part
-        StackPane right = new StackPane();
-        right.setAlignment(Pos.CENTER_RIGHT);
+        // Leaderboard
+        Leaderboard leaderboard = null;
+        try {
+            leaderboard = ClientApplication.sendGetFriendListRequest();
+            System.out.println(leaderboard);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
 
-        Label scoreboard = new Label("Scoreboard");
-        scoreboard.setMinSize(128, 320);
-
-        right.getChildren().addAll(scoreboard);
+        leaderboard.sortLeaderboard();
+        VBox scoreboard = leaderboard(leaderboard.getUsers());
+        scoreboard.setAlignment(Pos.CENTER_RIGHT);
+        BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
 
         //setting up the window
         BorderPane menuPane = new BorderPane();
         menuBar(menuPane);
         menuPane.setCenter(buttons);
-        menuPane.setRight(right);
+        menuPane.setRight(scoreboard);
 
         //setting up the scene
         Scene scene = new Scene(menuPane, screenWidth, screenHeight);
@@ -749,7 +759,7 @@ public class GuiMain extends Application {
      * Page for the share page.
      */
     private void showShare() {
-        window.setTitle("Share");
+        window.setTitle("Stats");
         window.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
@@ -817,24 +827,113 @@ public class GuiMain extends Application {
     private void userPage() {
         window.setTitle("User");
 
-        // CENTER
+        // LEFT: Stats
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
 
+        // CENTER: Show friends
+        Leaderboard leaderboard = null;
+        try {
+            leaderboard = ClientApplication.sendGetFriendListRequest();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+        leaderboard.sortLeaderboard();
+        VBox allFriends = showFriends(leaderboard.getUsers());
+        allFriends.setPadding(new Insets(100));
+
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(grid);
+        borderPane.setLeft(grid);
+        borderPane.setCenter(allFriends);
+        makeFriendRequestTable(borderPane);
         menuBar(borderPane);
 
         // Stats
-        Label stats = new Label("Stats");
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
 
-        // Make scene
-        grid.getChildren().addAll(
-            stats
-        );
+        Label stats = new Label("Stats");
+        Label username = new Label("Username:");
+        Label usernameValue = new Label(user.getCUsername());
+        Label totalCO2 = new Label("Total CO2 reduction:");
+        Label totalCO2Value = new Label(Integer.toString(user.getCO2reduc()));
+        Label co2food = new Label("CO2 reduction for food:");
+        Label co2foodValue = new Label(Integer.toString(user.getCO2food()));
+        Label co2transport = new Label("CO2 reduction for transport:");
+        Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
+        Label co2energy = new Label("CO2 reduction for energy:");
+        Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+
+        grid.add(stats, 0, 0);
+        grid.add(username, 0, 3);
+        grid.add(usernameValue, 4, 3);
+        grid.add(totalCO2, 0, 6);
+        grid.add(totalCO2Value, 4, 6);
+        grid.add(co2food, 0, 9);
+        grid.add(co2foodValue, 4, 9);
+        grid.add(co2transport, 0, 12);
+        grid.add(co2transportValue, 4, 12);
+        grid.add(co2energy, 0, 15);
+        grid.add(co2energyValue, 4, 15);
+
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+
+        // Show window
+        window.setScene(loginScene);
+        window.show();
+    }
+
+    /**
+     * This is the user page.
+     *
+     * @throws Exception - in case of an exception.
+     */
+    private void showUserPage(CO2 user) {
+        window.setTitle("User");
+
+        // CENTER
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(100));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+
+        // Make BorderPane layout
+        BorderPane borderPane = new BorderPane();
+        borderPane.setLeft(grid);
+        menuBar(borderPane);
+
+        Label stats = new Label("Stats");
+        Label username = new Label("Username:");
+        Label usernameValue = new Label(user.getCUsername());
+        Label totalCO2 = new Label("Total CO2 reduction:");
+        Label totalCO2Value = new Label(Integer.toString(user.getCO2reduc()));
+        Label co2food = new Label("CO2 reduction for food:");
+        Label co2foodValue = new Label(Integer.toString(user.getCO2food()));
+        Label co2transport = new Label("CO2 reduction for transport:");
+        Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
+        Label co2energy = new Label("CO2 reduction for energy:");
+        Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+
+        grid.add(stats, 0, 0);
+        grid.add(username, 0, 3);
+        grid.add(usernameValue, 4, 3);
+        grid.add(totalCO2, 0, 6);
+        grid.add(totalCO2Value, 4, 6);
+        grid.add(co2food, 0, 9);
+        grid.add(co2foodValue, 4, 9);
+        grid.add(co2transport, 0, 12);
+        grid.add(co2transportValue, 4, 12);
+        grid.add(co2energy, 0, 15);
+        grid.add(co2energyValue, 4, 15);
+
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
@@ -865,7 +964,7 @@ public class GuiMain extends Application {
 
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
-            loginPage();
+            logout();
         });
 
         Menu menu = new Menu("Menu");
@@ -1065,20 +1164,203 @@ public class GuiMain extends Application {
         showMainMenu();
     }
 
-    private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Closing the program",
-            "Are you sure you want to exit?");
-        if (answer) {
-            ClientApplication.clearLoginData();
-            window.close();
-        }
+    /**
+     * The tile for the string "username" and "co2reuduction".
+     * @return The string
+     */
+    public GridPane nameTile() {
+        GridPane nametile = new GridPane();
+        nametile.setPadding(new Insets(10));
+        nametile.setHgap(20);
+
+        Label username = new Label("Name");
+        username.setPrefWidth(150);
+        Label co2reduc = new Label("Score");
+
+        nametile.add(username, 0, 0);
+        nametile.add(co2reduc, 1, 0);
+
+        return nametile;
     }
 
+    /**
+     * leaderboard containing the username and the total co2 reduction.
+     * @param user username.
+     * @return a tile of the leaderboard.
+     */
+    public Button leaderboardTile(CO2 user) {
+        GridPane gridtile = new GridPane();
+        gridtile.setPadding(new Insets(10));
+        gridtile.setHgap(20);
+
+        Label cusername = new Label(user.getCUsername());
+        cusername.setPrefWidth(150);
+        Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
+
+        gridtile.add(cusername, 0, 0);
+        gridtile.add(co2reduc, 1, 0);
+
+        Button tile = new Button("", gridtile);
+
+        return tile;
+    }
+
+    /**
+     * The VBox showing the leaderboard of an arraylist of users in CO2 class.
+     * @param users username
+     * @return return the vBox
+     */
+    public VBox leaderboard(ArrayList<CO2> users) {
+        VBox vbox = new VBox();
+        GridPane nametile = nameTile();
+        vbox.getChildren().add(nametile);
+
+        for (CO2 user: users) {
+            Button tile = leaderboardTile(user);
+            tile.setOnAction(e -> showUserPage(user));
+            tile.setPrefWidth(300);
+            vbox.getChildren().add(tile);
+        }
+        return vbox;
+    }
+
+    /**
+     * leaderboard containing the username and the total co2 reduction.
+     * @param user username.
+     * @return a tile of the leaderboard.
+     */
+    public GridPane friendRequestTile(CO2 user) {
+        GridPane gridtile = new GridPane();
+        gridtile.setHgap(20);
+
+        Label cusername = new Label(user.getCUsername());
+        cusername.setPrefWidth(120);
+        Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
+        co2reduc.setPrefWidth(50);
+        Button accept = new Button("Accept");
+        accept.setOnAction(e -> {
+            try {
+                ClientApplication.respondToFriendRequest(user.getCUsername(), true);
+                userPage();
+            } catch (RestClientException e1) {
+                e1.printStackTrace();
+            }
+        });
+        accept.setPadding(new Insets(10));
+
+        Button decline = new Button("Decline");
+        decline.setOnAction(e -> {
+            try {
+                ClientApplication.respondToFriendRequest(user.getCUsername(), false);
+                userPage();
+            } catch (RestClientException e1) {
+                e1.printStackTrace();
+            }
+        });
+        decline.setPadding(new Insets(10));
+
+        GridPane friendTile = new GridPane();
+        friendTile.add(cusername,0,0);
+        friendTile.add(co2reduc,1,0);
+
+        Button friend = new Button("", friendTile);
+        friend.setOnAction(e -> showUserPage(user));
+        friend.setPadding(new Insets(10));
+
+        gridtile.add(friend, 0, 0);
+        gridtile.add(accept, 1, 0);
+        gridtile.add(decline, 2, 0);
+
+        return gridtile;
+    }
+
+    /**
+     * This method makes a friend request table for the user stat page.
+     * It puts the table on the right in the borderpane.
+     * @param borderPane the borderpane in which to put the table.
+     */
+    public void makeFriendRequestTable(BorderPane borderPane) {
+        VBox table  = friendRequestTable();
+        table.setPadding(new Insets(100));
+        borderPane.setRight(table);
+    }
+
+
+    /**
+     * The VBox showing the friend requests of an arraylist of users in CO2 class.
+     * @return return the vBox
+     */
+    public VBox friendRequestTable() {
+        Leaderboard friendRequests = null;
+        try {
+            friendRequests = ClientApplication.getFriendRequests();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+        friendRequests.sortLeaderboard();
+
+        VBox vbox = new VBox();
+        vbox.getChildren().add(new Label("Friend requests: "));
+
+        for (CO2 user: friendRequests.getUsers()) {
+            GridPane tile = friendRequestTile(user);
+            tile.setPrefWidth(400);
+            vbox.getChildren().add(tile);
+        }
+        return vbox;
+    }
+
+    /**
+     * This method makes a list of all of your friends.
+     * @param friends a list of all the friends.
+     * @return a VBox with a representation of all the friends and an option to add new friends.
+     */
+    public VBox showFriends(ArrayList<CO2> friends) {
+        ScrollPane scrollPane = new ScrollPane();
+
+        VBox leaderboard = leaderboard(friends);
+        scrollPane.setContent(leaderboard);
+
+        Label friendLabel = new Label("Friends: ");
+        Label addFriendLabel = new Label("\nAdd friend: ");
+        TextField addFriendField = new TextField();
+        Button addFriendButton = new Button("Add");
+
+        addFriendButton.setOnAction(e -> {
+            String friendUsername = addFriendField.getText();
+            addFriendField.setText("");
+            System.out.println(friendUsername);
+            try {
+                ClientApplication.sendAddFriendRequest(friendUsername);
+            } catch (RestClientException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        HBox addFriendBox = new HBox();
+        addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
+
+        VBox total = new VBox();
+        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
+        return total;
+    }
+
+    /**
+     * This method closes the program.
+     */
+    private void closeProgram() {
+        ClientApplication.clearLoginData();
+        window.close();
+    }
+
+    /**
+     * This method logs you out.
+     */
     private void logout() {
         Boolean answer = ConfirmBox.display("Logout",
             "Are you sure you want to logout?");
         if (answer) {
-            AlertBox.display("You have logged out");
+            ClientApplication.clearLoginData();
             loginPage();
         }
     }

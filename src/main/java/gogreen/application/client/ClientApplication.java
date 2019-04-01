@@ -1,6 +1,7 @@
 package gogreen.application.client;
 
 import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddFriendRequest;
 import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddLocalProduceRequest;
 import gogreen.application.communication.AddSolarPanelRequest;
@@ -13,7 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
+import gogreen.application.communication.FriendRequestResponse;
+import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URISyntaxException;
 
 public class ClientApplication {
 
@@ -91,6 +96,87 @@ public class ClientApplication {
         return true;
     }
 
+
+    /**
+     * This method sends a GET request to the server with the login information. Request friend
+     * list.
+     *
+     * @return - returns true if method was successful.
+     */
+    public static Leaderboard sendGetFriendListRequest() throws RestClientException {
+        ResponseEntity<Leaderboard> res = restTemplate
+            .getForEntity(URL + "friendlist", Leaderboard.class, loginData);
+
+        System.out.println(res);
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a GET request to the server with the login information. Request friend
+     * list.
+     *
+     * @return - returns true if method was successful.
+     */
+    public static CO2 sendGetUserStatsRequest()
+        throws RestClientException {
+        ResponseEntity<CO2> res = restTemplate.getForEntity(URL + "user", CO2.class, loginData);
+
+        System.out.println(res);
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information. Request adding a
+     * friend.
+     *
+     * @return - returns true if method was successful.
+     */
+    public static boolean sendAddFriendRequest(String username)
+        throws RestClientException {
+        AddFriendRequest req = new AddFriendRequest(loginData, username);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend", req, Boolean.class);
+        System.out.println(res);
+
+        return res.getBody();
+    }
+
+    /**
+     * Requests all your friend requests.
+     *
+     * @return Leaderboard with the users that sent you friend requests.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static Leaderboard getFriendRequests()
+        throws RestClientException {
+
+        ResponseEntity<Leaderboard> res = restTemplate.getForEntity(URL + "seefriendrequests", Leaderboard.class, loginData);
+
+        System.out.println(res);
+
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information. Request adding a
+     * friend.
+     *
+     * @return - returns true if method was successful.
+     * @throws URISyntaxException - can throw exception.
+     */
+    public static boolean respondToFriendRequest(String username, boolean success)
+        throws RestClientException {
+
+        FriendRequestResponse req = new FriendRequestResponse(loginData, username, success);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest", req, Boolean.class);
+
+        System.out.println(res);
+
+        return res.getBody();
+    }
+
+
     /**
      * Generic implementation of sending a post request containing activity add data to the server
      *
@@ -123,6 +209,7 @@ public class ClientApplication {
         AddFoodRequest req = new AddFoodRequest(loginData, choiceBoxValue, amount);
         return sendActivityAddRequest("activity/food/add", req);
     }
+
 
     /**
      * This method sends a post request to the server with data provided by the user about the local
