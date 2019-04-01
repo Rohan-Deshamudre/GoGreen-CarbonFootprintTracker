@@ -5,10 +5,7 @@ import static gogreen.application.controller.LoginController.checkLoginData;
 import gogreen.application.communication.*;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.model.CO2;
-import gogreen.application.model.Friend;
-import gogreen.application.model.FriendRequest;
-import gogreen.application.model.User;
+import gogreen.application.model.*;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
@@ -267,12 +264,16 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
-        if (exist != null) {
-            FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
-                req.getFriendUsername());
-            friendRequestRepository.save(newRequest);
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        List<Friend> wayOne = friendRepository.findByFusername(req.getLoginData().getUsername());
+
+        if (wayOne == null) {
+            List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
+            if (exist != null) {
+                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+                    req.getFriendUsername());
+                friendRequestRepository.save(newRequest);
+                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 
@@ -329,7 +330,10 @@ public class ActivityController {
         if (req.isAccepted()) {
             Friend newFriend = new Friend(0, req.getLoginData().getUsername(),
                 req.getFriendUsername());
+            Friend otherFriend = new Friend(0, req.getFriendUsername(),
+                    req.getLoginData().getUsername());
             friendRepository.save(newFriend);
+            friendRepository.save(otherFriend);
 
             List<FriendRequest> old = friendRequestRepository
                 .findByUsernameAndRequestTo(req.getFriendUsername(),
