@@ -105,7 +105,7 @@ public class ClientApplication {
      */
     public static Leaderboard sendGetFriendListRequest() throws RestClientException {
         ResponseEntity<Leaderboard> res = restTemplate
-            .getForEntity(URL + "friendlist", Leaderboard.class, loginData);
+            .postForEntity(URL + "friendlist", loginData, Leaderboard.class);
 
         System.out.println(res);
         return res.getBody();
@@ -119,7 +119,7 @@ public class ClientApplication {
      */
     public static CO2 sendGetUserStatsRequest()
         throws RestClientException {
-        ResponseEntity<CO2> res = restTemplate.getForEntity(URL + "user", CO2.class, loginData);
+        ResponseEntity<CO2> res = restTemplate.postForEntity(URL + "user", loginData, CO2.class);
 
         System.out.println(res);
         return res.getBody();
@@ -150,7 +150,7 @@ public class ClientApplication {
     public static Leaderboard getFriendRequests()
         throws RestClientException {
 
-        ResponseEntity<Leaderboard> res = restTemplate.getForEntity(URL + "seefriendrequests", Leaderboard.class, loginData);
+        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests", loginData, Leaderboard.class);
 
         System.out.println(res);
 
