@@ -80,7 +80,7 @@ public class ActivityShowFriendsTest {
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            get(URL)
+            post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -98,7 +98,7 @@ public class ActivityShowFriendsTest {
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
         mockMvc.perform(
-            get(URL)
+            post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -115,7 +115,7 @@ public class ActivityShowFriendsTest {
         when(friendRepository.findByFusername(fakeLoginData.getUsername())).thenReturn(all);
 
         MvcResult res = mockMvc.perform(
-            get(URL)
+            post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isOk())
