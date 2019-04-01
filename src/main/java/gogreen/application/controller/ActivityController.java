@@ -205,9 +205,12 @@ public class ActivityController {
     @ResponseBody
     public Leaderboard showFriends(@RequestBody LoginData req) {
 
-        // TODO: check login data.
-
         boolean result = true;
+        if (!checkLoginData(req, userRepository)) {
+            result = false;
+            Leaderboard lb = null;
+            return lb;
+        }
 
         if (result) {
             String username = req.getUsername();
@@ -240,10 +243,12 @@ public class ActivityController {
     @ResponseBody
     public CO2 userStats(@RequestBody LoginData req) {
 
-        // TODO: check login data.
-
         boolean result = true;
-
+        if (!checkLoginData(req, userRepository)) {
+            result = false;
+            CO2 user = null;
+            return user;
+        }
 
         if (result) {
             List<CO2> user = co2Repository.findByCusername(req.getUsername());
@@ -267,9 +272,11 @@ public class ActivityController {
     @ResponseBody
     public boolean addFriend(@RequestBody AddFriendRequest req) {
 
-        // TODO: check login data.
-
         boolean result = true;
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            result = false;
+            return false;
+        }
 
         if (result) {
             List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
@@ -296,9 +303,12 @@ public class ActivityController {
     @ResponseBody
     public Leaderboard seeFriendRequests(@RequestBody LoginData req) {
 
-        // TODO: check login data.
-
         boolean result = true;
+        if (!checkLoginData(req, userRepository)) {
+            result = false;
+            Leaderboard lb = null;
+            return lb;
+        }
 
         if (result) {
             List<FriendRequest> list = friendRequestRepository
@@ -331,9 +341,11 @@ public class ActivityController {
     @ResponseBody
     public boolean respondToFriendRequest(@RequestBody FriendRequestResponse req) {
 
-        // TODO: check login data.
-
         boolean result = true;
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            result = false;
+            return false;
+        }
 
         if (result) {
             if (req.isAccepted()) {
