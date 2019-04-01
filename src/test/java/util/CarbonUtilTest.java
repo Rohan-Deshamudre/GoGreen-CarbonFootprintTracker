@@ -14,6 +14,7 @@ public class CarbonUtilTest {
         assertEquals(CarbonUtil.getFoodCarbonReduction("Vegetarian Meat"), 200);
         assertEquals(CarbonUtil.getFoodCarbonReduction("Fruit"), 80);
         assertEquals(CarbonUtil.getFoodCarbonReduction("Else"), 150);
+        assertEquals(CarbonUtil.getFoodCarbonReduction("Other"), 0);
     }
 
     @Test
