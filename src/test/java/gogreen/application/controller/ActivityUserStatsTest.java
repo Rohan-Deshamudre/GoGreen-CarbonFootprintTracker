@@ -4,6 +4,7 @@ import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJsonString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,7 +71,7 @@ public class ActivityUserStatsTest {
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            get(URL)
+            post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -88,7 +89,7 @@ public class ActivityUserStatsTest {
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
         mockMvc.perform(
-            get(URL)
+            post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())

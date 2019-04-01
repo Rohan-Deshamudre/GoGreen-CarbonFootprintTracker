@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -201,7 +201,7 @@ public class ActivityController {
      * @param req the LoginRequest.
      * @return all the friends of that user.
      */
-    @GetMapping(value = "/friendlist",
+    @PostMapping(value = "/friendlist",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -233,7 +233,7 @@ public class ActivityController {
      * @param req the LoginRequest.
      * @return all the friends of that user.
      */
-    @GetMapping(value = "/user",
+    @PostMapping(value = "/user",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -284,7 +284,7 @@ public class ActivityController {
      * @param req the LoginRequest.
      * @return a Leaderboard with the friend requests.
      */
-    @GetMapping(value = "/seefriendrequests",
+    @PostMapping(value = "/seefriendrequests",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
