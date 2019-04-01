@@ -2,20 +2,26 @@ package gogreen.application.controller;
 
 import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJsonString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
+import gogreen.application.model.Friend;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
 import gogreen.application.util.CarbonUtil;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +33,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(SpringRunner.class)
@@ -98,5 +105,27 @@ public class ActivityShowFriendsTest {
             .andReturn();
     }
 
+    @Test
+    void emptyTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+        // same username but different password.
+        setUserValid(fakeLoginData, userRepository);
+
+        List<Friend> all = new ArrayList<>();
+        when(friendRepository.findByFusername(fakeLoginData.getUsername())).thenReturn(all);
+
+        MvcResult res = mockMvc.perform(
+            get(URL)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJsonString(fakeLoginData)))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andReturn();
+
+        // validate leaderboard response
+        Leaderboard leaderboard = objectMapper
+            .readValue(res.getResponse().getContentAsString(), Leaderboard.class);
+        assertEquals(all, leaderboard.getUsers());
+    }
 
 }
