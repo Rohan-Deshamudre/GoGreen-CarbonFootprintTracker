@@ -57,9 +57,18 @@ public class Leaderboard {
     public String toString() {
         String string = "<Leaderboard[\n";
         for (CO2 user: users) {
-            string += "    " + user + "\n";
+            string += "    " + user.toString() + "\n";
         }
         string += "]>";
         return string;
+    }
+
+    public static void main(String[] args) {
+        CO2 user = new CO2("name", 1, 2, 3, 4);
+        ArrayList<CO2> list = new ArrayList<>();
+        list.add(user);
+        Leaderboard lb = new Leaderboard(list);
+
+        System.out.println(lb.toString());
     }
 }
