@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -51,7 +52,7 @@ public class ActivityController {
      *
      * @param req - addFoodRequest containing the data for the request.
      * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     *      CO2Response describing the amount the user's CO2 has been reduced.
+     * CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/food/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -80,7 +81,7 @@ public class ActivityController {
      *
      * @param req - addLocalProduceRequest containing the data for the request.
      * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     *      CO2Response describing the amount the user's CO2 has been reduced.
+     * CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/localproduce/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -110,7 +111,7 @@ public class ActivityController {
      *
      * @param req - addFoodRequest containing the data for the request.
      * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     *      CO2Response describing the amount the user's CO2 has been reduced.
+     * CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/transport/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -140,7 +141,7 @@ public class ActivityController {
      *
      * @param req - addHomeTempRequest containing the data for the request.
      * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     *      CO2Response describing the amount the user's CO2 has been reduced.
+     * CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/hometemp/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -170,7 +171,7 @@ public class ActivityController {
      *
      * @param req - add containing the data for the request.
      * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     *      CO2Response describing the amount the user's CO2 has been reduced.
+     * CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/solarpanel/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -195,168 +196,154 @@ public class ActivityController {
     }
 
     /**
-     * Makes a list of friends.
+     * Returns a list of friends for the given login data.
+     *
      * @param req the LoginRequest.
      * @return all the friends of that user.
      */
-    @PostMapping(value = "/friendlist",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/friendlist",
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public Leaderboard showFriends(@RequestBody LoginData req) {
+    public ResponseEntity<Leaderboard> showFriends(@RequestBody LoginData req) {
 
-        // TODO: check login data.
-
-        boolean result = true;
-
-        if (result) {
-            String username = req.getUsername();
-            List<Friend> all = friendRepository.findByFusername(username);
-            System.out.println(all);
-            ArrayList<CO2> friends = new ArrayList<>();
-
-            for (Friend friend : all) {
-                List<CO2> user = co2Repository.findByCusername(friend.getFriend());
-                CO2 adding = user.get(0);
-                friends.add(adding);
-            }
-
-            Leaderboard leaderboard = new Leaderboard(friends);
-            return leaderboard;
-        } else {
-            throw new IllegalArgumentException();
+        if (!checkLoginData(req, userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        String username = req.getUsername();
+        List<Friend> all = friendRepository.findByFusername(username);
+        System.out.println(all);
+        ArrayList<CO2> friends = new ArrayList<>();
+
+        for (Friend friend : all) {
+            List<CO2> user = co2Repository.findByCusername(friend.getFriend());
+            CO2 adding = user.get(0);
+            friends.add(adding);
+        }
+
+        return new ResponseEntity<>(new Leaderboard(friends), HttpStatus.OK);
     }
 
 
     /**
      * Makes a list of friends.
+     *
      * @param req the LoginRequest.
      * @return all the friends of that user.
      */
-    @PostMapping(value = "/user",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/user",
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public CO2 userStats(@RequestBody LoginData req) {
+    public ResponseEntity<CO2> userStats(@RequestBody LoginData req) {
 
-        // TODO: check login data.
-
-        boolean result = true;
-
-
-        if (result) {
-            List<CO2> user = co2Repository.findByCusername(req.getUsername());
-            System.out.println(user);
-            return user.get(0);
-
-        } else {
-            throw new IllegalArgumentException();
+        if (!checkLoginData(req, userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        List<CO2> user = co2Repository.findByCusername(req.getUsername());
+        System.out.println(user);
+        return new ResponseEntity<>(user.get(0), HttpStatus.OK);
     }
 
 
     /**
      * Makes a list of friends.
+     *
      * @param req the LoginRequest.
      * @return is method successful.
      */
     @PostMapping(value = "/addfriend",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public boolean addFriend(@RequestBody AddFriendRequest req) {
+    public ResponseEntity<Boolean> addFriend(@RequestBody AddFriendRequest req) {
 
-        // TODO: check login data.
-
-        boolean result = true;
-
-        if (result) {
-            List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
-            if (exist != null) {
-                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
-                        req.getFriendUsername());
-                friendRequestRepository.save(newRequest);
-                return true;
-            }
-            return false;
-        } else {
-            throw new IllegalArgumentException();
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
+        if (exist != null) {
+            FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+                req.getFriendUsername());
+            friendRequestRepository.save(newRequest);
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+
     }
 
     /**
      * Shows a list of friend requests.
+     *
      * @param req the LoginRequest.
      * @return a Leaderboard with the friend requests.
      */
-    @PostMapping(value = "/seefriendrequests",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/seefriendrequests",
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public Leaderboard seeFriendRequests(@RequestBody LoginData req) {
+    public ResponseEntity<Leaderboard> seeFriendRequests(@RequestBody LoginData req) {
 
-        // TODO: check login data.
-
-        boolean result = true;
-
-        if (result) {
-            List<FriendRequest> list = friendRequestRepository
-                    .findByRequestTo(req.getUsername());
-            if (list != null) {
-                ArrayList<CO2> allReq = new ArrayList<>();
-                for (FriendRequest request: list) {
-                    List<CO2> friend = co2Repository.findByCusername(request.getUsername());
-                    CO2 user = friend.get(0);
-                    allReq.add(user);
-                }
-                Leaderboard leaderboard = new Leaderboard(allReq);
-                return leaderboard;
-            }
-            return null;
-
-        } else {
-            throw new IllegalArgumentException();
+        if (!checkLoginData(req, userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        List<FriendRequest> list = friendRequestRepository
+            .findByRequestTo(req.getUsername());
+        if (list != null) {
+            ArrayList<CO2> allReq = new ArrayList<>();
+            for (FriendRequest request : list) {
+                List<CO2> friend = co2Repository.findByCusername(request.getUsername());
+                CO2 user = friend.get(0);
+                allReq.add(user);
+            }
+            return new ResponseEntity<>(new Leaderboard(allReq), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
      * Handles the response to a friend request.
+     *
      * @param req the FriendRequestResponse.
      * @return if method was successful.
      */
     @PostMapping(value = "/respondtofriendrequest",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public boolean respondToFriendRequest(@RequestBody FriendRequestResponse req) {
+    public ResponseEntity<Boolean> respondToFriendRequest(@RequestBody FriendRequestResponse req) {
 
-        // TODO: check login data.
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
-        boolean result = true;
+        if (req.isAccepted()) {
+            Friend newFriend = new Friend(0, req.getLoginData().getUsername(),
+                req.getFriendUsername());
+            friendRepository.save(newFriend);
 
-        if (result) {
-            if (req.isAccepted()) {
-                Friend newFriend = new Friend(0, req.getLoginData().getUsername(),
-                        req.getFriendUsername());
-                friendRepository.save(newFriend);
-
-                List<FriendRequest> old = friendRequestRepository
-                        .findByUsernameAndRequestTo(req.getFriendUsername(),
-                        req.getLoginData().getUsername());
-                FriendRequest remove = old.get(0);
-                friendRequestRepository.delete(remove);
-                return true;
-            }
             List<FriendRequest> old = friendRequestRepository
-                    .findByUsernameAndRequestTo(req.getFriendUsername(),
+                .findByUsernameAndRequestTo(req.getFriendUsername(),
                     req.getLoginData().getUsername());
             FriendRequest remove = old.get(0);
             friendRequestRepository.delete(remove);
-            return false;
-
-        } else {
-            throw new IllegalArgumentException();
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
         }
+        List<FriendRequest> old = friendRequestRepository
+            .findByUsernameAndRequestTo(req.getFriendUsername(),
+                req.getLoginData().getUsername());
+        FriendRequest remove = old.get(0);
+        friendRequestRepository.delete(remove);
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+
     }
 }

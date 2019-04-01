@@ -275,7 +275,7 @@ public class GuiMain extends Application {
         try {
             leaderboard = ClientApplication.sendGetFriendListRequest();
             System.out.println(leaderboard);
-        } catch (URISyntaxException e) {
+        } catch (RestClientException e) {
             e.printStackTrace();
         }
 
@@ -837,7 +837,7 @@ public class GuiMain extends Application {
         Leaderboard leaderboard = null;
         try {
             leaderboard = ClientApplication.sendGetFriendListRequest();
-        } catch (URISyntaxException e) {
+        } catch (RestClientException e) {
             e.printStackTrace();
         }
         leaderboard.sortLeaderboard();
@@ -855,7 +855,7 @@ public class GuiMain extends Application {
         CO2 user = null;
         try {
             user = ClientApplication.sendGetUserStatsRequest();
-        } catch (URISyntaxException e) {
+        } catch (RestClientException e) {
             e.printStackTrace();
         }
 
@@ -1242,7 +1242,7 @@ public class GuiMain extends Application {
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), true);
                 userPage();
-            } catch (URISyntaxException e1) {
+            } catch (RestClientException e1) {
                 e1.printStackTrace();
             }
         });
@@ -1253,7 +1253,7 @@ public class GuiMain extends Application {
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), false);
                 userPage();
-            } catch (URISyntaxException e1) {
+            } catch (RestClientException e1) {
                 e1.printStackTrace();
             }
         });
@@ -1294,7 +1294,7 @@ public class GuiMain extends Application {
         Leaderboard friendRequests = null;
         try {
             friendRequests = ClientApplication.getFriendRequests();
-        } catch (URISyntaxException e) {
+        } catch (RestClientException e) {
             e.printStackTrace();
         }
         friendRequests.sortLeaderboard();
@@ -1332,7 +1332,7 @@ public class GuiMain extends Application {
             System.out.println(friendUsername);
             try {
                 ClientApplication.sendAddFriendRequest(friendUsername);
-            } catch (URISyntaxException e1) {
+            } catch (RestClientException e1) {
                 e1.printStackTrace();
             }
         });
