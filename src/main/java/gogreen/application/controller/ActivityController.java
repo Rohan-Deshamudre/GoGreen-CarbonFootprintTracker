@@ -8,7 +8,6 @@ import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.model.CO2;
 import gogreen.application.model.Friend;
 import gogreen.application.model.FriendRequest;
-import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -228,7 +226,7 @@ public class ActivityController {
 
 
     /**
-     * Makes a list of friends.
+     * Get user stats
      *
      * @param req the LoginRequest.
      * @return all the friends of that user.
@@ -251,7 +249,7 @@ public class ActivityController {
 
 
     /**
-     * Makes a list of friends.
+     * Add friend request
      *
      * @param req the LoginRequest.
      * @return is method successful.
