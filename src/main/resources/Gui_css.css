@@ -1,0 +1,17 @@
+.button{
+    -fx-background-color: #2a801d;
+}
+
+.button:hover{
+    -fx-background-color: #4bee1a;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+.bodybg{
+    -fx-background-color: green;
+}
+
+.Text{
+    -fx-background-color: green;
+}

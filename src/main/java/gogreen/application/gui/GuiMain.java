@@ -11,23 +11,18 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -36,6 +31,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.springframework.web.client.RestClientException;
+
+import java.awt.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -83,12 +80,12 @@ public class GuiMain extends Application {
         // TOP
         Group topGroup = new Group();
         Text goGreenText = new Text("Go Green!");
-        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 50));
+        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 70));
         topGroup.getChildren().add(goGreenText);
 
         // CENTER
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setPadding(new Insets(250, 100, 100, 550));
         grid.setVgap(8);
         grid.setHgap(10);
 
@@ -97,44 +94,54 @@ public class GuiMain extends Application {
         Label helloLabel = new Label(helloString);
         GridPane.setConstraints(helloLabel, 1, 0);
 
+        ImageView image = new ImageView("images/Go_Green_image.jpg");
+        image.setFitHeight(40);
+        image.setFitWidth(70);
+
         // Enter username
         Label usernameLabel = new Label("Username: ");
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
-        GridPane.setConstraints(usernameLabel, 0, 1);
-        GridPane.setConstraints(usernameField, 1, 1);
+        GridPane.setConstraints(usernameLabel, 0, 3);
+        GridPane.setConstraints(usernameField, 1, 3);
 
         // Enter password
         Label passwordLabel = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
-        GridPane.setConstraints(passwordLabel, 0, 2);
-        GridPane.setConstraints(passwordField, 1, 2);
+        GridPane.setConstraints(passwordLabel, 0, 4);
+        GridPane.setConstraints(passwordField, 1, 4);
 
         // Buttons
-        Button loginButton = new Button("Login");
+        Button registrationButton = new Button("Register");
+        registrationButton.setOnAction(e -> {
+            registrationPage();
+        });
+
+        Button loginButton = new Button();
         loginButton.setOnAction(e -> {
             loginButtonAction(usernameField.getText(), passwordField.getText());
             usernameField.setText("");
             passwordField.setText("");
         });
-        GridPane.setConstraints(loginButton, 1, 3);
 
-        Button registrationButton = new Button("Register");
-        registrationButton.setOnAction(e -> {
-            registrationPage();
-        });
+        GridPane.setConstraints(loginButton, 1, 5);
+        loginButton.setText("Login");
+        loginButton.setGraphic(image);
+
         HBox buttons = new HBox();
         buttons.setSpacing(10);
-        buttons.getChildren().addAll(loginButton, registrationButton);
-        GridPane.setConstraints(buttons, 1, 3);
+        buttons.getChildren().addAll(registrationButton, loginButton);
+        GridPane.setConstraints(buttons, 1, 5);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
+        borderPane.getStylesheets().add("/Gui_css.css");
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
+        borderPane.setAlignment(topGroup, Pos.TOP_CENTER);
         borderPane.setCenter(grid);
 
         // Make scene
@@ -144,7 +151,7 @@ public class GuiMain extends Application {
         );
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-
+        loginScene.getStylesheets().add("Login_css.css");
         // Show window
         window.setScene(loginScene);
         window.show();
@@ -161,12 +168,12 @@ public class GuiMain extends Application {
         // TOP
         Group topGroup = new Group();
         Text goGreenText = new Text("Registration");
-        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
+        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
         topGroup.getChildren().add(goGreenText);
 
         // CENTER
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setPadding(new Insets(250, 100, 100, 550));
         grid.setVgap(8);
         grid.setHgap(10);
 
@@ -217,6 +224,7 @@ public class GuiMain extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
+        borderPane.setAlignment(topGroup, Pos.TOP_CENTER);
         borderPane.setCenter(grid);
 
         // Make scene
@@ -225,7 +233,7 @@ public class GuiMain extends Application {
             passwordLabel1, passwordField, passwordField1, buttons
         );
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-
+        loginScene.getStylesheets().add("Register_css.css");
         // Show window
         window.setScene(loginScene);
         window.setTitle("Registration Page");
@@ -242,33 +250,44 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        GridPane buttons = new GridPane();
-        buttons.setAlignment(Pos.CENTER);
+        AnchorPane buttons = new AnchorPane();
         buttons.setPadding(new Insets(10));
-        buttons.setVgap(10);
-        buttons.setHgap(10);
         int buttonWidth = 160;
         int buttonHeight = 160;
 
         Button food = new Button("Food");
-        food.setMinSize(buttonWidth, buttonHeight);
         food.setOnAction(e -> showFoodPage());
-        buttons.add(food, 0, 0);
+        food.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(food, 250.0);
+        AnchorPane.setRightAnchor(food, 870.0);
+        AnchorPane.setLeftAnchor(food, 230.0);
+        buttons.getChildren().add(food);
 
         Button homeE = new Button("Home");
-        homeE.setMinSize(buttonWidth, buttonHeight);
         homeE.setOnAction(e -> showHomeEnergy());
-        buttons.add(homeE, 0, 1);
+        homeE.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(homeE, 250.0);
+        AnchorPane.setRightAnchor(homeE, 700.0);
+        AnchorPane.setLeftAnchor(homeE, 400.0);
+        buttons.getChildren().add(homeE);
 
         Button transport = new Button("Transport");
-        transport.setMinSize(buttonWidth, buttonHeight);
         transport.setOnAction(e -> showTransportPage());
-        buttons.add(transport, 1, 0);
+        transport.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(transport, 420.0);
+        AnchorPane.setRightAnchor(transport, 870.0);
+        AnchorPane.setLeftAnchor(transport, 230.0);
+        buttons.getChildren().add(transport);
 
-        Button share = new Button("Stats");
-        share.setMinSize(buttonWidth, buttonHeight);
-        share.setOnAction(e -> userPage());
-        buttons.add(share, 1, 1);
+        Button stats = new Button("Stats");
+        stats.setMinSize(buttonWidth, buttonHeight);
+        stats.setOnAction(e -> userPage());
+        stats.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(stats, 420.0);
+        AnchorPane.setRightAnchor(stats, 700.0);
+        AnchorPane.setLeftAnchor(stats, 400.0);
+        buttons.getChildren().add(stats);
+
 
         // Leaderboard
         Leaderboard leaderboard = null;
@@ -282,7 +301,7 @@ public class GuiMain extends Application {
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
-        BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
+        BorderPane.setMargin(scoreboard, new Insets(10, 200, 10, 10));
 
         //setting up the window
         BorderPane menuPane = new BorderPane();
@@ -292,6 +311,7 @@ public class GuiMain extends Application {
 
         //setting up the scene
         Scene scene = new Scene(menuPane, screenWidth, screenHeight);
+        scene.getStylesheets().add("MainMenu_css.css");
         window.setScene(scene);
         window.show();
     }
