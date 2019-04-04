@@ -229,7 +229,7 @@ public class ActivityController {
      * Get user stats
      *
      * @param req the LoginRequest.
-     * @return all the friends of that user.
+     * @return The user object
      */
     @PostMapping(value = "/user",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -262,6 +262,7 @@ public class ActivityController {
 
         if (!checkLoginData(req.getLoginData(), userRepository)) {
             // session invalid
+
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -345,3 +346,19 @@ public class ActivityController {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
