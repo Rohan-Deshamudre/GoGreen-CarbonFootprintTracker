@@ -779,6 +779,7 @@ public class GuiMain extends Application {
         hoursSunlightField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setId("button1");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             solarPanelAction(Integer.parseInt(areaField.getText()),
@@ -788,8 +789,11 @@ public class GuiMain extends Application {
         });
 
         Label titleLabel = new Label("Solar Panels");
+        titleLabel.setId("label1");
         Label areaLabel = new Label("Total area:");
+        areaLabel.setId("label1");
         Label hoursSunlightLabel = new Label("Sunlight:");
+        hoursSunlightLabel.setId("label1");
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -811,6 +815,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        scene.getStylesheets().add("solarPanelPage_css.css");
         window.setScene(scene);
         window.show();
     }
@@ -819,7 +824,7 @@ public class GuiMain extends Application {
      * Page for the share page.
      */
     private void showShare() {
-        window.setTitle("Stats");
+        window.setTitle("Share");
         window.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
@@ -832,16 +837,20 @@ public class GuiMain extends Application {
 
         //left buttons
         VBox left = new VBox();
+        left.setId("vbox");
         left.setPrefSize(70, 70);
         left.setAlignment(Pos.CENTER);
-        left.setPadding(new Insets(10, 10, 10, 10));
+        left.setPadding(new Insets(10, 5, 10, 10));
 
         Button react1 = new Button("Reaction 1");
+        react1.setId("button1");
         react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
         Button react2 = new Button("Reaction 2");
+        react2.setId("button2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
 
         Label whitespace = new Label("");
+        whitespace.setId("label1");
 
         left.getChildren().addAll(userChoice, whitespace, react1, react2);
 
@@ -852,8 +861,10 @@ public class GuiMain extends Application {
         right.setPadding(new Insets(53, 10, 10, 10));
 
         Button react3 = new Button("Reaction 3");
+        react3.setId("button3");
         react3.setMinSize(right.getPrefWidth(), right.getPrefHeight());
         Button react4 = new Button("Reaction 4");
+        react4.setId("button4");
         react4.setMinSize(right.getPrefWidth(), right.getPrefHeight());
 
         right.getChildren().addAll(react3, react4);
@@ -863,6 +874,7 @@ public class GuiMain extends Application {
         rightScore.setAlignment(Pos.CENTER_RIGHT);
 
         Label scoreboard = new Label("Scoreboard");
+        scoreboard.setId("label1");
         scoreboard.setMinSize(80, 130);
 
         rightScore.getChildren().addAll(scoreboard);
@@ -874,8 +886,9 @@ public class GuiMain extends Application {
         sharePane.setCenter(right);
         sharePane.setRight(rightScore);
 
-        Scene shareScene = new Scene(sharePane, screenWidth, screenHeight);
-        window.setScene(shareScene);
+        Scene scene = new Scene(sharePane, screenWidth, screenHeight);
+        scene.getStylesheets().add("Share_css.css");
+        window.setScene(scene);
         window.show();
     }
 
@@ -889,6 +902,7 @@ public class GuiMain extends Application {
 
         // LEFT: Stats
         GridPane grid = new GridPane();
+        grid.getStylesheets().add("Stats_css.css");
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
@@ -902,6 +916,7 @@ public class GuiMain extends Application {
         }
         leaderboard.sortLeaderboard();
         VBox allFriends = showFriends(leaderboard.getUsers());
+        allFriends.setId("vbox1");
         allFriends.setPadding(new Insets(100));
 
         // Make BorderPane layout
@@ -920,16 +935,27 @@ public class GuiMain extends Application {
         }
 
         Label stats = new Label("Stats");
+        stats.setId("label1");
         Label username = new Label("Username:");
+        username.setId("label1");
         Label usernameValue = new Label(user.getCUsername());
+        usernameValue.setId("label1");
         Label totalCO2 = new Label("Total CO2 reduction:");
+        totalCO2.setId("label1");
         Label totalCO2Value = new Label(Integer.toString(user.getCO2reduc()));
+        totalCO2Value.setId("label1");
         Label co2food = new Label("CO2 reduction for food:");
+        co2food.setId("label1");
         Label co2foodValue = new Label(Integer.toString(user.getCO2food()));
+        co2foodValue.setId("label1");
         Label co2transport = new Label("CO2 reduction for transport:");
+        co2transport.setId("label1");
         Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
+        co2transportValue.setId("label1");
         Label co2energy = new Label("CO2 reduction for energy:");
+        co2energy.setId("label1");
         Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+        co2energyValue.setId("label1");
 
         grid.add(stats, 0, 0);
         grid.add(username, 0, 3);
