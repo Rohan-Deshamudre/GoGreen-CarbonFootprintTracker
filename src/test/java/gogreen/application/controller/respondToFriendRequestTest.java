@@ -1,24 +1,14 @@
 package gogreen.application.controller;
 
-import static gogreen.application.controller.MockitoTestHelper.setUserValid;
-import static gogreen.application.controller.MockitoTestHelper.toJsonString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gogreen.application.client.Leaderboard;
+import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
+import gogreen.application.model.FriendRequest;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -33,9 +23,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static gogreen.application.controller.MockitoTestHelper.setUserValid;
+import static gogreen.application.controller.MockitoTestHelper.toJsonString;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
-public class ActivityUserStatsTest {
+public class respondToFriendRequestTest {
 
     private MockMvc mockMvc;
 
@@ -57,7 +58,7 @@ public class ActivityUserStatsTest {
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/user";
+    private final String URL = "/respondtofriendrequest";
 
     @BeforeEach
     void init() {
@@ -79,7 +80,7 @@ public class ActivityUserStatsTest {
         mockMvc.perform(
             post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(fakeLoginData)))
+                .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", true))))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -97,33 +98,68 @@ public class ActivityUserStatsTest {
         mockMvc.perform(
             post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(fakeLoginData)))
+                .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", true))))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
 
     @Test
-    void userStatsTest() throws Exception {
+    void RequestDeniedTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()), userRepository);
+        setUserValid(fakeLoginData, userRepository);
 
-        List<CO2> user = new ArrayList<>(1);
-        user.add(new CO2("dummyFriend1", 20, 20, 20, 20));
 
-        when(co2Repository.findByCusername(fakeLoginData.getUsername())).thenReturn(user);
+        List<FriendRequest> all = new ArrayList<>();
+        List<CO2> friend = new ArrayList<>();
+        friend.add(new CO2("steve", 4, 4, 4, 4));
+        all.add(new FriendRequest(1,"steve", "shdah"));
+
+
+        when(friendRequestRepository.findByUsernameAndRequestTo("friAndy", fakeLoginData.getUsername()))
+                .thenReturn(all);
+
 
         MvcResult res = mockMvc.perform(
                 post(URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(toJsonString(fakeLoginData)))
+                        .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", false))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andReturn();
 
-        // validate leaderboard response
-        CO2 response = objectMapper
-                .readValue(res.getResponse().getContentAsString(), CO2.class);
-        assertEquals(user.get(0).getCUsername(), response.getCUsername());
-}
+        Boolean response = objectMapper
+                .readValue(res.getResponse().getContentAsString(), Boolean.class);
+        assertFalse(response);
+    }
+
+    @Test
+    void RequestAcceptedTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+
+        setUserValid(fakeLoginData, userRepository);
+
+
+        List<FriendRequest> all = new ArrayList<>();
+        List<CO2> friend = new ArrayList<>();
+        friend.add(new CO2("steve", 4, 4, 4, 4));
+        all.add(new FriendRequest(1,"steve", "shdah"));
+
+
+        when(friendRequestRepository.findByUsernameAndRequestTo("friAndy", fakeLoginData.getUsername()))
+                .thenReturn(all);
+
+
+        MvcResult res = mockMvc.perform(
+                post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", true))))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn();
+
+        Boolean response = objectMapper
+                .readValue(res.getResponse().getContentAsString(), Boolean.class);
+        assertTrue(response);
+    }
 }

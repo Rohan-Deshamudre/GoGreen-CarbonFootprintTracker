@@ -14,6 +14,9 @@ public class AddFriendRequest extends ClientMessage {
         this.friendUsername = friendUsername;
     }
 
+    public AddFriendRequest() {
+
+    }
     /**
      * Getter of the friendUsername.
      * @return the friendUsername.

@@ -4,22 +4,19 @@ import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.client.Leaderboard;
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.LoginData;
+import gogreen.application.model.CO2;
 import gogreen.application.model.Friend;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
-import gogreen.application.util.CarbonUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +77,7 @@ public class ActivityShowFriendsTest {
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            post(URL)
+                post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -108,14 +105,14 @@ public class ActivityShowFriendsTest {
     @Test
     void emptyTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-        // same username but different password.
+
         setUserValid(fakeLoginData, userRepository);
 
         List<Friend> all = new ArrayList<>();
         when(friendRepository.findByFusername(fakeLoginData.getUsername())).thenReturn(all);
 
         MvcResult res = mockMvc.perform(
-            post(URL)
+                post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isOk())
@@ -128,4 +125,37 @@ public class ActivityShowFriendsTest {
         assertEquals(all, leaderboard.getUsers());
     }
 
+    @Test
+    void fullTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("dummy", "qwerty");
+
+        setUserValid(fakeLoginData, userRepository);
+
+        List<Friend> all = new ArrayList<>();
+        all.add(new Friend(0, "dummy", "dummyFriend1"));
+        all.add(new Friend(1, "dummy", "dummyFriend2"));
+        when(friendRepository.findByFusername(fakeLoginData.getUsername())).thenReturn(all);
+
+        List<CO2> friend1 = new ArrayList<>(1);
+        friend1.add(new CO2("dummyFriend1", 4, 4, 4, 4));
+        List<CO2> friend2 = new ArrayList<>(1);
+        friend2.add(new CO2("dummyFriend1", 20, 20, 20, 20));
+
+        when(co2Repository.findByCusername(all.get(0).getFriend())).thenReturn(friend1);
+        when(co2Repository.findByCusername(all.get(1).getFriend())).thenReturn(friend2);
+
+        MvcResult res = mockMvc.perform(
+                post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(fakeLoginData)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn();
+
+        // validate leaderboard response
+        Leaderboard leaderboard = objectMapper
+                .readValue(res.getResponse().getContentAsString(), Leaderboard.class);
+        assertEquals(friend1.get(0).getCUsername(), leaderboard.getUsers().get(0).getCUsername());
+        assertEquals(friend2.get(0).getCUsername(), leaderboard.getUsers().get(1).getCUsername());
+    }
 }

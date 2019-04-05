@@ -1,5 +1,8 @@
 package gogreen.application.communication;
 
+import gogreen.application.model.Friend;
+import gogreen.application.model.FriendRequest;
+
 public class FriendRequestResponse extends ClientMessage {
 
     private String friendUsername;
@@ -15,6 +18,10 @@ public class FriendRequestResponse extends ClientMessage {
         super(loginData);
         this.friendUsername = friendUsername;
         this.accepted = accepted;
+    }
+
+    public FriendRequestResponse() {
+
     }
 
     /**

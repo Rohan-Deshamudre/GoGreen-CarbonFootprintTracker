@@ -1,24 +1,16 @@
 package gogreen.application.controller;
 
-import static gogreen.application.controller.MockitoTestHelper.setUserValid;
-import static gogreen.application.controller.MockitoTestHelper.toJsonString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gogreen.application.client.Leaderboard;
+import gogreen.application.communication.AddFriendRequest;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
+import gogreen.application.model.Friend;
+import gogreen.application.model.FriendRequest;
+import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -33,9 +25,21 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static gogreen.application.controller.MockitoTestHelper.setUserValid;
+import static gogreen.application.controller.MockitoTestHelper.toJsonString;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
-public class ActivityUserStatsTest {
+ public class AddFriendTest {
 
     private MockMvc mockMvc;
 
@@ -57,7 +61,7 @@ public class ActivityUserStatsTest {
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/user";
+    private final String URL = "/addfriend";
 
     @BeforeEach
     void init() {
@@ -71,7 +75,7 @@ public class ActivityUserStatsTest {
      */
     @Test
     void unregisteredUser() throws Exception {
-        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+        LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
             .thenReturn(new ArrayList<>());
@@ -79,7 +83,7 @@ public class ActivityUserStatsTest {
         mockMvc.perform(
             post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(fakeLoginData)))
+                .content(toJsonString(new AddFriendRequest(fakeLoginData, "dummy"))))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -90,40 +94,63 @@ public class ActivityUserStatsTest {
      */
     @Test
     void wrongPassword() throws Exception {
-        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+        LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
         mockMvc.perform(
             post(URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(fakeLoginData)))
+                .content(toJsonString(new AddFriendRequest(fakeLoginData, "dummy"))))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
 
     @Test
-    void userStatsTest() throws Exception {
-        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+    void friendNotExistTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()), userRepository);
+        setUserValid(fakeLoginData, userRepository);
 
-        List<CO2> user = new ArrayList<>(1);
-        user.add(new CO2("dummyFriend1", 20, 20, 20, 20));
+        when(co2Repository.findByCusername("dummyFriend")).thenReturn(null);
 
-        when(co2Repository.findByCusername(fakeLoginData.getUsername())).thenReturn(user);
-
+        AddFriendRequest request = new AddFriendRequest(fakeLoginData, "dummyFriend");
+        System.out.println(request.getLoginData().toString());
         MvcResult res = mockMvc.perform(
                 post(URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(toJsonString(fakeLoginData)))
+                        .content(toJsonString(request)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andReturn();
 
-        // validate leaderboard response
-        CO2 response = objectMapper
-                .readValue(res.getResponse().getContentAsString(), CO2.class);
-        assertEquals(user.get(0).getCUsername(), response.getCUsername());
+        Boolean response = objectMapper
+                .readValue(res.getResponse().getContentAsString(), Boolean.class);
+        assertFalse(response);
 }
+
+    @Test
+    void madeNewFriendTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("dummy", "qwerty");
+
+        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()), userRepository);
+
+        List<CO2> all = new ArrayList<>();
+        all.add(new CO2("dummyFriend", 4, 4, 4, 4));
+        when(co2Repository.findByCusername("dummyFriend")).thenReturn(all);
+
+        AddFriendRequest request = new AddFriendRequest(fakeLoginData, "dummyFriend");
+
+        MvcResult res = mockMvc.perform(
+                post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(request)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn();
+
+        Boolean response = objectMapper
+                .readValue(res.getResponse().getContentAsString(), Boolean.class);
+        assertTrue(response);
+    }
 }

@@ -1,17 +1,17 @@
 package gogreen.application.controller;
 
+
 import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
+import gogreen.application.model.FriendRequest;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
@@ -32,10 +32,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
-public class ActivityUserStatsTest {
+public class ActivitySeeFriendRequestsTest {
+
 
     private MockMvc mockMvc;
 
@@ -57,7 +59,7 @@ public class ActivityUserStatsTest {
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/user";
+    private final String URL = "/seefriendrequests";
 
     @BeforeEach
     void init() {
@@ -72,16 +74,16 @@ public class ActivityUserStatsTest {
     @Test
     void unregisteredUser() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-
+        // invalid username returns an empty list.
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
-            .thenReturn(new ArrayList<>());
+                .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            post(URL)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(fakeLoginData)))
-            .andExpect(status().isUnauthorized())
-            .andReturn();
+                post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(fakeLoginData)))
+                .andExpect(status().isUnauthorized())
+                .andReturn();
     }
 
     /**
@@ -91,27 +93,52 @@ public class ActivityUserStatsTest {
     @Test
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-
+        // same username but different password.
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
         mockMvc.perform(
-            post(URL)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(fakeLoginData)))
-            .andExpect(status().isUnauthorized())
-            .andReturn();
+                post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(fakeLoginData)))
+                .andExpect(status().isUnauthorized())
+                .andReturn();
     }
 
+    /**
+     * Test correct post request for a user with no friends. Result to pass: HTTP 200 OK
+     */
     @Test
-    void userStatsTest() throws Exception {
+    void noFriendsTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+        setUserValid(fakeLoginData, userRepository);
+        // username with no friends returns an empty list.
+        when(friendRequestRepository.findByRequestTo("shdah")).thenReturn(null);
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()), userRepository);
+        MvcResult res = mockMvc.perform(
+                post(URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(fakeLoginData)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist())
+                .andReturn();
+    }
 
-        List<CO2> user = new ArrayList<>(1);
-        user.add(new CO2("dummyFriend1", 20, 20, 20, 20));
+    /**
+     * Test correct post request for a user . Result to pass: HTTP 200
+     * And a list with friends
+     */
+    @Test
+    void FriendsTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+        setUserValid(fakeLoginData, userRepository);
 
-        when(co2Repository.findByCusername(fakeLoginData.getUsername())).thenReturn(user);
+        List<FriendRequest> all = new ArrayList<>();
+        List<CO2> friend = new ArrayList<>();
+        friend.add(new CO2("steve", 4, 4, 4, 4));
+        all.add(new FriendRequest(1,"steve", "shdah"));
+
+        when(friendRequestRepository.findByRequestTo("shdah")).thenReturn(all);
+        when(co2Repository.findByCusername("steve")).thenReturn(friend);
 
         MvcResult res = mockMvc.perform(
                 post(URL)
@@ -121,9 +148,9 @@ public class ActivityUserStatsTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andReturn();
 
-        // validate leaderboard response
-        CO2 response = objectMapper
-                .readValue(res.getResponse().getContentAsString(), CO2.class);
-        assertEquals(user.get(0).getCUsername(), response.getCUsername());
-}
+        Leaderboard leaderboard = objectMapper
+                .readValue(res.getResponse().getContentAsString(), Leaderboard.class);
+        assertEquals(friend.get(0).getCUsername(), leaderboard.getUsers().get(0).getCUsername());
+        assertEquals(friend.get(0).getCO2energy(), leaderboard.getUsers().get(0).getCO2energy());
+    }
 }
