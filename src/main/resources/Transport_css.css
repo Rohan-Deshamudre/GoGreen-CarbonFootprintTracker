@@ -1,0 +1,29 @@
+.button{
+    -fx-border-radius: 5px;
+}
+
+#button1{
+    -fx-border-color: #1aee40;
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+}
+
+#button2 {
+    -fx-border-color: #1aee40;
+    -fx-font-size: 20px;
+    -fx-background-color: transparent;
+}
+#button1:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #1aee40;
+}
+
+#button2:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #1aee40;
+}
+
+#label1{
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+}

@@ -412,11 +412,17 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         Label titleLabel = new Label("Vegetarian Meal");
+        titleLabel.setId("label1");
         Label sizeLabel = new Label("Size:");
+        sizeLabel.setId("label1");
         Label label1 = new Label("Salad");
+        label1.setId("label1");
         Label label2 = new Label("Fruits");
+        label2.setId("label1");
         Label label3 = new Label("Vegetarian Meat");
+        label3.setId("label1");
         Label label4 = new Label("Else");
+        label4.setId("label1");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(label1, 0, 1);
@@ -477,7 +483,9 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         Label titleLabel = new Label("Local Store");
+        titleLabel.setId("label1");
         Label weightLabel = new Label("Weight:");
+        weightLabel.setId("label1");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(weightLabel, 0, 1);
@@ -520,16 +528,19 @@ public class GuiMain extends Application {
         buttons.setSpacing(20);
 
         Button option1 = new Button("Bike");
+        option1.setId("button1");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> bikeRidePage());
 
         Button option2 = new Button("Public transport");
+        option2.setId("button2");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> publicTransportPage());
 
         buttons.getChildren().addAll(option1, option2);
 
         Label transportTitle = new Label("Transport");
+        transportTitle.setId("label1");
 
         center.getChildren().addAll(transportTitle, buttons);
 
@@ -539,8 +550,9 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
-        window.setScene(foodPage);
+        Scene transportPage = new Scene(foodPane, screenWidth, screenHeight);
+        transportPage.getStylesheets().add("Transport_css.css");
+        window.setScene(transportPage);
         window.show();
     }
 
@@ -571,7 +583,9 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Bike Ride");
+        titleLabel.setId("label1");
         Label distanceLabel = new Label("Total distance:");
+        distanceLabel.setId("label1");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
@@ -585,6 +599,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        scene.getStylesheets().add("bikeRidePage_css.css");
         window.setScene(scene);
         window.show();
     }
@@ -1018,7 +1033,7 @@ public class GuiMain extends Application {
         menuBar.getMenus().addAll(menu);
 
         Button homeButton = new Button("Home");
-        homeButton.setMinSize(100, 10);
+        homeButton.setMinSize(10, 10);
         homeButton.getStylesheets().add("MenuBar_css.css");
         homeButton.setOnAction(e -> showMainMenu());
         homeButton.setFocusTraversable(false);
