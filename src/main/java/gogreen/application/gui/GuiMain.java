@@ -337,6 +337,7 @@ public class GuiMain extends Application {
         //set up the page
         VBox center = new VBox();
         center.getStylesheets().add("Food_css.css");
+        center.setPadding(new Insets(20));
         center.setAlignment(Pos.CENTER);
         center.setSpacing(10);
 
@@ -396,7 +397,9 @@ public class GuiMain extends Application {
         Slider sizeSlider4 = sizeSlider();
 
         Button addButton = new Button("Add");
+        addButton.setId("button1");
         addButton.setMinSize(100, 50);
+
         addButton.setOnAction(e -> foodAddButtonAction(
             sizeSlider1.getValue(),
             sizeSlider2.getValue(),
@@ -438,6 +441,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
+        foodPage.getStylesheets().add("veggieMealPage_css.css");
         window.setScene(foodPage);
         window.show();
     }
@@ -454,7 +458,7 @@ public class GuiMain extends Application {
 
         TextField weightField = new TextField();
         weightField.setMaxWidth(300);
-        weightField.setPromptText("weight");
+        weightField.setPromptText("weight(gram)");
 
         CheckBox checkBox = new CheckBox("Organic");
 
@@ -488,6 +492,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        scene.getStylesheets().add("localStorePage_css.css");
         window.setScene(scene);
         window.show();
     }
