@@ -1,0 +1,31 @@
+.button{
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+    -fx-border-radius: 15px;
+}
+
+#button1{
+    -fx-border-color: #1aee40;
+}
+
+#button2{
+    -fx-border-color: #1aee40;
+}
+
+#button1:hover{
+    -fx-background-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button2:hover{
+    -fx-background-color: #1aee40;
+    -fx-border-radius: 15px;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+.label{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}

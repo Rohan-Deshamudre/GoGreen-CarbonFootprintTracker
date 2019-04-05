@@ -251,41 +251,48 @@ public class GuiMain extends Application {
         });
 
         AnchorPane buttons = new AnchorPane();
-        buttons.setPadding(new Insets(10));
-        int buttonWidth = 160;
-        int buttonHeight = 160;
+        buttons.setPadding(new Insets(20));
+        int buttonWidth = 180;
+        int buttonHeight = 180;
 
         Button food = new Button("Food");
+        food.setId("button1");
+        food.setShape(new Circle(4));
         food.setOnAction(e -> showFoodPage());
         food.setMinSize(buttonWidth, buttonHeight);
-        AnchorPane.setTopAnchor(food, 250.0);
-        AnchorPane.setRightAnchor(food, 870.0);
-        AnchorPane.setLeftAnchor(food, 230.0);
+        AnchorPane.setTopAnchor(food, 200.0);
+        AnchorPane.setRightAnchor(food, 460.0);
+        AnchorPane.setLeftAnchor(food, 390.0);
         buttons.getChildren().add(food);
 
         Button homeE = new Button("Home");
+        homeE.setId("button2");
+        homeE.setShape(new Circle(4));
         homeE.setOnAction(e -> showHomeEnergy());
         homeE.setMinSize(buttonWidth, buttonHeight);
-        AnchorPane.setTopAnchor(homeE, 250.0);
-        AnchorPane.setRightAnchor(homeE, 700.0);
-        AnchorPane.setLeftAnchor(homeE, 400.0);
+        AnchorPane.setTopAnchor(homeE, 200.0);
+        AnchorPane.setRightAnchor(homeE, 250.0);
+        AnchorPane.setLeftAnchor(homeE, 600.0);
         buttons.getChildren().add(homeE);
 
         Button transport = new Button("Transport");
+        transport.setId("button3");
+        transport.setShape(new Circle(4));
         transport.setOnAction(e -> showTransportPage());
         transport.setMinSize(buttonWidth, buttonHeight);
-        AnchorPane.setTopAnchor(transport, 420.0);
-        AnchorPane.setRightAnchor(transport, 870.0);
-        AnchorPane.setLeftAnchor(transport, 230.0);
+        AnchorPane.setTopAnchor(transport, 400.0);
+        AnchorPane.setRightAnchor(transport, 460.0);
+        AnchorPane.setLeftAnchor(transport, 390.0);
         buttons.getChildren().add(transport);
 
         Button stats = new Button("Stats");
+        stats.setId("button4");
+        stats.setShape(new Circle(4));
         stats.setMinSize(buttonWidth, buttonHeight);
         stats.setOnAction(e -> userPage());
-        stats.setMinSize(buttonWidth, buttonHeight);
-        AnchorPane.setTopAnchor(stats, 420.0);
-        AnchorPane.setRightAnchor(stats, 700.0);
-        AnchorPane.setLeftAnchor(stats, 400.0);
+        AnchorPane.setTopAnchor(stats, 400.0);
+        AnchorPane.setRightAnchor(stats, 250.0);
+        AnchorPane.setLeftAnchor(stats, 600.0);
         buttons.getChildren().add(stats);
 
 
@@ -300,8 +307,9 @@ public class GuiMain extends Application {
 
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
+        scoreboard.setPadding(new Insets(10, 100, 10, 10));
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
-        BorderPane.setMargin(scoreboard, new Insets(10, 200, 10, 10));
+        BorderPane.setMargin(scoreboard, new Insets(10, 10, 10, 10));
 
         //setting up the window
         BorderPane menuPane = new BorderPane();
@@ -328,6 +336,7 @@ public class GuiMain extends Application {
 
         //set up the page
         VBox center = new VBox();
+        center.getStylesheets().add("Food_css.css");
         center.setAlignment(Pos.CENTER);
         center.setSpacing(10);
 
@@ -340,10 +349,12 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Ate a vegetarian meal");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        option1.setId("button1");
         option1.setOnAction(e -> veggieMealPage());
 
         Button option2 = new Button("Bought from a biological store");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        option2.setId("button2");
         option2.setOnAction(e -> localStorePage());
 
         buttons.getChildren().addAll(option1, option2);
@@ -997,10 +1008,13 @@ public class GuiMain extends Application {
             goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
         );
 
+
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu);
 
         Button homeButton = new Button("Home");
+        homeButton.setMinSize(100, 10);
+        homeButton.getStylesheets().add("MenuBar_css.css");
         homeButton.setOnAction(e -> showMainMenu());
         homeButton.setFocusTraversable(false);
 
@@ -1234,6 +1248,8 @@ public class GuiMain extends Application {
         VBox vbox = new VBox();
         GridPane nametile = nameTile();
         vbox.getChildren().add(nametile);
+        vbox.getStylesheets().add("Leaderboard_css.css");
+        vbox.setPadding(new Insets(10));
 
         for (CO2 user: users) {
             Button tile = leaderboardTile(user);

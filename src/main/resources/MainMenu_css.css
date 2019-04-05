@@ -1,9 +1,30 @@
+#button1{
+    -fx-background-image: url("images/foodlogo.jpg");
+    -fx-font-size: 25;
+}
+
+#button2{
+    -fx-background-image: url("images/homelogo.jpg");
+    -fx-font-size: 25;
+}
+
+#button3{
+    -fx-background-image: url("images/transportlogo.jpg");
+    -fx-font-size: 25;
+}
+
+#button4{
+    -fx-background-image: url("images/statslogo.jpg");
+    -fx-font-size: 25;
+}
+
 .button{
-    -fx-border-color: black;
+    -fx-border-color: transparent;
 }
 
 .button:hover{
     -fx-background-color: #4bee1a;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
+    -fx-border-color: #1aee40;
 }

@@ -5,6 +5,7 @@
 
 .button{
     -fx-background-color: #3cee3b;
+    -fx-font-size: 20px;
 }
 
 .button:hover{
