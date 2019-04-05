@@ -22,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -32,8 +31,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.springframework.web.client.RestClientException;
 
-import java.awt.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 
@@ -632,7 +629,9 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Public Transport");
+        titleLabel.setId("label1");
         Label distanceLabel = new Label("Total distance:");
+        distanceLabel.setId("label1");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
@@ -646,6 +645,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        scene.getStylesheets().add("publicTransportPage_css.css");
         window.setScene(scene);
         window.show();
     }
@@ -673,16 +673,19 @@ public class GuiMain extends Application {
         buttons.setSpacing(20);
 
         Button option1 = new Button("Home Temperature");
+        option1.setId("button1");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> homeTemperaturePage());
 
         Button option2 = new Button("Solar Panels");
+        option2.setId("button2");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> solarPanelPage());
 
         buttons.getChildren().addAll(option1, option2);
 
         Label energyTitle = new Label("Home energy");
+        energyTitle.setId("label1");
 
         center.getChildren().addAll(energyTitle, buttons);
 
@@ -693,6 +696,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene energyPage = new Scene(energyPane, screenWidth, screenHeight);
+        energyPage.getStylesheets().add("HomeEnergy_css.css");
         window.setScene(energyPage);
         window.show();
     }
@@ -716,6 +720,7 @@ public class GuiMain extends Application {
         durationField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setId("button1");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
@@ -730,8 +735,11 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Home Temperature");
+        titleLabel.setId("label1");
         Label temperatureLabel = new Label("Temperature reduction:");
+        temperatureLabel.setId("label1");
         Label durationLabel = new Label("Duration:");
+        durationLabel.setId("label1");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(temperatureLabel, 0, 1);
@@ -747,6 +755,7 @@ public class GuiMain extends Application {
 
         //set up the scene
         Scene scene = new Scene(borderPane, screenWidth, screenHeight);
+        scene.getStylesheets().add("homeTemperaturePage_css.css");
         window.setScene(scene);
         window.show();
     }
