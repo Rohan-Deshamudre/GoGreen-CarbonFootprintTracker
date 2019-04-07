@@ -1,9 +1,9 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
+import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.client.Leaderboard;
 import gogreen.application.model.CO2;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -11,20 +11,26 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -76,9 +82,8 @@ public class GuiMain extends Application {
         });
 
         // TOP
-        Group topGroup = new Group();
-        ImageView image = new ImageView("images/Gogreen.jpeg");
-        topGroup.getChildren().add(image);
+        //        ImageView image = new ImageView("images/Gogreen.jpeg");
+        //        topGroup.getChildren().add(image);
 
         // CENTER
         GridPane grid = new GridPane();
@@ -91,9 +96,9 @@ public class GuiMain extends Application {
         Label helloLabel = new Label(helloString);
         GridPane.setConstraints(helloLabel, 1, 0);
 
-//        ImageView image = new ImageView("images/Go_Green_image.jpg");
-//        image.setFitHeight(40);
-//        image.setFitWidth(70);
+        //        ImageView image = new ImageView("images/Go_Green_image.jpg");
+        //        image.setFitHeight(40);
+        //        image.setFitWidth(70);
 
         // Enter username
         Label usernameLabel = new Label("Username: ");
@@ -129,7 +134,7 @@ public class GuiMain extends Application {
 
         GridPane.setConstraints(loginButton, 1, 5);
         loginButton.setText("Login");
-//        loginButton.setGraphic(image);
+        //        loginButton.setGraphic(image);
 
         HBox buttons = new HBox();
         buttons.setSpacing(10);
@@ -137,6 +142,7 @@ public class GuiMain extends Application {
         GridPane.setConstraints(buttons, 1, 5);
 
         // Make BorderPane layout
+        Group topGroup = new Group();
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
