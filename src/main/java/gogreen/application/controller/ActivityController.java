@@ -209,9 +209,7 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String username = req.getUsername();
-        List<Friend> all = friendRepository.findByFusername(username);
-        System.out.println(all);
+        List<Friend> all = friendRepository.findByFusername(req.getUsername());
         ArrayList<CO2> friends = new ArrayList<>();
 
         for (Friend friend : all) {
@@ -264,9 +262,12 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<Friend> wayOne = friendRepository.findByFusername(req.getLoginData().getUsername());
+        List<Friend> check = friendRepository.findByFusernameAndFriend(req.getLoginData().getUsername(),
+                req.getFriendUsername());
 
-        if (wayOne == null) {
+        if (check.isEmpty() && !req.getLoginData().getUsername().equals(
+                req.getFriendUsername()
+        )) {
             List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
             if (exist != null) {
                 FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
