@@ -1,3 +1,13 @@
-.label{
+#label1{
     -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.button:hover{
+    -fx-background-color: #3cee3b;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+.text-field{
 }

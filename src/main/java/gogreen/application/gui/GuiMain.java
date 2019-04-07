@@ -23,6 +23,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -82,8 +83,11 @@ public class GuiMain extends Application {
         });
 
         // TOP
-        //        ImageView image = new ImageView("images/Gogreen.jpeg");
-        //        topGroup.getChildren().add(image);
+        Group topGroup = new Group();
+        ImageView image = new ImageView("images/GoGreenlogo.jpg");
+        image.setFitWidth(350);
+        image.setFitHeight(120);
+        topGroup.getChildren().add(image);
 
         // CENTER
         GridPane grid = new GridPane();
@@ -142,7 +146,6 @@ public class GuiMain extends Application {
         GridPane.setConstraints(buttons, 1, 5);
 
         // Make BorderPane layout
-        Group topGroup = new Group();
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
@@ -911,7 +914,7 @@ public class GuiMain extends Application {
         // LEFT: Stats
         GridPane grid = new GridPane();
         grid.getStylesheets().add("Stats_css.css");
-        grid.setPadding(new Insets(100));
+        grid.setPadding(new Insets(100, 20, 100, 50));
         grid.setVgap(8);
         grid.setHgap(10);
 
@@ -924,11 +927,11 @@ public class GuiMain extends Application {
         }
         leaderboard.sortLeaderboard();
         VBox allFriends = showFriends(leaderboard.getUsers());
-        allFriends.setId("vbox1");
-        allFriends.setPadding(new Insets(100));
+        allFriends.setPadding(new Insets(100, 80, 100, 40));
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
+        borderPane.getStylesheets().add("Stats_css.css");
         borderPane.setLeft(grid);
         borderPane.setCenter(allFriends);
         makeFriendRequestTable(borderPane);
