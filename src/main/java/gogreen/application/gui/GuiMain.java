@@ -19,6 +19,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
@@ -76,9 +77,8 @@ public class GuiMain extends Application {
 
         // TOP
         Group topGroup = new Group();
-        Text goGreenText = new Text("Go Green!");
-        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 70));
-        topGroup.getChildren().add(goGreenText);
+        ImageView image = new ImageView("images/Gogreen.jpeg");
+        topGroup.getChildren().add(image);
 
         // CENTER
         GridPane grid = new GridPane();
@@ -91,9 +91,9 @@ public class GuiMain extends Application {
         Label helloLabel = new Label(helloString);
         GridPane.setConstraints(helloLabel, 1, 0);
 
-        ImageView image = new ImageView("images/Go_Green_image.jpg");
-        image.setFitHeight(40);
-        image.setFitWidth(70);
+//        ImageView image = new ImageView("images/Go_Green_image.jpg");
+//        image.setFitHeight(40);
+//        image.setFitWidth(70);
 
         // Enter username
         Label usernameLabel = new Label("Username: ");
@@ -113,11 +113,14 @@ public class GuiMain extends Application {
 
         // Buttons
         Button registrationButton = new Button("Register");
+        registrationButton.setId("button1");
         registrationButton.setOnAction(e -> {
             registrationPage();
         });
 
         Button loginButton = new Button();
+        loginButton.setId("button2");
+        loginButton.setMinSize(100, 50);
         loginButton.setOnAction(e -> {
             loginButtonAction(usernameField.getText(), passwordField.getText());
             usernameField.setText("");
@@ -126,7 +129,7 @@ public class GuiMain extends Application {
 
         GridPane.setConstraints(loginButton, 1, 5);
         loginButton.setText("Login");
-        loginButton.setGraphic(image);
+//        loginButton.setGraphic(image);
 
         HBox buttons = new HBox();
         buttons.setSpacing(10);
@@ -135,7 +138,6 @@ public class GuiMain extends Application {
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
-        borderPane.getStylesheets().add("/Gui_css.css");
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
         borderPane.setAlignment(topGroup, Pos.TOP_CENTER);
@@ -986,6 +988,8 @@ public class GuiMain extends Application {
 
         // CENTER
         GridPane grid = new GridPane();
+        grid.setId("grid1");
+        grid.getStylesheets().add("Stats_css.css");
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
