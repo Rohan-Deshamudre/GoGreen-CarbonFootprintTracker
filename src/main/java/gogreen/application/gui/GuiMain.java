@@ -82,43 +82,40 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        // TOP
+        // layout
+        VBox vert = new VBox();
+        vert.setAlignment(Pos.CENTER);
+
+        // Logo
         Group topGroup = new Group();
         ImageView image = new ImageView("images/GoGreenlogo.jpg");
-        image.setFitWidth(350);
-        image.setFitHeight(120);
+        image.setFitWidth(450);
+        image.setFitHeight(200);
         topGroup.getChildren().add(image);
-
-        // CENTER
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(250, 100, 100, 550));
-        grid.setVgap(8);
-        grid.setHgap(10);
 
         // Hello client label
         String helloString = ClientApplication.getRequestHeroku();
         Label helloLabel = new Label(helloString);
-        GridPane.setConstraints(helloLabel, 1, 0);
-
-        //        ImageView image = new ImageView("images/Go_Green_image.jpg");
-        //        image.setFitHeight(40);
-        //        image.setFitWidth(70);
 
         // Enter username
         Label usernameLabel = new Label("Username: ");
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
-        GridPane.setConstraints(usernameLabel, 0, 3);
-        GridPane.setConstraints(usernameField, 1, 3);
+
+        HBox textUsername = new HBox();
+        textUsername.setAlignment(Pos.CENTER);
+        textUsername.getChildren().addAll(usernameLabel, usernameField);
 
         // Enter password
-        Label passwordLabel = new Label("Password: ");
+        Label passwordLabel = new Label("Password:  ");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
-        GridPane.setConstraints(passwordLabel, 0, 4);
-        GridPane.setConstraints(passwordField, 1, 4);
+
+        HBox textPassword = new HBox();
+        textPassword.setAlignment(Pos.CENTER);
+        textPassword.getChildren().addAll(passwordLabel, passwordField);
 
         // Buttons
         Button registrationButton = new Button("Register");
@@ -135,28 +132,21 @@ public class GuiMain extends Application {
             usernameField.setText("");
             passwordField.setText("");
         });
-
-        GridPane.setConstraints(loginButton, 1, 5);
         loginButton.setText("Login");
-        //        loginButton.setGraphic(image);
 
         HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
         buttons.setSpacing(10);
         buttons.getChildren().addAll(registrationButton, loginButton);
         GridPane.setConstraints(buttons, 1, 5);
 
+        // Make the scene
+        vert.getChildren().addAll(topGroup, helloLabel, textUsername, textPassword, buttons);
+
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
-        borderPane.setTop(topGroup);
-        borderPane.setAlignment(topGroup, Pos.TOP_CENTER);
-        borderPane.setCenter(grid);
-
-        // Make scene
-        grid.getChildren().addAll(
-            helloLabel, usernameLabel, usernameField,
-            passwordLabel, passwordField, buttons
-        );
+        borderPane.setCenter(vert);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
         loginScene.getStylesheets().add("Login_css.css");
