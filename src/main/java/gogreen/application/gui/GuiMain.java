@@ -112,6 +112,7 @@ public class GuiMain extends Application {
 
         HBox textUsername = new HBox();
         textUsername.setAlignment(Pos.CENTER);
+        textUsername.setPadding(new Insets(10, 0, 0, 0));
         textUsername.getChildren().addAll(usernameLabel, usernameField);
 
         // Enter password
@@ -144,8 +145,8 @@ public class GuiMain extends Application {
         HBox buttons = new HBox();
         buttons.setAlignment(Pos.CENTER);
         buttons.setSpacing(10);
+        buttons.setPadding(new Insets(10, 0, 0, 0));
         buttons.getChildren().addAll(registrationButton, loginButton);
-        GridPane.setConstraints(buttons, 1, 5);
 
         // Make the scene
         vert.getChildren().addAll(logo, whitespace, helloLabel, textUsername, textPassword, buttons);
