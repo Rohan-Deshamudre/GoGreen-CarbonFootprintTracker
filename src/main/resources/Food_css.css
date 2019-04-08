@@ -1,13 +1,13 @@
 #button2{
-    -fx-border-color: #1aee40;
     -fx-font-size: 20px;
     -fx-border-radius: 5px;
+    -fx-background-color: transparent;
 }
 
 #button3{
-    -fx-border-color: #1aee40;
     -fx-font-size: 20px;
     -fx-border-radius: 5px;
+    -fx-background-color: transparent;
 }
 
 #button2:hover{
