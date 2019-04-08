@@ -62,13 +62,4 @@ public class Leaderboard {
         string += "]>";
         return string;
     }
-
-    public static void main(String[] args) {
-        CO2 user = new CO2("name", 1, 2, 3, 4);
-        ArrayList<CO2> list = new ArrayList<>();
-        list.add(user);
-        Leaderboard lb = new Leaderboard(list);
-
-        System.out.println(lb.toString());
-    }
 }
