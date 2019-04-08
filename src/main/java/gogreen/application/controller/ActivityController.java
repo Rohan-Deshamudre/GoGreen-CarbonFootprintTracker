@@ -210,9 +210,7 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String username = req.getUsername();
-        List<Friend> all = friendRepository.findByFusername(username);
-        System.out.println(all);
+        List<Friend> all = friendRepository.findByFusername(req.getUsername());
         ArrayList<CO2> friends = new ArrayList<>();
 
         for (Friend friend : all) {
@@ -266,12 +264,20 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
-        if (exist != null) {
-            FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+        List<Friend> check = friendRepository.findByFusernameAndFriend(req.getLoginData().getUsername(),
                 req.getFriendUsername());
-            friendRequestRepository.save(newRequest);
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+
+        if (check.isEmpty() && !req.getLoginData().getUsername().equals(
+                req.getFriendUsername()
+        )) {
+
+            List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
+            if (exist != null) {
+                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+                        req.getFriendUsername());
+                friendRequestRepository.save(newRequest);
+                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 
@@ -328,7 +334,10 @@ public class ActivityController {
         if (req.isAccepted()) {
             Friend newFriend = new Friend(0, req.getLoginData().getUsername(),
                 req.getFriendUsername());
+            Friend newFriend1 = new Friend(0, req.getFriendUsername(),
+                    req.getLoginData().getUsername());
             friendRepository.save(newFriend);
+            friendRepository.save(newFriend1);
 
             List<FriendRequest> old = friendRequestRepository
                 .findByUsernameAndRequestTo(req.getFriendUsername(),
