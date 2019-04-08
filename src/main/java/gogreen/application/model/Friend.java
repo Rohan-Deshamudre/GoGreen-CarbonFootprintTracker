@@ -24,6 +24,12 @@ public class Friend {
 
     protected Friend() {}
 
+    /**
+     * Makes a Friend object with the provided parameters.
+     * @param id the id of the friendship
+     * @param fusername the username of one of the friends
+     * @param friend the username of one of the friends
+     */
     public Friend(int id, String fusername, String friend) {
         this.id = id;
         this.fusername = fusername;

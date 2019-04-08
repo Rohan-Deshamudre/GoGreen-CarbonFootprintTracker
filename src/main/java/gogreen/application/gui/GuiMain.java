@@ -1,9 +1,9 @@
 package gogreen.application.gui;
 
 import gogreen.application.client.ClientApplication;
+import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
-import gogreen.application.client.Leaderboard;
 import gogreen.application.model.CO2;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -36,9 +36,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.springframework.web.client.RestClientException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
+import java.net.URISyntaxException;
+
+import java.util.ArrayList;
 
 public class GuiMain extends Application {
 
