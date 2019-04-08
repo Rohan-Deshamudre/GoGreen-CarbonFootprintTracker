@@ -272,7 +272,6 @@ public class ActivityController {
 
         List<Friend> check = friendRepository.findByFusernameAndFriend(req.getLoginData()
                 .getUsername(), req.getFriendUsername());
-
         if (check.isEmpty() && !req.getLoginData().getUsername().equals(
                 req.getFriendUsername()
         )) {
