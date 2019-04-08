@@ -46,6 +46,11 @@ public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
+    private Scene mainmenuScene;
+    private Scene foodScene;
+    private Scene homeScene;
+    private Scene transportScene;
+    private Scene statsScene;
     private int screenWidth;
     private int screenHeight;
 
@@ -127,12 +132,14 @@ public class GuiMain extends Application {
 
         // Buttons
         Button registrationButton = new Button("Register");
+        registrationButton.setFocusTraversable(false);
         registrationButton.setId("regisbutton");
         registrationButton.setOnAction(e -> {
             registrationPage();
         });
 
         Button loginButton = new Button();
+        loginButton.setFocusTraversable(false);
         loginButton.setId("loginbutton");
         loginButton.setMinSize(100, 50);
         loginButton.setOnAction(e -> {
@@ -209,10 +216,12 @@ public class GuiMain extends Application {
 
         // Buttons
         Button loginButton = new Button("Login");
+        loginButton.setFocusTraversable(false);
         loginButton.setOnAction(e -> {
             loginPage();
         });
         Button registrationButton = new Button("Register");
+        registrationButton.setFocusTraversable(false);
         registrationButton.setOnAction(e -> {
             // Register
             registerButtonAction(usernameField.getText(), passwordField.getText(),
@@ -262,38 +271,41 @@ public class GuiMain extends Application {
         int buttonHeight = 180;
 
         Button food = new Button();
+        food.setFocusTraversable(false);
         food.setId("button1");
         food.setShape(new Circle(4));
         food.setOnAction(e -> showFoodPage());
         food.setMinSize(buttonWidth, buttonHeight);
-        AnchorPane.setTopAnchor(food, 180.0);
+        AnchorPane.setTopAnchor(food, 150.0);
         AnchorPane.setRightAnchor(food, 460.0);
         AnchorPane.setLeftAnchor(food, 390.0);
         buttons.getChildren().add(food);
         Label food1 = new Label("Food");
         food1.setId("label1");
-        AnchorPane.setTopAnchor(food1, 370.0);
+        AnchorPane.setTopAnchor(food1, 340.0);
         AnchorPane.setRightAnchor(food1, 460.0);
         AnchorPane.setLeftAnchor(food1, 460.0);
         buttons.getChildren().add(food1);
 
         Button homeE = new Button();
+        homeE.setFocusTraversable(false);
         homeE.setId("button2");
         homeE.setShape(new Circle(4));
         homeE.setOnAction(e -> showHomeEnergy());
         homeE.setMinSize(buttonWidth, buttonHeight);
-        AnchorPane.setTopAnchor(homeE, 180.0);
+        AnchorPane.setTopAnchor(homeE, 150.0);
         AnchorPane.setRightAnchor(homeE, 260.0);
         AnchorPane.setLeftAnchor(homeE, 590.0);
         buttons.getChildren().add(homeE);
         Label home = new Label("Home");
         home.setId("label1");
-        AnchorPane.setTopAnchor(home, 370.0);
+        AnchorPane.setTopAnchor(home, 340.0);
         AnchorPane.setRightAnchor(home, 260.0);
         AnchorPane.setLeftAnchor(home, 660.0);
         buttons.getChildren().add(home);
 
         Button transport = new Button();
+        transport.setFocusTraversable(false);
         transport.setId("button3");
         transport.setShape(new Circle(4));
         transport.setOnAction(e -> showTransportPage());
@@ -310,6 +322,7 @@ public class GuiMain extends Application {
         buttons.getChildren().add(transport1);
 
         Button stats = new Button();
+        stats.setFocusTraversable(false);
         stats.setId("button4");
         stats.setShape(new Circle(4));
         stats.setMinSize(buttonWidth, buttonHeight);
@@ -348,9 +361,9 @@ public class GuiMain extends Application {
         menuPane.setRight(scoreboard);
 
         //setting up the scene
-        Scene scene = new Scene(menuPane, screenWidth, screenHeight);
-        scene.getStylesheets().add("MainMenu_css.css");
-        window.setScene(scene);
+        mainmenuScene = new Scene(menuPane, screenWidth, screenHeight);
+        mainmenuScene.getStylesheets().add("MainMenu_css.css");
+        window.setScene(mainmenuScene);
         window.show();
     }
 
@@ -372,17 +385,21 @@ public class GuiMain extends Application {
 
         // Set up buttons
         HBox buttons = new HBox();
+        buttons.setFocusTraversable(false);
+
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(180);
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
         Button option1 = new Button("Ate a vegetarian meal");
+        option1.setFocusTraversable(false);
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setId("button2");
         option1.setOnAction(e -> veggieMealPage());
 
         Button option2 = new Button("Bought from a biological store");
+        option2.setFocusTraversable(false);
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setId("button3");
         option2.setOnAction(e -> localStorePage());
@@ -390,6 +407,7 @@ public class GuiMain extends Application {
         buttons.getChildren().addAll(option1, option2);
 
         Label foodTitle = new Label("Food");
+        foodTitle.setId("label1");
 
         center.getChildren().addAll(foodTitle, buttons);
 
@@ -399,9 +417,9 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
-        foodPage.getStylesheets().add("Food_css.css");
-        window.setScene(foodPage);
+        foodScene = new Scene(foodPane, screenWidth, screenHeight);
+        foodScene.getStylesheets().add("Food_css.css");
+        window.setScene(foodScene);
         window.show();
     }
 
@@ -427,6 +445,7 @@ public class GuiMain extends Application {
         Slider sizeSlider4 = sizeSlider();
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
         addButton.setId("button1");
         addButton.setMinSize(100, 50);
 
@@ -476,9 +495,9 @@ public class GuiMain extends Application {
         borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
-        foodPage.getStylesheets().add("veggieMealPage_css.css");
-        window.setScene(foodPage);
+        foodScene = new Scene(borderPane, screenWidth, screenHeight);
+        foodScene.getStylesheets().add("veggieMealPage_css.css");
+        window.setScene(foodScene);
         window.show();
     }
 
@@ -499,6 +518,7 @@ public class GuiMain extends Application {
         CheckBox checkBox = new CheckBox("Organic");
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             localProduceAction(Integer.parseInt(weightField.getText()), checkBox.isSelected());
@@ -529,9 +549,9 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        scene.getStylesheets().add("localStorePage_css.css");
-        window.setScene(scene);
+        foodScene = new Scene(borderPane, screenWidth, screenHeight);
+        foodScene.getStylesheets().add("localStorePage_css.css");
+        window.setScene(foodScene);
         window.show();
     }
 
@@ -552,17 +572,20 @@ public class GuiMain extends Application {
 
         // Set up buttons
         HBox buttons = new HBox();
+        buttons.setFocusTraversable(false);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(180);
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
         Button option1 = new Button("Bike");
+        option1.setFocusTraversable(false);
         option1.setId("button1");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> bikeRidePage());
 
         Button option2 = new Button("Public transport");
+        option2.setFocusTraversable(false);
         option2.setId("button2");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> publicTransportPage());
@@ -580,9 +603,9 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene transportPage = new Scene(foodPane, screenWidth, screenHeight);
-        transportPage.getStylesheets().add("Transport_css.css");
-        window.setScene(transportPage);
+        transportScene = new Scene(foodPane, screenWidth, screenHeight);
+        transportScene.getStylesheets().add("Transport_css.css");
+        window.setScene(transportScene);
         window.show();
     }
 
@@ -601,6 +624,7 @@ public class GuiMain extends Application {
         distanceField.setPromptText("distance");
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             transportAddButtonAction(TravelType.BIKE, Integer.parseInt(distanceField.getText()));
@@ -628,9 +652,9 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        scene.getStylesheets().add("bikeRidePage_css.css");
-        window.setScene(scene);
+        transportScene = new Scene(borderPane, screenWidth, screenHeight);
+        transportScene.getStylesheets().add("bikeRidePage_css.css");
+        window.setScene(transportScene);
         window.show();
     }
 
@@ -649,6 +673,7 @@ public class GuiMain extends Application {
         distanceField.setPromptText("distance");
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             transportAddButtonAction(TravelType.PUB_TRANSPORT,
@@ -677,9 +702,9 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        scene.getStylesheets().add("publicTransportPage_css.css");
-        window.setScene(scene);
+        transportScene = new Scene(borderPane, screenWidth, screenHeight);
+        transportScene.getStylesheets().add("publicTransportPage_css.css");
+        window.setScene(transportScene);
         window.show();
     }
 
@@ -700,17 +725,21 @@ public class GuiMain extends Application {
 
         // Set up buttons
         HBox buttons = new HBox();
+        buttons.setFocusTraversable(false);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(180);
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
         Button option1 = new Button("Home Temperature");
+        option1.setFocusTraversable(false);
         option1.setId("button1");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> homeTemperaturePage());
 
         Button option2 = new Button("Solar Panels");
+        option2.setFocusTraversable(false);
+
         option2.setId("button2");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> solarPanelPage());
@@ -728,9 +757,9 @@ public class GuiMain extends Application {
         energyPane.setCenter(center);
 
         //set up the scene
-        Scene energyPage = new Scene(energyPane, screenWidth, screenHeight);
-        energyPage.getStylesheets().add("HomeEnergy_css.css");
-        window.setScene(energyPage);
+        homeScene = new Scene(energyPane, screenWidth, screenHeight);
+        homeScene.getStylesheets().add("HomeEnergy_css.css");
+        window.setScene(homeScene);
         window.show();
     }
 
@@ -753,6 +782,7 @@ public class GuiMain extends Application {
         durationField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
         addButton.setId("button1");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
@@ -787,9 +817,9 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        scene.getStylesheets().add("homeTemperaturePage_css.css");
-        window.setScene(scene);
+        homeScene = new Scene(borderPane, screenWidth, screenHeight);
+        homeScene.getStylesheets().add("homeTemperaturePage_css.css");
+        window.setScene(homeScene);
         window.show();
     }
 
@@ -812,6 +842,7 @@ public class GuiMain extends Application {
         hoursSunlightField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
         addButton.setId("button1");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
@@ -847,9 +878,9 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        scene.getStylesheets().add("solarPanelPage_css.css");
-        window.setScene(scene);
+        homeScene = new Scene(borderPane, screenWidth, screenHeight);
+        homeScene.getStylesheets().add("solarPanelPage_css.css");
+        window.setScene(homeScene);
         window.show();
     }
 
@@ -876,9 +907,11 @@ public class GuiMain extends Application {
         left.setPadding(new Insets(10, 5, 10, 10));
 
         Button react1 = new Button("Reaction 1");
+        react1.setFocusTraversable(false);
         react1.setId("button1");
         react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
         Button react2 = new Button("Reaction 2");
+        react2.setFocusTraversable(false);
         react2.setId("button2");
         react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
 
@@ -894,9 +927,11 @@ public class GuiMain extends Application {
         right.setPadding(new Insets(53, 10, 10, 10));
 
         Button react3 = new Button("Reaction 3");
+        react3.setFocusTraversable(false);
         react3.setId("button3");
         react3.setMinSize(right.getPrefWidth(), right.getPrefHeight());
         Button react4 = new Button("Reaction 4");
+        react4.setFocusTraversable(false);
         react4.setId("button4");
         react4.setMinSize(right.getPrefWidth(), right.getPrefHeight());
 
@@ -1080,21 +1115,10 @@ public class GuiMain extends Application {
      * @param pane - the window in which to display the menu bar.
      */
     public void menuBar(BorderPane pane) {
-        MenuItem goToHomeScreen = new MenuItem("Home");
-        goToHomeScreen.setOnAction(e -> showMainMenu());
-
-        MenuItem goToFood = new MenuItem("Food");
-        goToFood.setOnAction(e -> showFoodPage());
-        MenuItem goToTransport = new MenuItem("Transport");
-        goToTransport.setOnAction(e -> showTransportPage());
-        MenuItem goToEnergy = new MenuItem("Home energy");
-        goToEnergy.setOnAction(e -> showHomeEnergy());
-
-        MenuItem goToUserPage = new MenuItem("Stats");
-        goToUserPage.setOnAction(e -> userPage());
-        MenuItem goToShare = new MenuItem("Share");
-        goToShare.setOnAction(e -> showShare());
-
+        MenuItem nightmode = new MenuItem("Nightmode");
+        nightmode.setOnAction((e -> {
+            nightmode();
+        }));
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
             logout();
@@ -1102,12 +1126,9 @@ public class GuiMain extends Application {
 
         Menu menu = new Menu("Menu");
         SeparatorMenuItem sep1 = new SeparatorMenuItem();
-        SeparatorMenuItem sep2 = new SeparatorMenuItem();
-        SeparatorMenuItem sep3 = new SeparatorMenuItem();
 
         menu.getItems().addAll(
-            goToHomeScreen, sep1, goToFood, goToTransport,
-            goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
+            nightmode, logout
         );
 
 
@@ -1116,6 +1137,8 @@ public class GuiMain extends Application {
         menuBar.getMenus().addAll(menu);
 
         Button homeButton = new Button("Home");
+        homeButton.setFocusTraversable(false);
+
         homeButton.setId("button5");
         homeButton.setMinSize(10, 10);
         homeButton.getStylesheets().add("MainMenu_css.css");
@@ -1339,6 +1362,7 @@ public class GuiMain extends Application {
         gridtile.add(co2reduc, 1, 0);
 
         Button tile = new Button("", gridtile);
+        tile.setFocusTraversable(false);
 
         return tile;
     }
@@ -1485,12 +1509,21 @@ public class GuiMain extends Application {
         return total;
     }
 
+
     /**
      * This method closes the program.
      */
     private void closeProgram() {
         ClientApplication.clearLoginData();
         window.close();
+    }
+
+    public void nightmode() {
+        mainmenuScene.getStylesheets().add("NightMode_css.css");
+        foodScene.getStylesheets().add("NightMode_css.css");
+        homeScene.getStylesheets().add("NightMode_css.css");
+        transportScene.getStylesheets().add("NightMode_css.css");
+        statsScene.getStylesheets().add("NightMode_css.css");
     }
 
     /**

@@ -1,0 +1,19 @@
+.root {
+    -fx-background-color: black;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.button{
+    -fx-text-fill: white;
+}
+
+.slider{
+    -fx-text-fill: white;
+}
+
+.menu-bar{
+    -fx-background-color: black;
+}

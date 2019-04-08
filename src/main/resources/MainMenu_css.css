@@ -5,25 +5,30 @@
 #button1{
     -fx-background-image: url("images/foodlogo.jpg");
     -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
 }
 
 #button2{
     -fx-background-image: url("images/homelogo.jpg");
     -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
 }
 
 #button3{
     -fx-background-image: url("images/transportlogo.jpg");
     -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
 }
 
 #button4{
     -fx-background-image: url("images/statslogo.jpg");
     -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
 }
 
 #button5{
     -fx-font-size: 15px;
+    -fx-border-color: #a9a9a9;
 }
 
 #button5:hover{
