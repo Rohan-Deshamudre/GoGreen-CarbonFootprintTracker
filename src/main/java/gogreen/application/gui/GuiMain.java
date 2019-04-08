@@ -93,6 +93,7 @@ public class GuiMain extends Application {
         image.setFitHeight(200);
         topGroup.getChildren().add(image);
         HBox logo = new HBox();
+        logo.setId("hbox1");
         logo.setAlignment(Pos.CENTER);
         logo.getChildren().addAll(topGroup);
 

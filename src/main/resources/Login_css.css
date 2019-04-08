@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #dbffd0;
+    -fx-background-color: #e4ffe2;
 }
 
 #regisbutton{
@@ -29,4 +29,8 @@
 .label{
     -fx-font-size: 20px;
     -fx-font-weight: bold;
+}
+
+#hbox1{
+    -fx-background-color: #a4ee6f;
 }
