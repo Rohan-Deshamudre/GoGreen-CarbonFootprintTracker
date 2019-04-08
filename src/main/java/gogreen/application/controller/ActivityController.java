@@ -72,7 +72,7 @@ public class ActivityController {
 
         // Update user's carbon food footprint reduction
         CO2 userCO2 = co2Repository.findByCusername(req.getLoginData().getUsername()).get(0);
-        int carbonReducFood = CarbonUtil.getFoodCarbonReduction(req.getChoiceBoxValue());
+        int carbonReducFood = CarbonUtil.getFoodCarbonReduction(req.getChoiceBoxValue(), req.getAmount());
         userCO2.addCO2Food(carbonReducFood);
         userCO2.addCO2Reduc(carbonReducFood);
         co2Repository.save(userCO2);
@@ -111,7 +111,7 @@ public class ActivityController {
     }
 
     /**
-     * Handle add food requests.
+     * Handle add transport requests.
      *
      * @param req - addFoodRequest containing the data for the request.
      * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid.

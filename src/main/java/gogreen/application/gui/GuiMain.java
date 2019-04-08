@@ -368,10 +368,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> foodAddButtonAction(
-            sizeSlider1.getValue(),
-            sizeSlider2.getValue(),
-            sizeSlider3.getValue(),
-            sizeSlider4.getValue()));
+                sizeSlider1.getValue(),
+                sizeSlider2.getValue(),
+                sizeSlider3.getValue(),
+                sizeSlider4.getValue()));
 
         GridPane centerGrid = new GridPane();
         centerGrid.setAlignment(Pos.CENTER);

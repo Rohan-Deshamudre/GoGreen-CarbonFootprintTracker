@@ -15,18 +15,46 @@ public class CarbonUtil {
      * @param checkBoxValue the value of the check box
      * @return returns the amount of carbon reduced in kgs.
      */
-    public static int getFoodCarbonReduction(String checkBoxValue) {
-        int carbonFootprint = 0;
+    public static int getFoodCarbonReduction(String checkBoxValue, int amount) {
+
         if (checkBoxValue.equalsIgnoreCase("salad")) {
-            carbonFootprint = 100;
+            switch (amount) {
+                case 1:
+                    return 900;
+                case 2:
+                    return 1100;
+                case 3:
+                    return 1300;
+            }
         } else if (checkBoxValue.equalsIgnoreCase("Vegetarian Meat")) {
-            carbonFootprint = 200;
+            switch (amount) {
+                case 1:
+                    return 900;
+                case 2:
+                    return 1100;
+                case 3:
+                    return 1300;
+            }
         } else if (checkBoxValue.equalsIgnoreCase("Fruit")) {
-            carbonFootprint = 80;
+            switch (amount) {
+                case 1:
+                    return 900;
+                case 2:
+                    return 1100;
+                case 3:
+                    return 1300;
+            }
         } else if (checkBoxValue.equalsIgnoreCase("Else")) {
-            carbonFootprint = 150;
+            switch (amount) {
+                case 1:
+                    return 900;
+                case 2:
+                    return 1100;
+                case 3:
+                    return 1300;
+            }
         }
-        return carbonFootprint;
+        return -1;
     }
 
     /**
@@ -53,9 +81,11 @@ public class CarbonUtil {
     public static int getTransportCarbonReduction(TravelType travelType, int distance) {
         switch (travelType) {
             case BIKE:
-                return distance * 5;
+                //284-16 is the difference between using a bike and a car
+                return distance * (284-16);
             case PUB_TRANSPORT:
-                return distance * 2;
+                //idem
+                return distance * (284-101);
             default:
                 return -1;
         }
