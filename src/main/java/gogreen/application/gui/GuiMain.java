@@ -92,6 +92,9 @@ public class GuiMain extends Application {
         image.setFitWidth(450);
         image.setFitHeight(200);
         topGroup.getChildren().add(image);
+        HBox logo = new HBox();
+        logo.setAlignment(Pos.CENTER);
+        logo.getChildren().addAll(topGroup);
 
         // Hello client label
         String helloString = ClientApplication.getRequestHeroku();
@@ -141,7 +144,7 @@ public class GuiMain extends Application {
         GridPane.setConstraints(buttons, 1, 5);
 
         // Make the scene
-        vert.getChildren().addAll(topGroup, helloLabel, textUsername, textPassword, buttons);
+        vert.getChildren().addAll(logo, helloLabel, textUsername, textPassword, buttons);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
