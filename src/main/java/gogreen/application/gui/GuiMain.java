@@ -85,6 +85,7 @@ public class GuiMain extends Application {
         // layout
         VBox vert = new VBox();
         vert.setAlignment(Pos.CENTER);
+        vert.setPadding(new Insets(0, 0, 75, 0));
 
         // Logo
         Group topGroup = new Group();
@@ -96,12 +97,14 @@ public class GuiMain extends Application {
         logo.setAlignment(Pos.CENTER);
         logo.getChildren().addAll(topGroup);
 
+        Label whitespace = new Label("");
+
         // Hello client label
         String helloString = ClientApplication.getRequestHeroku();
         Label helloLabel = new Label(helloString);
 
         // Enter username
-        Label usernameLabel = new Label("Username: ");
+        Label usernameLabel = new Label("Username:   ");
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
@@ -111,7 +114,7 @@ public class GuiMain extends Application {
         textUsername.getChildren().addAll(usernameLabel, usernameField);
 
         // Enter password
-        Label passwordLabel = new Label("Password:  ");
+        Label passwordLabel = new Label("Password:    ");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
@@ -144,7 +147,7 @@ public class GuiMain extends Application {
         GridPane.setConstraints(buttons, 1, 5);
 
         // Make the scene
-        vert.getChildren().addAll(logo, helloLabel, textUsername, textPassword, buttons);
+        vert.getChildren().addAll(logo, whitespace, helloLabel, textUsername, textPassword, buttons);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
