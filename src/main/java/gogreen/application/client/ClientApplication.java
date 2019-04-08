@@ -9,13 +9,13 @@ import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.ClientMessage;
+import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
+import gogreen.application.model.CO2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
-import gogreen.application.communication.FriendRequestResponse;
-import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
@@ -135,7 +135,8 @@ public class ClientApplication {
         throws RestClientException {
         AddFriendRequest req = new AddFriendRequest(loginData, username);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend",
+                req, Boolean.class);
         System.out.println(res);
 
         return res.getBody();
@@ -150,7 +151,8 @@ public class ClientApplication {
     public static Leaderboard getFriendRequests()
         throws RestClientException {
 
-        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests", loginData, Leaderboard.class);
+        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests",
+                loginData, Leaderboard.class);
 
         System.out.println(res);
 
@@ -169,7 +171,8 @@ public class ClientApplication {
 
         FriendRequestResponse req = new FriendRequestResponse(loginData, username, success);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest",
+                req, Boolean.class);
 
         System.out.println(res);
 
