@@ -1,20 +1,13 @@
-.button{
-    -fx-background-color: transparent;
+#button2{
+    -fx-border-color: #1aee40;
     -fx-font-size: 20px;
     -fx-border-radius: 5px;
 }
 
-#button1{
+#button3{
     -fx-border-color: #1aee40;
-}
-
-#button2{
-    -fx-border-color: #1aee40;
-}
-
-#button1:hover{
+    -fx-font-size: 20px;
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
 }
 
 #button2:hover{
@@ -22,7 +15,7 @@
     -fx-background-color: #1aee40;
 }
 
-.label{
-    -fx-font-size: 50px;
-    -fx-font-weight: bold;
+#button3:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #1aee40;
 }

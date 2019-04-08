@@ -1,28 +1,26 @@
 .root {
-    -fx-background-color: #a4ee6f;
+    -fx-background-color: #60a95b;
 }
 
-.button{
-    -fx-font-size: 20px;
-    -fx-border-radius: 30px;
-}
-
-#button1{
+#regisbutton{
     -fx-background-color: #3cee3b;
+    -fx-font-size: 15px;
 }
 
-#button2{
+#loginbutton{
     -fx-shape: "M 250 300 L 400 300 L 400 250 L 550 350 L 400 450 L 400 400 L 250 400 L 250 300 ";
     -fx-background-color: #3cee3b;
+    -fx-min-height: 15px;
+    -fx-font-size: 20px;
 }
 
-#button1:hover{
+#loginbutton:hover{
     -fx-background-color: white;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
 }
 
-#button2:hover{
+#regisbutton:hover{
     -fx-background-color: white;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;

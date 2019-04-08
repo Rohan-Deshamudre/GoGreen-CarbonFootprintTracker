@@ -22,11 +22,3 @@
     -fx-scale-y: 1.2;
     -fx-scale-x: 1.2;
 }
-
-.button:hover{
-    -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
-    -fx-border-color: grey;
-    -fx-scale-y: 1.1;
-    -fx-scale-x: 1.1;
-}

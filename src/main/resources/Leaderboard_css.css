@@ -1,16 +1,11 @@
 .button:hover{
     -fx-background-color: #1aee40;
-    -fx-scale-y: 1.1;
-    -fx-scale-x: 1.1;
-    -fx-border-color: grey;
 }
 
 .button{
     -fx-border-color: grey;
-    -fx-font-size: 25;
 }
 
 .label{
-    -fx-font-size: 20;
     -fx-font-weight: bold;
 }

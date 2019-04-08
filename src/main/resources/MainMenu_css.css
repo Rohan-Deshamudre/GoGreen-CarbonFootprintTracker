@@ -18,13 +18,38 @@
     -fx-font-size: 25;
 }
 
-.button{
-    -fx-border-color: transparent;
+#button5{
+    -fx-font-size: 15px;
 }
 
-.button:hover{
-    -fx-background-color: #4bee1a;
+#button5:hover{
+    -fx-background-color: #1aee40;
+}
+
+#label1{
+    -fx-font-size: 20px;
+}
+
+#button1:hover{
+    -fx-border-color: #1aee40;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
+}
+
+#button2:hover{
     -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button3:hover{
+    -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button4:hover{
+    -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
 }
