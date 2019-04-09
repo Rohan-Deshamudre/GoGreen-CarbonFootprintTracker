@@ -23,6 +23,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -870,6 +871,7 @@ public class GuiMain extends Application {
         Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
         Label co2energy = new Label("CO2 reduction for energy:");
         Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+        ImageView badge = new ImageView("images/BadgeDemo.png");
 
         grid.add(stats, 0, 0);
         grid.add(username, 0, 3);
@@ -882,6 +884,7 @@ public class GuiMain extends Application {
         grid.add(co2transportValue, 4, 12);
         grid.add(co2energy, 0, 15);
         grid.add(co2energyValue, 4, 15);
+        grid.add(badge, 4, 18);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
