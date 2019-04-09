@@ -2,8 +2,18 @@
     -fx-font-size: 20px;
 }
 
-.slider .track{
-    -fx-background-color: #1aee40;
+.slider {
+    /* default track color: */
+    -slider-filled-track-color: #96ff91;
+    -slider-track-color: -slider-filled-track-color ;
+}
+
+.slider .thumb {
+    -fx-background-color: #a4ee6f;
+}
+
+.slider .track {
+    -fx-background-color: -slider-track-color ;
 }
 
 #button1:hover{
@@ -12,4 +22,16 @@
     -fx-border-color: grey;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
+}
+
+#buttonaddfood:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #1aee40;
+}
+
+#buttonaddfood{
+    -fx-font-size: 20px;
+    -fx-border-color: #1aee40;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
 }

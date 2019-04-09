@@ -6,23 +6,13 @@ import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.model.CO2;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -53,6 +43,7 @@ public class GuiMain extends Application {
     private Scene statsScene;
     private int screenWidth;
     private int screenHeight;
+    private CheckMenuItem nightmode;
 
     /**
      * Main method of the class, launches the application.
@@ -350,6 +341,7 @@ public class GuiMain extends Application {
 
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
+        scoreboard.setId("vbox3");
         scoreboard.setPadding(new Insets(10, 200, 10, 10));
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
         BorderPane.setMargin(scoreboard, new Insets(10, 10, 10, 10));
@@ -439,14 +431,40 @@ public class GuiMain extends Application {
         center.setSpacing(10);
         center.setPadding(new Insets(30));
 
+        String SLIDER_STYLE_FORMAT =
+                "-slider-track-color: linear-gradient(to right, -slider-filled-track-color 0%%, "
+                        + "-slider-filled-track-color %1$f%%, -fx-base %1$f%%, -fx-base 100%%);";
+
         Slider sizeSlider1 = sizeSlider();
+        sizeSlider1.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider1.getValue() - sizeSlider1.getMin()) / (sizeSlider1.getMax() - sizeSlider1.getMin()) * 100.0 ;
+            return String.format(SLIDER_STYLE_FORMAT, percentage);
+        }, sizeSlider1.valueProperty(), sizeSlider1.minProperty(), sizeSlider1.maxProperty()));
+
         Slider sizeSlider2 = sizeSlider();
+        sizeSlider2.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider2.getValue() - sizeSlider2.getMin()) / (sizeSlider2.getMax() - sizeSlider2.getMin()) * 100.0 ;
+            return String.format(SLIDER_STYLE_FORMAT, percentage);
+        }, sizeSlider2.valueProperty(), sizeSlider2.minProperty(), sizeSlider2.maxProperty()));
+
         Slider sizeSlider3 = sizeSlider();
+        sizeSlider3.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider3.getValue() - sizeSlider3.getMin()) / (sizeSlider3.getMax() - sizeSlider3.getMin()) * 100.0 ;
+            return String.format(SLIDER_STYLE_FORMAT, percentage);
+        }, sizeSlider3.valueProperty(), sizeSlider3.minProperty(), sizeSlider3.maxProperty()));
+
         Slider sizeSlider4 = sizeSlider();
+        sizeSlider4.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider4.getValue() - sizeSlider4.getMin()) / (sizeSlider4.getMax() - sizeSlider4.getMin()) * 100.0 ;
+            return String.format(SLIDER_STYLE_FORMAT, percentage);
+        }, sizeSlider4.valueProperty(), sizeSlider4.minProperty(), sizeSlider4.maxProperty()));
+
+
+
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddfood");
         addButton.setFocusTraversable(false);
-        addButton.setId("button1");
         addButton.setMinSize(100, 50);
 
         addButton.setOnAction(e -> foodAddButtonAction(
@@ -518,6 +536,7 @@ public class GuiMain extends Application {
         CheckBox checkBox = new CheckBox("Organic");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddlocal");
         addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
@@ -624,6 +643,7 @@ public class GuiMain extends Application {
         distanceField.setPromptText("distance");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddbike");
         addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
@@ -673,6 +693,7 @@ public class GuiMain extends Application {
         distanceField.setPromptText("distance");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddtrans");
         addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
@@ -782,8 +803,8 @@ public class GuiMain extends Application {
         durationField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddtem");
         addButton.setFocusTraversable(false);
-        addButton.setId("button1");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
@@ -843,7 +864,7 @@ public class GuiMain extends Application {
 
         Button addButton = new Button("Add");
         addButton.setFocusTraversable(false);
-        addButton.setId("button1");
+        addButton.setId("buttonaddpanel");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             solarPanelAction(Integer.parseInt(areaField.getText()),
@@ -885,82 +906,6 @@ public class GuiMain extends Application {
     }
 
     /**
-     * Page for the share page.
-     */
-    private void showShare() {
-        window.setTitle("Share");
-        window.setOnCloseRequest(e -> {
-            e.consume();
-            closeProgram();
-        });
-
-        //setup username select
-        ChoiceBox<String> userChoice = new ChoiceBox<>();
-        userChoice.getItems().addAll("User1", "User", "User3");
-        userChoice.setValue("User1");
-
-        //left buttons
-        VBox left = new VBox();
-        left.setId("vbox");
-        left.setPrefSize(70, 70);
-        left.setAlignment(Pos.CENTER);
-        left.setPadding(new Insets(10, 5, 10, 10));
-
-        Button react1 = new Button("Reaction 1");
-        react1.setFocusTraversable(false);
-        react1.setId("button1");
-        react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
-        Button react2 = new Button("Reaction 2");
-        react2.setFocusTraversable(false);
-        react2.setId("button2");
-        react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
-
-        Label whitespace = new Label("");
-        whitespace.setId("label1");
-
-        left.getChildren().addAll(userChoice, whitespace, react1, react2);
-
-        //right buttons
-        VBox right = new VBox();
-        right.setPrefSize(50, 70);
-        right.setAlignment(Pos.CENTER);
-        right.setPadding(new Insets(53, 10, 10, 10));
-
-        Button react3 = new Button("Reaction 3");
-        react3.setFocusTraversable(false);
-        react3.setId("button3");
-        react3.setMinSize(right.getPrefWidth(), right.getPrefHeight());
-        Button react4 = new Button("Reaction 4");
-        react4.setFocusTraversable(false);
-        react4.setId("button4");
-        react4.setMinSize(right.getPrefWidth(), right.getPrefHeight());
-
-        right.getChildren().addAll(react3, react4);
-
-        //Setting up the scoreboard
-        StackPane rightScore = new StackPane();
-        rightScore.setAlignment(Pos.CENTER_RIGHT);
-
-        Label scoreboard = new Label("Scoreboard");
-        scoreboard.setId("label1");
-        scoreboard.setMinSize(80, 130);
-
-        rightScore.getChildren().addAll(scoreboard);
-
-        //Setting up the pane
-        BorderPane sharePane = new BorderPane();
-        menuBar(sharePane);
-        sharePane.setLeft(left);
-        sharePane.setCenter(right);
-        sharePane.setRight(rightScore);
-
-        Scene scene = new Scene(sharePane, screenWidth, screenHeight);
-        scene.getStylesheets().add("Share_css.css");
-        window.setScene(scene);
-        window.show();
-    }
-
-    /**
      * This is the user page.
      *
      * @throws Exception - in case of an exception.
@@ -970,7 +915,7 @@ public class GuiMain extends Application {
 
         // LEFT: Stats
         GridPane grid = new GridPane();
-        grid.getStylesheets().add("Stats_css.css");
+        grid.setId("griduser");
         grid.setPadding(new Insets(100, 20, 100, 50));
         grid.setVgap(8);
         grid.setHgap(10);
@@ -984,11 +929,10 @@ public class GuiMain extends Application {
         }
         leaderboard.sortLeaderboard();
         VBox allFriends = showFriends(leaderboard.getUsers());
-        allFriends.setPadding(new Insets(100, 80, 100, 40));
+        allFriends.setPadding(new Insets(100, 40, 100, 50));
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
-        borderPane.getStylesheets().add("Stats_css.css");
         borderPane.setLeft(grid);
         borderPane.setCenter(allFriends);
         makeFriendRequestTable(borderPane);
@@ -1038,6 +982,7 @@ public class GuiMain extends Application {
         grid.add(co2energyValue, 4, 15);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
+        loginScene.getStylesheets().add("Stats_css.css");
 
         // Show window
         window.setScene(loginScene);
@@ -1055,7 +1000,6 @@ public class GuiMain extends Application {
         // CENTER
         GridPane grid = new GridPane();
         grid.setId("grid1");
-//        grid.getStylesheets().add("Stats_css.css");
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
@@ -1102,10 +1046,10 @@ public class GuiMain extends Application {
         grid.add(co2energy, 0, 15);
         grid.add(co2energyValue, 4, 15);
 
-        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+        statsScene = new Scene(borderPane, screenWidth, screenHeight);
 
         // Show window
-        window.setScene(loginScene);
+        window.setScene(statsScene);
         window.show();
     }
 
@@ -1115,26 +1059,27 @@ public class GuiMain extends Application {
      * @param pane - the window in which to display the menu bar.
      */
     public void menuBar(BorderPane pane) {
-        MenuItem nightmode = new MenuItem("Nightmode");
-        nightmode.setOnAction((e -> {
+        nightmode = new CheckMenuItem("Nightmode");
+        if(nightmode.isSelected()){
             nightmode();
-        }));
+        }
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
             logout();
         });
 
-        Menu menu = new Menu("Menu");
+        Menu settings = new Menu("Settings");
         SeparatorMenuItem sep1 = new SeparatorMenuItem();
 
-        menu.getItems().addAll(
+        settings.getItems().addAll(
             nightmode, logout
         );
 
 
         MenuBar menuBar = new MenuBar();
+        menuBar.setId("menuBar1");
         menuBar.getStylesheets().add("MenuBar_css.css");
-        menuBar.getMenus().addAll(menu);
+        menuBar.getMenus().addAll(settings);
 
         Button homeButton = new Button("Home");
         homeButton.setFocusTraversable(false);
@@ -1331,6 +1276,7 @@ public class GuiMain extends Application {
      */
     public GridPane nameTile() {
         GridPane nametile = new GridPane();
+        nametile.setId("grid2");
         nametile.setPadding(new Insets(10));
         nametile.setHgap(20);
 
@@ -1351,6 +1297,8 @@ public class GuiMain extends Application {
      */
     public Button leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
+        gridtile.getStylesheets().add("Leaderboard_css.css");
+        gridtile.setId("grid1");
         gridtile.setPadding(new Insets(10));
         gridtile.setHgap(20);
 
@@ -1362,6 +1310,7 @@ public class GuiMain extends Application {
         gridtile.add(co2reduc, 1, 0);
 
         Button tile = new Button("", gridtile);
+        tile.setId("buttonleaderboard");
         tile.setFocusTraversable(false);
 
         return tile;
@@ -1374,6 +1323,7 @@ public class GuiMain extends Application {
      */
     public VBox leaderboard(ArrayList<CO2> users) {
         VBox vbox = new VBox();
+        vbox.setId("vBoxleader");
         GridPane nametile = nameTile();
         vbox.getChildren().add(nametile);
         vbox.getStylesheets().add("Leaderboard_css.css");
@@ -1395,6 +1345,7 @@ public class GuiMain extends Application {
      */
     public GridPane friendRequestTile(CO2 user) {
         GridPane gridtile = new GridPane();
+        gridtile.getStylesheets().add("Stats_css.css");
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
@@ -1402,6 +1353,7 @@ public class GuiMain extends Application {
         Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
         co2reduc.setPrefWidth(50);
         Button accept = new Button("Accept");
+        accept.setId("buttonaccept");
         accept.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), true);
@@ -1413,6 +1365,7 @@ public class GuiMain extends Application {
         accept.setPadding(new Insets(10));
 
         Button decline = new Button("Decline");
+        decline.setId("buttondecline");
         decline.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), false);
@@ -1428,6 +1381,7 @@ public class GuiMain extends Application {
         friendTile.add(co2reduc,1,0);
 
         Button friend = new Button("", friendTile);
+        friend.setId("buttonfriend");
         friend.setOnAction(e -> showUserPage(user));
         friend.setPadding(new Insets(10));
 
@@ -1445,7 +1399,7 @@ public class GuiMain extends Application {
      */
     public void makeFriendRequestTable(BorderPane borderPane) {
         VBox table  = friendRequestTable();
-        table.setPadding(new Insets(100));
+        table.setPadding(new Insets(100, 100, 100, 50));
         borderPane.setRight(table);
     }
 
@@ -1481,14 +1435,19 @@ public class GuiMain extends Application {
      */
     public VBox showFriends(ArrayList<CO2> friends) {
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setId("friends");
+        scrollPane.getStylesheets().add("Stats_css.css");
 
         VBox leaderboard = leaderboard(friends);
+        leaderboard.setId("vboxleader");
         scrollPane.setContent(leaderboard);
 
         Label friendLabel = new Label("Friends: ");
         Label addFriendLabel = new Label("\nAdd friend: ");
+        addFriendLabel.setId("labelfriend");
         TextField addFriendField = new TextField();
         Button addFriendButton = new Button("Add");
+        addFriendButton.setId("addFriend");
 
         addFriendButton.setOnAction(e -> {
             String friendUsername = addFriendField.getText();
@@ -1502,6 +1461,7 @@ public class GuiMain extends Application {
         });
 
         HBox addFriendBox = new HBox();
+        addFriendBox.setSpacing(10);
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
         VBox total = new VBox();

@@ -6,7 +6,14 @@
     -fx-font-size: 20px;
 }
 
-.button:hover{
+#buttonaddtrans:hover{
+    -fx-border-radius: 5px;
     -fx-background-color: #1aee40;
-    -fx-border-color: grey;
+}
+
+#buttonaddtrans{
+    -fx-font-size: 20px;
+    -fx-border-color: #1aee40;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
 }

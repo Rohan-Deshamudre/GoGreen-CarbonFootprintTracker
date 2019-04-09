@@ -10,10 +10,19 @@
     -fx-text-fill: white;
 }
 
+#button5{
+    -fx-background-color: grey;
+}
+
 .slider{
     -fx-text-fill: white;
 }
 
 .menu-bar{
     -fx-background-color: black;
+}
+
+.menu-item{
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }

@@ -6,10 +6,14 @@
     -fx-font-size: 20px;
 }
 
-#button1:hover{
+#buttonaddtem:hover{
     -fx-border-radius: 5px;
     -fx-background-color: #1aee40;
-    -fx-border-color: grey;
-    -fx-scale-y: 1.1;
-    -fx-scale-x: 1.1;
+}
+
+#buttonaddtem{
+    -fx-font-size: 20px;
+    -fx-border-color: #1aee40;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
 }

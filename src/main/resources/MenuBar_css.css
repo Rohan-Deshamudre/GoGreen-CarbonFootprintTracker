@@ -9,9 +9,7 @@
     -fx-border-color: #1aee40;
 }
 
-.menu-bar .label{
+#menuBar1{
     -fx-font-size: 15px;
-}
-
-.menu-bar:hover{
+    -fx-font-weight: bold;
 }
