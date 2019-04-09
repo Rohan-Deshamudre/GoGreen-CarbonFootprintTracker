@@ -270,19 +270,22 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<Friend> check1 = friendRepository.findByFusernameAndFriend(req.getLoginData()
+        List<Friend> check1 = friendRepository.findByFusernameAndFriend(req
+                .getLoginData().getUsername(), req.getFriendUsername());
+
+        List<FriendRequest>  check2 = friendRequestRepository
+                .findByUsernameAndRequestTo(req.getLoginData()
                 .getUsername(), req.getFriendUsername());
 
-        List<FriendRequest>  check2 = friendRequestRepository.findByUsernameAndRequestTo(req.getLoginData()
-                .getUsername(), req.getFriendUsername());
-
-        if (check1.isEmpty() && check2.isEmpty() && !req.getLoginData().getUsername().equals(
-                req.getFriendUsername()
+        if (check1.isEmpty() && check2.isEmpty() && !req.getLoginData()
+                .getUsername().equals(req.getFriendUsername()
         )) {
 
-            List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
+            List<CO2> exist = co2Repository.findByCusername(req
+                    .getFriendUsername());
             if (exist != null) {
-                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+                FriendRequest newRequest = new FriendRequest(0,
+                        req.getLoginData().getUsername(),
                         req.getFriendUsername());
                 friendRequestRepository.save(newRequest);
                 return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
@@ -376,19 +379,19 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<Boolean> removeFriendRequest(@RequestBody AddFriendRequest req) {
 
-        //I'm re-using AddFriendRequest, maybe its better to make a clone message class or rename AddFriendrequest?
-
         if (!checkLoginData(req.getLoginData(), userRepository)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<Friend> friend = friendRepository.findByFusernameAndFriend(req.getLoginData()
+        List<Friend> friend = friendRepository
+                .findByFusernameAndFriend(req.getLoginData()
                 .getUsername(), req.getFriendUsername());
 
         if (!friend.isEmpty()) {
 
-            List<Friend> friendInverse = friendRepository.findByFusernameAndFriend(req.getFriendUsername(),
+            List<Friend> friendInverse = friendRepository
+                    .findByFusernameAndFriend(req.getFriendUsername(),
                     req.getLoginData().getUsername());
 
             System.out.println("removing: " + friend.get(0));

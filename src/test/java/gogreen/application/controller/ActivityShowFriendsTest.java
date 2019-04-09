@@ -17,8 +17,6 @@ import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +30,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
@@ -57,7 +58,7 @@ public class ActivityShowFriendsTest {
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/friendlist";
+    private final String url = "/friendlist";
 
     @BeforeEach
     void init() {
@@ -77,7 +78,7 @@ public class ActivityShowFriendsTest {
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-                post(URL)
+                post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -95,7 +96,7 @@ public class ActivityShowFriendsTest {
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -108,11 +109,11 @@ public class ActivityShowFriendsTest {
 
         setUserValid(fakeLoginData, userRepository);
 
-        List<Friend> all = new ArrayList<>();
-        when(friendRepository.findByFusername(fakeLoginData.getUsername())).thenReturn(all);
+        when(friendRepository.findByFusername(fakeLoginData.getUsername()))
+                .thenReturn(new ArrayList<>());
 
         MvcResult res = mockMvc.perform(
-                post(URL)
+                post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isOk())
@@ -122,7 +123,7 @@ public class ActivityShowFriendsTest {
         // validate leaderboard response
         Leaderboard leaderboard = objectMapper
             .readValue(res.getResponse().getContentAsString(), Leaderboard.class);
-        assertEquals(all, leaderboard.getUsers());
+        assertEquals(new ArrayList<>(), leaderboard.getUsers());
     }
 
     @Test
@@ -145,7 +146,7 @@ public class ActivityShowFriendsTest {
         when(co2Repository.findByCusername(all.get(1).getFriend())).thenReturn(friend2);
 
         MvcResult res = mockMvc.perform(
-                post(URL)
+                post(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(toJsonString(fakeLoginData)))
                 .andExpect(status().isOk())

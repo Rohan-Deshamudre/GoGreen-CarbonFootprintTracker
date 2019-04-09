@@ -1,5 +1,14 @@
 package gogreen.application.controller;
 
+import static gogreen.application.controller.MockitoTestHelper.setUserValid;
+import static gogreen.application.controller.MockitoTestHelper.toJsonString;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
@@ -26,17 +35,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gogreen.application.controller.MockitoTestHelper.setUserValid;
-import static gogreen.application.controller.MockitoTestHelper.toJsonString;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
-public class respondToFriendRequestTest {
+public class RespondToFriendRequestTest {
 
     private MockMvc mockMvc;
 
@@ -58,7 +59,7 @@ public class respondToFriendRequestTest {
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/respondtofriendrequest";
+    private final String url = "/respondtofriendrequest";
 
     @BeforeEach
     void init() {
@@ -78,9 +79,10 @@ public class respondToFriendRequestTest {
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", true))))
+                .content(toJsonString(new FriendRequestResponse(fakeLoginData,
+                        "friAndy", true))))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
@@ -96,15 +98,16 @@ public class respondToFriendRequestTest {
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", true))))
+                .content(toJsonString(new FriendRequestResponse(fakeLoginData,
+                        "friAndy", true))))
             .andExpect(status().isUnauthorized())
             .andReturn();
     }
 
     @Test
-    void RequestDeniedTest() throws Exception {
+    void requestDeniedTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
         setUserValid(fakeLoginData, userRepository);
@@ -116,14 +119,16 @@ public class respondToFriendRequestTest {
         all.add(new FriendRequest(1,"steve", "shdah"));
 
 
-        when(friendRequestRepository.findByUsernameAndRequestTo("friAndy", fakeLoginData.getUsername()))
+        when(friendRequestRepository.findByUsernameAndRequestTo("friAndy",
+                fakeLoginData.getUsername()))
                 .thenReturn(all);
 
 
         MvcResult res = mockMvc.perform(
-                post(URL)
+                post(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", false))))
+                        .content(toJsonString(new FriendRequestResponse(fakeLoginData,
+                                "friAndy", false))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andReturn();
@@ -134,7 +139,7 @@ public class respondToFriendRequestTest {
     }
 
     @Test
-    void RequestAcceptedTest() throws Exception {
+    void requestAcceptedTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
         setUserValid(fakeLoginData, userRepository);
@@ -146,14 +151,16 @@ public class respondToFriendRequestTest {
         all.add(new FriendRequest(1,"steve", "shdah"));
 
 
-        when(friendRequestRepository.findByUsernameAndRequestTo("friAndy", fakeLoginData.getUsername()))
+        when(friendRequestRepository.findByUsernameAndRequestTo("friAndy",
+                fakeLoginData.getUsername()))
                 .thenReturn(all);
 
 
         MvcResult res = mockMvc.perform(
-                post(URL)
+                post(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(toJsonString(new FriendRequestResponse(fakeLoginData, "friAndy", true))))
+                        .content(toJsonString(new FriendRequestResponse(fakeLoginData,
+                                "friAndy", true))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andReturn();

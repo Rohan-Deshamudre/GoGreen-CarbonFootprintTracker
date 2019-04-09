@@ -1,9 +1,17 @@
 package gogreen.application.controller;
 
+import static gogreen.application.controller.MockitoTestHelper.setUserValid;
+import static gogreen.application.controller.MockitoTestHelper.toJsonString;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.communication.AddFriendRequest;
 import gogreen.application.communication.LoginData;
-import gogreen.application.model.CO2;
 import gogreen.application.model.Friend;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
@@ -26,18 +34,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gogreen.application.controller.MockitoTestHelper.setUserValid;
-import static gogreen.application.controller.MockitoTestHelper.toJsonString;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
- public class RemoveFriendTest {
+public class RemoveFriendTest {
 
     private MockMvc mockMvc;
 
@@ -59,7 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/removefriend";
+    private final String url = "/removefriend";
 
     @BeforeEach
     void init() {
@@ -79,7 +78,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(new AddFriendRequest(fakeLoginData, "dummy"))))
             .andExpect(status().isUnauthorized())
@@ -94,10 +93,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository);
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(new AddFriendRequest(fakeLoginData, "dummy"))))
             .andExpect(status().isUnauthorized())
@@ -111,12 +111,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         setUserValid(fakeLoginData, userRepository);
 
         List<Friend> friend = new ArrayList<>();
-        when(friendRepository.findByFusernameAndFriend( "dummy","dummyFriend")).thenReturn(friend);
+        when(friendRepository.findByFusernameAndFriend( "dummy","dummyFriend"))
+                .thenReturn(friend);
 
         AddFriendRequest request = new AddFriendRequest(fakeLoginData, "dummyFriend");
 
         MvcResult res = mockMvc.perform(
-                post(URL)
+                post(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(toJsonString(request)))
                 .andExpect(status().isOk())
@@ -126,27 +127,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         Boolean response = objectMapper
                 .readValue(res.getResponse().getContentAsString(), Boolean.class);
         assertFalse(response);
-}
+    }
 
     @Test
     void removeFriendTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()),
+                userRepository);
 
         List<Friend> list1 = new ArrayList<>();
         Friend friend1 = new Friend(0, "dummyFriend", "dummy");
         list1.add(friend1);
-        when(friendRepository.findByFusernameAndFriend( "dummy","dummyFriend")).thenReturn(list1);
+        when(friendRepository.findByFusernameAndFriend( "dummy","dummyFriend"))
+                .thenReturn(list1);
         List<Friend> list2 = new ArrayList<>();
-        Friend friend2 = new Friend(0, "dummy", "dummyFriend");
         list2.add(friend1);
-        when(friendRepository.findByFusernameAndFriend( "dummyFriend","dummy")).thenReturn(list2);
+        when(friendRepository.findByFusernameAndFriend( "dummyFriend","dummy"))
+                .thenReturn(list2);
 
         AddFriendRequest request = new AddFriendRequest(fakeLoginData, "dummyFriend");
 
         MvcResult res = mockMvc.perform(
-                post(URL)
+                post(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(toJsonString(request)))
                 .andExpect(status().isOk())
