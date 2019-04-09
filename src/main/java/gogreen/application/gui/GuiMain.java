@@ -1327,10 +1327,13 @@ public class GuiMain extends Application {
         TextField addFriendField = new TextField();
         Button addFriendButton = new Button("Add");
 
+        Label removeFriendLabel = new Label("\nRemove friend: ");
+        TextField removeFriendField = new TextField();
+        Button removeFriendButton = new Button("Remove");
+
         addFriendButton.setOnAction(e -> {
             String friendUsername = addFriendField.getText();
             addFriendField.setText("");
-            System.out.println(friendUsername);
             try {
                 ClientApplication.sendAddFriendRequest(friendUsername);
             } catch (RestClientException e1) {
@@ -1338,11 +1341,28 @@ public class GuiMain extends Application {
             }
         });
 
+        removeFriendButton.setOnAction(e -> {
+            String friendUsername = removeFriendField.getText();
+            removeFriendField.setText("");
+            Boolean answer = ConfirmBox.display("Remove Friend", "Are you sure you want to remove " +
+                    friendUsername + " as your friend? he'll be sad to see you go!");
+            if (answer) {
+                try {
+                    ClientApplication.sendRemoveFriendRequest(friendUsername);
+                } catch (RestClientException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         HBox addFriendBox = new HBox();
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
+        HBox removeFriendBox = new HBox();
+        removeFriendBox.getChildren().addAll(removeFriendField, removeFriendButton);
+
         VBox total = new VBox();
-        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
+        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox, removeFriendLabel, removeFriendBox);
         return total;
     }
 

@@ -22,8 +22,8 @@ import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
-    //private static final String URL = "http://localhost:8080/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
 
     private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
     private static RestTemplate restTemplate = new RestTemplate();
@@ -142,6 +142,17 @@ public class ClientApplication {
         return res.getBody();
     }
 
+    public static boolean sendRemoveFriendRequest(String friend)
+            throws RestClientException {
+        //I'm re-using AddFriendRequest, maybe its better to make a clone message class or rename AddFriendrequest?
+        AddFriendRequest req = new AddFriendRequest(loginData, friend);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "removefriend",
+                req, Boolean.class);
+        System.out.println(res);
+
+        return res.getBody();
+    }
     /**
      * Requests all your friend requests.
      *
