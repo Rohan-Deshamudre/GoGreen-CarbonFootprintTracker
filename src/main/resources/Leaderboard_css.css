@@ -12,13 +12,13 @@
 
 #grid2{
     -fx-border-color: grey;
-    -fx-border-radius: 10px;
+    -fx-border-radius: 3px;
 }
 
 #buttonleaderboard{
-    -fx-border-color: black;
+    -fx-border-color: grey;
     -fx-background-color: white;
-    -fx-border-radius: 10px;
+    -fx-border-radius: 3px;
 }
 
 #buttonleaderboard:hover{

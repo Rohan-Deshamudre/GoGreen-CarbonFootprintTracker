@@ -85,6 +85,7 @@ public class GuiMain extends Application {
 
         // Logo
         Group topGroup = new Group();
+        topGroup.setId("logo");
         ImageView image = new ImageView("images/GoGreenlogo.jpg");
         image.setFitWidth(450);
         image.setFitHeight(200);
@@ -1069,7 +1070,6 @@ public class GuiMain extends Application {
         });
 
         Menu settings = new Menu("Settings");
-        SeparatorMenuItem sep1 = new SeparatorMenuItem();
 
         settings.getItems().addAll(
             nightmode, logout

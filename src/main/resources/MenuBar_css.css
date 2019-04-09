@@ -11,5 +11,9 @@
 
 #menuBar1{
     -fx-font-size: 15px;
-    -fx-font-weight: bold;
+    -fx-background-color: #86a986;
+}
+
+.menu-bar{
+    -fx-padding: 0px;
 }
