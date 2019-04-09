@@ -5,9 +5,10 @@
 .button{
     -fx-background-color: #3cee3b;
     -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 .label{
     -fx-font-size: 20px;
-    -fx-font-weight: bold;
+    -fx-font-family: 'Helvetica', sans-serif;
 }

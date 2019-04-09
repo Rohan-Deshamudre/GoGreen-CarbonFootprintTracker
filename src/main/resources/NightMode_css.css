@@ -4,25 +4,31 @@
 
 .label {
     -fx-text-fill: white;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 .button{
     -fx-text-fill: white;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #button5{
     -fx-background-color: grey;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 .slider{
     -fx-text-fill: white;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 .menu-bar{
     -fx-background-color: black;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 .menu-item{
     -fx-background-color: black;
     -fx-text-fill: white;
+    -fx-font-family: 'Helvetica', sans-serif;
 }

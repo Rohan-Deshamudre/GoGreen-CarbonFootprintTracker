@@ -1,17 +1,20 @@
 .button{
     -fx-border-radius: 5px;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #button1{
     -fx-border-color: #1aee40;
     -fx-background-color: transparent;
     -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #button2 {
     -fx-border-color: #1aee40;
     -fx-font-size: 20px;
     -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 #button1:hover{
     -fx-border-radius: 5px;
@@ -25,5 +28,5 @@
 
 #label1{
     -fx-font-size: 30px;
-    -fx-font-weight: bold;
+    -fx-font-family: 'Helvetica', sans-serif;
 }

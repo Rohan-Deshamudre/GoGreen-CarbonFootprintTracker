@@ -1454,6 +1454,7 @@ public class GuiMain extends Application {
         scrollPane.getStylesheets().add("Stats_css.css");
 
         VBox leaderboard = leaderboard(friends);
+        leaderboard.setPadding(new Insets(10, 20, 10, 20));
         leaderboard.setId("vboxleader");
         scrollPane.setContent(leaderboard);
 

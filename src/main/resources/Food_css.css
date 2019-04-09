@@ -3,6 +3,7 @@
     -fx-border-color: #1aee40;
     -fx-border-radius: 5px;
     -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #button3{
@@ -10,6 +11,7 @@
     -fx-border-color: #1aee40;
     -fx-border-radius: 5px;
     -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #button2:hover{
@@ -24,4 +26,5 @@
 
 #label1{
     -fx-font-size: 30px;
+    -fx-font-family: 'Helvetica', sans-serif;
 }

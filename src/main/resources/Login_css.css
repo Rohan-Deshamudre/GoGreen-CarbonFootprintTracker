@@ -5,6 +5,7 @@
 #regisbutton{
     -fx-background-color: #3cee3b;
     -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #loginbutton{
@@ -12,6 +13,7 @@
     -fx-background-color: #3cee3b;
     -fx-min-height: 15px;
     -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #loginbutton:hover{
@@ -28,8 +30,7 @@
 
 .label{
     -fx-font-size: 20px;
-    -fx-font-family: "OpenSans-Regular.ttf";
-    -fx-font-weight: bold;
+    -fx-font-family: sans-serif;
 }
 
 #hbox1{

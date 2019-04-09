@@ -4,4 +4,5 @@
 
 .Text{
     -fx-background-color: green;
+    -fx-font-family: 'Helvetica', sans-serif;
 }
