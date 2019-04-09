@@ -12,13 +12,22 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -95,29 +104,23 @@ public class GuiMain extends Application {
         logo.setAlignment(Pos.CENTER);
         logo.getChildren().addAll(topGroup);
 
-        Label whitespace = new Label("");
-
-        // Hello client label
-        String helloString = ClientApplication.getRequestHeroku();
-        Label helloLabel = new Label(helloString);
-
         // Enter username
-        Label usernameLabel = new Label("Username:   ");
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
 
+        Label usernameLabel = new Label("Username:   ");
         HBox textUsername = new HBox();
         textUsername.setAlignment(Pos.CENTER);
         textUsername.setPadding(new Insets(10, 0, 0, 0));
         textUsername.getChildren().addAll(usernameLabel, usernameField);
 
         // Enter password
-        Label passwordLabel = new Label("Password:    ");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
 
+        Label passwordLabel = new Label("Password:    ");
         HBox textPassword = new HBox();
         textPassword.setAlignment(Pos.CENTER);
         textPassword.getChildren().addAll(passwordLabel, passwordField);
@@ -148,7 +151,11 @@ public class GuiMain extends Application {
         buttons.getChildren().addAll(registrationButton, loginButton);
 
         // Make the scene
-        vert.getChildren().addAll(logo, whitespace, helloLabel, textUsername, textPassword, buttons);
+        String helloString = ClientApplication.getRequestHeroku();
+        Label helloLabel = new Label(helloString);
+        Label whitespace = new Label("");
+        vert.getChildren().addAll(logo, whitespace, helloLabel,
+                textUsername, textPassword, buttons);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
@@ -432,32 +439,40 @@ public class GuiMain extends Application {
         center.setSpacing(10);
         center.setPadding(new Insets(30));
 
-        String SLIDER_STYLE_FORMAT =
+        String sliderStyleFormat =
                 "-slider-track-color: linear-gradient(to right, -slider-filled-track-color 0%%, "
                         + "-slider-filled-track-color %1$f%%, -fx-base %1$f%%, -fx-base 100%%);";
 
         Slider sizeSlider1 = sizeSlider();
         sizeSlider1.styleProperty().bind(Bindings.createStringBinding(() -> {
-            double percentage = (sizeSlider1.getValue() - sizeSlider1.getMin()) / (sizeSlider1.getMax() - sizeSlider1.getMin()) * 100.0 ;
-            return String.format(SLIDER_STYLE_FORMAT, percentage);
+            double percentage = (sizeSlider1.getValue()
+                    - sizeSlider1.getMin()) / (sizeSlider1.getMax()
+                    - sizeSlider1.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
         }, sizeSlider1.valueProperty(), sizeSlider1.minProperty(), sizeSlider1.maxProperty()));
 
         Slider sizeSlider2 = sizeSlider();
         sizeSlider2.styleProperty().bind(Bindings.createStringBinding(() -> {
-            double percentage = (sizeSlider2.getValue() - sizeSlider2.getMin()) / (sizeSlider2.getMax() - sizeSlider2.getMin()) * 100.0 ;
-            return String.format(SLIDER_STYLE_FORMAT, percentage);
+            double percentage = (sizeSlider2.getValue()
+                    - sizeSlider2.getMin()) / (sizeSlider2.getMax()
+                    - sizeSlider2.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
         }, sizeSlider2.valueProperty(), sizeSlider2.minProperty(), sizeSlider2.maxProperty()));
 
         Slider sizeSlider3 = sizeSlider();
         sizeSlider3.styleProperty().bind(Bindings.createStringBinding(() -> {
-            double percentage = (sizeSlider3.getValue() - sizeSlider3.getMin()) / (sizeSlider3.getMax() - sizeSlider3.getMin()) * 100.0 ;
-            return String.format(SLIDER_STYLE_FORMAT, percentage);
+            double percentage = (sizeSlider3.getValue()
+                    - sizeSlider3.getMin()) / (sizeSlider3.getMax()
+                    - sizeSlider3.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
         }, sizeSlider3.valueProperty(), sizeSlider3.minProperty(), sizeSlider3.maxProperty()));
 
         Slider sizeSlider4 = sizeSlider();
         sizeSlider4.styleProperty().bind(Bindings.createStringBinding(() -> {
-            double percentage = (sizeSlider4.getValue() - sizeSlider4.getMin()) / (sizeSlider4.getMax() - sizeSlider4.getMin()) * 100.0 ;
-            return String.format(SLIDER_STYLE_FORMAT, percentage);
+            double percentage = (sizeSlider4.getValue()
+                    - sizeSlider4.getMin()) / (sizeSlider4.getMax()
+                    - sizeSlider4.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
         }, sizeSlider4.valueProperty(), sizeSlider4.minProperty(), sizeSlider4.maxProperty()));
 
 
@@ -1061,7 +1076,7 @@ public class GuiMain extends Application {
      */
     public void menuBar(BorderPane pane) {
         nightmode = new CheckMenuItem("Nightmode");
-        if(nightmode.isSelected()){
+        if (nightmode.isSelected()) {
             nightmode();
         }
         MenuItem logout = new MenuItem("Logout");
@@ -1442,7 +1457,6 @@ public class GuiMain extends Application {
         leaderboard.setId("vboxleader");
         scrollPane.setContent(leaderboard);
 
-        Label friendLabel = new Label("Friends: ");
         Label addFriendLabel = new Label("\nAdd friend: ");
         addFriendLabel.setId("labelfriend");
         TextField addFriendField = new TextField();
@@ -1464,6 +1478,7 @@ public class GuiMain extends Application {
         addFriendBox.setSpacing(10);
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
+        Label friendLabel = new Label("Friends: ");
         VBox total = new VBox();
         total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
         return total;
@@ -1477,6 +1492,10 @@ public class GuiMain extends Application {
         ClientApplication.clearLoginData();
         window.close();
     }
+
+    /**
+     * Gets the stylesheet for the nightmode.
+     */
 
     public void nightmode() {
         mainmenuScene.getStylesheets().add("NightMode_css.css");
