@@ -44,33 +44,33 @@ public class Achievement {
     public static String getDescription(int id) {
         switch (id) {
             case 1:
-                return "";
+                return "Switch on Night Mode";
             case 2:
-                return "";
+                return "Get to number 1 on the Leaderboard";
             case 3:
-                return "";
+                return "Get 1,000 points";
             case 4:
-                return "";
+                return "Get 10,000 points";
             case 5:
-                return "";
+                return "Add 1 Friend";
             case 6:
-                return "";
+                return "Add 10 Friends";
             case 7:
-                return "";
+                return "Unfriend somebody";
             case 8:
-                return "";
+                return "Eat your first Vegetarian Meal";
             case 9:
-                return "";
+                return "Go to a Local Store";
             case 10:
-                return "";
+                return "Eat Organic Food";
             case 11:
-                return "";
+                return "Lower your Home Temperature";
             case 12:
-                return "";
+                return "Install Solar Panels";
             case 13:
-                return "";
+                return "Take a Bike Ride";
             default:
-                return "";
+                return "Use Public Transport";
         }
     }
 }

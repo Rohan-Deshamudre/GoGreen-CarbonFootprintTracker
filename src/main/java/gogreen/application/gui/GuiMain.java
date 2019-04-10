@@ -1410,6 +1410,7 @@ public class GuiMain extends Application {
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
+        grid.setAlignment(Pos.CENTER);
 
 
         // Make BorderPane layout
@@ -1429,12 +1430,11 @@ public class GuiMain extends Application {
         while (i < max) {
             for(int j = 0; j < 7; j++) {
                 if (i < max) {
-                    GridPane tile = achievementTile(user, i+1);
-                    grid.add(tile, j, row);
+                    achievementTile(user, i+1, grid, j, row);
                 }
                 i++;
             }
-            row++;
+            row += 2;
         }
 
 
@@ -1447,22 +1447,21 @@ public class GuiMain extends Application {
         window.show();
     }
 
-    private GridPane achievementTile(CO2 user, int id) {
-
-        Label done = new Label();
-        if (user.getAchievements()[id - 1]) {
-            done.setText(Integer.toString(id));
-        }
-
+    private void achievementTile(CO2 user, int id, GridPane grid, int x, int y) {
         Label name = new Label(Achievement.getName(id));
         name.setPrefWidth(100);
+        name.setWrapText(true);
+        name.setPadding(new Insets(50, 0, 0, 0));
+        if (user.getAchievements()[id - 1]) {
+            name.setStyle("-fx-font-weight: bold");
+        }
 
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10));
-        grid.add(done, 0, 0);
-        grid.add(name, 0, 1);
+        Label description = new Label(Achievement.getDescription(id));
+        description.setPrefWidth(100);
+        description.setWrapText(true);
 
-        return grid;
+        grid.add(name, x, y);
+        grid.add(description, x , y+1);
     }
 
     /**
