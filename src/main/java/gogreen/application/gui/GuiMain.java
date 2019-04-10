@@ -881,6 +881,8 @@ public class GuiMain extends Application {
         HBox badgeInfo = new HBox();
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
+        Button viewAchievements = new Button("Achievements");
+        viewAchievements.setOnAction(e -> showAchievements());
 
         grid.add(stats, 0, 0);
         grid.add(username, 0, 1);
@@ -895,6 +897,7 @@ public class GuiMain extends Application {
         grid.add(co2energyValue, 1, 5);
         grid.add(badgeLabel, 0, 6);
         grid.add(badgeInfo, 1, 6);
+        grid.add(viewAchievements, 0, 7);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -942,6 +945,8 @@ public class GuiMain extends Application {
         HBox badgeInfo = new HBox();
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
+        Button viewAchievements = new Button("Achievements");
+        viewAchievements.setOnAction(e -> showAchievements(user));
 
         grid.add(stats, 0, 0);
         grid.add(username, 0, 3);
@@ -956,6 +961,7 @@ public class GuiMain extends Application {
         grid.add(co2energyValue, 4, 15);
         grid.add(badgeLabel, 0, 18);
         grid.add(badgeInfo, 4, 18);
+        grid.add(viewAchievements, 0, 21);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -1384,6 +1390,16 @@ public class GuiMain extends Application {
         VBox total = new VBox();
         total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
         return total;
+    }
+
+    public void showAchievements() {
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+        showAchievements(user);
     }
 
     public void showAchievements(CO2 user) {
