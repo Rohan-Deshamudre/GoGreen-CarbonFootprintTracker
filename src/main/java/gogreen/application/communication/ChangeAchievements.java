@@ -15,6 +15,14 @@ public class ChangeAchievements extends ClientMessage {
     }
 
     /**
+     * Getter of achievements.
+     * @return achievements.
+     */
+    public String getAchievements() {
+        return achievements;
+    }
+
+    /**
      * To String method.
      * @return String version of the object.
      */

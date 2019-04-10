@@ -357,16 +357,21 @@ public class ActivityController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<Boolean> changeAchievements(@RequestBody ChangeAchievements req) {
-
         if (!checkLoginData(req.getLoginData(), userRepository)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        // Change value in the database.
+        List<CO2> user = co2Repository.findByCusername(req.getLoginData().getUsername());
+        if (!user.isEmpty()) {
+            CO2 update = user.get(0);
+            update.setAchievement(req.getAchievements());
+            co2Repository.save(update);
 
-        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
 
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
     }
 
 }
