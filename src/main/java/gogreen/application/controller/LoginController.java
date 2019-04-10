@@ -63,7 +63,7 @@ public class LoginController {
 
         // Register new account
         userRepository.save(new User(cred.getUsername(), cred.getPassword()));
-        co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0));
+        co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0, "00000000000000"));
 
         return new ResponseEntity(HttpStatus.CREATED);
     }

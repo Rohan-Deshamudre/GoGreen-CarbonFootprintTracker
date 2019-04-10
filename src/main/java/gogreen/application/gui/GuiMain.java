@@ -1460,7 +1460,8 @@ public class GuiMain extends Application {
         name.setPrefWidth(100);
         name.setWrapText(true);
         name.setPadding(new Insets(50, 0, 0, 0));
-        if (user.getAchievements()[id - 1]) {
+
+        if (user.getAchievement().charAt(id-1) == '1') {
             name.setStyle("-fx-font-weight: bold");
         }
 

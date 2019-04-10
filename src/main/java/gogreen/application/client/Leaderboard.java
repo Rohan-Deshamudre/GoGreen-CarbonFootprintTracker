@@ -23,13 +23,7 @@ public class Leaderboard {
      * This method is temporary, just for testing.
      */
     public Leaderboard() {
-        CO2 a1 = new CO2("a1", 1, 2, 3, 50);
-        CO2 b2 = new CO2("b2", 1, 2, 3 ,10);
-        CO2 c3 = new CO2("c3", 1, 2, 3, 500);
         ArrayList<CO2> al = new ArrayList<>();
-        al.add(a1);
-        al.add(b2);
-        al.add(c3);
         users = al;
     }
 
@@ -61,14 +55,5 @@ public class Leaderboard {
         }
         string += "]>";
         return string;
-    }
-
-    public static void main(String[] args) {
-        CO2 user = new CO2("name", 1, 2, 3, 4);
-        ArrayList<CO2> list = new ArrayList<>();
-        list.add(user);
-        Leaderboard lb = new Leaderboard(list);
-
-        System.out.println(lb.toString());
     }
 }
