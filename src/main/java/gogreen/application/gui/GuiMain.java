@@ -4,6 +4,7 @@ import gogreen.application.client.ClientApplication;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.client.Leaderboard;
+import gogreen.application.model.Achievement;
 import gogreen.application.model.Badge;
 import gogreen.application.model.CO2;
 import javafx.application.Application;
@@ -983,6 +984,8 @@ public class GuiMain extends Application {
         goToUserPage.setOnAction(e -> userPage());
         MenuItem goToShare = new MenuItem("Share");
         goToShare.setOnAction(e -> showShare());
+        MenuItem goToAchievements = new MenuItem("Achievements");
+        goToAchievements.setOnAction(e -> showAchievements(ClientApplication.sendGetUserStatsRequest()));
 
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
@@ -996,7 +999,7 @@ public class GuiMain extends Application {
 
         menu.getItems().addAll(
             goToHomeScreen, sep1, goToFood, goToTransport,
-            goToEnergy, sep2, goToUserPage, goToShare, sep3, logout
+            goToEnergy, sep2, goToUserPage, goToShare, goToAchievements, sep3, logout
         );
 
         MenuBar menuBar = new MenuBar();
@@ -1324,7 +1327,6 @@ public class GuiMain extends Application {
         borderPane.setRight(table);
     }
 
-
     /**
      * The VBox showing the friend requests of an arraylist of users in CO2 class.
      * @return return the vBox
@@ -1382,6 +1384,69 @@ public class GuiMain extends Application {
         VBox total = new VBox();
         total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
         return total;
+    }
+
+    public void showAchievements(CO2 user) {
+        window.setTitle("Achievements");
+
+        // CENTER
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(100));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+
+        // Make BorderPane layout
+        BorderPane borderPane = new BorderPane();
+        borderPane.setLeft(grid);
+        menuBar(borderPane);
+
+        Label stats = new Label("Stats");
+        Label username = new Label("Username:");
+        Label usernameValue = new Label(user.getCUsername());
+        grid.add(username, 0, 0);
+        grid.add(usernameValue, 1, 0);
+
+        int i = 0;
+        int row = 1;
+        int max = Achievement.getTotalAchievements();
+        while (i < max) {
+            for(int j = 0; j < 7; j++) {
+                if (i < max) {
+                    GridPane tile = achievementTile(user, i+1);
+                    grid.add(tile, j, row);
+                }
+                i++;
+            }
+            row++;
+        }
+
+
+
+
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+
+        // Show window
+        window.setScene(loginScene);
+        window.show();
+    }
+
+    private GridPane achievementTile(CO2 user, int id) {
+
+        Label done = new Label();
+        if (user.getAchievements()[id - 1]) {
+            done.setText(Integer.toString(id));
+        }
+
+        Label name = new Label(Achievement.getName(id));
+        name.setPrefWidth(100);
+
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10));
+        grid.add(done, 0, 0);
+        grid.add(name, 0, 1);
+
+        return grid;
     }
 
     /**

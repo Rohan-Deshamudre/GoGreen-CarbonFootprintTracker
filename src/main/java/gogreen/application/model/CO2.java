@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "co2", schema = "public")
@@ -127,5 +129,11 @@ public class CO2 {
      */
     public void addCO2Reduc(int co2Reduc) {
         this.CO2reduc += co2Reduc;
+    }
+
+    public boolean[] getAchievements() {
+        boolean[] result = new boolean[Achievement.getTotalAchievements()];
+        result [1] = true;
+        return result;
     }
 }
