@@ -890,6 +890,18 @@ public class GuiMain extends Application {
             e.printStackTrace();
         }
 
+        // Check for friends achievements
+        if (user.getAchievement().charAt(4) == '0') {
+            if (leaderboard.getUsers().size() > 0) {
+                Achievement.changeAchievements(user, 4);
+            }
+        }
+        if (user.getAchievement().charAt(5) == '0') {
+            if (leaderboard.getUsers().size() > 9) {
+                Achievement.changeAchievements(user, 5);
+            }
+        }
+
         Label stats = new Label("Stats");
         Label username = new Label("Username:");
         Label usernameValue = new Label(user.getCUsername());
@@ -1307,9 +1319,10 @@ public class GuiMain extends Application {
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
-        ImageView badge = new ImageView("images/BadgeDemo.png");
-        badge.setFitHeight(10);
-        badge.setFitWidth(10);
+        String url = Badge.getBadge(user.getCO2reduc());
+        ImageView badge = new ImageView(url);
+        badge.setFitHeight(25);
+        badge.setFitWidth(25);
 
         HBox nameBox = new HBox();
         nameBox.setPrefWidth(120);
