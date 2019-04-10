@@ -1341,7 +1341,7 @@ public class GuiMain extends Application {
             removeFriendField.setText("");
             Boolean answer = ConfirmBox.display("Remove Friend",
                     "Are you sure you want to remove "
-                            + friendUsername + " as your friend? he'll be sad to see you go!");
+                            + friendUsername + " as your friend?");
             if (answer) {
                 try {
                     ClientApplication.sendRemoveFriendRequest(friendUsername);
