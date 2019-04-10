@@ -27,6 +27,9 @@ public class CO2 {
     @Column(name = "co2reduc")
     private int CO2reduc;
 
+    @Column(name = "achievement")
+    private String achievement;
+
     protected CO2() {
     }
 
@@ -39,20 +42,22 @@ public class CO2 {
      * @param CO2energy    the total CO2 reduced by energy.
      * @param CO2reduc     the total CO2 reduced by the user.
      */
-    public CO2(String cusername, int CO2food, int CO2transport, int CO2energy, int CO2reduc) {
+    public CO2(String cusername, int CO2food, int CO2transport, int CO2energy, int CO2reduc,
+               String achievement) {
         this.cusername = cusername;
         this.CO2food = CO2food;
         this.CO2transport = CO2transport;
         this.CO2energy = CO2energy;
         this.CO2reduc = CO2reduc;
+        this.achievement = achievement;
     }
 
     @Override
     public String toString() {
         return String.format(
             "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
-                + "Co2Energy='%s', Co2Reduction='%d']",
-            cusername, CO2food, CO2transport, CO2energy, CO2reduc);
+                + "Co2Energy='%s', Co2Reduction='%d', achievement='%s']",
+            cusername, CO2food, CO2transport, CO2energy, CO2reduc, achievement);
     }
 
     public String getCUsername() {
@@ -131,9 +136,11 @@ public class CO2 {
         this.CO2reduc += co2Reduc;
     }
 
-    public boolean[] getAchievements() {
-        boolean[] result = new boolean[Achievement.getTotalAchievements()];
-        result [1] = true;
-        return result;
+    public String getAchievement() {
+        return achievement;
+    }
+
+    public void setAchievement(String achievement) {
+        this.achievement = achievement;
     }
 }

@@ -125,6 +125,8 @@ public class ClientApplication {
         return res.getBody();
     }
 
+
+
     /**
      * This method sends a POST request to the server with the login information. Request adding a
      * friend.
