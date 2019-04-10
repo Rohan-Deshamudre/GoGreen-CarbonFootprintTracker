@@ -1343,6 +1343,16 @@ public class GuiMain extends Application {
 
         Button decline = new Button("Decline");
         decline.setOnAction(e -> {
+            // Check for achievement
+            CO2 self = null;
+            try {
+                self = ClientApplication.sendGetUserStatsRequest();
+                if (self.getAchievement().charAt(6) == '0') {
+                    Achievement.changeAchievements(self, 6);
+                }
+            } catch (RestClientException f) {
+                f.printStackTrace();
+            }
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), false);
                 userPage();
