@@ -1,11 +1,33 @@
 package gogreen.application.model;
 
+import gogreen.application.client.ClientApplication;
+import gogreen.application.gui.AlertBox;
+
 public class Achievement {
 
     private static int totalAchievements = 14;
 
     public static int getTotalAchievements() {
         return totalAchievements;
+    }
+
+    /**
+     * Marks one achievement for a user as done.
+     * @param user the user.
+     * @param i the index of the achievement to be changed.
+     * @return the new achievements String.
+     */
+    public static void changeAchievements(CO2 user, int i) {
+        String oldAchievements = user.getAchievement();
+        String newAchievements = oldAchievements.substring(0,i)
+                + '1' +oldAchievements.substring(i+1);
+        System.out.println(newAchievements);
+
+        // Show new achievement pop up.
+        AlertBox.display(getName(i+1) + "\n\n" + getDescription(i + 1)
+                , "New Achievement!");
+
+        ClientApplication.changeAchievements(user.getCUsername(), newAchievements);
     }
 
     public static String getName(int id) {

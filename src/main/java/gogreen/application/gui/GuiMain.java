@@ -291,6 +291,26 @@ public class GuiMain extends Application {
 
         leaderboard.getUsers().add(user);
         leaderboard.sortLeaderboard();
+
+        // Check for getting to top of the leaderboard achievement.
+        if (user.getAchievement().charAt(1) == '0') {
+            if (leaderboard.getUsers().get(0) == user) {
+                Achievement.changeAchievements(user, 1);
+            }
+        }
+        // Check for 1,000 points achievement
+        if (user.getAchievement().charAt(2) == '0') {
+            if (user.getCO2reduc() >= 1000) {
+                Achievement.changeAchievements(user, 2);
+            }
+        }
+        // Check for 10,000 points achievement
+        if (user.getAchievement().charAt(3) == '0') {
+            if (user.getCO2reduc() >= 10000) {
+                Achievement.changeAchievements(user, 3);
+            }
+        }
+
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
         BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
@@ -1095,7 +1115,8 @@ public class GuiMain extends Application {
             System.out.println();
             showMainMenu();
         } else {
-            AlertBox.display("Wrong username/password combination. Please try again.");
+            AlertBox.display("Wrong username/password combination. Please try again."
+                    , "Something went wrong");
             System.out.println("LOGIN UNSUCCESSFUL");
             System.out.println();
         }
@@ -1103,12 +1124,12 @@ public class GuiMain extends Application {
 
     private void registerButtonAction(String username, String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm)) {
-            AlertBox.display("Passwords do not match!");
+            AlertBox.display("Passwords do not match!", "Something went wrong");
         } else if (ClientApplication.sendRegisterRequest(username, password)) {
-            AlertBox.display("Successfully registered.");
+            AlertBox.display("Successfully registered.", "Success");
             showMainMenu();
         } else {
-            AlertBox.display("Username already taken!");
+            AlertBox.display("Username already taken!", "Something went wrong");
         }
     }
 
@@ -1133,9 +1154,10 @@ public class GuiMain extends Application {
                 co2Response = ClientApplication.sendAddFoodRequest("Else", int4);
             }
 
-            AlertBox.display("CO2 reduced with: " + co2Response.getCO2Reduction() + ". Good job!");
+            AlertBox.display("CO2 reduced with: " + co2Response.getCO2Reduction()
+                    + ". Good job!", "Success");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
+            AlertBox.display("An error occurred processing your request:\n" + e.getMessage(), "Something went wrong");
         }
         showMainMenu();
     }
@@ -1149,9 +1171,10 @@ public class GuiMain extends Application {
     public void localProduceAction(int weight, boolean organic) {
         try {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
-            AlertBox.display("CO2 reduced with: " + res.getCO2Reduction() + ". Good job!");
+            AlertBox.display("CO2 reduced with: " + res.getCO2Reduction() + ". Good job!", "");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
+            AlertBox.display("An error occurred processing your request:\n" + e.getMessage()
+                    , "Something went wrong");
         }
     }
 
@@ -1164,9 +1187,10 @@ public class GuiMain extends Application {
     public void transportAddButtonAction(TravelType travelType, int distance) {
         try {
             CO2Response res = ClientApplication.sendAddTransportRequest(travelType, distance);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction()
+                    + "kgs. Good job!", "Success");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred:\n" + e.getMessage());
+            AlertBox.display("An error occurred:\n" + e.getMessage(), "Something went wrong");
         }
         showMainMenu();
     }
@@ -1180,9 +1204,9 @@ public class GuiMain extends Application {
     public void homeTempAddButtonAction(int temperature, int duration) {
         try {
             CO2Response res = ClientApplication.sendAddHomeTempRequest(temperature, duration);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!", "");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred:\n" + e.getMessage());
+            AlertBox.display("An error occurred:\n" + e.getMessage(), "");
         }
         showMainMenu();
     }
@@ -1196,9 +1220,9 @@ public class GuiMain extends Application {
     public void solarPanelAction(int area, int hoursSunlight) {
         try {
             CO2Response res = ClientApplication.sendAddSolarPanelRequest(area, hoursSunlight);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!", "");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred:\n" + e.getMessage());
+            AlertBox.display("An error occurred:\n" + e.getMessage(), "Something went wrong");
         }
         showMainMenu();
     }
@@ -1444,9 +1468,6 @@ public class GuiMain extends Application {
             }
             row += 2;
         }
-
-
-
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
