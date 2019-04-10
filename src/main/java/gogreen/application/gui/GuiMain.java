@@ -878,7 +878,7 @@ public class GuiMain extends Application {
         badge.setFitHeight(20);
         badge.setFitWidth(20);
         HBox badgeInfo = new HBox();
-        Label badgeTitle = new Label(Badge.getTitle(user.getCO2reduc()));
+        Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
 
         grid.add(stats, 0, 0);
@@ -933,6 +933,14 @@ public class GuiMain extends Application {
         Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
         Label co2energy = new Label("CO2 reduction for energy:");
         Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+        Label badgeLabel = new Label("Badge:");
+        String url = Badge.getBadge(user.getCO2reduc());
+        ImageView badge = new ImageView(url);
+        badge.setFitHeight(20);
+        badge.setFitWidth(20);
+        HBox badgeInfo = new HBox();
+        Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
+        badgeInfo.getChildren().addAll(badge, badgeTitle);
 
         grid.add(stats, 0, 0);
         grid.add(username, 0, 3);
@@ -945,6 +953,8 @@ public class GuiMain extends Application {
         grid.add(co2transportValue, 4, 12);
         grid.add(co2energy, 0, 15);
         grid.add(co2energyValue, 4, 15);
+        grid.add(badgeLabel, 0, 18);
+        grid.add(badgeInfo, 4, 18);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -1202,23 +1212,24 @@ public class GuiMain extends Application {
      */
     public Button leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
-        gridtile.setPadding(new Insets(10));
+        gridtile.setPadding(new Insets(5, 10, 5, 10));
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
+        cusername.setPrefWidth(150);
+
+        Label co2reduc = new Label( " " + Integer.toString(user.getCO2reduc()));
+
         String url = Badge.getBadge(user.getCO2reduc());
         ImageView badge = new ImageView(url);
-        badge.setFitHeight(20);
-        badge.setFitWidth(20);
+        badge.setFitHeight(25);
+        badge.setFitWidth(25);
 
         HBox nameBox = new HBox();
-        nameBox.setPrefWidth(150);
-        nameBox.getChildren().addAll(cusername, badge);
+        nameBox.getChildren().addAll(badge, co2reduc);
 
-        Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
-
-        gridtile.add(nameBox, 0, 0);
-        gridtile.add(co2reduc, 1, 0);
+        gridtile.add(cusername, 0, 0);
+        gridtile.add(nameBox, 1, 0);
 
         Button tile = new Button("", gridtile);
 
@@ -1237,6 +1248,7 @@ public class GuiMain extends Application {
 
         for (CO2 user: users) {
             Button tile = leaderboardTile(user);
+            tile.setFocusTraversable(false);
             tile.setOnAction(e -> showUserPage(user));
             tile.setPrefWidth(300);
             vbox.getChildren().add(tile);
