@@ -135,6 +135,7 @@ public class GuiMain extends Application {
 
         Button loginButton = new Button();
         loginButton.setFocusTraversable(false);
+        loginButton.setDefaultButton(true);
         loginButton.setId("loginbutton");
         loginButton.setMinSize(100, 50);
         loginButton.setOnAction(e -> {
