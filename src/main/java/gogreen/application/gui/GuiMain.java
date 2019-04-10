@@ -282,6 +282,14 @@ public class GuiMain extends Application {
             e.printStackTrace();
         }
 
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+
+        leaderboard.getUsers().add(user);
         leaderboard.sortLeaderboard();
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
