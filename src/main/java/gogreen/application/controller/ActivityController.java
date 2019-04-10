@@ -345,6 +345,30 @@ public class ActivityController {
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 
     }
+
+    /**
+     * Handles changing the achievements of a user.
+     *
+     * @param req the ChangeAchievements.
+     * @return if method was successful.
+     */
+    @PostMapping(value = "/changeachievements",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Boolean> changeAchievements(@RequestBody ChangeAchievements req) {
+
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Change value in the database.
+
+        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+
+    }
+
 }
 
 

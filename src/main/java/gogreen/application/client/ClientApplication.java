@@ -1,20 +1,11 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.communication.AddFriendRequest;
-import gogreen.application.communication.AddHomeTempRequest;
-import gogreen.application.communication.AddLocalProduceRequest;
-import gogreen.application.communication.AddSolarPanelRequest;
-import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.*;
 import gogreen.application.communication.AddTransportRequest.TravelType;
-import gogreen.application.communication.CO2Response;
-import gogreen.application.communication.ClientMessage;
-import gogreen.application.communication.LoginData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
-import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
 
@@ -269,5 +260,24 @@ public class ClientApplication {
         throws RestClientException {
         AddSolarPanelRequest req = new AddSolarPanelRequest(loginData, area, hoursSunlight);
         return sendActivityAddRequest("activity/solarpanel/add", req);
+    }
+
+    /**
+     * Changes the achievements of a user.
+     * @param username the username.
+     * @param achievements the achievements.
+     * @return method success.
+     * @throws RestClientException can throw exception.
+     */
+    public static boolean changeAchievements(String username, String achievements)
+            throws RestClientException {
+
+        ChangeAchievements req = new ChangeAchievements(loginData, achievements);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "changeachievements", req, Boolean.class);
+
+        System.out.println(res);
+
+        return res.getBody();
     }
 }
