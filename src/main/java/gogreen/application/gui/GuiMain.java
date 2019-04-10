@@ -4,6 +4,7 @@ import gogreen.application.client.ClientApplication;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.client.Leaderboard;
+import gogreen.application.model.Badge;
 import gogreen.application.model.CO2;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -871,20 +872,28 @@ public class GuiMain extends Application {
         Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
         Label co2energy = new Label("CO2 reduction for energy:");
         Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
-        ImageView badge = new ImageView("images/BadgeDemo.png");
+        Label badgeLabel = new Label("Badge:");
+        String url = Badge.getBadge(user.getCO2reduc());
+        ImageView badge = new ImageView(url);
+        badge.setFitHeight(20);
+        badge.setFitWidth(20);
+        HBox badgeInfo = new HBox();
+        Label badgeTitle = new Label(Badge.getTitle(user.getCO2reduc()));
+        badgeInfo.getChildren().addAll(badge, badgeTitle);
 
         grid.add(stats, 0, 0);
-        grid.add(username, 0, 3);
-        grid.add(usernameValue, 4, 3);
-        grid.add(totalCO2, 0, 6);
-        grid.add(totalCO2Value, 4, 6);
-        grid.add(co2food, 0, 9);
-        grid.add(co2foodValue, 4, 9);
-        grid.add(co2transport, 0, 12);
-        grid.add(co2transportValue, 4, 12);
-        grid.add(co2energy, 0, 15);
-        grid.add(co2energyValue, 4, 15);
-        grid.add(badge, 4, 18);
+        grid.add(username, 0, 1);
+        grid.add(usernameValue, 1, 1);
+        grid.add(totalCO2, 0, 2);
+        grid.add(totalCO2Value, 1, 2);
+        grid.add(co2food, 0, 3);
+        grid.add(co2foodValue, 1, 3);
+        grid.add(co2transport, 0, 4);
+        grid.add(co2transportValue, 1, 4);
+        grid.add(co2energy, 0, 5);
+        grid.add(co2energyValue, 1, 5);
+        grid.add(badgeLabel, 0, 6);
+        grid.add(badgeInfo, 1, 6);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -1197,10 +1206,18 @@ public class GuiMain extends Application {
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
-        cusername.setPrefWidth(150);
+        String url = Badge.getBadge(user.getCO2reduc());
+        ImageView badge = new ImageView(url);
+        badge.setFitHeight(20);
+        badge.setFitWidth(20);
+
+        HBox nameBox = new HBox();
+        nameBox.setPrefWidth(150);
+        nameBox.getChildren().addAll(cusername, badge);
+
         Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
 
-        gridtile.add(cusername, 0, 0);
+        gridtile.add(nameBox, 0, 0);
         gridtile.add(co2reduc, 1, 0);
 
         Button tile = new Button("", gridtile);
@@ -1237,7 +1254,14 @@ public class GuiMain extends Application {
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
-        cusername.setPrefWidth(120);
+        ImageView badge = new ImageView("images/BadgeDemo.png");
+        badge.setFitHeight(10);
+        badge.setFitWidth(10);
+
+        HBox nameBox = new HBox();
+        nameBox.setPrefWidth(120);
+        nameBox.getChildren().addAll(cusername, badge);
+
         Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
         co2reduc.setPrefWidth(50);
         Button accept = new Button("Accept");
@@ -1263,7 +1287,7 @@ public class GuiMain extends Application {
         decline.setPadding(new Insets(10));
 
         GridPane friendTile = new GridPane();
-        friendTile.add(cusername,0,0);
+        friendTile.add(nameBox,0,0);
         friendTile.add(co2reduc,1,0);
 
         Button friend = new Button("", friendTile);
