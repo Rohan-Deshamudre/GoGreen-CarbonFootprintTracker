@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class ShowUserTest {
 
     @Test
-    public void FriendConstructorTest() {
+    public void friendConstructorTest() {
         ShowUser user = new ShowUser("user", 1);
         assertTrue(user.getUsername().equals("user"));
         assertEquals(user.getCo2reduc(), 1);
