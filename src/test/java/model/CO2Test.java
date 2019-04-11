@@ -11,37 +11,37 @@ public class CO2Test {
 
     @Test
     public void getCUsernameTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertTrue(user.getCUsername().equals("user"));
     }
 
     @Test
     public void getCO2FoodTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertEquals(user.getCO2food(), 10);
     }
 
     @Test
     public void getCO2Transport() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertEquals(user.getCO2transport(), 11);
     }
 
     @Test
     public void getCO2Energy() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertEquals(user.getCO2energy(), 12);
     }
 
     @Test
     public void getCO2ReducTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertEquals(13, user.getCO2reduc());
     }
 
     @Test
     public void co2ConstructorTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertTrue(user.getCUsername().equals("user"));
         assertEquals(user.getCO2food(), 10);
         assertEquals(user.getCO2transport(), 11);
@@ -51,9 +51,9 @@ public class CO2Test {
 
     @Test
     public void toStringTest() {
-        CO2 user = new CO2("user", 10, 11, 12, 13);
+        CO2 user = new CO2("user", 10, 11, 12, 13, "achieve");
         assertTrue(user.toString().equals("CO2[cusername='user', Co2Food='10', "
-            + "Co2Transport='11', Co2Energy='12', Co2Reduction='13']"));
+            + "Co2Transport='11', Co2Energy='12', Co2Reduction='13', achievement='%s']"));
     }
 }
 
