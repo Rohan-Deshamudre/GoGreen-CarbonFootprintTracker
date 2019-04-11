@@ -52,7 +52,7 @@ public class GuiMain extends Application {
     private int screenWidth;
     private int screenHeight;
     private CheckMenuItem nightmode;
-    private boolean nightmodeon = false;
+    private boolean nightmodeon;
     private Object scene;
 
     /**
@@ -72,6 +72,7 @@ public class GuiMain extends Application {
         screenWidth = (int) primaryScreenBounds.getWidth();
         screenHeight = (int) primaryScreenBounds.getHeight();
         window.setMaximized(true);
+        nightmodeon  =false;
 
         loginPage();
     }
@@ -180,6 +181,11 @@ public class GuiMain extends Application {
 
     private void registrationPage() {
         window.setTitle("Registration");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
         // TOP
         Group topGroup = new Group();
         Text goGreenText = new Text("Registration");
@@ -365,7 +371,11 @@ public class GuiMain extends Application {
 
         //setting up the scene
         mainmenuScene = new Scene(menuPane, screenWidth, screenHeight);
-        mainmenuScene.getStylesheets().add("MainMenu_css.css");
+        if (nightmodeon) {
+            mainmenuScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            mainmenuScene.getStylesheets().add("MainMenu_css.css");
+        }
         window.setScene(mainmenuScene);
         window.show();
     }
@@ -421,7 +431,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         foodScene = new Scene(foodPane, screenWidth, screenHeight);
-        foodScene.getStylesheets().add("Food_css.css");
+        if (nightmodeon) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            foodScene.getStylesheets().add("Food_css.css");
+        }
         window.setScene(foodScene);
         window.show();
     }
@@ -533,7 +547,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         foodScene = new Scene(borderPane, screenWidth, screenHeight);
-        foodScene.getStylesheets().add("veggieMealPage_css.css");
+        if (nightmodeon) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            foodScene.getStylesheets().add("veggieMealPage_css.css");
+        }
         window.setScene(foodScene);
         window.show();
     }
@@ -588,7 +606,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         foodScene = new Scene(borderPane, screenWidth, screenHeight);
-        foodScene.getStylesheets().add("localStorePage_css.css");
+        if (nightmodeon) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            foodScene.getStylesheets().add("localStorePage_css.css");
+        }
         window.setScene(foodScene);
         window.show();
     }
@@ -642,7 +664,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         transportScene = new Scene(foodPane, screenWidth, screenHeight);
-        transportScene.getStylesheets().add("Transport_css.css");
+        if (nightmodeon) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            transportScene.getStylesheets().add("Transport_css.css");
+        }
         window.setScene(transportScene);
         window.show();
     }
@@ -692,7 +718,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         transportScene = new Scene(borderPane, screenWidth, screenHeight);
-        transportScene.getStylesheets().add("bikeRidePage_css.css");
+        if (nightmodeon) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            transportScene.getStylesheets().add("bikeRidePage_css.css");
+        }
         window.setScene(transportScene);
         window.show();
     }
@@ -743,7 +773,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         transportScene = new Scene(borderPane, screenWidth, screenHeight);
-        transportScene.getStylesheets().add("publicTransportPage_css.css");
+        if (nightmodeon) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            transportScene.getStylesheets().add("publicTransportPage_css.css");
+        }
         window.setScene(transportScene);
         window.show();
     }
@@ -798,7 +832,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         homeScene = new Scene(energyPane, screenWidth, screenHeight);
-        homeScene.getStylesheets().add("HomeEnergy_css.css");
+        if (nightmodeon) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            homeScene.getStylesheets().add("HomeEnergy_css.css");
+        }
         window.setScene(homeScene);
         window.show();
     }
@@ -858,7 +896,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         homeScene = new Scene(borderPane, screenWidth, screenHeight);
-        homeScene.getStylesheets().add("homeTemperaturePage_css.css");
+        if (nightmodeon) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            homeScene.getStylesheets().add("homeTemperaturePage_css.css");
+        }
         window.setScene(homeScene);
         window.show();
     }
@@ -919,7 +961,11 @@ public class GuiMain extends Application {
 
         //set up the scene
         homeScene = new Scene(borderPane, screenWidth, screenHeight);
-        homeScene.getStylesheets().add("solarPanelPage_css.css");
+        if (nightmodeon) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            homeScene.getStylesheets().add("solarPanelPage_css.css");
+        }
         window.setScene(homeScene);
         window.show();
     }
@@ -1001,9 +1047,11 @@ public class GuiMain extends Application {
         grid.add(co2energyValue, 4, 15);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-        loginScene.getStylesheets().add("Stats_css.css");
-
-        // Show window
+        if (nightmodeon) {
+            loginScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            loginScene.getStylesheets().add("Stats_css.css");
+        }
         window.setScene(loginScene);
         window.show();
     }
@@ -1066,8 +1114,6 @@ public class GuiMain extends Application {
         grid.add(co2energyValue, 4, 15);
 
         statsScene = new Scene(borderPane, screenWidth, screenHeight);
-
-        // Show window
         window.setScene(statsScene);
         window.show();
     }
@@ -1078,31 +1124,23 @@ public class GuiMain extends Application {
      * @param pane - the window in which to display the menu bar.
      */
     public void menuBar(BorderPane pane) {
-        MenuItem logout = new MenuItem("Logout");
-        logout.setOnAction(e -> {
-            logout();
-        });
-
-        nightmode = new CheckMenuItem("Nightmode");
-
         Menu settings = new Menu("Settings");
 
-        settings.getItems().addAll(
-            nightmode, logout
-        );
+        MenuItem logout = new MenuItem("Logout");
+        logout.setOnAction(e -> logout());
 
-        if (nightmodeon) {
-            nightmode.setSelected(true);
-        }
-        nightmode.setOnAction(e -> {
-            nightmodeon = true;
+        MenuItem nightMode = new MenuItem("Night mode");
+        nightMode.setOnAction(e -> {
+            if (nightMode.getText().equals("Night mode")) {
+                nightmodeon = true;
+                nightMode.setText("Day mode");
+            } else {
+                nightmodeon = false;
+                nightMode.setText("Night mode");
+            }
         });
 
-        if (nightmodeon) {
-            nightmode();
-        }
-
-
+        settings.getItems().addAll(logout, nightMode);
 
         MenuBar menuBar = new MenuBar();
         menuBar.setId("menuBar1");
@@ -1308,9 +1346,9 @@ public class GuiMain extends Application {
         nametile.setPadding(new Insets(10));
         nametile.setHgap(20);
 
-        Label username = new Label("Name");
+        Label username = new Label("  Name");
         username.setPrefWidth(150);
-        Label co2reduc = new Label("Score");
+        Label co2reduc = new Label("  Score");
 
         nametile.add(username, 0, 0);
         nametile.add(co2reduc, 1, 0);
@@ -1532,27 +1570,6 @@ public class GuiMain extends Application {
     private void closeProgram() {
         ClientApplication.clearLoginData();
         window.close();
-    }
-
-    /**
-     * Gets the stylesheet for the nightmode.
-     */
-
-    public void nightmode() {
-        if (scene == mainmenuScene) {
-            mainmenuScene.getStylesheets().add("NightMode_css.css");
-
-        } else if (scene == foodScene) {
-            foodScene.getStylesheets().add("NightMode_css.css");
-
-        } else if (scene == homeScene) {
-            homeScene.getStylesheets().add("NightMode_css.css");
-
-        } else if (scene == transportScene) {
-            transportScene.getStylesheets().add("NightMode_css.css");
-        } else if (scene == statsScene) {
-            statsScene.getStylesheets().add("NightMode_css.css");
-        }
     }
 
     /**
