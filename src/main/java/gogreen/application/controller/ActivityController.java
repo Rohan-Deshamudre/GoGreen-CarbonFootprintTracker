@@ -433,20 +433,3 @@ public class ActivityController {
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}

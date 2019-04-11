@@ -46,10 +46,10 @@ public class CO2 {
     public CO2(String cusername, int co2Food, int co2Transport, int co2Energy, int co2Reduc,
                String achievement) {
         this.cusername = cusername;
-        this.CO2food = co2Food;
-        this.CO2transport = co2Transport;
-        this.CO2energy = co2Energy;
-        this.CO2reduc = co2Reduc;
+        this.co2food = co2Food;
+        this.co2transport = co2Transport;
+        this.co2energy = co2Energy;
+        this.co2reduc = co2Reduc;
         this.achievement = achievement;
     }
 
@@ -58,7 +58,7 @@ public class CO2 {
         return String.format(
             "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
                 + "Co2Energy='%s', Co2Reduction='%d', achievement='%s']",
-            cusername, CO2food, CO2transport, CO2energy, CO2reduc, achievement);
+            cusername, co2food, co2transport, co2energy, co2reduc, achievement);
     }
 
     public String getCUsername() {
