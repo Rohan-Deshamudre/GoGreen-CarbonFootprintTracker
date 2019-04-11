@@ -80,7 +80,7 @@ public class Achievement {
             case 6:
                 return "Add 10 Friends";
             case 7:
-                return "Unfriend somebody";
+                return "Decline a Friend Request";
             case 8:
                 return "Eat your first Vegetarian Meal";
             case 9:
