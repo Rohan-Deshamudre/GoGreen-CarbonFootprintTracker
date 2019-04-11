@@ -1,19 +1,26 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.*;
-import gogreen.application.communication.AddTransportRequest.TravelType;
+import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddSolarPanelRequest;
+import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddFriendRequest;
+import gogreen.application.communication.AddLocalProduceRequest;
+import gogreen.application.communication.ClientMessage;
+import gogreen.application.communication.ChangeAchievements;
+import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.FriendRequestResponse;
+import gogreen.application.communication.LoginData;
+import gogreen.application.model.CO2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
-import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URISyntaxException;
 
 public class ClientApplication {
 
-//    private static final String URL = "https://gogreen32.herokuapp.com/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
     private static final String URL = "http://localhost:8080/";
 
     private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
@@ -27,8 +34,7 @@ public class ClientApplication {
      * @return the text response from the server.
      */
     public static String getRequestHeroku() {
-        String quote = restTemplate.getForObject(URL, String.class);
-        return quote;
+        return restTemplate.getForObject(URL, String.class);
     }
 
     /**
@@ -36,7 +42,7 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @returns - true iff login is successful.
+     * @return - true iff login is successful.
      */
     public static boolean sendLoginRequest(String username, String password) {
         LoginData curLoginData = new LoginData(username, password);
@@ -116,7 +122,23 @@ public class ClientApplication {
         return res.getBody();
     }
 
+    /**
+     * Changes the achievements of a user.
+     * @param achievements the achievements.
+     * @return method success.
+     * @throws RestClientException can throw exception.
+     */
+    public static boolean changeAchievements(String achievements)
+            throws RestClientException {
 
+        ChangeAchievements req = new ChangeAchievements(loginData, achievements);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "changeachievements", req, Boolean.class);
+
+        System.out.println(res);
+
+        return res.getBody();
+    }
 
     /**
      * This method sends a POST request to the server with the login information. Request adding a
@@ -128,7 +150,26 @@ public class ClientApplication {
         throws RestClientException {
         AddFriendRequest req = new AddFriendRequest(loginData, username);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend",
+                req, Boolean.class);
+        System.out.println(res);
+
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request removing a friend
+     *
+     * @return - returns true if method was successful.
+     */
+    public static boolean sendRemoveFriendRequest(String friend)
+            throws RestClientException {
+
+        AddFriendRequest req = new AddFriendRequest(loginData, friend);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "removefriend",
+                req, Boolean.class);
         System.out.println(res);
 
         return res.getBody();
@@ -138,12 +179,13 @@ public class ClientApplication {
      * Requests all your friend requests.
      *
      * @return Leaderboard with the users that sent you friend requests.
-     * @throws URISyntaxException - can throw exception.
+     * @throws RestClientException - can throw exception.
      */
     public static Leaderboard getFriendRequests()
         throws RestClientException {
 
-        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests", loginData, Leaderboard.class);
+        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests",
+                loginData, Leaderboard.class);
 
         System.out.println(res);
 
@@ -155,14 +197,15 @@ public class ClientApplication {
      * friend.
      *
      * @return - returns true if method was successful.
-     * @throws URISyntaxException - can throw exception.
+     * @throws RestClientException - can throw exception.
      */
     public static boolean respondToFriendRequest(String username, boolean success)
         throws RestClientException {
 
         FriendRequestResponse req = new FriendRequestResponse(loginData, username, success);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest",
+                req, Boolean.class);
 
         System.out.println(res);
 
@@ -203,7 +246,6 @@ public class ClientApplication {
         return sendActivityAddRequest("activity/food/add", req);
     }
 
-
     /**
      * This method sends a post request to the server with data provided by the user about the local
      * produce they bought.
@@ -228,7 +270,7 @@ public class ClientApplication {
      * @return CO2Response - response object containing data returned by server.
      * @throws RestClientException - on request unsuccessful.
      */
-    public static CO2Response sendAddTransportRequest(TravelType travelType, int distance)
+    public static CO2Response sendAddTransportRequest(AddTransportRequest.TravelType travelType, int distance)
         throws RestClientException {
         AddTransportRequest req = new AddTransportRequest(loginData, travelType, distance);
         return sendActivityAddRequest("activity/transport/add", req);
@@ -264,22 +306,4 @@ public class ClientApplication {
         return sendActivityAddRequest("activity/solarpanel/add", req);
     }
 
-    /**
-     * Changes the achievements of a user.
-     * @param username the username.
-     * @param achievements the achievements.
-     * @return method success.
-     * @throws RestClientException can throw exception.
-     */
-    public static boolean changeAchievements(String username, String achievements)
-            throws RestClientException {
-
-        ChangeAchievements req = new ChangeAchievements(loginData, achievements);
-
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "changeachievements", req, Boolean.class);
-
-        System.out.println(res);
-
-        return res.getBody();
-    }
 }

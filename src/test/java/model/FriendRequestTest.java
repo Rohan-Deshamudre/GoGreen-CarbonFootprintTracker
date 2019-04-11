@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class FriendRequestTest {
 
     @Test
-    public void FriendRequestConstructorTest() {
+    public void friendRequestConstructorTest() {
         FriendRequest request = new FriendRequest(1, "username", "username1");
         assertEquals(request.getId(), 1);
         assertTrue(request.getUsername().equals("username"));
@@ -19,7 +19,8 @@ public class FriendRequestTest {
     @Test
     public void toStringTest() {
         FriendRequest request = new FriendRequest(1, "username", "username1");
-        assertTrue(request.toString().equals("FriendRequest[id='1', username='username', requestTo='username1']"));
+        assertTrue(request.toString()
+                .equals("FriendRequest[id='1', username='username', requestTo='username1']"));
     }
 
     @Test

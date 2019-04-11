@@ -57,7 +57,7 @@ public class CarbonUtil {
             case PUB_TRANSPORT:
                 return distance * 2;
             default:
-                return 0;
+                return -1;
         }
     }
 
