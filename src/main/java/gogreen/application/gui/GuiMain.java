@@ -406,6 +406,8 @@ public class GuiMain extends Application {
                     user = ClientApplication.sendGetUserStatsRequest();
                 } catch (RestClientException f) {
                     f.printStackTrace();
+                    AlertBox.display("Something went wrong with the"
+                            + "achievement!", "Achievement");
                 }
 
                 Achievement.changeAchievements(user, 7);
