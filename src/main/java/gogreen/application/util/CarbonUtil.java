@@ -50,7 +50,7 @@ public class CarbonUtil {
                     return 1350;
             }
         }
-        return -1;
+        return 0;
     }
 
     /**
