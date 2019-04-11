@@ -37,8 +37,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.springframework.web.client.RestClientException;
 
-import java.net.URISyntaxException;
-
 import java.util.ArrayList;
 
 public class GuiMain extends Application {
@@ -1095,7 +1093,8 @@ public class GuiMain extends Application {
                 co2Response = ClientApplication.sendAddFoodRequest("Vegan Meal", int4);
             }
 
-            AlertBox.display("By choosing to have a Vegetarian Meal instead of a Meat meal, you reduced CO2 by: "
+            AlertBox.display("By choosing to have a Vegetarian Meal instead of a Meat meal,"
+                    + " you reduced CO2 by: "
                     + co2Response.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
@@ -1112,7 +1111,8 @@ public class GuiMain extends Application {
     public void localProduceAction(int weight, boolean organic) {
         try {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
-            AlertBox.display("By choosing to buy from a Local Store reduced CO2 by: " + res.getCO2Reduction() + " grams. Good job!");
+            AlertBox.display("By choosing to buy from a Local Store reduced CO2 by: "
+                    + res.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
         }
@@ -1127,7 +1127,8 @@ public class GuiMain extends Application {
     public void transportAddButtonAction(TravelType travelType, int distance) {
         try {
             CO2Response res = ClientApplication.sendAddTransportRequest(travelType, distance);
-            AlertBox.display("By choosing to travel by: "+ travelType +" you reduced CO2 by " + res.getCO2Reduction() + " grams. Good job!");
+            AlertBox.display("By choosing to travel by: " + travelType + " you reduced CO2 by "
+                    + res.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }
@@ -1143,7 +1144,8 @@ public class GuiMain extends Application {
     public void homeTempAddButtonAction(int temperature, int duration) {
         try {
             CO2Response res = ClientApplication.sendAddHomeTempRequest(temperature, duration);
-            AlertBox.display("By reducing the temperature you reduced CO2 by: " + res.getCO2Reduction() + " grams. Good job!");
+            AlertBox.display("By reducing the temperature you reduced CO2 by: "
+                    + res.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }
@@ -1159,7 +1161,8 @@ public class GuiMain extends Application {
     public void solarPanelAction(int area, int hoursSunlight) {
         try {
             CO2Response res = ClientApplication.sendAddSolarPanelRequest(area, hoursSunlight);
-            AlertBox.display("Your Solar Panel has reduced CO2 by: " + res.getCO2Reduction() + "grams. Good job!");
+            AlertBox.display("Your Solar Panel has reduced CO2 by: "
+                    + res.getCO2Reduction() + "grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }

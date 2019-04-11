@@ -21,6 +21,8 @@ public class CarbonUtil {
                     return 500;
                 case 3:
                     return 700;
+                default:
+                    return 0;
             }
         } else if (checkBoxValue.equalsIgnoreCase("Vegetarian Meat")) {
             switch (amount) {
@@ -30,6 +32,8 @@ public class CarbonUtil {
                     return 980;
                 case 3:
                     return 1220;
+                default:
+                    return 0;
             }
         } else if (checkBoxValue.equalsIgnoreCase("Fruit")) {
             switch (amount) {
@@ -39,6 +43,8 @@ public class CarbonUtil {
                     return 210;
                 case 3:
                     return 280;
+                default:
+                    return 0;
             }
         } else if (checkBoxValue.equalsIgnoreCase("Vegan Meal")) {
             switch (amount) {
@@ -48,6 +54,8 @@ public class CarbonUtil {
                     return 1150;
                 case 3:
                     return 1350;
+                default:
+                    return 0;
             }
         }
         return 0;
@@ -80,10 +88,10 @@ public class CarbonUtil {
         switch (travelType) {
             case BIKE:
                 //284-16 is the difference between using a bike and a car
-                return distance * (284-16);
+                return distance * (284 - 16);
             case PUB_TRANSPORT:
                 //idem
-                return distance * (284-101);
+                return distance * (284 - 101);
             default:
                 return -1;
         }
@@ -100,7 +108,7 @@ public class CarbonUtil {
     public static int getHomeTempCarbonReduction(int temp, int duration) {
         // 270g of CO2 saved per hour of heating turned off.
         //Per degree reduced on average 40g is reduced.
-        return (int) duration * (40*temp);
+        return (int) duration * (40 * temp);
     }
 
     /**
@@ -112,6 +120,6 @@ public class CarbonUtil {
      */
     public static int getSolarPanelCarbonReduction(int area, int hoursSunlight) {
         //Each meter squared of solar panel saves 19.4g of CO2 per hour
-        return (int) (19.4*area*hoursSunlight);
+        return (int) (19.4 * area * hoursSunlight);
     }
 }

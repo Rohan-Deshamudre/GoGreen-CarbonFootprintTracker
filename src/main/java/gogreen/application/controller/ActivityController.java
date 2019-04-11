@@ -72,7 +72,8 @@ public class ActivityController {
 
         // Update user's carbon food footprint reduction
         CO2 userCO2 = co2Repository.findByCusername(req.getLoginData().getUsername()).get(0);
-        int carbonReducFood = CarbonUtil.getFoodCarbonReduction(req.getChoiceBoxValue(), req.getAmount());
+        int carbonReducFood = CarbonUtil.getFoodCarbonReduction(
+                req.getChoiceBoxValue(), req.getAmount());
         userCO2.addCO2Food(carbonReducFood);
         userCO2.addCO2Reduc(carbonReducFood);
         co2Repository.save(userCO2);
