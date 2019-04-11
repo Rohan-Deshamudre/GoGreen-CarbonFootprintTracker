@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,10 @@ public class LoginController {
 
     @Autowired
     private CO2Repository co2Repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     /**
      * Adds a page /login which handles responding to login requests.
@@ -62,7 +67,8 @@ public class LoginController {
         }
 
         // Register new account
-        userRepository.save(new User(cred.getUsername(), cred.getPassword()));
+        String encryptedPassword = passwordEncoder.encode(cred.getPassword());
+        userRepository.save(new User(cred.getUsername(),encryptedPassword));
         co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0));
 
         return new ResponseEntity(HttpStatus.CREATED);
@@ -75,11 +81,11 @@ public class LoginController {
      * @param userRepository - the repository storing users to check.
      * @return - true iff login is successful.
      */
-    public static boolean checkLoginData(LoginData loginData, UserRepository userRepository) {
+    public boolean checkLoginData(LoginData loginData, UserRepository userRepository) {
         List<User> userDb = userRepository.findByUsername(loginData.getUsername());
 
         for (User user : userDb) {
-            if (loginData.getPassword().equals(user.getPassword())) {
+            if (passwordEncoder.matches(loginData.getPassword(), user.getPassword())) {
                 return true;
             }
         }

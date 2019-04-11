@@ -57,7 +57,7 @@ dependencies {
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 
-    //compile("org.springframework.boot:spring-boot-starter-security")
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.1.4.RELEASE'
 
 }
 
