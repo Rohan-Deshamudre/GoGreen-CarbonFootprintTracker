@@ -2,6 +2,7 @@ package gogreen.application.model;
 
 import gogreen.application.client.ClientApplication;
 import gogreen.application.gui.AlertBox;
+import gogreen.application.gui.GuiMain;
 
 public class Achievement {
 
@@ -27,6 +28,7 @@ public class Achievement {
         AlertBox.display(getName(i+1) + "\n\n" + getDescription(i + 1)
                 , "New Achievement!");
 
+        GuiMain.setAchievements(newAchievements);
         ClientApplication.changeAchievements(user.getCUsername(), newAchievements);
     }
 

@@ -49,6 +49,7 @@ public class GuiMain extends Application {
     private Scene loginScene;
     private int screenWidth;
     private int screenHeight;
+    private static String achievements;
 
     /**
      * Main method of the class, launches the application.
@@ -288,24 +289,25 @@ public class GuiMain extends Application {
         } catch (RestClientException e) {
             e.printStackTrace();
         }
+        achievements = user.getAchievement();
 
         leaderboard.getUsers().add(user);
         leaderboard.sortLeaderboard();
 
         // Check for getting to top of the leaderboard achievement.
-        if (user.getAchievement().charAt(1) == '0') {
+        if (achievements.charAt(1) == '0') {
             if (leaderboard.getUsers().get(0) == user) {
                 Achievement.changeAchievements(user, 1);
             }
         }
         // Check for 1,000 points achievement
-        if (user.getAchievement().charAt(2) == '0') {
+        if (achievements.charAt(2) == '0') {
             if (user.getCO2reduc() >= 1000) {
                 Achievement.changeAchievements(user, 2);
             }
         }
         // Check for 10,000 points achievement
-        if (user.getAchievement().charAt(3) == '0') {
+        if (achievements.charAt(3) == '0') {
             if (user.getCO2reduc() >= 10000) {
                 Achievement.changeAchievements(user, 3);
             }
@@ -397,11 +399,23 @@ public class GuiMain extends Application {
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
-        addButton.setOnAction(e -> foodAddButtonAction(
+        addButton.setOnAction(e ->
+        {
+                if (achievements.charAt(7) == '0') {
+                    CO2 user = null;
+                    try {
+                        user = ClientApplication.sendGetUserStatsRequest();
+                    } catch (RestClientException f) {
+                        f.printStackTrace();
+                    }
+                    Achievement.changeAchievements(user, 7);
+                }
+                foodAddButtonAction(
             sizeSlider1.getValue(),
             sizeSlider2.getValue(),
             sizeSlider3.getValue(),
-            sizeSlider4.getValue()));
+            sizeSlider4.getValue());
+        });
 
         GridPane centerGrid = new GridPane();
         centerGrid.setAlignment(Pos.CENTER);
@@ -461,6 +475,24 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
+            if (achievements.charAt(8) == '0') {
+                CO2 user = null;
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
+                }
+                Achievement.changeAchievements(user, 8);
+            }
+            if (achievements.charAt(9) == '0' && checkBox.isSelected()) {
+                CO2 user = null;
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
+                }
+                Achievement.changeAchievements(user, 9);
+            }
             localProduceAction(Integer.parseInt(weightField.getText()), checkBox.isSelected());
             weightField.setText("");
             checkBox.setSelected(false);
@@ -556,6 +588,15 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
+            if (achievements.charAt(12) == '0') {
+                CO2 user = null;
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
+                }
+                Achievement.changeAchievements(user, 12);
+            }
             transportAddButtonAction(TravelType.BIKE, Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
         });
@@ -601,6 +642,15 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
+            if (achievements.charAt(13) == '0') {
+                CO2 user = null;
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
+                }
+                Achievement.changeAchievements(user, 13);
+            }
             transportAddButtonAction(TravelType.PUB_TRANSPORT,
                 Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
@@ -698,6 +748,15 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
+            if (achievements.charAt(10) == '0') {
+                CO2 user = null;
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
+                }
+                Achievement.changeAchievements(user, 10);
+            }
             homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
                 Integer.parseInt(durationField.getText()));
             temperatureField.setText("");
@@ -752,6 +811,15 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
+            if (achievements.charAt(11) == '0') {
+                CO2 user = null;
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
+                }
+                Achievement.changeAchievements(user, 11);
+            }
             solarPanelAction(Integer.parseInt(areaField.getText()),
                 Integer.parseInt(hoursSunlightField.getText()));
             areaField.setText("");
@@ -1499,6 +1567,14 @@ public class GuiMain extends Application {
         window.show();
     }
 
+    /**
+     * Tile for the achievement page.
+     * @param user the user.
+     * @param id achievement id.
+     * @param grid the grid on the page.
+     * @param x x coordinate on the grid.
+     * @param y y coordinate on the grid.
+     */
     private void achievementTile(CO2 user, int id, GridPane grid, int x, int y) {
         Label name = new Label(Achievement.getName(id));
         name.setPrefWidth(100);
@@ -1515,6 +1591,22 @@ public class GuiMain extends Application {
 
         grid.add(name, x, y);
         grid.add(description, x , y+1);
+    }
+
+    /**
+     * Getter for achievements.
+     * @return achievements.
+     */
+    public static String getAchievements() {
+        return achievements;
+    }
+
+    /**
+     * Setter for achievements.
+     * * @param achievements the achievements.
+     */
+    public static void setAchievements(String achievements) {
+        achievements = achievements;
     }
 
     /**
