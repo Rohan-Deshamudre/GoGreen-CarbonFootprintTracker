@@ -1208,6 +1208,8 @@ public class GuiMain extends Application {
         } else if (ClientApplication.sendRegisterRequest(username, password)) {
             AlertBox.display("Successfully registered.", "Success");
             showMainMenu();
+        } else if (username.equals("") || password.equals("") || passwordConfirm.equals("")) {
+            AlertBox.display("One or multiple fields have not been filled in!", "Empty field(s)");
         } else {
             AlertBox.display("Username already taken!", "Something went wrong");
         }
@@ -1515,12 +1517,18 @@ public class GuiMain extends Application {
                             + friendUsername + " as your friend?");
             if (answer) {
                 try {
-                    ClientApplication.sendRemoveFriendRequest(friendUsername);
-                    userPage();
+                    boolean check = ClientApplication.sendRemoveFriendRequest(friendUsername);
+                    if (check) {
+                        ConfirmBox.display("Remove friend", "Your friend has been removed");
+                    } else {
+                        ConfirmBox.display("Remove friend went wrong",
+                                "This person is not in your friend list");
+                    }
                 } catch (RestClientException e1) {
                     e1.printStackTrace();
                 }
             }
+            userPage();
         });
 
         Label friendLabel = new Label("Friends: ");
