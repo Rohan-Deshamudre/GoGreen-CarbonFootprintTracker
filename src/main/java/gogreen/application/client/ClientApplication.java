@@ -9,16 +9,14 @@ import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
 import gogreen.application.communication.ClientMessage;
+import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
+import gogreen.application.model.CO2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
-import gogreen.application.communication.FriendRequestResponse;
-import gogreen.application.model.CO2;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URISyntaxException;
 
 public class ClientApplication {
 
@@ -36,8 +34,7 @@ public class ClientApplication {
      * @return the text response from the server.
      */
     public static String getRequestHeroku() {
-        String quote = restTemplate.getForObject(URL, String.class);
-        return quote;
+        return restTemplate.getForObject(URL, String.class);
     }
 
     /**
@@ -45,7 +42,7 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @returns - true iff login is successful.
+     * @return - true iff login is successful.
      */
     public static boolean sendLoginRequest(String username, String password) {
         LoginData curLoginData = new LoginData(username, password);
@@ -135,7 +132,26 @@ public class ClientApplication {
         throws RestClientException {
         AddFriendRequest req = new AddFriendRequest(loginData, username);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "addfriend",
+                req, Boolean.class);
+        System.out.println(res);
+
+        return res.getBody();
+    }
+
+    /**
+     * This method sends a POST request to the server with the login information.
+     * Request removing a friend
+     *
+     * @return - returns true if method was successful.
+     */
+    public static boolean sendRemoveFriendRequest(String friend)
+            throws RestClientException {
+
+        AddFriendRequest req = new AddFriendRequest(loginData, friend);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "removefriend",
+                req, Boolean.class);
         System.out.println(res);
 
         return res.getBody();
@@ -145,12 +161,13 @@ public class ClientApplication {
      * Requests all your friend requests.
      *
      * @return Leaderboard with the users that sent you friend requests.
-     * @throws URISyntaxException - can throw exception.
+     * @throws RestClientException - can throw exception.
      */
     public static Leaderboard getFriendRequests()
         throws RestClientException {
 
-        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests", loginData, Leaderboard.class);
+        ResponseEntity<Leaderboard> res = restTemplate.postForEntity(URL + "seefriendrequests",
+                loginData, Leaderboard.class);
 
         System.out.println(res);
 
@@ -162,14 +179,15 @@ public class ClientApplication {
      * friend.
      *
      * @return - returns true if method was successful.
-     * @throws URISyntaxException - can throw exception.
+     * @throws RestClientException - can throw exception.
      */
     public static boolean respondToFriendRequest(String username, boolean success)
         throws RestClientException {
 
         FriendRequestResponse req = new FriendRequestResponse(loginData, username, success);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "respondtofriendrequest",
+                req, Boolean.class);
 
         System.out.println(res);
 

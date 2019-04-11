@@ -2,13 +2,19 @@ package gogreen.application.controller;
 
 import static gogreen.application.controller.LoginController.checkLoginData;
 
-import gogreen.application.communication.*;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddFoodRequest;
+import gogreen.application.communication.AddFriendRequest;
+import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddLocalProduceRequest;
+import gogreen.application.communication.AddSolarPanelRequest;
+import gogreen.application.communication.AddTransportRequest;
+import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.FriendRequestResponse;
+import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.Friend;
 import gogreen.application.model.FriendRequest;
-import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
@@ -20,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,10 +54,9 @@ public class ActivityController {
 
     /**
      * Handle add food requests.
-     *
      * @param req - addFoodRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     * CO2Response describing the amount the user's CO2 has been reduced.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid.
+     *          Else returns a CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/food/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -80,8 +84,8 @@ public class ActivityController {
      * Handle add local produce requests.
      *
      * @param req - addLocalProduceRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     * CO2Response describing the amount the user's CO2 has been reduced.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid.
+     *          Else returns a CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/localproduce/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -110,8 +114,8 @@ public class ActivityController {
      * Handle add food requests.
      *
      * @param req - addFoodRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     * CO2Response describing the amount the user's CO2 has been reduced.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid.
+     *          Else returns a CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/transport/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -140,8 +144,8 @@ public class ActivityController {
      * Handle add home temperature requests.
      *
      * @param req - addHomeTempRequest containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     * CO2Response describing the amount the user's CO2 has been reduced.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid.
+     *          Else returns a CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/hometemp/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -170,8 +174,8 @@ public class ActivityController {
      * Handle add solar panel requests.
      *
      * @param req - add containing the data for the request.
-     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid. Else returns a
-     * CO2Response describing the amount the user's CO2 has been reduced.
+     * @return returns 'HTTP 401 Unauthorized' if the supplied login data is invalid.
+     *          Else returns a CO2Response describing the amount the user's CO2 has been reduced.
      */
     @PostMapping(value = "/activity/solarpanel/add",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -212,9 +216,7 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String username = req.getUsername();
-        List<Friend> all = friendRepository.findByFusername(username);
-        System.out.println(all);
+        List<Friend> all = friendRepository.findByFusername(req.getUsername());
         ArrayList<CO2> friends = new ArrayList<>();
 
         for (Friend friend : all) {
@@ -228,10 +230,10 @@ public class ActivityController {
 
 
     /**
-     * Makes a list of friends.
+     * Get user stats
      *
      * @param req the LoginRequest.
-     * @return all the friends of that user.
+     * @return The user object
      */
     @PostMapping(value = "/user",
         consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -251,7 +253,7 @@ public class ActivityController {
 
 
     /**
-     * Makes a list of friends.
+     * Add friend request
      *
      * @param req the LoginRequest.
      * @return is method successful.
@@ -264,15 +266,30 @@ public class ActivityController {
 
         if (!checkLoginData(req.getLoginData(), userRepository)) {
             // session invalid
+
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
-        if (exist != null) {
-            FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
-                req.getFriendUsername());
-            friendRequestRepository.save(newRequest);
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        List<Friend> check1 = friendRepository.findByFusernameAndFriend(req
+                .getLoginData().getUsername(), req.getFriendUsername());
+
+        List<FriendRequest>  check2 = friendRequestRepository
+                .findByUsernameAndRequestTo(req.getLoginData()
+                .getUsername(), req.getFriendUsername());
+
+        if (check1.isEmpty() && check2.isEmpty() && !req.getLoginData()
+                .getUsername().equals(req.getFriendUsername()
+        )) {
+
+            List<CO2> exist = co2Repository.findByCusername(req
+                    .getFriendUsername());
+            if (exist != null) {
+                FriendRequest newRequest = new FriendRequest(0,
+                        req.getLoginData().getUsername(),
+                        req.getFriendUsername());
+                friendRequestRepository.save(newRequest);
+                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 
@@ -329,7 +346,10 @@ public class ActivityController {
         if (req.isAccepted()) {
             Friend newFriend = new Friend(0, req.getLoginData().getUsername(),
                 req.getFriendUsername());
+            Friend newFriend1 = new Friend(0, req.getFriendUsername(),
+                    req.getLoginData().getUsername());
             friendRepository.save(newFriend);
+            friendRepository.save(newFriend1);
 
             List<FriendRequest> old = friendRequestRepository
                 .findByUsernameAndRequestTo(req.getFriendUsername(),
@@ -346,4 +366,56 @@ public class ActivityController {
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 
     }
+
+    /**
+     * Handles the request to remove a friend
+     *
+     * @param req the AddFriendRequest.
+     * @return if method was successful.
+     */
+    @PostMapping(value = "/removefriend",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Boolean> removeFriendRequest(@RequestBody AddFriendRequest req) {
+
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<Friend> friend = friendRepository
+                .findByFusernameAndFriend(req.getLoginData()
+                .getUsername(), req.getFriendUsername());
+
+        if (!friend.isEmpty()) {
+
+            List<Friend> friendInverse = friendRepository
+                    .findByFusernameAndFriend(req.getFriendUsername(),
+                    req.getLoginData().getUsername());
+
+            System.out.println("removing: " + friend.get(0));
+            friendRepository.delete(friend.get(0));
+            friendRepository.delete(friendInverse.get(0));
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

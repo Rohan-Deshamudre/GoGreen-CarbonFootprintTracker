@@ -4,7 +4,8 @@ public class AddTransportRequest extends ClientMessage {
 
     public enum TravelType {
         BIKE,
-        PUB_TRANSPORT
+        PUB_TRANSPORT,
+        DEFAULT
     }
 
     private TravelType travelType;

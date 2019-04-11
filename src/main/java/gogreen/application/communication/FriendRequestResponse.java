@@ -17,6 +17,10 @@ public class FriendRequestResponse extends ClientMessage {
         this.accepted = accepted;
     }
 
+    public FriendRequestResponse() {
+
+    }
+
     /**
      * Getter of friendUsername.
      * @return friendUsername.

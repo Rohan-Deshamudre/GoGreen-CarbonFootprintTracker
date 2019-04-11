@@ -1,3 +1,7 @@
+.root{
+    -fx-background-color: white;
+}
+
 #label1{
     -fx-font-size: 20px;
     -fx-font-family: 'Helvetica', sans-serif;

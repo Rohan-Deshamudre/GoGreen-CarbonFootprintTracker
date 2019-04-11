@@ -25,8 +25,12 @@ public class CarbonUtilTest {
 
     @Test
     public void getTransportCarbonReductionTest() {
-        assertEquals(CarbonUtil.getTransportCarbonReduction(AddTransportRequest.TravelType.BIKE, 10), 50);
-        assertEquals(CarbonUtil.getTransportCarbonReduction(AddTransportRequest.TravelType.PUB_TRANSPORT, 10), 20);
+        assertEquals(CarbonUtil.getTransportCarbonReduction(AddTransportRequest
+                .TravelType.BIKE, 10), 50);
+        assertEquals(CarbonUtil.getTransportCarbonReduction(AddTransportRequest
+                .TravelType.PUB_TRANSPORT, 10), 20);
+        assertEquals(CarbonUtil.getTransportCarbonReduction(AddTransportRequest
+                .TravelType.DEFAULT, 42), -1);
     }
 
     @Test

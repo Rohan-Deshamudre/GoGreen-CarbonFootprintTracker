@@ -40,7 +40,6 @@ import org.springframework.web.client.RestClientException;
 
 import java.util.ArrayList;
 
-
 public class GuiMain extends Application {
 
     private Stage window;
@@ -54,7 +53,7 @@ public class GuiMain extends Application {
     private int screenHeight;
     private CheckMenuItem nightmode;
     private boolean nightmodeon = false;
-    private Object Scene;
+    private Object scene;
 
     /**
      * Main method of the class, launches the application.
@@ -92,7 +91,8 @@ public class GuiMain extends Application {
         // layout
         VBox vert = new VBox();
         vert.setAlignment(Pos.CENTER);
-        vert.setPadding(new Insets(0, 0, 75, 0));
+        vert.setSpacing(10);
+        vert.setPadding(new Insets(0, 0, 20, 0));
 
         // Logo
         Group topGroup = new Group();
@@ -1480,7 +1480,6 @@ public class GuiMain extends Application {
         addFriendButton.setOnAction(e -> {
             String friendUsername = addFriendField.getText();
             addFriendField.setText("");
-            System.out.println(friendUsername);
             try {
                 ClientApplication.sendAddFriendRequest(friendUsername);
             } catch (RestClientException e1) {
@@ -1488,13 +1487,41 @@ public class GuiMain extends Application {
             }
         });
 
+        TextField removeFriendField = new TextField();
+        Button removeFriendButton = new Button("Remove");
+        removeFriendButton.setId("buttonfriend");
+
+        removeFriendButton.setOnAction(e -> {
+            String friendUsername = removeFriendField.getText();
+            removeFriendField.setText("");
+            Boolean answer = ConfirmBox.display("Remove Friend",
+                    "Are you sure you want to remove "
+                            + friendUsername + " as your friend?");
+            if (answer) {
+                try {
+                    ClientApplication.sendRemoveFriendRequest(friendUsername);
+                } catch (RestClientException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        Label removeFriendLabel = new Label("\nRemove friend: ");
+        removeFriendLabel.setId("labelfriend");
+
         HBox addFriendBox = new HBox();
         addFriendBox.setSpacing(10);
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
+        HBox removeFriendBox = new HBox();
+        removeFriendBox.setSpacing(10);
+        removeFriendBox.getChildren().addAll(removeFriendField, removeFriendButton);
+
         Label friendLabel = new Label("Friends: ");
+        friendLabel.setId("labelfriend");
         VBox total = new VBox();
-        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
+        total.getChildren().addAll(friendLabel, scrollPane,
+                addFriendLabel, addFriendBox, removeFriendLabel, removeFriendBox);
         return total;
     }
 
@@ -1512,22 +1539,18 @@ public class GuiMain extends Application {
      */
 
     public void nightmode() {
-        if (Scene == mainmenuScene) {
+        if (scene == mainmenuScene) {
             mainmenuScene.getStylesheets().add("NightMode_css.css");
 
-        }
-        else if (Scene == foodScene) {
+        } else if (scene == foodScene) {
             foodScene.getStylesheets().add("NightMode_css.css");
 
-        }
-        else if (Scene == homeScene) {
+        } else if (scene == homeScene) {
             homeScene.getStylesheets().add("NightMode_css.css");
 
-        }
-        else if (Scene == transportScene) {
+        } else if (scene == transportScene) {
             transportScene.getStylesheets().add("NightMode_css.css");
-        }
-        else if (Scene == statsScene) {
+        } else if (scene == statsScene) {
             statsScene.getStylesheets().add("NightMode_css.css");
         }
     }

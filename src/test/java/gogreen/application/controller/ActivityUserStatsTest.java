@@ -2,18 +2,19 @@ package gogreen.application.controller;
 
 import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJsonString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gogreen.application.communication.LoginData;
+import gogreen.application.model.CO2;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.FriendRepository;
 import gogreen.application.repository.FriendRequestRepository;
 import gogreen.application.repository.UserRepository;
-import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ActivityController.class)
@@ -51,7 +56,7 @@ public class ActivityUserStatsTest {
     @MockBean
     private FriendRequestRepository friendRequestRepository;
 
-    private final String URL = "/user";
+    private final String url = "/user";
 
     @BeforeEach
     void init() {
@@ -66,12 +71,12 @@ public class ActivityUserStatsTest {
     @Test
     void unregisteredUser() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-        // invalid username returns an empty list.
+
         when(userRepository.findByUsername(fakeLoginData.getUsername()))
             .thenReturn(new ArrayList<>());
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
@@ -79,20 +84,48 @@ public class ActivityUserStatsTest {
     }
 
     /**
-     * Test correct post request for a user supplying a wrong password. Result to pass: HTTP 401
+     * Test correct post request for a user supplying a wrong password.
+     * Result to pass: HTTP 401
      * Unauthorized
      */
     @Test
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-        // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository);
 
         mockMvc.perform(
-            post(URL)
+            post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(toJsonString(fakeLoginData)))
             .andExpect(status().isUnauthorized())
             .andReturn();
+    }
+
+    @Test
+    void userStatsTest() throws Exception {
+        LoginData fakeLoginData = new LoginData("shdah", "adjasj");
+
+        setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()),
+                userRepository);
+
+        List<CO2> user = new ArrayList<>(1);
+        user.add(new CO2("dummyFriend1", 20, 20, 20, 20));
+
+        when(co2Repository.findByCusername(fakeLoginData.getUsername())).thenReturn(user);
+
+        MvcResult res = mockMvc.perform(
+                post(url)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(fakeLoginData)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn();
+
+        // validate leaderboard response
+        CO2 response = objectMapper
+                .readValue(res.getResponse().getContentAsString(), CO2.class);
+        assertEquals(user.get(0).getCUsername(), response.getCUsername());
     }
 }

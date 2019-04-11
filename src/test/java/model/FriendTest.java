@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class FriendTest {
 
     @Test
-    public void FriendConstructorTest() {
+    public void friendConstructorTest() {
         Friend friend = new Friend(1, "user", "friend");
         assertEquals(friend.getId(), 1);
         assertTrue(friend.getFusername().equals("user"));

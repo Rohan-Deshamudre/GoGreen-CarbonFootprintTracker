@@ -1,3 +1,7 @@
+.root{
+    -fx-background-color: white;
+}
+
 #button1{
     -fx-border-color: #1aee40;
     -fx-background-color: transparent;
