@@ -14,7 +14,7 @@ public class CO2 {
     private String cusername;
 
     @Column(name = "co2food")
-    private int co2food;
+    private int co2Food;
 
     @Column(name = "co2transport")
     private int co2Transport;
@@ -44,7 +44,7 @@ public class CO2 {
     public CO2(String cusername, int co2Food, int co2Transport, int co2Energy, int co2Reduc,
                String achievement) {
         this.cusername = cusername;
-        this.co2food = co2Food;
+        this.co2Food = co2Food;
         this.co2Transport = co2Transport;
         this.co2Energy = co2Energy;
         this.co2Reduc = co2Reduc;
@@ -56,7 +56,7 @@ public class CO2 {
         return String.format(
             "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
                 + "Co2Energy='%s', Co2Reduction='%d', achievement='%s']",
-            cusername, co2food, co2Transport, co2Energy, co2Reduc, achievement);
+            cusername, co2Food, co2Transport, co2Energy, co2Reduc, achievement);
     }
 
     public String getCUsername() {
@@ -68,11 +68,11 @@ public class CO2 {
     }
 
     public int getCO2food() {
-        return co2food;
+        return co2Food;
     }
 
     public void setCO2food(int co2food) {
-        this.co2food = co2food;
+        this.co2Food = co2food;
     }
 
     /**
@@ -81,7 +81,7 @@ public class CO2 {
      * @param co2Food - amount of CO2 to add.
      */
     public void addCO2Food(int co2Food) {
-        this.co2food += co2Food;
+        this.co2Food += co2Food;
     }
 
     public int getCO2transport() {

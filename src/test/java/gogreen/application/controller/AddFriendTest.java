@@ -175,6 +175,7 @@ public class AddFriendTest {
 
         List<CO2> all = new ArrayList<>();
         all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
+
         when(co2Repository.findByCusername("dummyFriend")).thenReturn(all);
 
         List<Friend> friends = new ArrayList<>();
@@ -209,6 +210,7 @@ public class AddFriendTest {
 
         List<CO2> all = new ArrayList<>();
         all.add(new CO2("dummy", 4, 4, 4, 4, "101010"));
+
         when(co2Repository.findByCusername("dummy")).thenReturn(all);
 
         List<Friend> friends = new ArrayList<>();

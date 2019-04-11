@@ -7,6 +7,7 @@ import gogreen.application.gui.GuiMain;
 public class Achievement {
 
     private static String[] achievements = {
+        "easterEgg",
         "November Grain",
         "Beet It",
         "Guys, I'm Super Cereal!",
@@ -23,6 +24,7 @@ public class Achievement {
         "So Long And Thanks For The Fish"
     };
     private static String[] descriptions = {
+        "easterEgg",
         "Switch on Night Mode",
         "Get to number 1 on the Leaderboard",
         "Get 1,000 points",
