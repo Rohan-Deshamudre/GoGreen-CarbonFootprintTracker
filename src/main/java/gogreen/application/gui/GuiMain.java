@@ -1505,6 +1505,8 @@ public class GuiMain extends Application {
             } catch (RestClientException e1) {
                 e1.printStackTrace();
             }
+
+            addFriendField.requestFocus();
         });
 
         TextField removeFriendField = new TextField();
