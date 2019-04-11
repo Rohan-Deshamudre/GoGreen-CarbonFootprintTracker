@@ -51,7 +51,6 @@ public class GuiMain extends Application {
     private Scene statsScene;
     private int screenWidth;
     private int screenHeight;
-    private CheckMenuItem nightmode;
     private boolean nightmodeon;
     private Object scene;
 
@@ -137,7 +136,6 @@ public class GuiMain extends Application {
         });
 
         Button loginButton = new Button();
-        loginButton.setFocusTraversable(false);
         loginButton.setDefaultButton(true);
         loginButton.setId("loginbutton");
         loginButton.setMinSize(100, 50);
@@ -1129,18 +1127,17 @@ public class GuiMain extends Application {
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> logout());
 
-        MenuItem nightMode = new MenuItem("Night mode");
+        String nightText = "Night mode";
+        if (nightmodeon) {
+            nightText = "Day mode";
+        }
+        MenuItem nightMode = new MenuItem(nightText);
         nightMode.setOnAction(e -> {
-            if (nightMode.getText().equals("Night mode")) {
-                nightmodeon = true;
-                nightMode.setText("Day mode");
-            } else {
-                nightmodeon = false;
-                nightMode.setText("Night mode");
-            }
+            nightmodeon = !nightmodeon;
+            showMainMenu();
         });
 
-        settings.getItems().addAll(logout, nightMode);
+        settings.getItems().addAll(nightMode, logout);
 
         MenuBar menuBar = new MenuBar();
         menuBar.setId("menuBar1");
