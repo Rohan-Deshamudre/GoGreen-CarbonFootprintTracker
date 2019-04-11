@@ -326,7 +326,6 @@ public class ClientApplication {
         AlertBox.display(Achievement.getName(id + 1) + "\n\n" +
                         Achievement.getDescription(id + 1), "New Achievement!");
 
-        GuiMain.setAchievements(newAchievements);
         ClientApplication.changeAchievements(newAchievements);
     }
 

@@ -1,6 +1,5 @@
 package gogreen.application.gui;
 
-import ch.qos.logback.core.net.server.Client;
 import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddTransportRequest.TravelType;
@@ -45,7 +44,6 @@ import java.util.ArrayList;
 
 public class GuiMain extends Application {
 
-    private static String achievements;
     private Stage window;
     private Scene loginScene;
     private int screenWidth;
@@ -289,7 +287,6 @@ public class GuiMain extends Application {
         } catch (RestClientException e) {
             e.printStackTrace();
         }
-        achievements = user.getAchievement();
 
         leaderboard.getUsers().add(user);
         leaderboard.sortLeaderboard();
@@ -1555,22 +1552,6 @@ public class GuiMain extends Application {
 
         grid.add(name, x1, y1);
         grid.add(description, x1 , y1 + 1);
-    }
-
-    /**
-     * Getter for achievements.
-     * @return achievements.
-     */
-    public static String getAchievements() {
-        return achievements;
-    }
-
-    /**
-     * Setter for achievements.
-     * * @param achievements the achievements.
-     */
-    public static void setAchievements(String achievements) {
-        achievements = achievements;
     }
 
     /**
