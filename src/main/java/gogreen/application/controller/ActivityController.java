@@ -2,10 +2,19 @@ package gogreen.application.controller;
 
 import static gogreen.application.controller.LoginController.checkLoginData;
 
-import gogreen.application.communication.*;
 import gogreen.application.client.Leaderboard;
+
+
+import gogreen.application.communication.AddHomeTempRequest;
+import gogreen.application.communication.AddSolarPanelRequest;
+import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.AddFoodRequest;
-import gogreen.application.model.Achievement;
+import gogreen.application.communication.AddFriendRequest;
+import gogreen.application.communication.AddLocalProduceRequest;
+import gogreen.application.communication.ChangeAchievements;
+import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.FriendRequestResponse;
+import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
 import gogreen.application.model.Friend;
 import gogreen.application.model.FriendRequest;

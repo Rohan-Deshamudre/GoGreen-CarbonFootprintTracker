@@ -37,19 +37,19 @@ public class CO2 {
      * Makes a CO2 object with the provided parameters.
      *
      * @param cusername    the username of the user.
-     * @param CO2food      the total CO2 reduced by diet.
-     * @param CO2transport the total CO2 reduced by transport.
-     * @param CO2energy    the total CO2 reduced by energy.
-     * @param CO2reduc     the total CO2 reduced by the user.
+     * @param co2Food      the total CO2 reduced by diet.
+     * @param co2Transport the total CO2 reduced by transport.
+     * @param co2Energy    the total CO2 reduced by energy.
+     * @param co2Reduc     the total CO2 reduced by the user.
      * @param achievement  achievements of the user.
      */
-    public CO2(String cusername, int CO2food, int CO2transport, int CO2energy, int CO2reduc,
+    public CO2(String cusername, int co2Food, int co2Transport, int co2Energy, int co2Reduc,
                String achievement) {
         this.cusername = cusername;
-        this.CO2food = CO2food;
-        this.CO2transport = CO2transport;
-        this.CO2energy = CO2energy;
-        this.CO2reduc = CO2reduc;
+        this.CO2food = co2Food;
+        this.CO2transport = co2Transport;
+        this.CO2energy = co2Energy;
+        this.CO2reduc = co2Reduc;
         this.achievement = achievement;
     }
 
