@@ -2,25 +2,27 @@
     -fx-background-color: white;
 }
 
-#button1{
+#buttonop5{
     -fx-border-color: #1aee40;
+    -fx-border-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-size: 20px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
 
-#button2 {
+#buttonop6 {
     -fx-border-color: #1aee40;
+    -fx-border-radius: 5px;
     -fx-font-size: 20px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
 }
-#button1:hover{
+#buttonop5:hover{
     -fx-border-radius: 5px;
     -fx-background-color: #1aee40;
 }
 
-#button2:hover{
+#buttonop6:hover{
     -fx-border-radius: 5px;
     -fx-background-color: #1aee40;
 }
@@ -29,4 +31,25 @@
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#menuBar1{
+    -fx-font-size: 15px;
+    -fx-background-color: #86a986;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.menu-bar{
+    -fx-padding: 0px;
+}
+
+#buttonhome{
+    -fx-font-size: 15px;
+    -fx-border-color: #a9a9a9;
+    -fx-background-color: #e4ffe2;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonhome:hover{
+    -fx-background-color: #1aee40;
 }

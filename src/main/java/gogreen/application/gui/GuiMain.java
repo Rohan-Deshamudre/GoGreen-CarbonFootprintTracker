@@ -52,7 +52,6 @@ public class GuiMain extends Application {
     private int screenWidth;
     private int screenHeight;
     private boolean nightmodeon;
-    private Object scene;
 
     /**
      * Main method of the class, launches the application.
@@ -406,13 +405,13 @@ public class GuiMain extends Application {
         Button option1 = new Button("Ate a vegetarian meal");
         option1.setFocusTraversable(false);
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        option1.setId("button2");
+        option1.setId("buttonop1");
         option1.setOnAction(e -> veggieMealPage());
 
         Button option2 = new Button("Bought from a biological store");
         option2.setFocusTraversable(false);
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
-        option2.setId("button3");
+        option2.setId("buttonop2");
         option2.setOnAction(e -> localStorePage());
 
         buttons.getChildren().addAll(option1, option2);
@@ -638,13 +637,13 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Bike");
         option1.setFocusTraversable(false);
-        option1.setId("button1");
+        option1.setId("buttonop3");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> bikeRidePage());
 
         Button option2 = new Button("Public transport");
         option2.setFocusTraversable(false);
-        option2.setId("button2");
+        option2.setId("buttonop4");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> publicTransportPage());
 
@@ -805,14 +804,14 @@ public class GuiMain extends Application {
 
         Button option1 = new Button("Home Temperature");
         option1.setFocusTraversable(false);
-        option1.setId("button1");
+        option1.setId("buttonop5");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> homeTemperaturePage());
 
         Button option2 = new Button("Solar Panels");
         option2.setFocusTraversable(false);
 
-        option2.setId("button2");
+        option2.setId("buttonop6");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> solarPanelPage());
 
@@ -992,6 +991,7 @@ public class GuiMain extends Application {
         }
         leaderboard.sortLeaderboard();
         VBox allFriends = showFriends(leaderboard.getUsers());
+        allFriends.setId("vboxfriends");
         allFriends.setPadding(new Insets(100, 40, 100, 50));
 
         // Make BorderPane layout
@@ -1141,15 +1141,13 @@ public class GuiMain extends Application {
 
         MenuBar menuBar = new MenuBar();
         menuBar.setId("menuBar1");
-        menuBar.getStylesheets().add("MenuBar_css.css");
         menuBar.getMenus().addAll(settings);
 
         Button homeButton = new Button("Home");
         homeButton.setFocusTraversable(false);
 
-        homeButton.setId("button5");
+        homeButton.setId("buttonhome");
         homeButton.setMinSize(10, 10);
-        homeButton.getStylesheets().add("MainMenu_css.css");
         homeButton.setOnAction(e -> showMainMenu());
         homeButton.setFocusTraversable(false);
 
@@ -1389,7 +1387,6 @@ public class GuiMain extends Application {
         vbox.setId("vBoxleader");
         GridPane nametile = nameTile();
         vbox.getChildren().add(nametile);
-        vbox.getStylesheets().add("Leaderboard_css.css");
         vbox.setPadding(new Insets(10));
 
         for (CO2 user: users) {
@@ -1412,8 +1409,10 @@ public class GuiMain extends Application {
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
+        cusername.setId("labeluser");
         cusername.setPrefWidth(120);
         Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
+        co2reduc.setId("labelco2reduc");
         co2reduc.setPrefWidth(50);
         Button accept = new Button("Accept");
         accept.setId("buttonaccept");
@@ -1499,7 +1498,7 @@ public class GuiMain extends Application {
     public VBox showFriends(ArrayList<CO2> friends) {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setId("friends");
-        scrollPane.getStylesheets().add("Stats_css.css");
+//        scrollPane.getStylesheets().add("Stats_css.css");
 
         VBox leaderboard = leaderboard(friends);
         leaderboard.setPadding(new Insets(10, 20, 10, 20));
