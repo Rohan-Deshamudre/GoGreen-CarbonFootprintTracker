@@ -63,7 +63,8 @@ public class ActivityAddFoodDataTest {
 
     private final LoginData fakeLoginData = new LoginData("Gucci", "Mane");
     private final String fakeCheckBoxValue = "salad";
-    private final int fakeCO2Reduction = CarbonUtil.getFoodCarbonReduction(fakeCheckBoxValue);
+    private final int fakeIntValue = 1;
+    private final int fakeCO2Reduction = CarbonUtil.getFoodCarbonReduction(fakeCheckBoxValue,fakeIntValue);
 
     @BeforeEach
     void init() {
