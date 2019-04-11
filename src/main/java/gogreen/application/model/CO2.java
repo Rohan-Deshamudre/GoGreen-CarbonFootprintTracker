@@ -41,6 +41,7 @@ public class CO2 {
      * @param CO2transport the total CO2 reduced by transport.
      * @param CO2energy    the total CO2 reduced by energy.
      * @param CO2reduc     the total CO2 reduced by the user.
+     * @param achievement  achievements of the user.
      */
     public CO2(String cusername, int CO2food, int CO2transport, int CO2energy, int CO2reduc,
                String achievement) {

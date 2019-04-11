@@ -136,7 +136,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()), userRepository);
 
         List<CO2> all = new ArrayList<>();
-        all.add(new CO2("dummyFriend", 4, 4, 4, 4));
+        all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
         when(co2Repository.findByCusername("dummyFriend")).thenReturn(all);
 
         AddFriendRequest request = new AddFriendRequest(fakeLoginData, "dummyFriend");
