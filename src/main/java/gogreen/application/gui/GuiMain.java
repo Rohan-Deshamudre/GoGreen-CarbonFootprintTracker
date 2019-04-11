@@ -1489,6 +1489,7 @@ public class GuiMain extends Application {
      */
     public VBox showFriends(ArrayList<CO2> friends) {
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefHeight(350);
 
         VBox leaderboard = leaderboard(friends);
         scrollPane.setContent(leaderboard);
