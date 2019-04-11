@@ -119,7 +119,7 @@ public class ActivityAddSolarPanelTest {
     @Test
     void emptyCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0, "101010"), co2Repository);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
             fakeHoursSunlight);
@@ -154,7 +154,7 @@ public class ActivityAddSolarPanelTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164, "101010");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,

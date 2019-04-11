@@ -28,7 +28,7 @@ public class Achievement {
                 "New Achievement!");
 
         GuiMain.setAchievements(newAchievements);
-        ClientApplication.changeAchievements(user.getCUsername(), newAchievements);
+        ClientApplication.changeAchievements(newAchievements);
     }
 
     /**
