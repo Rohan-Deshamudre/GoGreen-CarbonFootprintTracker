@@ -257,6 +257,33 @@ public class ActivityController {
         return new ResponseEntity<>(user.get(0), HttpStatus.OK);
     }
 
+    /**
+     * Handles changing the achievements of a user.
+     *
+     * @param req the ChangeAchievements.
+     * @return if method was successful.
+     */
+    @PostMapping(value = "/changeachievements",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Boolean> changeAchievements(@RequestBody ChangeAchievements req) {
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<CO2> user = co2Repository.findByCusername(req.getLoginData().getUsername());
+        if (!user.isEmpty()) {
+            CO2 update = user.get(0);
+            update.setAchievement(req.getAchievements());
+            co2Repository.save(update);
+
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+    }
 
     /**
      * Add friend request
@@ -356,48 +383,4 @@ public class ActivityController {
 
     }
 
-    /**
-     * Handles changing the achievements of a user.
-     *
-     * @param req the ChangeAchievements.
-     * @return if method was successful.
-     */
-    @PostMapping(value = "/changeachievements",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<Boolean> changeAchievements(@RequestBody ChangeAchievements req) {
-        if (!checkLoginData(req.getLoginData(), userRepository)) {
-            // session invalid
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        List<CO2> user = co2Repository.findByCusername(req.getLoginData().getUsername());
-        if (!user.isEmpty()) {
-            CO2 update = user.get(0);
-            update.setAchievement(req.getAchievements());
-            co2Repository.save(update);
-
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
-    }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
