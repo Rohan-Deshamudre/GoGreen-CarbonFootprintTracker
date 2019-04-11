@@ -331,6 +331,13 @@ public class ClientApplication {
     }
 
     /**
+     * Checks if achievement 0 is received for the user.
+     */
+    public static void checkAchievement0() {
+        // Check for night mode
+    }
+
+    /**
      * Checks if achievement 1 is received for the user.
      * @param user the user.
      */
@@ -379,7 +386,7 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 3 is received for the user.
+     * Checks if achievement 5 is received for the user.
      * @param user the user.
      */
     public static void checkAchievement5(CO2 user, Leaderboard leaderboard) {
@@ -391,7 +398,7 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 3 is received for the user.
+     * Checks if achievement 6 is received for the user.
      */
     public static void checkAchievement6() {
         CO2 self = null;
@@ -468,7 +475,7 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 3 is received for the user.
+     * Checks if achievement 11 is received for the user.
      */
     public static void checkAchievement11() {
             CO2 user = null;
@@ -483,7 +490,7 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 3 is received for the user.
+     * Checks if achievement 12 is received for the user.
      */
     public static void checkAchievement12() {
         CO2 user = null;
@@ -498,7 +505,7 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 3 is received for the user.
+     * Checks if achievement 13 is received for the user.
      */
     public static void checkAchievement13() {
             CO2 user = null;
