@@ -2,10 +2,15 @@ package gogreen.application.model;
 
 public class Badge {
 
+    /**
+     * Badge getter.
+     * @param points amount of points.
+     * @return the url of the badge location.
+     */
     public static String getBadge(int points) {
-       if (points < 100) {
-           return "images/Veggie.png";
-       }
+        if (points < 100) {
+            return "images/Veggie.png";
+        }
         if (points < 400) {
             return "images/Squirrel.png";
         }
@@ -18,9 +23,14 @@ public class Badge {
         if (points < 10000) {
             return "images/MelonHead.png";
         }
-       return "images/WildCabbage.png";
+        return "images/WildCabbage.png";
     }
 
+    /**
+     * Title getter.
+     * @param points the amount of points a user has.
+     * @return the title.
+     */
     public static String getTitle(int points) {
         if (points < 100) {
             return "Veggie";

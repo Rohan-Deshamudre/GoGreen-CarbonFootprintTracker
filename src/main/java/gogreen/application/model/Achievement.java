@@ -15,23 +15,27 @@ public class Achievement {
     /**
      * Marks one achievement for a user as done.
      * @param user the user.
-     * @param i the index of the achievement to be changed.
-     * @return the new achievements String.
+     * @param id the index of the achievement to be changed.
      */
-    public static void changeAchievements(CO2 user, int i) {
+    public static void changeAchievements(CO2 user, int id) {
         String oldAchievements = user.getAchievement();
-        String newAchievements = oldAchievements.substring(0,i)
-                + '1' +oldAchievements.substring(i+1);
+        String newAchievements = oldAchievements.substring(0,id)
+                + '1' + oldAchievements.substring(id + 1);
         System.out.println(newAchievements);
 
         // Show new achievement pop up.
-        AlertBox.display(getName(i+1) + "\n\n" + getDescription(i + 1)
-                , "New Achievement!");
+        AlertBox.display(getName(id + 1) + "\n\n" + getDescription(id + 1),
+                "New Achievement!");
 
         GuiMain.setAchievements(newAchievements);
         ClientApplication.changeAchievements(user.getCUsername(), newAchievements);
     }
 
+    /**
+     * Getter of the name of the achievement.
+     * @param id id.
+     * @return the name of the achievement.
+     */
     public static String getName(int id) {
         switch (id) {
             case 1:
@@ -65,6 +69,11 @@ public class Achievement {
         }
     }
 
+    /**
+     * Getter for the description.
+     * @param id the id.
+     * @return the description.
+     */
     public static String getDescription(int id) {
         switch (id) {
             case 1:
