@@ -6,10 +6,41 @@ import gogreen.application.gui.GuiMain;
 
 public class Achievement {
 
-    private static int totalAchievements = 14;
+    private static String[] achievements = {
+        "November Grain",
+        "Beet It",
+        "Guys, I'm Super Cereal!",
+        "Killing ManBearPig",
+        "Lettuce Start",
+        "Starting The Cornversation",
+        "Don't Leaf Me!",
+        "Taking a Leek",
+        "Bush Did 7-Eleven",
+        "Keeping Up With The Vegetarians",
+        "World Peas",
+        "I Love Fishsticks",
+        "Bean There, Done That",
+        "So Long And Thanks For The Fish"
+    };
+    private static String[] descriptions = {
+        "Switch on Night Mode",
+        "Get to number 1 on the Leaderboard",
+        "Get 1,000 points",
+        "Get 10,000 points",
+        "Add 1 Friend",
+        "Add 10 Friends",
+        "Decline a Friend Request",
+        "Eat your first Vegetarian Meal",
+        "Go to a Local Store",
+        "Eat Organic Food",
+        "Lower your Home Temperature",
+        "Install Solar Panels",
+        "Take a Bike Ride",
+        "Use Public Transport"
+    };
 
     public static int getTotalAchievements() {
-        return totalAchievements;
+        return 14;
     }
 
     /**
@@ -37,36 +68,7 @@ public class Achievement {
      * @return the name of the achievement.
      */
     public static String getName(int id) {
-        switch (id) {
-            case 1:
-                return "November Grain";
-            case 2:
-                return "Beet It";
-            case 3:
-                return "Guys, I'm Super Cereal!";
-            case 4:
-                return "Killing ManBearPig";
-            case 5:
-                return "Lettuce Start";
-            case 6:
-                return "Starting The Cornversation";
-            case 7:
-                return "Don't Leaf Me!";
-            case 8:
-                return "Taking a Leek";
-            case 9:
-                return "Bush Did 7-Eleven";
-            case 10:
-                return "Keeping Up With The Vegetarians";
-            case 11:
-                return "World Peas";
-            case 12:
-                return "I Love Fishsticks";
-            case 13:
-                return "Bean There, Done That";
-            default:
-                return "So Long And Thanks For The Fish";
-        }
+        return achievements[id];
     }
 
     /**
@@ -75,35 +77,6 @@ public class Achievement {
      * @return the description.
      */
     public static String getDescription(int id) {
-        switch (id) {
-            case 1:
-                return "Switch on Night Mode";
-            case 2:
-                return "Get to number 1 on the Leaderboard";
-            case 3:
-                return "Get 1,000 points";
-            case 4:
-                return "Get 10,000 points";
-            case 5:
-                return "Add 1 Friend";
-            case 6:
-                return "Add 10 Friends";
-            case 7:
-                return "Decline a Friend Request";
-            case 8:
-                return "Eat your first Vegetarian Meal";
-            case 9:
-                return "Go to a Local Store";
-            case 10:
-                return "Eat Organic Food";
-            case 11:
-                return "Lower your Home Temperature";
-            case 12:
-                return "Install Solar Panels";
-            case 13:
-                return "Take a Bike Ride";
-            default:
-                return "Use Public Transport";
-        }
+        return descriptions[id];
     }
 }

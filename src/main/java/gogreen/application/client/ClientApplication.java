@@ -1,14 +1,14 @@
 package gogreen.application.client;
 
-import gogreen.application.communication.AddHomeTempRequest;
-import gogreen.application.communication.AddSolarPanelRequest;
-import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddFriendRequest;
+import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddLocalProduceRequest;
-import gogreen.application.communication.ClientMessage;
-import gogreen.application.communication.ChangeAchievements;
+import gogreen.application.communication.AddSolarPanelRequest;
+import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ChangeAchievements;
+import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
@@ -133,7 +133,8 @@ public class ClientApplication {
 
         ChangeAchievements req = new ChangeAchievements(loginData, achievements);
 
-        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "changeachievements", req, Boolean.class);
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "changeachievements",
+                req, Boolean.class);
 
         System.out.println(res);
 
@@ -270,7 +271,8 @@ public class ClientApplication {
      * @return CO2Response - response object containing data returned by server.
      * @throws RestClientException - on request unsuccessful.
      */
-    public static CO2Response sendAddTransportRequest(AddTransportRequest.TravelType travelType, int distance)
+    public static CO2Response sendAddTransportRequest(AddTransportRequest.TravelType travelType,
+                                                      int distance)
         throws RestClientException {
         AddTransportRequest req = new AddTransportRequest(loginData, travelType, distance);
         return sendActivityAddRequest("activity/transport/add", req);

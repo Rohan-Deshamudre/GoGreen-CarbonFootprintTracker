@@ -15,6 +15,12 @@ public class ChangeAchievements extends ClientMessage {
     }
 
     /**
+     * Default constructor.
+     */
+    public ChangeAchievements(){
+    }
+
+    /**
      * Getter of achievements.
      * @return achievements.
      */

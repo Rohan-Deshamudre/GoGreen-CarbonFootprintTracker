@@ -42,15 +42,13 @@ import org.springframework.web.client.RestClientException;
 
 import java.util.ArrayList;
 
-import java.util.ArrayList;
-
 public class GuiMain extends Application {
 
+    private static String achievements;
     private Stage window;
     private Scene loginScene;
     private int screenWidth;
     private int screenHeight;
-    private static String achievements;
 
     /**
      * Main method of the class, launches the application.
@@ -400,22 +398,23 @@ public class GuiMain extends Application {
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
-        addButton.setOnAction(e ->
-        {
-                if (achievements.charAt(7) == '0') {
-                    CO2 user = null;
-                    try {
-                        user = ClientApplication.sendGetUserStatsRequest();
-                    } catch (RestClientException f) {
-                        f.printStackTrace();
-                    }
-                    Achievement.changeAchievements(user, 7);
+        addButton.setOnAction(e -> {
+            if (achievements.charAt(7) == '0') {
+                CO2 user = null;
+
+                try {
+                    user = ClientApplication.sendGetUserStatsRequest();
+                } catch (RestClientException f) {
+                    f.printStackTrace();
                 }
-                foodAddButtonAction(
-            sizeSlider1.getValue(),
-            sizeSlider2.getValue(),
-            sizeSlider3.getValue(),
-            sizeSlider4.getValue());
+
+                Achievement.changeAchievements(user, 7);
+            }
+            foodAddButtonAction(
+                sizeSlider1.getValue(),
+                sizeSlider2.getValue(),
+                sizeSlider3.getValue(),
+                sizeSlider4.getValue());
         });
 
         GridPane centerGrid = new GridPane();
@@ -972,41 +971,40 @@ public class GuiMain extends Application {
         }
 
         Label stats = new Label("Stats");
+        grid.add(stats, 0, 0);
         Label username = new Label("Username:");
+        grid.add(username, 0, 1);
         Label usernameValue = new Label(user.getCUsername());
+        grid.add(usernameValue, 1, 1);
         Label totalCO2 = new Label("Total CO2 reduction:");
+        grid.add(totalCO2, 0, 2);
         Label totalCO2Value = new Label(Integer.toString(user.getCO2reduc()));
+        grid.add(totalCO2Value, 1, 2);
         Label co2food = new Label("CO2 reduction for food:");
+        grid.add(co2food, 0, 3);
         Label co2foodValue = new Label(Integer.toString(user.getCO2food()));
+        grid.add(co2foodValue, 1, 3);
         Label co2transport = new Label("CO2 reduction for transport:");
+        grid.add(co2transport, 0, 4);
         Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
+        grid.add(co2transportValue, 1, 4);
         Label co2energy = new Label("CO2 reduction for energy:");
+        grid.add(co2energy, 0, 5);
         Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+        grid.add(co2energyValue, 1, 5);
         Label badgeLabel = new Label("Badge:");
+        grid.add(badgeLabel, 0, 6);
         String url = Badge.getBadge(user.getCO2reduc());
         ImageView badge = new ImageView(url);
         badge.setFitHeight(20);
         badge.setFitWidth(20);
         HBox badgeInfo = new HBox();
+        grid.add(badgeInfo, 1, 6);
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
         Button viewAchievements = new Button("Achievements");
-        viewAchievements.setOnAction(e -> showAchievements());
-
-        grid.add(stats, 0, 0);
-        grid.add(username, 0, 1);
-        grid.add(usernameValue, 1, 1);
-        grid.add(totalCO2, 0, 2);
-        grid.add(totalCO2Value, 1, 2);
-        grid.add(co2food, 0, 3);
-        grid.add(co2foodValue, 1, 3);
-        grid.add(co2transport, 0, 4);
-        grid.add(co2transportValue, 1, 4);
-        grid.add(co2energy, 0, 5);
-        grid.add(co2energyValue, 1, 5);
-        grid.add(badgeLabel, 0, 6);
-        grid.add(badgeInfo, 1, 6);
         grid.add(viewAchievements, 0, 7);
+        viewAchievements.setOnAction(e -> showAchievements());
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -1036,41 +1034,40 @@ public class GuiMain extends Application {
         menuBar(borderPane);
 
         Label stats = new Label("Stats");
+        grid.add(stats, 0, 0);
         Label username = new Label("Username:");
+        grid.add(username, 0, 3);
         Label usernameValue = new Label(user.getCUsername());
+        grid.add(usernameValue, 4, 3);
         Label totalCO2 = new Label("Total CO2 reduction:");
+        grid.add(totalCO2, 0, 6);
         Label totalCO2Value = new Label(Integer.toString(user.getCO2reduc()));
+        grid.add(totalCO2Value, 4, 6);
         Label co2food = new Label("CO2 reduction for food:");
+        grid.add(co2food, 0, 9);
         Label co2foodValue = new Label(Integer.toString(user.getCO2food()));
+        grid.add(co2foodValue, 4, 9);
         Label co2transport = new Label("CO2 reduction for transport:");
+        grid.add(co2transport, 0, 12);
         Label co2transportValue = new Label(Integer.toString(user.getCO2transport()));
+        grid.add(co2transportValue, 4, 12);
         Label co2energy = new Label("CO2 reduction for energy:");
+        grid.add(co2energy, 0, 15);
         Label co2energyValue = new Label(Integer.toString(user.getCO2energy()));
+        grid.add(co2energyValue, 4, 15);
         Label badgeLabel = new Label("Badge:");
+        grid.add(badgeLabel, 0, 18);
         String url = Badge.getBadge(user.getCO2reduc());
         ImageView badge = new ImageView(url);
         badge.setFitHeight(20);
         badge.setFitWidth(20);
         HBox badgeInfo = new HBox();
+        grid.add(badgeInfo, 4, 18);
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
         Button viewAchievements = new Button("Achievements");
-        viewAchievements.setOnAction(e -> showAchievements(user));
-
-        grid.add(stats, 0, 0);
-        grid.add(username, 0, 3);
-        grid.add(usernameValue, 4, 3);
-        grid.add(totalCO2, 0, 6);
-        grid.add(totalCO2Value, 4, 6);
-        grid.add(co2food, 0, 9);
-        grid.add(co2foodValue, 4, 9);
-        grid.add(co2transport, 0, 12);
-        grid.add(co2transportValue, 4, 12);
-        grid.add(co2energy, 0, 15);
-        grid.add(co2energyValue, 4, 15);
-        grid.add(badgeLabel, 0, 18);
-        grid.add(badgeInfo, 4, 18);
         grid.add(viewAchievements, 0, 21);
+        viewAchievements.setOnAction(e -> showAchievements(user));
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
 
@@ -1100,7 +1097,9 @@ public class GuiMain extends Application {
         MenuItem goToShare = new MenuItem("Share");
         goToShare.setOnAction(e -> showShare());
         MenuItem goToAchievements = new MenuItem("Achievements");
-        goToAchievements.setOnAction(e -> showAchievements(ClientApplication.sendGetUserStatsRequest()));
+        goToAchievements.setOnAction(e -> showAchievements(
+                ClientApplication.sendGetUserStatsRequest()
+        ));
 
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
@@ -1196,8 +1195,8 @@ public class GuiMain extends Application {
             System.out.println();
             showMainMenu();
         } else {
-            AlertBox.display("Wrong username/password combination. Please try again."
-                    , "Something went wrong");
+            AlertBox.display("Wrong username/password combination. Please try again.",
+                    "Something went wrong");
             System.out.println("LOGIN UNSUCCESSFUL");
             System.out.println();
         }
@@ -1238,7 +1237,8 @@ public class GuiMain extends Application {
             AlertBox.display("CO2 reduced with: " + co2Response.getCO2Reduction()
                     + ". Good job!", "Success");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred processing your request:\n" + e.getMessage(), "Something went wrong");
+            AlertBox.display("An error occurred processing your request:\n" + e.getMessage(),
+                    "Something went wrong");
         }
         showMainMenu();
     }
@@ -1254,8 +1254,8 @@ public class GuiMain extends Application {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
             AlertBox.display("CO2 reduced with: " + res.getCO2Reduction() + ". Good job!", "");
         } catch (RestClientException e) {
-            AlertBox.display("An error occurred processing your request:\n" + e.getMessage()
-                    , "Something went wrong");
+            AlertBox.display("An error occurred processing your request:\n" + e.getMessage(),
+                    "Something went wrong");
         }
     }
 
@@ -1387,12 +1387,11 @@ public class GuiMain extends Application {
         GridPane gridtile = new GridPane();
         gridtile.setHgap(20);
 
-        Label cusername = new Label(user.getCUsername());
         String url = Badge.getBadge(user.getCO2reduc());
         ImageView badge = new ImageView(url);
         badge.setFitHeight(25);
         badge.setFitWidth(25);
-
+        Label cusername = new Label(user.getCUsername());
         HBox nameBox = new HBox();
         nameBox.setPrefWidth(120);
         nameBox.getChildren().addAll(cusername, badge);
@@ -1539,6 +1538,11 @@ public class GuiMain extends Application {
         return total;
     }
 
+    /**
+     * Gets the user information from the server and calls
+     * showAchievements(CO2 user).
+     * @throws RestClientException when retrieving the user information fails
+     */
     public void showAchievements() {
         CO2 user = null;
         try {
@@ -1549,6 +1553,10 @@ public class GuiMain extends Application {
         showAchievements(user);
     }
 
+    /**
+     * Opens a window that contains information about
+     * the users achievements.
+     */
     public void showAchievements(CO2 user) {
         window.setTitle("Achievements");
 
@@ -1571,15 +1579,15 @@ public class GuiMain extends Application {
         grid.add(username, 0, 0);
         grid.add(usernameValue, 1, 0);
 
-        int i = 0;
+        int itr = 0;
         int row = 1;
         int max = Achievement.getTotalAchievements();
-        while (i < max) {
-            for(int j = 0; j < 7; j++) {
-                if (i < max) {
-                    achievementTile(user, i+1, grid, j, row);
+        while (itr < max) {
+            for (int j = 0; j < 7; j++ ) {
+                if (itr < max) {
+                    achievementTile(user, itr + 1, grid, j, row);
                 }
-                i++;
+                itr++;
             }
             row += 2;
         }
@@ -1596,16 +1604,16 @@ public class GuiMain extends Application {
      * @param user the user.
      * @param id achievement id.
      * @param grid the grid on the page.
-     * @param x x coordinate on the grid.
-     * @param y y coordinate on the grid.
+     * @param x1 x coordinate on the grid.
+     * @param y1 y coordinate on the grid.
      */
-    private void achievementTile(CO2 user, int id, GridPane grid, int x, int y) {
+    private void achievementTile(CO2 user, int id, GridPane grid, int x1, int y1) {
         Label name = new Label(Achievement.getName(id));
         name.setPrefWidth(100);
         name.setWrapText(true);
         name.setPadding(new Insets(50, 0, 0, 0));
 
-        if (user.getAchievement().charAt(id-1) == '1') {
+        if (user.getAchievement().charAt(id - 1) == '1') {
             name.setStyle("-fx-font-weight: bold");
         }
 
@@ -1613,8 +1621,8 @@ public class GuiMain extends Application {
         description.setPrefWidth(100);
         description.setWrapText(true);
 
-        grid.add(name, x, y);
-        grid.add(description, x , y+1);
+        grid.add(name, x1, y1);
+        grid.add(description, x1 , y1 + 1);
     }
 
     /**
