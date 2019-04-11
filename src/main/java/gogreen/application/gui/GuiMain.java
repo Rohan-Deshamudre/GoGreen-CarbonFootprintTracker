@@ -323,7 +323,7 @@ public class GuiMain extends Application {
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> veggieMealPage());
 
-        Button option2 = new Button("Bought from a biological store");
+        Button option2 = new Button("Bought from a Local store");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> localStorePage());
 
@@ -383,7 +383,7 @@ public class GuiMain extends Application {
         Label label1 = new Label("Salad");
         Label label2 = new Label("Fruits");
         Label label3 = new Label("Vegetarian Meat");
-        Label label4 = new Label("Else");
+        Label label4 = new Label("Vegan Meal");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(label1, 0, 1);
@@ -424,7 +424,7 @@ public class GuiMain extends Application {
 
         TextField weightField = new TextField();
         weightField.setMaxWidth(300);
-        weightField.setPromptText("weight");
+        weightField.setPromptText("grams");
 
         CheckBox checkBox = new CheckBox("Organic");
 
@@ -521,7 +521,7 @@ public class GuiMain extends Application {
 
         TextField distanceField = new TextField();
         distanceField.setMaxWidth(300);
-        distanceField.setPromptText("distance");
+        distanceField.setPromptText("km");
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
@@ -566,7 +566,7 @@ public class GuiMain extends Application {
 
         TextField distanceField = new TextField();
         distanceField.setMaxWidth(300);
-        distanceField.setPromptText("distance");
+        distanceField.setPromptText("km");
 
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
@@ -659,7 +659,7 @@ public class GuiMain extends Application {
 
         TextField temperatureField = new TextField();
         temperatureField.setMaxWidth(300);
-        temperatureField.setPromptText("reduction");
+        temperatureField.setPromptText("Degrees Celsius");
 
         TextField durationField = new TextField();
         durationField.setMaxWidth(300);
@@ -713,7 +713,7 @@ public class GuiMain extends Application {
 
         TextField areaField = new TextField();
         areaField.setMaxWidth(300);
-        areaField.setPromptText("area");
+        areaField.setPromptText("square meters");
 
         TextField hoursSunlightField = new TextField();
         hoursSunlightField.setMaxWidth(300);
@@ -1092,10 +1092,11 @@ public class GuiMain extends Application {
                 co2Response = ClientApplication.sendAddFoodRequest("Vegetarian Meat", int3);
             }
             if (val4 != 0) {
-                co2Response = ClientApplication.sendAddFoodRequest("Else", int4);
+                co2Response = ClientApplication.sendAddFoodRequest("Vegan Meal", int4);
             }
 
-            AlertBox.display("CO2 reduced with: " + co2Response.getCO2Reduction() + ". Good job!");
+            AlertBox.display("By choosing to have a Vegetarian Meal instead of a Meat meal, you reduced CO2 by: "
+                    + co2Response.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
         }
@@ -1111,7 +1112,7 @@ public class GuiMain extends Application {
     public void localProduceAction(int weight, boolean organic) {
         try {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
-            AlertBox.display("CO2 reduced with: " + res.getCO2Reduction() + ". Good job!");
+            AlertBox.display("By choosing to buy from a Local Store reduced CO2 by: " + res.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage());
         }
@@ -1126,7 +1127,7 @@ public class GuiMain extends Application {
     public void transportAddButtonAction(TravelType travelType, int distance) {
         try {
             CO2Response res = ClientApplication.sendAddTransportRequest(travelType, distance);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+            AlertBox.display("By choosing to travel by: "+ travelType +" you reduced CO2 by " + res.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }
@@ -1142,7 +1143,7 @@ public class GuiMain extends Application {
     public void homeTempAddButtonAction(int temperature, int duration) {
         try {
             CO2Response res = ClientApplication.sendAddHomeTempRequest(temperature, duration);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+            AlertBox.display("By reducing the temperature you reduced CO2 by: " + res.getCO2Reduction() + " grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }
@@ -1158,7 +1159,7 @@ public class GuiMain extends Application {
     public void solarPanelAction(int area, int hoursSunlight) {
         try {
             CO2Response res = ClientApplication.sendAddSolarPanelRequest(area, hoursSunlight);
-            AlertBox.display("Reduced CO2 by: " + res.getCO2Reduction() + "kgs. Good job!");
+            AlertBox.display("Your Solar Panel has reduced CO2 by: " + res.getCO2Reduction() + "grams. Good job!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage());
         }
