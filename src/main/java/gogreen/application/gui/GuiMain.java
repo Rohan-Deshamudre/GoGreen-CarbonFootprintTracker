@@ -53,6 +53,8 @@ public class GuiMain extends Application {
     private int screenWidth;
     private int screenHeight;
     private CheckMenuItem nightmode;
+    private boolean nightmodeon = false;
+    private Object Scene;
 
     /**
      * Main method of the class, launches the application.
@@ -1076,20 +1078,30 @@ public class GuiMain extends Application {
      * @param pane - the window in which to display the menu bar.
      */
     public void menuBar(BorderPane pane) {
-        nightmode = new CheckMenuItem("Nightmode");
-        if (nightmode.isSelected()) {
-            nightmode();
-        }
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> {
             logout();
         });
+
+        nightmode = new CheckMenuItem("Nightmode");
 
         Menu settings = new Menu("Settings");
 
         settings.getItems().addAll(
             nightmode, logout
         );
+
+        if (nightmodeon) {
+            nightmode.setSelected(true);
+        }
+        nightmode.setOnAction(e -> {
+            nightmodeon = true;
+        });
+
+        if (nightmodeon) {
+            nightmode();
+        }
+
 
 
         MenuBar menuBar = new MenuBar();
@@ -1500,11 +1512,24 @@ public class GuiMain extends Application {
      */
 
     public void nightmode() {
-        mainmenuScene.getStylesheets().add("NightMode_css.css");
-        foodScene.getStylesheets().add("NightMode_css.css");
-        homeScene.getStylesheets().add("NightMode_css.css");
-        transportScene.getStylesheets().add("NightMode_css.css");
-        statsScene.getStylesheets().add("NightMode_css.css");
+        if (Scene == mainmenuScene) {
+            mainmenuScene.getStylesheets().add("NightMode_css.css");
+
+        }
+        else if (Scene == foodScene) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+
+        }
+        else if (Scene == homeScene) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+
+        }
+        else if (Scene == transportScene) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        }
+        else if (Scene == statsScene) {
+            statsScene.getStylesheets().add("NightMode_css.css");
+        }
     }
 
     /**
