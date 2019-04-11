@@ -1346,9 +1346,9 @@ public class GuiMain extends Application {
         nametile.setPadding(new Insets(10));
         nametile.setHgap(20);
 
-        Label username = new Label("  Name");
+        Label username = new Label("   Name");
         username.setPrefWidth(150);
-        Label co2reduc = new Label("  Score");
+        Label co2reduc = new Label("   Score");
 
         nametile.add(username, 0, 0);
         nametile.add(co2reduc, 1, 0);
