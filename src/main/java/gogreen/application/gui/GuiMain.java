@@ -42,6 +42,7 @@ import org.springframework.web.client.RestClientException;
 
 import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 public class GuiMain extends Application {
 
@@ -1491,15 +1492,12 @@ public class GuiMain extends Application {
         VBox leaderboard = leaderboard(friends);
         scrollPane.setContent(leaderboard);
 
-        Label friendLabel = new Label("Friends: ");
-        Label addFriendLabel = new Label("\nAdd friend: ");
         TextField addFriendField = new TextField();
         Button addFriendButton = new Button("Add");
 
         addFriendButton.setOnAction(e -> {
             String friendUsername = addFriendField.getText();
             addFriendField.setText("");
-            System.out.println(friendUsername);
             try {
                 ClientApplication.sendAddFriendRequest(friendUsername);
             } catch (RestClientException e1) {
@@ -1507,11 +1505,37 @@ public class GuiMain extends Application {
             }
         });
 
+        TextField removeFriendField = new TextField();
+        Button removeFriendButton = new Button("Remove");
+
+        removeFriendButton.setOnAction(e -> {
+            String friendUsername = removeFriendField.getText();
+            removeFriendField.setText("");
+            Boolean answer = ConfirmBox.display("Remove Friend",
+                    "Are you sure you want to remove "
+                            + friendUsername + " as your friend?");
+            if (answer) {
+                try {
+                    ClientApplication.sendRemoveFriendRequest(friendUsername);
+                } catch (RestClientException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        Label friendLabel = new Label("Friends: ");
+        Label addFriendLabel = new Label("\nAdd friend: ");
+        Label removeFriendLabel = new Label("\nRemove friend: ");
+
         HBox addFriendBox = new HBox();
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
+        HBox removeFriendBox = new HBox();
+        removeFriendBox.getChildren().addAll(removeFriendField, removeFriendButton);
+
         VBox total = new VBox();
-        total.getChildren().addAll(friendLabel, scrollPane, addFriendLabel, addFriendBox);
+        total.getChildren().addAll(friendLabel, scrollPane,
+                addFriendLabel, addFriendBox, removeFriendLabel, removeFriendBox);
         return total;
     }
 
