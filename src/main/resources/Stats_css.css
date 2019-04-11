@@ -9,14 +9,19 @@
 
 #vboxleader{
     -fx-background-color: white;
-    -fx-border-color: grey;
+    -fx-border-color: transparent;
     -fx-border-radius: 5px;
     -fx-font-family: 'Helvetica', sans-serif;
+}
 
+#totalvbox{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 #friends{
     -fx-border-color: grey;
+    -fx-background-color: transparent;
     -fx-border-radius: 5px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
