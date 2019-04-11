@@ -1516,6 +1516,7 @@ public class GuiMain extends Application {
             if (answer) {
                 try {
                     ClientApplication.sendRemoveFriendRequest(friendUsername);
+                    userPage();
                 } catch (RestClientException e1) {
                     e1.printStackTrace();
                 }
