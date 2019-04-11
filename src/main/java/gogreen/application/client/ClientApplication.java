@@ -11,6 +11,9 @@ import gogreen.application.communication.ChangeAchievements;
 import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
+import gogreen.application.gui.AlertBox;
+import gogreen.application.gui.GuiMain;
+import gogreen.application.model.Achievement;
 import gogreen.application.model.CO2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -308,4 +311,204 @@ public class ClientApplication {
         return sendActivityAddRequest("activity/solarpanel/add", req);
     }
 
+    /**
+     * Marks one achievement for a user as done.
+     * @param user the user.
+     * @param id the index of the achievement to be changed.
+     */
+    public static void changeAchievements(CO2 user, int id) {
+        String oldAchievements = user.getAchievement();
+        String newAchievements = oldAchievements.substring(0,id)
+                + '1' + oldAchievements.substring(id + 1);
+        System.out.println(newAchievements);
+
+        // Show new achievement pop up.
+        AlertBox.display(Achievement.getName(id + 1) + "\n\n" +
+                        Achievement.getDescription(id + 1), "New Achievement!");
+
+        GuiMain.setAchievements(newAchievements);
+        ClientApplication.changeAchievements(newAchievements);
+    }
+
+    /**
+     * Checks if achievement 1 is received for the user.
+     * @param user the user.
+     */
+    public static void checkAchievement1(CO2 user, Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(1) == '0') {
+            if (leaderboard.getUsers().get(0) == user) {
+                ClientApplication.changeAchievements(user, 1);
+            }
+        }
+    }
+
+    /**
+     * Checks if achievement 2 is received for the user.
+     * @param user the user.
+     */
+    public static void checkAchievement2(CO2 user) {
+        if (user.getAchievement().charAt(2) == '0') {
+            if (user.getCO2reduc() >= 1000) {
+                ClientApplication.changeAchievements(user, 2);
+            }
+        }
+    }
+
+    /**
+     * Checks if achievement 3 is received for the user.
+     * @param user the user.
+     */
+    public static void checkAchievement3(CO2 user) {
+        if (user.getAchievement().charAt(3) == '0') {
+            if (user.getCO2reduc() >= 10000) {
+                ClientApplication.changeAchievements(user, 3);
+            }
+        }
+    }
+
+    /**
+     * Checks if achievement 4 is received for the user.
+     * @param user the user.
+     */
+    public static void checkAchievement4(CO2 user, Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(4) == '0') {
+            if (leaderboard.getUsers().size() > 0) {
+                ClientApplication.changeAchievements(user, 4);
+            }
+        }
+    }
+
+    /**
+     * Checks if achievement 3 is received for the user.
+     * @param user the user.
+     */
+    public static void checkAchievement5(CO2 user, Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(5) == '0') {
+            if (leaderboard.getUsers().size() > 9) {
+                ClientApplication.changeAchievements(user, 5);
+            }
+        }
+    }
+
+    /**
+     * Checks if achievement 3 is received for the user.
+     */
+    public static void checkAchievement6() {
+        CO2 self = null;
+        try {
+            self = ClientApplication.sendGetUserStatsRequest();
+            if (self.getAchievement().charAt(6) == '0') {
+                ClientApplication.changeAchievements(self, 6);
+            }
+        } catch (RestClientException f) {
+            f.printStackTrace();
+        }
+    }
+
+    /**
+     * Checks if achievement 7 is received for the user.
+     */
+    public static void checkAchievement7() {
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException f) {
+            f.printStackTrace();
+            AlertBox.display("Something went wrong with the"
+                    + "achievement!", "Achievement");
+        }
+        if (user.getAchievement().charAt(7) == '0') {
+            ClientApplication.changeAchievements(user, 7);
+        }
+    }
+
+    /**
+     * Checks if achievement 8 is received for the user.
+     */
+    public static void checkAchievement8() {
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException f) {
+            f.printStackTrace();
+        }
+        if (user.getAchievement().charAt(8) == '0') {
+            ClientApplication.changeAchievements(user, 8);
+        }
+    }
+
+    /**
+     * Checks if achievement 9 is received for the user.
+     */
+    public static void checkAchievement9(boolean checkbox) {
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException f) {
+            f.printStackTrace();
+        }
+        if (user.getAchievement().charAt(9) == '0' && checkbox) {
+            ClientApplication.changeAchievements(user, 9);
+        }
+    }
+
+    /**
+     * Checks if achievement 10 is received for the user.
+     */
+    public static void checkAchievement10() {
+            CO2 user = null;
+            try {
+                user = ClientApplication.sendGetUserStatsRequest();
+            } catch (RestClientException f) {
+                f.printStackTrace();
+            }
+        if (user.getAchievement().charAt(10) == '0') {
+            ClientApplication.changeAchievements(user, 10);
+        }
+    }
+
+    /**
+     * Checks if achievement 3 is received for the user.
+     */
+    public static void checkAchievement11() {
+            CO2 user = null;
+            try {
+                user = ClientApplication.sendGetUserStatsRequest();
+            } catch (RestClientException f) {
+                f.printStackTrace();
+            }
+        if (user.getAchievement().charAt(11) == '0') {
+            ClientApplication.changeAchievements(user, 11);
+        }
+    }
+
+    /**
+     * Checks if achievement 3 is received for the user.
+     */
+    public static void checkAchievement12() {
+        CO2 user = null;
+        try {
+            user = ClientApplication.sendGetUserStatsRequest();
+        } catch (RestClientException f) {
+            f.printStackTrace();
+        }
+        if (user.getAchievement().charAt(12) == '0') {
+            ClientApplication.changeAchievements(user, 12);
+        }
+    }
+
+    /**
+     * Checks if achievement 3 is received for the user.
+     */
+    public static void checkAchievement13() {
+            CO2 user = null;
+            try {
+                user = ClientApplication.sendGetUserStatsRequest();
+            } catch (RestClientException f) {
+                f.printStackTrace();
+            }
+        if (user.getAchievement().charAt(13) == '0') {
+            ClientApplication.changeAchievements(user, 13);
+        }
+    }
 }

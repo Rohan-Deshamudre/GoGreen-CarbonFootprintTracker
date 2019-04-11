@@ -46,25 +46,6 @@ public class Achievement {
     }
 
     /**
-     * Marks one achievement for a user as done.
-     * @param user the user.
-     * @param id the index of the achievement to be changed.
-     */
-    public static void changeAchievements(CO2 user, int id) {
-        String oldAchievements = user.getAchievement();
-        String newAchievements = oldAchievements.substring(0,id)
-                + '1' + oldAchievements.substring(id + 1);
-        System.out.println(newAchievements);
-
-        // Show new achievement pop up.
-        AlertBox.display(getName(id + 1) + "\n\n" + getDescription(id + 1),
-                "New Achievement!");
-
-        GuiMain.setAchievements(newAchievements);
-        ClientApplication.changeAchievements(newAchievements);
-    }
-
-    /**
      * Getter of the name of the achievement.
      * @param id id.
      * @return the name of the achievement.

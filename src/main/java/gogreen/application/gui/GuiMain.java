@@ -1,5 +1,6 @@
 package gogreen.application.gui;
 
+import ch.qos.logback.core.net.server.Client;
 import gogreen.application.client.ClientApplication;
 import gogreen.application.client.Leaderboard;
 import gogreen.application.communication.AddTransportRequest.TravelType;
@@ -294,23 +295,12 @@ public class GuiMain extends Application {
         leaderboard.sortLeaderboard();
 
         // Check for getting to top of the leaderboard achievement.
-        if (achievements.charAt(1) == '0') {
-            if (leaderboard.getUsers().get(0) == user) {
-                Achievement.changeAchievements(user, 1);
-            }
-        }
+        ClientApplication.checkAchievement1(user, leaderboard);
         // Check for 1,000 points achievement
-        if (achievements.charAt(2) == '0') {
-            if (user.getCO2reduc() >= 1000) {
-                Achievement.changeAchievements(user, 2);
-            }
-        }
+        ClientApplication.checkAchievement2(user);
         // Check for 10,000 points achievement
-        if (achievements.charAt(3) == '0') {
-            if (user.getCO2reduc() >= 10000) {
-                Achievement.changeAchievements(user, 3);
-            }
-        }
+        ClientApplication.checkAchievement3(user);
+
 
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
@@ -399,19 +389,8 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            if (achievements.charAt(7) == '0') {
-                CO2 user = null;
+            ClientApplication.checkAchievement7();
 
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                    AlertBox.display("Something went wrong with the"
-                            + "achievement!", "Achievement");
-                }
-
-                Achievement.changeAchievements(user, 7);
-            }
             foodAddButtonAction(
                 sizeSlider1.getValue(),
                 sizeSlider2.getValue(),
@@ -477,24 +456,9 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            if (achievements.charAt(8) == '0') {
-                CO2 user = null;
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                }
-                Achievement.changeAchievements(user, 8);
-            }
-            if (achievements.charAt(9) == '0' && checkBox.isSelected()) {
-                CO2 user = null;
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                }
-                Achievement.changeAchievements(user, 9);
-            }
+            ClientApplication.checkAchievement8();
+            ClientApplication.checkAchievement9(checkBox.isSelected());
+
             localProduceAction(Integer.parseInt(weightField.getText()), checkBox.isSelected());
             weightField.setText("");
             checkBox.setSelected(false);
@@ -590,15 +554,7 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            if (achievements.charAt(12) == '0') {
-                CO2 user = null;
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                }
-                Achievement.changeAchievements(user, 12);
-            }
+            ClientApplication.checkAchievement12();
             transportAddButtonAction(TravelType.BIKE, Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
         });
@@ -644,15 +600,7 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            if (achievements.charAt(13) == '0') {
-                CO2 user = null;
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                }
-                Achievement.changeAchievements(user, 13);
-            }
+            ClientApplication.checkAchievement13();
             transportAddButtonAction(TravelType.PUB_TRANSPORT,
                 Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
@@ -750,15 +698,8 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            if (achievements.charAt(10) == '0') {
-                CO2 user = null;
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                }
-                Achievement.changeAchievements(user, 10);
-            }
+            ClientApplication.checkAchievement10();
+
             homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
                 Integer.parseInt(durationField.getText()));
             temperatureField.setText("");
@@ -813,15 +754,8 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            if (achievements.charAt(11) == '0') {
-                CO2 user = null;
-                try {
-                    user = ClientApplication.sendGetUserStatsRequest();
-                } catch (RestClientException f) {
-                    f.printStackTrace();
-                }
-                Achievement.changeAchievements(user, 11);
-            }
+            ClientApplication.checkAchievement11();
+
             solarPanelAction(Integer.parseInt(areaField.getText()),
                 Integer.parseInt(hoursSunlightField.getText()));
             areaField.setText("");
@@ -961,16 +895,8 @@ public class GuiMain extends Application {
         }
 
         // Check for friends achievements
-        if (user.getAchievement().charAt(4) == '0') {
-            if (leaderboard.getUsers().size() > 0) {
-                Achievement.changeAchievements(user, 4);
-            }
-        }
-        if (user.getAchievement().charAt(5) == '0') {
-            if (leaderboard.getUsers().size() > 9) {
-                Achievement.changeAchievements(user, 5);
-            }
-        }
+        ClientApplication.checkAchievement4(user, leaderboard);
+        ClientApplication.checkAchievement5(user, leaderboard);
 
         Label stats = new Label("Stats");
         grid.add(stats, 0, 0);
@@ -1416,15 +1342,7 @@ public class GuiMain extends Application {
         Button decline = new Button("Decline");
         decline.setOnAction(e -> {
             // Check for achievement
-            CO2 self = null;
-            try {
-                self = ClientApplication.sendGetUserStatsRequest();
-                if (self.getAchievement().charAt(6) == '0') {
-                    Achievement.changeAchievements(self, 6);
-                }
-            } catch (RestClientException f) {
-                f.printStackTrace();
-            }
+            ClientApplication.checkAchievement6();
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), false);
                 userPage();
