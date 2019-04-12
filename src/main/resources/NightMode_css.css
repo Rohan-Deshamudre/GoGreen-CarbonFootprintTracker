@@ -458,3 +458,30 @@
 .scroll-pane > .corner {
     -fx-background-color: black;
 }
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: black;
+}
+
+#buttonachieve{
+    -fx-font-size: 15px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonachieve:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#gridachieve{
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}

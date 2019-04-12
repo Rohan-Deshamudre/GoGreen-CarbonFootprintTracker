@@ -1111,6 +1111,7 @@ public class GuiMain extends Application {
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
         Button viewAchievements = new Button("Achievements");
+        viewAchievements.setId("buttonachieve");
         grid.add(viewAchievements, 0, 7);
         viewAchievements.setOnAction(e -> showAchievements());
 
@@ -1125,6 +1126,8 @@ public class GuiMain extends Application {
         co2transportValue.setId("label1");
         co2energy.setId("label1");
         co2energyValue.setId("label1");
+        badgeLabel.setId("label1");
+        badge.setId("image1");
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
         if (nightmodeon) {
@@ -1732,6 +1735,7 @@ public class GuiMain extends Application {
 
         // CENTER
         GridPane grid = new GridPane();
+        grid.setId("gridachieve");
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
@@ -1743,9 +1747,10 @@ public class GuiMain extends Application {
         borderPane.setLeft(grid);
         menuBar(borderPane);
 
-        Label stats = new Label("Stats");
         Label username = new Label("Username:");
+        username.setId("label1");
         Label usernameValue = new Label(user.getCUsername());
+        usernameValue.setId("label1");
         grid.add(username, 0, 0);
         grid.add(usernameValue, 1, 0);
 
@@ -1763,7 +1768,11 @@ public class GuiMain extends Application {
         }
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-
+        if (nightmodeon) {
+            loginScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            loginScene.getStylesheets().add("Achievements_css.css");
+        }
         // Show window
         window.setScene(loginScene);
         window.show();
