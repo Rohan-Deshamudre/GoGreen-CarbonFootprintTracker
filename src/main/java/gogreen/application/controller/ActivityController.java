@@ -2,7 +2,6 @@ package gogreen.application.controller;
 
 
 import gogreen.application.client.Leaderboard;
-
 import gogreen.application.communication.AddFoodRequest;
 import gogreen.application.communication.AddFriendRequest;
 import gogreen.application.communication.AddHomeTempRequest;
