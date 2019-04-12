@@ -2,9 +2,20 @@
     -fx-background-color: white;
 }
 
+#label1{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: black;
+}
+
+#grid2{
+    -fx-border-color: grey;
+    -fx-border-radius: 5px;
+}
+
 #button1{
     -fx-background-image: url("images/foodlogo.jpg");
-    -fx-font-size: 25;
+    -fx-font-size: 25px;
     -fx-border-color: #a9a9a9;
     -fx-font-family: 'Helvetica', sans-serif;
 }
@@ -48,7 +59,7 @@
      -fx-background-color: #1aee40;
  }
 
-#label1{
+#labelmain{
     -fx-font-size: 20px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
@@ -85,4 +96,41 @@
 
 .menu-bar{
     -fx-padding: 0px;
+}
+
+#buttontile:hover{
+    -fx-background-color: #dbffd0;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#buttontile{
+    -fx-border-color: grey;
+    -fx-background-color: white;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: black;
+}
+
+#labelleaderboard{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labeluser{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelco2reduc{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelleaderboard{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
 }

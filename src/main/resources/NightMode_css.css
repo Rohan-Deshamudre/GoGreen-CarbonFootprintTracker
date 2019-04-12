@@ -8,7 +8,25 @@
 
 #label1 {
     -fx-text-fill: white;
-    -fx-font-size: 25px;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelmain{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labeltitle{
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelpage{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
 
@@ -20,11 +38,19 @@
     -fx-border-color: white;
 }
 
+#field1{
+    -fx-font-size: 15px;
+}
+
 #menuBar1{
     -fx-font-size: 15px;
     -fx-background-color: grey;
     -fx-font-family: 'Helvetica', sans-serif;
     -fx-padding: 0px;
+}
+
+.menu-item:hover{
+    -fx-background-color: #808080;
 }
 
 .menu-item{
@@ -66,25 +92,25 @@
 }
 
 #button1:hover{
-    -fx-border-color: #1aee40;
+    -fx-border-color: #808080;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
 }
 
 #button2:hover{
-    -fx-border-color: #1aee40;
+    -fx-border-color: #808080;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
 }
 
 #button3:hover{
-    -fx-border-color: #1aee40;
+    -fx-border-color: #808080;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
 }
 
 #button4:hover{
-    -fx-border-color: #1aee40;
+    -fx-border-color: #808080;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1;
 }
@@ -95,10 +121,11 @@
     -fx-background-color: black;
     -fx-font-family: 'Helvetica', sans-serif;
     -fx-text-fill: white;
+    -fx-border-color: white;
 }
 
 #buttonhome:hover{
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonop1{
@@ -121,12 +148,12 @@
 
 #buttonop1:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonop2:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 .slider {
@@ -148,7 +175,7 @@
 
 #buttonaddfood:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddfood{
@@ -166,7 +193,7 @@
 }
 
 .check-box:selected .mark {
-    -fx-background-color: green;
+    -fx-background-color: black;
 }
 
 .check-box:hover{
@@ -176,7 +203,7 @@
 
 #buttonaddlocal:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddlocal{
@@ -207,17 +234,17 @@
 
 #buttonop3:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonop4:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddbike:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddbike{
@@ -231,7 +258,7 @@
 
 #buttonaddtrans:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddtrans{
@@ -260,19 +287,20 @@
     -fx-font-family: 'Helvetica', sans-serif;
     -fx-text-fill: white;
 }
+
 #buttonop5:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonop6:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddtem:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddtem{
@@ -286,7 +314,7 @@
 
 #buttonaddpanel:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonaddpanel{
@@ -307,16 +335,13 @@
 }
 
 #friends{
-    -fx-border-color: grey;
-    -fx-border-radius: 5px;
-    -fx-font-family: 'Helvetica', sans-serif;
-    -fx-text-fill: white;
+    -fx-border-color: white;
     -fx-background-color: black;
 }
 
 #buttonaccept{
     -fx-font-size: 15px;
-    -fx-border-color: grey;
+    -fx-border-color: white;
     -fx-border-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
@@ -325,12 +350,12 @@
 
 #buttonaccept:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttondecline{
     -fx-font-size: 15px;
-    -fx-border-color: grey;
+    -fx-border-color: white;
     -fx-border-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
@@ -339,12 +364,12 @@
 
 #buttondecline:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #buttonfriend{
     -fx-font-size: 15px;
-    -fx-border-color: grey;
+    -fx-border-color: white;
     -fx-border-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
@@ -353,12 +378,12 @@
 
 #buttonfriend:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #addFriend{
     -fx-font-size: 15px;
-    -fx-border-color: grey;
+    -fx-border-color: white;
     -fx-border-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
@@ -367,7 +392,7 @@
 
 #addFriend:hover{
     -fx-border-radius: 5px;
-    -fx-background-color: #1aee40;
+    -fx-background-color: #808080;
 }
 
 #labelfriend{
@@ -384,29 +409,52 @@
     -fx-text-fill: white;
 }
 
-#buttonleaderboard{
-    -fx-border-color: white;
-    -fx-background-color: white;
-    -fx-border-radius: 3px;
-    -fx-font-family: 'Helvetica', sans-serif;
-    -fx-text-fill: white;
-}
-
-#buttonleaderboard:hover{
-    -fx-background-color: #dbffd0;
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
-}
-
 #labeluser{
     -fx-text-fill: white;
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
 
 #labelco2reduc{
     -fx-text-fill: white;
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
 
+#buttontile:hover{
+    -fx-background-color: #808080;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#buttontile{
+    -fx-border-color: white;
+    -fx-background-color: black;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    textfill: white;
+}
+
+#label1{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelleaderboard{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: grey;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}

@@ -3,6 +3,11 @@
 }
 
 #label1{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#label2{
     -fx-font-size: 20px;
     -fx-font-family: 'Helvetica', sans-serif;
 }
@@ -100,4 +105,27 @@
 
 #buttonhome:hover{
     -fx-background-color: #1aee40;
+}
+
+#buttontile:hover{
+    -fx-background-color: #dbffd0;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#buttontile{
+    -fx-border-color: grey;
+    -fx-background-color: white;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelleaderboard{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+}
+
+#grid2{
+    -fx-border-color: grey;
+    -fx-border-radius: 5px;
 }

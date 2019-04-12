@@ -286,7 +286,7 @@ public class GuiMain extends Application {
         AnchorPane.setLeftAnchor(food, 390.0);
         buttons.getChildren().add(food);
         Label food1 = new Label("Food");
-        food1.setId("label1");
+        food1.setId("labelmain");
         AnchorPane.setTopAnchor(food1, 340.0);
         AnchorPane.setRightAnchor(food1, 460.0);
         AnchorPane.setLeftAnchor(food1, 460.0);
@@ -303,7 +303,7 @@ public class GuiMain extends Application {
         AnchorPane.setLeftAnchor(homeE, 590.0);
         buttons.getChildren().add(homeE);
         Label home = new Label("Home");
-        home.setId("label1");
+        home.setId("labelmain");
         AnchorPane.setTopAnchor(home, 340.0);
         AnchorPane.setRightAnchor(home, 260.0);
         AnchorPane.setLeftAnchor(home, 660.0);
@@ -320,7 +320,7 @@ public class GuiMain extends Application {
         AnchorPane.setLeftAnchor(transport, 390.0);
         buttons.getChildren().add(transport);
         Label transport1 = new Label("Transport");
-        transport1.setId("label1");
+        transport1.setId("labelmain");
         AnchorPane.setTopAnchor(transport1, 590.0);
         AnchorPane.setRightAnchor(transport1, 490.0);
         AnchorPane.setLeftAnchor(transport1, 440.0);
@@ -337,7 +337,7 @@ public class GuiMain extends Application {
         AnchorPane.setLeftAnchor(stats, 600.0);
         buttons.getChildren().add(stats);
         Label stat = new Label("Stats");
-        stat.setId("label1");
+        stat.setId("labelmain");
         AnchorPane.setTopAnchor(stat, 590.0);
         AnchorPane.setRightAnchor(stat, 250.0);
         AnchorPane.setLeftAnchor(stat, 670.0);
@@ -417,7 +417,7 @@ public class GuiMain extends Application {
         buttons.getChildren().addAll(option1, option2);
 
         Label foodTitle = new Label("Food");
-        foodTitle.setId("label1");
+        foodTitle.setId("labeltitle");
 
         center.getChildren().addAll(foodTitle, buttons);
 
@@ -509,17 +509,17 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         Label titleLabel = new Label("Vegetarian Meal");
-        titleLabel.setId("label1");
+        titleLabel.setId("labelpage");
         Label sizeLabel = new Label("Size:");
-        sizeLabel.setId("label1");
+        sizeLabel.setId("labelpage");
         Label label1 = new Label("Salad");
-        label1.setId("label1");
+        label1.setId("labelpage");
         Label label2 = new Label("Fruits");
-        label2.setId("label1");
+        label2.setId("labelpage");
         Label label3 = new Label("Vegetarian Meat");
-        label3.setId("label1");
+        label3.setId("labelpage");
         Label label4 = new Label("Else");
-        label4.setId("label1");
+        label4.setId("labelpage");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(label1, 0, 1);
@@ -586,9 +586,9 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         Label titleLabel = new Label("Local Store");
-        titleLabel.setId("label1");
+        titleLabel.setId("labelpage");
         Label weightLabel = new Label("Weight:");
-        weightLabel.setId("label1");
+        weightLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(weightLabel, 0, 1);
@@ -650,7 +650,7 @@ public class GuiMain extends Application {
         buttons.getChildren().addAll(option1, option2);
 
         Label transportTitle = new Label("Transport");
-        transportTitle.setId("label1");
+        transportTitle.setId("labeltitle");
 
         center.getChildren().addAll(transportTitle, buttons);
 
@@ -699,9 +699,9 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Bike Ride");
-        titleLabel.setId("label1");
+        titleLabel.setId("labelpage");
         Label distanceLabel = new Label("Total distance:");
-        distanceLabel.setId("label1");
+        distanceLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
@@ -754,9 +754,9 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Public Transport");
-        titleLabel.setId("label1");
+        titleLabel.setId("labelpage");
         Label distanceLabel = new Label("Total distance:");
-        distanceLabel.setId("label1");
+        distanceLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
@@ -818,7 +818,7 @@ public class GuiMain extends Application {
         buttons.getChildren().addAll(option1, option2);
 
         Label energyTitle = new Label("Home energy");
-        energyTitle.setId("label1");
+        energyTitle.setId("labeltitle");
 
         center.getChildren().addAll(energyTitle, buttons);
 
@@ -873,11 +873,11 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Home Temperature");
-        titleLabel.setId("label1");
+        titleLabel.setId("labelpage");
         Label temperatureLabel = new Label("Temperature reduction:");
-        temperatureLabel.setId("label1");
+        temperatureLabel.setId("labelpage");
         Label durationLabel = new Label("Duration:");
-        durationLabel.setId("label1");
+        durationLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(temperatureLabel, 0, 1);
@@ -932,11 +932,11 @@ public class GuiMain extends Application {
         });
 
         Label titleLabel = new Label("Solar Panels");
-        titleLabel.setId("label1");
+        titleLabel.setId("labelpage");
         Label areaLabel = new Label("Total area:");
-        areaLabel.setId("label1");
+        areaLabel.setId("labelpage");
         Label hoursSunlightLabel = new Label("Sunlight:");
-        hoursSunlightLabel.setId("label1");
+        hoursSunlightLabel.setId("labelpage");
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -992,7 +992,7 @@ public class GuiMain extends Application {
         leaderboard.sortLeaderboard();
         VBox allFriends = showFriends(leaderboard.getUsers());
         allFriends.setId("vboxfriends");
-        allFriends.setPadding(new Insets(100, 40, 100, 50));
+        allFriends.setPadding(new Insets(100, 40, 100, 150));
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
@@ -1338,12 +1338,14 @@ public class GuiMain extends Application {
     public GridPane nameTile() {
         GridPane nametile = new GridPane();
         nametile.setId("grid2");
-        nametile.setPadding(new Insets(10));
+        nametile.setPadding(new Insets(10, 20, 10, 10));
         nametile.setHgap(20);
 
         Label username = new Label("   Name");
+        username.setId("label1");
         username.setPrefWidth(150);
         Label co2reduc = new Label("   Score");
+        co2reduc.setId("label1");
 
         nametile.add(username, 0, 0);
         nametile.add(co2reduc, 1, 0);
@@ -1364,8 +1366,10 @@ public class GuiMain extends Application {
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
+        cusername.setId("labelleaderboard");
         cusername.setPrefWidth(150);
         Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
+        co2reduc.setId("labelleaderboard");
 
         gridtile.add(cusername, 0, 0);
         gridtile.add(co2reduc, 1, 0);
@@ -1391,6 +1395,7 @@ public class GuiMain extends Application {
 
         for (CO2 user: users) {
             Button tile = leaderboardTile(user);
+            tile.setId("buttontile");
             tile.setOnAction(e -> showUserPage(user));
             tile.setPrefWidth(300);
             vbox.getChildren().add(tile);
@@ -1405,7 +1410,6 @@ public class GuiMain extends Application {
      */
     public GridPane friendRequestTile(CO2 user) {
         GridPane gridtile = new GridPane();
-        gridtile.getStylesheets().add("Stats_css.css");
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
@@ -1480,7 +1484,9 @@ public class GuiMain extends Application {
         friendRequests.sortLeaderboard();
 
         VBox vbox = new VBox();
-        vbox.getChildren().add(new Label("Friend requests: "));
+        Label friendrequest = new Label("Friend requests");
+        friendrequest.setId("label1");
+        vbox.getChildren().add(friendrequest);
 
         for (CO2 user: friendRequests.getUsers()) {
             GridPane tile = friendRequestTile(user);
@@ -1497,17 +1503,19 @@ public class GuiMain extends Application {
      */
     public VBox showFriends(ArrayList<CO2> friends) {
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMaxWidth(340);
         scrollPane.setId("friends");
-//        scrollPane.getStylesheets().add("Stats_css.css");
 
         VBox leaderboard = leaderboard(friends);
         leaderboard.setPadding(new Insets(10, 20, 10, 20));
+        leaderboard.setMinWidth(340);
         leaderboard.setId("vboxleader");
         scrollPane.setContent(leaderboard);
 
         Label addFriendLabel = new Label("\nAdd friend: ");
         addFriendLabel.setId("labelfriend");
         TextField addFriendField = new TextField();
+        addFriendField.setId("field1");
         Button addFriendButton = new Button("Add");
         addFriendButton.setId("addFriend");
 
@@ -1522,6 +1530,7 @@ public class GuiMain extends Application {
         });
 
         TextField removeFriendField = new TextField();
+        removeFriendField.setId("field1");
         Button removeFriendButton = new Button("Remove");
         removeFriendButton.setId("buttonfriend");
 
@@ -1552,7 +1561,7 @@ public class GuiMain extends Application {
         removeFriendBox.getChildren().addAll(removeFriendField, removeFriendButton);
 
         Label friendLabel = new Label("Friends: ");
-        friendLabel.setId("labelfriend");
+        friendLabel.setId("label1");
         VBox total = new VBox();
         total.getChildren().addAll(friendLabel, scrollPane,
                 addFriendLabel, addFriendBox, removeFriendLabel, removeFriendBox);
