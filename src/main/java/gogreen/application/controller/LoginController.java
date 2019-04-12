@@ -37,12 +37,10 @@ public class LoginController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity handleLoginRequest(@RequestBody LoginData cred) {
-
         if (checkLoginData(cred, userRepository)) {
             // login successful
             return new ResponseEntity(HttpStatus.OK);
         }
-
         return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
@@ -63,14 +61,11 @@ public class LoginController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
-        if (!cred.getUsername().equals("") && !cred.getPassword().equals("")) {
-            userRepository.save(new User(cred.getUsername(), cred.getPassword()));
-            co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0, "00000000000000"));
+        // Register new account
+        userRepository.save(new User(cred.getUsername(), cred.getPassword()));
+        co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0));
 
-            return new ResponseEntity(HttpStatus.CREATED);
-        }
-
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
