@@ -146,6 +146,24 @@ public class ClientApplication {
     }
 
     /**
+     * Marks one achievement for a user as done.
+     * @param user the user.
+     * @param id the index of the achievement to be changed.
+     */
+    public static void changeAchievements(CO2 user, int id) {
+        String oldAchievements = user.getAchievement();
+        String newAchievements = oldAchievements.substring(0,id)
+                + '1' + oldAchievements.substring(id + 1);
+        System.out.println(newAchievements);
+
+        // Show new achievement pop up.
+        AlertBox.display(Achievement.getName(id + 1) + "\n\n"
+                + Achievement.getDescription(id + 1), "New Achievement!");
+
+        ClientApplication.changeAchievements(newAchievements);
+    }
+
+    /**
      * This method sends a POST request to the server with the login information. Request adding a
      * friend.
      *
@@ -310,24 +328,6 @@ public class ClientApplication {
         throws RestClientException {
         AddSolarPanelRequest req = new AddSolarPanelRequest(loginData, area, hoursSunlight);
         return sendActivityAddRequest("activity/solarpanel/add", req);
-    }
-
-    /**
-     * Marks one achievement for a user as done.
-     * @param user the user.
-     * @param id the index of the achievement to be changed.
-     */
-    public static void changeAchievements(CO2 user, int id) {
-        String oldAchievements = user.getAchievement();
-        String newAchievements = oldAchievements.substring(0,id)
-                + '1' + oldAchievements.substring(id + 1);
-        System.out.println(newAchievements);
-
-        // Show new achievement pop up.
-        AlertBox.display(Achievement.getName(id + 1) + "\n\n"
-                + Achievement.getDescription(id + 1), "New Achievement!");
-
-        ClientApplication.changeAchievements(newAchievements);
     }
 
     /**
