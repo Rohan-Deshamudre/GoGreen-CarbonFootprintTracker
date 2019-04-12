@@ -299,6 +299,7 @@ public class GuiMain extends Application {
         ClientApplication.checkAchievement3(user);
 
 
+
         VBox scoreboard = leaderboard(leaderboard.getUsers());
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
         BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
@@ -386,7 +387,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            ClientApplication.checkAchievement7();
+            boolean gotten = ClientApplication.checkAchievement(7);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 7);
+            }
 
             foodAddButtonAction(
                 sizeSlider1.getValue(),
@@ -453,7 +457,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            ClientApplication.checkAchievement8();
+            boolean gotten = ClientApplication.checkAchievement(8);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 8);
+            }
             ClientApplication.checkAchievement9(checkBox.isSelected());
 
             localProduceAction(Integer.parseInt(weightField.getText()), checkBox.isSelected());
@@ -551,7 +558,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            ClientApplication.checkAchievement12();
+            boolean gotten = ClientApplication.checkAchievement(12);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 12);
+            }
             transportAddButtonAction(TravelType.BIKE, Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
         });
@@ -597,7 +607,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            ClientApplication.checkAchievement13();
+            boolean gotten = ClientApplication.checkAchievement(13);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 13);
+            }
             transportAddButtonAction(TravelType.PUB_TRANSPORT,
                 Integer.parseInt(distanceField.getText()));
             distanceField.setText("");
@@ -695,7 +708,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            ClientApplication.checkAchievement10();
+            boolean gotten = ClientApplication.checkAchievement(10);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 10);
+            }
 
             homeTempAddButtonAction(Integer.parseInt(temperatureField.getText()),
                 Integer.parseInt(durationField.getText()));
@@ -751,7 +767,10 @@ public class GuiMain extends Application {
         Button addButton = new Button("Add");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
-            ClientApplication.checkAchievement11();
+            boolean gotten = ClientApplication.checkAchievement(11);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 11);
+            }
 
             solarPanelAction(Integer.parseInt(areaField.getText()),
                 Integer.parseInt(hoursSunlightField.getText()));
@@ -1339,7 +1358,10 @@ public class GuiMain extends Application {
         Button decline = new Button("Decline");
         decline.setOnAction(e -> {
             // Check for achievement
-            ClientApplication.checkAchievement6();
+            boolean gotten = ClientApplication.checkAchievement(6);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 6);
+            }
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), false);
                 userPage();

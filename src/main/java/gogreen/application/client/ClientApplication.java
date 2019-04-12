@@ -30,6 +30,7 @@ public class ClientApplication {
     private static RestTemplate restTemplate = new RestTemplate();
 
     private static LoginData loginData = null;
+    private static CO2 user = null;
 
     /**
      * get requests index page of our heroku server.
@@ -121,6 +122,7 @@ public class ClientApplication {
         throws RestClientException {
         ResponseEntity<CO2> res = restTemplate.postForEntity(URL + "user", loginData, CO2.class);
 
+        setUser(res.getBody());
         System.out.println(res);
         return res.getBody();
     }
@@ -396,52 +398,6 @@ public class ClientApplication {
         }
     }
 
-    /**
-     * Checks if achievement 6 is received for the user.
-     */
-    public static void checkAchievement6() {
-        CO2 self = null;
-        try {
-            self = ClientApplication.sendGetUserStatsRequest();
-            if (self.getAchievement().charAt(6) == '0') {
-                ClientApplication.changeAchievements(self, 6);
-            }
-        } catch (RestClientException f) {
-            f.printStackTrace();
-        }
-    }
-
-    /**
-     * Checks if achievement 7 is received for the user.
-     */
-    public static void checkAchievement7() {
-        CO2 user = null;
-        try {
-            user = ClientApplication.sendGetUserStatsRequest();
-        } catch (RestClientException f) {
-            f.printStackTrace();
-            AlertBox.display("Something went wrong with the"
-                    + "achievement!", "Achievement");
-        }
-        if (user.getAchievement().charAt(7) == '0') {
-            ClientApplication.changeAchievements(user, 7);
-        }
-    }
-
-    /**
-     * Checks if achievement 8 is received for the user.
-     */
-    public static void checkAchievement8() {
-        CO2 user = null;
-        try {
-            user = ClientApplication.sendGetUserStatsRequest();
-        } catch (RestClientException f) {
-            f.printStackTrace();
-        }
-        if (user.getAchievement().charAt(8) == '0') {
-            ClientApplication.changeAchievements(user, 8);
-        }
-    }
 
     /**
      * Checks if achievement 9 is received for the user.
@@ -458,63 +414,31 @@ public class ClientApplication {
         }
     }
 
+
+
+
     /**
-     * Checks if achievement 10 is received for the user.
+     * Checks whether the user has a new achievement.
+     * @param id the achievement id.
+     * @return whether you got a new achievement.
      */
-    public static void checkAchievement10() {
-            CO2 user = null;
-            try {
-                user = ClientApplication.sendGetUserStatsRequest();
-            } catch (RestClientException f) {
-                f.printStackTrace();
-            }
-        if (user.getAchievement().charAt(10) == '0') {
-            ClientApplication.changeAchievements(user, 10);
-        }
+    public static boolean checkAchievement(int id) {
+        return user.getAchievement().charAt(id) == '0';
     }
 
     /**
-     * Checks if achievement 11 is received for the user.
+     * Getter for user.
+     * @return the user.
      */
-    public static void checkAchievement11() {
-            CO2 user = null;
-            try {
-                user = ClientApplication.sendGetUserStatsRequest();
-            } catch (RestClientException f) {
-                f.printStackTrace();
-            }
-        if (user.getAchievement().charAt(11) == '0') {
-            ClientApplication.changeAchievements(user, 11);
-        }
+    public static CO2 getUser() {
+        return user;
     }
 
     /**
-     * Checks if achievement 12 is received for the user.
+     * Setter for user.
+     * @param user the user.
      */
-    public static void checkAchievement12() {
-        CO2 user = null;
-        try {
-            user = ClientApplication.sendGetUserStatsRequest();
-        } catch (RestClientException f) {
-            f.printStackTrace();
-        }
-        if (user.getAchievement().charAt(12) == '0') {
-            ClientApplication.changeAchievements(user, 12);
-        }
-    }
-
-    /**
-     * Checks if achievement 13 is received for the user.
-     */
-    public static void checkAchievement13() {
-            CO2 user = null;
-            try {
-                user = ClientApplication.sendGetUserStatsRequest();
-            } catch (RestClientException f) {
-                f.printStackTrace();
-            }
-        if (user.getAchievement().charAt(13) == '0') {
-            ClientApplication.changeAchievements(user, 13);
-        }
+    public static void setUser(CO2 user) {
+        ClientApplication.user = user;
     }
 }
