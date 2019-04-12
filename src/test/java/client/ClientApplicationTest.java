@@ -8,6 +8,7 @@ import static gogreen.application.client.ClientApplication.checkAchievement2;
 import static gogreen.application.client.ClientApplication.checkAchievement3;
 import static gogreen.application.client.ClientApplication.checkAchievement4;
 import static gogreen.application.client.ClientApplication.checkAchievement5;
+import static gogreen.application.client.ClientApplication.checkAchievement9;
 import static gogreen.application.client.ClientApplication.setUser;
 
 import gogreen.application.client.Leaderboard;
@@ -32,6 +33,21 @@ class ClientApplicationTest {
         assertTrue(checkAchievement(5));
         assertFalse(checkAchievement(4));
     }
+
+    @Test
+    public void checkAchievement1Test() {
+        setUser(user);
+        leaderboard.getUsers().add(user);
+        assertTrue(checkAchievement1(leaderboard));
+
+        leaderboard.getUsers().add(user1);
+        leaderboard.sortLeaderboard();
+        assertFalse(checkAchievement1(leaderboard));
+
+        setUser(user2);
+        assertFalse(checkAchievement1(leaderboard));
+    }
+
     @Test
     public void checkAchievement2Test() {
         setUser(user3);
@@ -45,27 +61,17 @@ class ClientApplicationTest {
     @Test
     public void checkAchievement3Test() {
         setUser(user3);
-        assertTrue(checkAchievement2());
+        assertTrue(checkAchievement3());
         setUser(user2);
-        assertFalse(checkAchievement2());
+        assertFalse(checkAchievement3());
         setUser(user1);
-        assertFalse(checkAchievement2());
-    }
-
-    @Test
-    public void checkAchievement1Test() {
-        setUser(user);
-        leaderboard.getUsers().add(user);
-        assertTrue(checkAchievement1(leaderboard));
-
-        leaderboard.getUsers().add(user1);
-        leaderboard.sortLeaderboard();
-        assertFalse(checkAchievement1(leaderboard));
+        assertFalse(checkAchievement3());
     }
 
     @Test
     public void checkAchievement4Test() {
         setUser(user1);
+        leaderboard = new Leaderboard();
         assertFalse(checkAchievement4(leaderboard));
         leaderboard.getUsers().add(user2);
         assertTrue(checkAchievement4(leaderboard));
@@ -76,6 +82,7 @@ class ClientApplicationTest {
     @Test
     public void checkAchievement5Test() {
         setUser(user1);
+        leaderboard = new Leaderboard();
         assertFalse(checkAchievement5(leaderboard));
         for (int i = 0; i < 10; i++) {
             leaderboard.getUsers().add(user2);
@@ -83,6 +90,15 @@ class ClientApplicationTest {
         assertTrue(checkAchievement5(leaderboard));
         setUser(user2);
         assertFalse(checkAchievement5(leaderboard));
+    }
+
+    @Test
+    public void checkAchievement9Test() {
+        setUser(user3);
+        assertTrue(checkAchievement9(true));
+        assertFalse(checkAchievement9(false));
+        setUser(user2);
+        assertFalse(checkAchievement9(true));
     }
 
 }
