@@ -82,7 +82,8 @@ public class LoginController {
      * @param passwordEncoder - a spring passwordencoder instance
      * @return - true iff login is successful.
      */
-    public static boolean checkLoginData(LoginData loginData, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public static boolean checkLoginData(
+            LoginData loginData, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         List<User> userDb = userRepository.findByUsername(loginData.getUsername());
 
         for (User user : userDb) {
