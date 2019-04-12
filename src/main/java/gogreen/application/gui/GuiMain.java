@@ -1561,6 +1561,7 @@ public class GuiMain extends Application {
         Label friendLabel = new Label("Friends: ");
         friendLabel.setId("label1");
         VBox total = new VBox();
+        total.setId("totalvbox");
         total.getChildren().addAll(friendLabel, scrollPane,
                 addFriendLabel, addFriendBox, removeFriendLabel, removeFriendBox);
         return total;
