@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -52,6 +53,9 @@ public class ActivityAddLocalProduceTest {
 
     @MockBean
     private CO2Repository co2Repository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final LoginData fakeLoginData = new LoginData("Paul", "mon€yboy");
     private final int fakeWeight = 6;
@@ -92,7 +96,7 @@ public class ActivityAddLocalProduceTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
 
         AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
             fakeOrganic);
@@ -110,7 +114,7 @@ public class ActivityAddLocalProduceTest {
      */
     @Test
     void emptyCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
         AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
@@ -145,7 +149,7 @@ public class ActivityAddLocalProduceTest {
      */
     @Test
     void dataCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 

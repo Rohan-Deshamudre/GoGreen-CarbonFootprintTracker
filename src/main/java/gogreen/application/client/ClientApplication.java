@@ -40,7 +40,7 @@ public class ClientApplication {
      *
      * @param username - the username.
      * @param password - the password.
-     * @returns - true iff login is successful.
+     * @return - true iff login is successful.
      */
     public static boolean sendLoginRequest(String username, String password) {
         LoginData curLoginData = new LoginData(username, password);
