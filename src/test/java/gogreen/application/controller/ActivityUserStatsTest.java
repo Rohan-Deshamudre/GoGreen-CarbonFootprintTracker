@@ -111,7 +111,7 @@ public class ActivityUserStatsTest {
                 userRepository);
 
         List<CO2> user = new ArrayList<>(1);
-        user.add(new CO2("dummyFriend1", 20, 20, 20, 20));
+        user.add(new CO2("dummyFriend1", 20, 20, 20, 20, "101010"));
 
         when(co2Repository.findByCusername(fakeLoginData.getUsername())).thenReturn(user);
 
