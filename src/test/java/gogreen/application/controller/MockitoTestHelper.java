@@ -55,7 +55,7 @@ public class MockitoTestHelper {
         List<CO2> dbUserCO2List = new ArrayList<>();
         dbUserCO2List.add(
             new CO2(co2.getCUsername(), co2.getCO2food(), co2.getCO2transport(), co2.getCO2energy(),
-                co2.getCO2reduc(), "101010"));
+                co2.getCO2reduc()));
         when(co2Repository.findByCusername(co2.getCUsername())).thenReturn(dbUserCO2List);
     }
 }
