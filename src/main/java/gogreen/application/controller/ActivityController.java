@@ -271,15 +271,22 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        List<Friend> check = friendRepository.findByFusernameAndFriend(req.getLoginData()
+        List<Friend> check1 = friendRepository.findByFusernameAndFriend(req
+                .getLoginData().getUsername(), req.getFriendUsername());
+
+        List<FriendRequest>  check2 = friendRequestRepository
+                .findByUsernameAndRequestTo(req.getLoginData()
                 .getUsername(), req.getFriendUsername());
-        if (check.isEmpty() && !req.getLoginData().getUsername().equals(
-                req.getFriendUsername()
+
+        if (check1.isEmpty() && check2.isEmpty() && !req.getLoginData()
+                .getUsername().equals(req.getFriendUsername()
         )) {
 
-            List<CO2> exist = co2Repository.findByCusername(req.getFriendUsername());
+            List<CO2> exist = co2Repository.findByCusername(req
+                    .getFriendUsername());
             if (exist != null) {
-                FriendRequest newRequest = new FriendRequest(0, req.getLoginData().getUsername(),
+                FriendRequest newRequest = new FriendRequest(0,
+                        req.getLoginData().getUsername(),
                         req.getFriendUsername());
                 friendRequestRepository.save(newRequest);
                 return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
@@ -359,6 +366,42 @@ public class ActivityController {
         friendRequestRepository.delete(remove);
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 
+    }
+
+    /**
+     * Handles the request to remove a friend
+     *
+     * @param req the AddFriendRequest.
+     * @return if method was successful.
+     */
+    @PostMapping(value = "/removefriend",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Boolean> removeFriendRequest(@RequestBody AddFriendRequest req) {
+
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<Friend> friend = friendRepository
+                .findByFusernameAndFriend(req.getLoginData()
+                .getUsername(), req.getFriendUsername());
+
+        if (!friend.isEmpty()) {
+
+            List<Friend> friendInverse = friendRepository
+                    .findByFusernameAndFriend(req.getFriendUsername(),
+                    req.getLoginData().getUsername());
+
+            System.out.println("removing: " + friend.get(0));
+            friendRepository.delete(friend.get(0));
+            friendRepository.delete(friendInverse.get(0));
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
     }
 }
 
