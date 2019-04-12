@@ -1197,7 +1197,7 @@ public class GuiMain extends Application {
 
             AlertBox.display("By choosing to have a Vegetarian Meal instead of a Meat meal,"
                     + " you reduced CO2 by: "
-                    + co2Response.getCO2Reduction() + " grams. Good job!");
+                    + co2Response.getCO2Reduction() + " grams. Good job!", "Success!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage(),
                     "Something went wrong");
@@ -1215,7 +1215,7 @@ public class GuiMain extends Application {
         try {
             CO2Response res = ClientApplication.sendAddLocalProduceRequest(weight, organic);
             AlertBox.display("By choosing to buy from a Local Store reduced CO2 by: "
-                    + res.getCO2Reduction() + " grams. Good job!");
+                    + res.getCO2Reduction() + " grams. Good job!", "Success!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred processing your request:\n" + e.getMessage(),
                     "Something went wrong");
@@ -1232,7 +1232,7 @@ public class GuiMain extends Application {
         try {
             CO2Response res = ClientApplication.sendAddTransportRequest(travelType, distance);
             AlertBox.display("By choosing to travel by: " + travelType + " you reduced CO2 by "
-                    + res.getCO2Reduction() + " grams. Good job!");
+                    + res.getCO2Reduction() + " grams. Good job!", "Success!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage(), "Something went wrong");
         }
@@ -1249,7 +1249,7 @@ public class GuiMain extends Application {
         try {
             CO2Response res = ClientApplication.sendAddHomeTempRequest(temperature, duration);
             AlertBox.display("By reducing the temperature you reduced CO2 by: "
-                    + res.getCO2Reduction() + " grams. Good job!");
+                    + res.getCO2Reduction() + " grams. Good job!", "Success!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage(), "");
         }
@@ -1266,7 +1266,7 @@ public class GuiMain extends Application {
         try {
             CO2Response res = ClientApplication.sendAddSolarPanelRequest(area, hoursSunlight);
             AlertBox.display("Your Solar Panel has reduced CO2 by: "
-                    + res.getCO2Reduction() + "grams. Good job!");
+                    + res.getCO2Reduction() + "grams. Good job!", "Success!");
         } catch (RestClientException e) {
             AlertBox.display("An error occurred:\n" + e.getMessage(), "Something went wrong");
         }
