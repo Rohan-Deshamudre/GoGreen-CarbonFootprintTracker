@@ -375,43 +375,41 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 4 is received for the user.
-     * @param user the user.
+     * Checks wherther the user has a new Achievement.
+     * @param leaderboard the leaderboard.
+     * @return whether the user has a new achievement.
      */
-    public static void checkAchievement4(CO2 user, Leaderboard leaderboard) {
+    public static boolean checkAchievement4(Leaderboard leaderboard) {
         if (user.getAchievement().charAt(4) == '0') {
             if (leaderboard.getUsers().size() > 0) {
-                ClientApplication.changeAchievements(user, 4);
+                return true;
             }
         }
+        return false;
     }
 
     /**
-     * Checks if achievement 5 is received for the user.
-     * @param user the user.
+     * Checks wherther the user has a new Achievement.
+     * @param leaderboard the leaderboard.
+     * @return whether the user has a new achievement.
      */
-    public static void checkAchievement5(CO2 user, Leaderboard leaderboard) {
-        if (user.getAchievement().charAt(5) == '0') {
-            if (leaderboard.getUsers().size() > 9) {
-                ClientApplication.changeAchievements(user, 5);
-            }
+    public static boolean checkAchievement5(Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(5) == '0' && leaderboard.getUsers().size() > 9) {
+            return true;
         }
+        return false;
     }
 
-
     /**
-     * Checks if achievement 9 is received for the user.
+     * Checks wherther the user has a new Achievement.
+     * @param checkbox the checkbox value.
+     * @return whether the user has a new achievement.
      */
-    public static void checkAchievement9(boolean checkbox) {
-        CO2 user = null;
-        try {
-            user = ClientApplication.sendGetUserStatsRequest();
-        } catch (RestClientException f) {
-            f.printStackTrace();
-        }
+    public static boolean checkAchievement9(boolean checkbox) {
         if (user.getAchievement().charAt(9) == '0' && checkbox) {
-            ClientApplication.changeAchievements(user, 9);
+            return true;
         }
+        return false;
     }
 
 

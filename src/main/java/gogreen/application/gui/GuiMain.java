@@ -911,8 +911,14 @@ public class GuiMain extends Application {
         }
 
         // Check for friends achievements
-        ClientApplication.checkAchievement4(user, leaderboard);
-        ClientApplication.checkAchievement5(user, leaderboard);
+        boolean gotten = ClientApplication.checkAchievement4(leaderboard);
+        if (gotten) {
+            ClientApplication.changeAchievements(ClientApplication.getUser(), 4);
+        }
+        gotten = ClientApplication.checkAchievement5(leaderboard);
+        if (gotten) {
+            ClientApplication.changeAchievements(ClientApplication.getUser(), 5);
+        }
 
         Label stats = new Label("Stats");
         grid.add(stats, 0, 0);
