@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -61,6 +62,9 @@ public class ActivityAddTransportDataTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final LoginData fakeLoginData = new LoginData("Max", "v3rSt@ppEn");
     private final TravelType fakeTravelType = TravelType.BIKE;
@@ -101,7 +105,7 @@ public class ActivityAddTransportDataTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
 
         AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
             fakeDistance);
@@ -119,7 +123,7 @@ public class ActivityAddTransportDataTest {
      */
     @Test
     void emptyCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
         AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
@@ -154,7 +158,7 @@ public class ActivityAddTransportDataTest {
      */
     @Test
     void dataCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 

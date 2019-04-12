@@ -13,6 +13,7 @@ import gogreen.application.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class MockitoTestHelper {
 
@@ -36,12 +37,13 @@ public class MockitoTestHelper {
      *
      * @param loginData - login credentials for the user.
      */
-    public static void setUserValid(LoginData loginData, UserRepository userRepository) {
+    public static void setUserValid(LoginData loginData, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         User fakeUser = mock(User.class);
-        when(fakeUser.getPassword()).thenReturn(loginData.getPassword());
+        when(fakeUser.getPassword()).thenReturn("TestEncryptedPassword");
         List<User> fakeUserList = new ArrayList<>();
         fakeUserList.add(fakeUser);
         when(userRepository.findByUsername(loginData.getUsername())).thenReturn(fakeUserList);
+        when(passwordEncoder.matches(loginData.getPassword(), fakeUser.getPassword())).thenReturn(true);
     }
 
     /**

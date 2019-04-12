@@ -42,7 +42,7 @@ public class LoginController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity handleLoginRequest(@RequestBody LoginData cred) {
-        if (checkLoginData(cred, userRepository)) {
+        if (checkLoginData(cred, userRepository, passwordEncoder)) {
             // login successful
             return new ResponseEntity(HttpStatus.OK);
         }
@@ -79,9 +79,10 @@ public class LoginController {
      *
      * @param loginData      - LoginData object containing the users login credentials.
      * @param userRepository - the repository storing users to check.
+     * @param passwordEncoder - a spring passwordencoder instance
      * @return - true iff login is successful.
      */
-    public boolean checkLoginData(LoginData loginData, UserRepository userRepository) {
+    public static boolean checkLoginData(LoginData loginData, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         List<User> userDb = userRepository.findByUsername(loginData.getUsername());
 
         for (User user : userDb) {

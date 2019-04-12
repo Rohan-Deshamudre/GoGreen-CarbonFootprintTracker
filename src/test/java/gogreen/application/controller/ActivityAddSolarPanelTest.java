@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -60,6 +61,9 @@ public class ActivityAddSolarPanelTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final LoginData fakeLoginData = new LoginData("Versace", "g0d");
     private final int fakeArea = 25;
@@ -100,7 +104,7 @@ public class ActivityAddSolarPanelTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
             fakeHoursSunlight);
@@ -118,7 +122,7 @@ public class ActivityAddSolarPanelTest {
      */
     @Test
     void emptyCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
@@ -153,7 +157,7 @@ public class ActivityAddSolarPanelTest {
      */
     @Test
     void dataCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 

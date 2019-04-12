@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,9 @@ public class ActivityController {
     @Autowired
     private FriendRequestRepository friendRequestRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private Logger log = LogManager.getLogger(ActivityController.class.getName());
 
     /**
@@ -65,7 +69,7 @@ public class ActivityController {
     public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddFoodRequest req) {
         log.info(req.toString());
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -94,7 +98,7 @@ public class ActivityController {
     public ResponseEntity<CO2Response> handleFoodAdd(@RequestBody AddLocalProduceRequest req) {
         log.info(req.toString());
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -124,7 +128,7 @@ public class ActivityController {
     public ResponseEntity<CO2Response> handleTransportAdd(@RequestBody AddTransportRequest req) {
         log.info(req.toString());
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -154,7 +158,7 @@ public class ActivityController {
     public ResponseEntity<CO2Response> handleHomeTempAdd(@RequestBody AddHomeTempRequest req) {
         log.info(req.toString());
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -184,7 +188,7 @@ public class ActivityController {
     public ResponseEntity<CO2Response> handleSolarPanAdd(@RequestBody AddSolarPanelRequest req) {
         log.info(req.toString());
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -211,7 +215,7 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<Leaderboard> showFriends(@RequestBody LoginData req) {
 
-        if (!loginController.checkLoginData(req, userRepository)) {
+        if (!loginController.checkLoginData(req, userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -241,7 +245,7 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<CO2> userStats(@RequestBody LoginData req) {
 
-        if (!loginController.checkLoginData(req, userRepository)) {
+        if (!loginController.checkLoginData(req, userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -264,7 +268,7 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<Boolean> addFriend(@RequestBody AddFriendRequest req) {
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
 
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -307,7 +311,7 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<Leaderboard> seeFriendRequests(@RequestBody LoginData req) {
 
-        if (!loginController.checkLoginData(req, userRepository)) {
+        if (!loginController.checkLoginData(req, userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -338,7 +342,7 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<Boolean> respondToFriendRequest(@RequestBody FriendRequestResponse req) {
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -379,7 +383,7 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity<Boolean> removeFriendRequest(@RequestBody AddFriendRequest req) {
 
-        if (!loginController.checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

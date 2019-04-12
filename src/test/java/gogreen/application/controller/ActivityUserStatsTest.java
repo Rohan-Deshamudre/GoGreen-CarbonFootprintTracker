@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -55,6 +56,9 @@ public class ActivityUserStatsTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/user";
 
@@ -93,7 +97,7 @@ public class ActivityUserStatsTest {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
-                userRepository);
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)
@@ -108,7 +112,7 @@ public class ActivityUserStatsTest {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()),
-                userRepository);
+                userRepository, passwordEncoder);
 
         List<CO2> user = new ArrayList<>(1);
         user.add(new CO2("dummyFriend1", 20, 20, 20, 20));

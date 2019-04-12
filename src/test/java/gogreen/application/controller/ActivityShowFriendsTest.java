@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -57,6 +58,9 @@ public class ActivityShowFriendsTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/friendlist";
 
@@ -93,7 +97,7 @@ public class ActivityShowFriendsTest {
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)
@@ -107,7 +111,7 @@ public class ActivityShowFriendsTest {
     void emptyTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         when(friendRepository.findByFusername(fakeLoginData.getUsername()))
                 .thenReturn(new ArrayList<>());
@@ -130,7 +134,7 @@ public class ActivityShowFriendsTest {
     void fullTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<Friend> all = new ArrayList<>();
         all.add(new Friend(0, "dummy", "dummyFriend1"));
