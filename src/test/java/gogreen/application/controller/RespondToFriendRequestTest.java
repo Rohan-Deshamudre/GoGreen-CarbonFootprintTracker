@@ -119,7 +119,7 @@ public class RespondToFriendRequestTest {
 
         List<FriendRequest> all = new ArrayList<>();
         List<CO2> friend = new ArrayList<>();
-        friend.add(new CO2("steve", 4, 4, 4, 4));
+        friend.add(new CO2("steve", 4, 4, 4, 4, "101010"));
         all.add(new FriendRequest(1,"steve", "shdah"));
 
 
@@ -151,7 +151,7 @@ public class RespondToFriendRequestTest {
 
         List<FriendRequest> all = new ArrayList<>();
         List<CO2> friend = new ArrayList<>();
-        friend.add(new CO2("steve", 4, 4, 4, 4));
+        friend.add(new CO2("steve", 4, 4, 4, 4, "101010"));
         all.add(new FriendRequest(1,"steve", "shdah"));
 
 

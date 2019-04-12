@@ -46,6 +46,7 @@ public class LoginController {
             // login successful
             return new ResponseEntity(HttpStatus.OK);
         }
+
         return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
@@ -71,7 +72,7 @@ public class LoginController {
         userRepository.save(new User(cred.getUsername(),encryptedPassword));
         co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0));
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
     /**
