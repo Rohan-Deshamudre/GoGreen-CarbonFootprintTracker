@@ -135,7 +135,7 @@ public class ActivitySeeFriendRequestsTest {
 
         List<FriendRequest> all = new ArrayList<>();
         List<CO2> friend = new ArrayList<>();
-        friend.add(new CO2("steve", 4, 4, 4, 4, "101010"));
+        friend.add(new CO2("steve", 4, 4, 4, 4));
         all.add(new FriendRequest(1,"steve", "shdah"));
 
         when(friendRequestRepository.findByRequestTo("shdah")).thenReturn(all);

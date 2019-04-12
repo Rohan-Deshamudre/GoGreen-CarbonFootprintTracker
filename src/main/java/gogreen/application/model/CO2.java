@@ -14,19 +14,16 @@ public class CO2 {
     private String cusername;
 
     @Column(name = "co2food")
-    private int co2Food;
+    private int co2food;
 
     @Column(name = "co2transport")
-    private int co2Transport;
+    private int co2transport;
 
     @Column(name = "co2energy")
-    private int co2Energy;
+    private int co2energy;
 
     @Column(name = "co2reduc")
-    private int co2Reduc;
-
-    @Column(name = "achievement")
-    private String achievement;
+    private int co2reduc;
 
     protected CO2() {
     }
@@ -35,28 +32,25 @@ public class CO2 {
      * Makes a CO2 object with the provided parameters.
      *
      * @param cusername    the username of the user.
-     * @param co2Food      the total CO2 reduced by diet.
-     * @param co2Transport the total CO2 reduced by transport.
-     * @param co2Energy    the total CO2 reduced by energy.
-     * @param co2Reduc     the total CO2 reduced by the user.
-     * @param achievement  achievements of the user.
+     * @param co2food      the total CO2 reduced by diet.
+     * @param co2transport the total CO2 reduced by transport.
+     * @param co2energy    the total CO2 reduced by energy.
+     * @param co2reduc     the total CO2 reduced by the user.
      */
-    public CO2(String cusername, int co2Food, int co2Transport, int co2Energy, int co2Reduc,
-               String achievement) {
+    public CO2(String cusername, int co2food, int co2transport, int co2energy, int co2reduc) {
         this.cusername = cusername;
-        this.co2Food = co2Food;
-        this.co2Transport = co2Transport;
-        this.co2Energy = co2Energy;
-        this.co2Reduc = co2Reduc;
-        this.achievement = achievement;
+        this.co2food = co2food;
+        this.co2transport = co2transport;
+        this.co2energy = co2energy;
+        this.co2reduc = co2reduc;
     }
 
     @Override
     public String toString() {
         return String.format(
             "CO2[cusername='%s', Co2Food='%s', Co2Transport='%s', "
-                + "Co2Energy='%s', Co2Reduction='%d', achievement='%s']",
-            cusername, co2Food, co2Transport, co2Energy, co2Reduc, achievement);
+                + "Co2Energy='%s', Co2Reduction='%d']",
+            cusername, co2food, co2transport, co2energy, co2reduc);
     }
 
     public String getCUsername() {
@@ -68,11 +62,11 @@ public class CO2 {
     }
 
     public int getCO2food() {
-        return co2Food;
+        return co2food;
     }
 
     public void setCO2food(int co2food) {
-        this.co2Food = co2food;
+        this.co2food = co2food;
     }
 
     /**
@@ -81,15 +75,15 @@ public class CO2 {
      * @param co2Food - amount of CO2 to add.
      */
     public void addCO2Food(int co2Food) {
-        this.co2Food += co2Food;
+        this.co2food += co2Food;
     }
 
     public int getCO2transport() {
-        return co2Transport;
+        return co2transport;
     }
 
     public void setCO2transport(int co2transport) {
-        this.co2Transport = co2transport;
+        this.co2transport = co2transport;
     }
 
     /**
@@ -98,15 +92,15 @@ public class CO2 {
      * @param co2Transport - amount of CO2 to add.
      */
     public void addCO2Transport(int co2Transport) {
-        this.co2Transport += co2Transport;
+        this.co2transport += co2Transport;
     }
 
     public int getCO2energy() {
-        return co2Energy;
+        return co2energy;
     }
 
     public void setCO2energy(int co2energy) {
-        this.co2Energy = co2energy;
+        this.co2energy = co2energy;
     }
 
     /**
@@ -115,15 +109,15 @@ public class CO2 {
      * @param co2Energy - amount of CO2 to add.
      */
     public void addCO2Energy(int co2Energy) {
-        this.co2Energy += co2Energy;
+        this.co2energy += co2Energy;
     }
 
     public int getCO2reduc() {
-        return co2Reduc;
+        return co2reduc;
     }
 
     public void setCO2reduc(int co2reduc) {
-        this.co2Reduc = co2reduc;
+        this.co2reduc = co2reduc;
     }
 
     /**
@@ -132,14 +126,6 @@ public class CO2 {
      * @param co2Reduc - the amount of CO2 to add to the total.
      */
     public void addCO2Reduc(int co2Reduc) {
-        this.co2Reduc += co2Reduc;
-    }
-
-    public String getAchievement() {
-        return achievement;
-    }
-
-    public void setAchievement(String achievement) {
-        this.achievement = achievement;
+        this.co2reduc += co2Reduc;
     }
 }

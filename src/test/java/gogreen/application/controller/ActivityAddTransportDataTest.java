@@ -120,7 +120,7 @@ public class ActivityAddTransportDataTest {
     @Test
     void emptyCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0, "101010"), co2Repository);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
 
         AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
             fakeDistance);
@@ -155,7 +155,7 @@ public class ActivityAddTransportDataTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164, "101010");
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddTransportRequest req = new AddTransportRequest(fakeLoginData, fakeTravelType,
