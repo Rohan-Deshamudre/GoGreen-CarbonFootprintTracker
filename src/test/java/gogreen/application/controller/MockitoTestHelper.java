@@ -10,10 +10,10 @@ import gogreen.application.model.CO2;
 import gogreen.application.model.User;
 import gogreen.application.repository.CO2Repository;
 import gogreen.application.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class MockitoTestHelper {
 
@@ -37,13 +37,16 @@ public class MockitoTestHelper {
      *
      * @param loginData - login credentials for the user.
      */
-    public static void setUserValid(LoginData loginData, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public static void setUserValid(LoginData loginData,
+                                    UserRepository userRepository,
+                                    PasswordEncoder passwordEncoder) {
         User fakeUser = mock(User.class);
         when(fakeUser.getPassword()).thenReturn("TestEncryptedPassword");
         List<User> fakeUserList = new ArrayList<>();
         fakeUserList.add(fakeUser);
         when(userRepository.findByUsername(loginData.getUsername())).thenReturn(fakeUserList);
-        when(passwordEncoder.matches(loginData.getPassword(), fakeUser.getPassword())).thenReturn(true);
+        when(passwordEncoder.matches(loginData.getPassword(),
+                fakeUser.getPassword())).thenReturn(true);
     }
 
     /**
@@ -54,8 +57,8 @@ public class MockitoTestHelper {
     public static void setCarbonRecord(CO2 co2, CO2Repository co2Repository) {
         List<CO2> dbUserCO2List = new ArrayList<>();
         dbUserCO2List.add(
-            new CO2(co2.getCUsername(), co2.getCO2food(), co2.getCO2transport(), co2.getCO2energy(),
-                co2.getCO2reduc(), "101010"));
+            new CO2(co2.getCUsername(), co2.getCO2food(), co2.getCO2transport(),
+                    co2.getCO2energy(), co2.getCO2reduc(), "101010"));
         when(co2Repository.findByCusername(co2.getCUsername())).thenReturn(dbUserCO2List);
     }
 }

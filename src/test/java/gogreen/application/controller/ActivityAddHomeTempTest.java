@@ -103,7 +103,8 @@ public class ActivityAddHomeTempTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         AddHomeTempRequest req = new AddHomeTempRequest(fakeLoginData, fakeTemp, fakeDuration);
         mockMvc.perform(
@@ -121,7 +122,8 @@ public class ActivityAddHomeTempTest {
     @Test
     void emptyCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
+                "00000000000000"), co2Repository);
 
         AddHomeTempRequest req = new AddHomeTempRequest(fakeLoginData, fakeTemp, fakeDuration);
         MvcResult res = mockMvc.perform(
@@ -155,7 +157,8 @@ public class ActivityAddHomeTempTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164,
+                "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddHomeTempRequest req = new AddHomeTempRequest(fakeLoginData, fakeTemp, fakeDuration);

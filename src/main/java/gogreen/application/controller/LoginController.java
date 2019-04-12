@@ -62,6 +62,11 @@ public class LoginController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity handleRegisterRequest(@RequestBody LoginData cred) {
+        if (cred.getPassword().equals("") || cred.getUsername().equals("")) {
+            // Empty Field
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
         if (!userRepository.findByUsername(cred.getUsername()).isEmpty()) {
             // Username is taken
             return new ResponseEntity(HttpStatus.FORBIDDEN);
@@ -70,9 +75,9 @@ public class LoginController {
         // Register new account
         String encryptedPassword = passwordEncoder.encode(cred.getPassword());
         userRepository.save(new User(cred.getUsername(),encryptedPassword));
-        co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0));
+        co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0, "00000000000000"));
 
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**

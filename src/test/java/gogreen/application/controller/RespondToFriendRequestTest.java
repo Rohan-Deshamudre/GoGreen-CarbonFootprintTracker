@@ -99,7 +99,8 @@ public class RespondToFriendRequestTest {
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)

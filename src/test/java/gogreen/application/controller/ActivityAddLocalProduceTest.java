@@ -104,7 +104,8 @@ public class ActivityAddLocalProduceTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
             fakeOrganic);
@@ -123,7 +124,8 @@ public class ActivityAddLocalProduceTest {
     @Test
     void emptyCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
+                "00000000000000"), co2Repository);
 
         AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,
             fakeOrganic);
@@ -158,7 +160,8 @@ public class ActivityAddLocalProduceTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164,
+                "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddLocalProduceRequest req = new AddLocalProduceRequest(fakeLoginData, fakeWeight,

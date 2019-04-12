@@ -98,7 +98,8 @@ class LoginControllerTest {
     @Test
     void passwordUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "boogie"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "boogie"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post("/login")
@@ -132,7 +133,8 @@ class LoginControllerTest {
     @Test
     void usernameTakenRegistrationTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Bob", "R0$$");
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "marl3y"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "marl3y"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post("/login/register")
@@ -177,7 +179,8 @@ class LoginControllerTest {
     @Test
     void newUserRegistrationTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Marco", "p0lO");
-        when(passwordEncoder.encode(fakeLoginData.getPassword())).thenReturn("TestEncryptedPassword");
+        when(passwordEncoder.encode(fakeLoginData.getPassword()))
+                .thenReturn("TestEncryptedPassword");
 
         mockMvc.perform(
             post("/login/register")

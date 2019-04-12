@@ -104,7 +104,8 @@ public class ActivityAddSolarPanelTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
             fakeHoursSunlight);
@@ -123,7 +124,8 @@ public class ActivityAddSolarPanelTest {
     @Test
     void emptyCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
+                "00000000000000"), co2Repository);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,
             fakeHoursSunlight);
@@ -158,7 +160,8 @@ public class ActivityAddSolarPanelTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164,
+                "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddSolarPanelRequest req = new AddSolarPanelRequest(fakeLoginData, fakeArea,

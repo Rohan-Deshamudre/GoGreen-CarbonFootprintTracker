@@ -1,6 +1,5 @@
 package gogreen.application.controller;
 
-
 import gogreen.application.client.Leaderboard;
 
 import gogreen.application.communication.AddFoodRequest;
@@ -268,8 +267,9 @@ public class ActivityController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<Boolean> changeAchievements(@RequestBody ChangeAchievements req) {
-        if (!checkLoginData(req.getLoginData(), userRepository)) {
+        if (!loginController.checkLoginData(req.getLoginData(), userRepository, passwordEncoder)) {
             // session invalid
+
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 

@@ -101,7 +101,8 @@ public class ActivityAddFoodDataTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository, passwordEncoder);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository,
+                passwordEncoder);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         mockMvc.perform(
@@ -118,8 +119,10 @@ public class ActivityAddFoodDataTest {
      */
     @Test
     void emptyCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
+        setUserValid(fakeLoginData, userRepository,
+                passwordEncoder);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
+                "00000000000000"), co2Repository);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         MvcResult res = mockMvc.perform(
@@ -153,7 +156,8 @@ public class ActivityAddFoodDataTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository, passwordEncoder);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164,
+                "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
