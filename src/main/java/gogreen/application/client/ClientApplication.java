@@ -12,7 +12,6 @@ import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
 import gogreen.application.gui.AlertBox;
-import gogreen.application.gui.GuiMain;
 import gogreen.application.model.Achievement;
 import gogreen.application.model.CO2;
 import org.apache.logging.log4j.LogManager;
@@ -325,8 +324,8 @@ public class ClientApplication {
         System.out.println(newAchievements);
 
         // Show new achievement pop up.
-        AlertBox.display(Achievement.getName(id + 1) + "\n\n" +
-                        Achievement.getDescription(id + 1), "New Achievement!");
+        AlertBox.display(Achievement.getName(id + 1) + "\n\n"
+                + Achievement.getDescription(id + 1), "New Achievement!");
 
         ClientApplication.changeAchievements(newAchievements);
     }

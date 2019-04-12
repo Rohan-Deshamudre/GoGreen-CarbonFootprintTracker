@@ -1,9 +1,5 @@
 package gogreen.application.model;
 
-import gogreen.application.client.ClientApplication;
-import gogreen.application.gui.AlertBox;
-import gogreen.application.gui.GuiMain;
-
 public class Achievement {
 
     private static String[] achievements = {
