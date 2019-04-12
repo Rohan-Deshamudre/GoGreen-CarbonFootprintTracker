@@ -37,9 +37,6 @@ public class LoginController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity handleLoginRequest(@RequestBody LoginData cred) {
-        if (cred.getUsername().equals("") || cred.getPassword().equals("")) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
 
         if (checkLoginData(cred, userRepository)) {
             // login successful
