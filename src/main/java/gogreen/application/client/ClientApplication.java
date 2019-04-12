@@ -339,39 +339,43 @@ public class ClientApplication {
     }
 
     /**
-     * Checks if achievement 1 is received for the user.
-     * @param user the user.
+     * Checks wherther the user has a new Achievement.
+     * @param leaderboard the leaderboard.
+     * @return whether the user has a new achievement.
      */
-    public static void checkAchievement1(CO2 user, Leaderboard leaderboard) {
+    public static boolean checkAchievement1(Leaderboard leaderboard) {
         if (user.getAchievement().charAt(1) == '0') {
             if (leaderboard.getUsers().get(0) == user) {
-                ClientApplication.changeAchievements(user, 1);
+                return true;
             }
         }
+        return false;
     }
 
     /**
-     * Checks if achievement 2 is received for the user.
-     * @param user the user.
+     * Checks wherther the user has a new Achievement.
+     * @return whether the user has a new achievement.
      */
-    public static void checkAchievement2(CO2 user) {
+    public static boolean checkAchievement2() {
         if (user.getAchievement().charAt(2) == '0') {
             if (user.getCO2reduc() >= 1000) {
-                ClientApplication.changeAchievements(user, 2);
+                return true;
             }
         }
+        return false;
     }
 
     /**
-     * Checks if achievement 3 is received for the user.
-     * @param user the user.
+     * Checks wherther the user has a new Achievement.
+     * @return whether the user has a new achievement.
      */
-    public static void checkAchievement3(CO2 user) {
+    public static boolean checkAchievement3() {
         if (user.getAchievement().charAt(3) == '0') {
             if (user.getCO2reduc() >= 10000) {
-                ClientApplication.changeAchievements(user, 3);
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -411,9 +415,6 @@ public class ClientApplication {
         }
         return false;
     }
-
-
-
 
     /**
      * Checks whether the user has a new achievement.

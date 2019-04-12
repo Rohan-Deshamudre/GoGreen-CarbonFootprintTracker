@@ -292,11 +292,20 @@ public class GuiMain extends Application {
         leaderboard.sortLeaderboard();
 
         // Check for getting to top of the leaderboard achievement.
-        ClientApplication.checkAchievement1(user, leaderboard);
+        boolean gotten = ClientApplication.checkAchievement1(leaderboard);
+        if (gotten) {
+            ClientApplication.changeAchievements(ClientApplication.getUser(), 1);
+        }
         // Check for 1,000 points achievement
-        ClientApplication.checkAchievement2(user);
+        gotten = ClientApplication.checkAchievement2();
+        if (gotten) {
+            ClientApplication.changeAchievements(ClientApplication.getUser(), 2);
+        }
         // Check for 10,000 points achievement
-        ClientApplication.checkAchievement3(user);
+        gotten = ClientApplication.checkAchievement3();
+        if (gotten) {
+            ClientApplication.changeAchievements(ClientApplication.getUser(), 3);
+        }
 
 
 
