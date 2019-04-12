@@ -139,7 +139,7 @@ class LoginControllerTest {
      * body: "Username is taken!"
      */
     @Test
-    void EmptyRegistrationTest() throws Exception {
+    void emptyRegistrationTest() throws Exception {
 
         mockMvc.perform(
                 post("/login/register")

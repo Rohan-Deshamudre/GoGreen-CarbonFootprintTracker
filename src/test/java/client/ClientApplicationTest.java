@@ -1,7 +1,5 @@
 package client;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static gogreen.application.client.ClientApplication.checkAchievement;
 import static gogreen.application.client.ClientApplication.checkAchievement1;
 import static gogreen.application.client.ClientApplication.checkAchievement2;
@@ -10,12 +8,13 @@ import static gogreen.application.client.ClientApplication.checkAchievement4;
 import static gogreen.application.client.ClientApplication.checkAchievement5;
 import static gogreen.application.client.ClientApplication.checkAchievement9;
 import static gogreen.application.client.ClientApplication.setUser;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gogreen.application.client.Leaderboard;
 import gogreen.application.model.CO2;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 
 class ClientApplicationTest {
 
