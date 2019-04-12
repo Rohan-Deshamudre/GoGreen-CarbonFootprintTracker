@@ -6,11 +6,13 @@ import gogreen.application.communication.AddHomeTempRequest;
 import gogreen.application.communication.AddLocalProduceRequest;
 import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.AddTransportRequest;
-import gogreen.application.communication.AddTransportRequest.TravelType;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ChangeAchievements;
 import gogreen.application.communication.ClientMessage;
 import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
+import gogreen.application.gui.AlertBox;
+import gogreen.application.model.Achievement;
 import gogreen.application.model.CO2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,13 +22,14 @@ import org.springframework.web.client.RestTemplate;
 
 public class ClientApplication {
 
-    private static final String URL = "https://gogreen32.herokuapp.com/";
-    //private static final String URL = "http://localhost:8080/";
+//    private static final String URL = "https://gogreen32.herokuapp.com/";
+    private static final String URL = "http://localhost:8080/";
 
     private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
     private static RestTemplate restTemplate = new RestTemplate();
 
     private static LoginData loginData = null;
+    private static CO2 user = null;
 
     /**
      * get requests index page of our heroku server.
@@ -118,8 +121,46 @@ public class ClientApplication {
         throws RestClientException {
         ResponseEntity<CO2> res = restTemplate.postForEntity(URL + "user", loginData, CO2.class);
 
-        System.out.println(res);
+        setUser(res.getBody());
+        System.out.println(res.getBody());
         return res.getBody();
+    }
+
+    /**
+     * Changes the achievements of a user.
+     * @param achievements the achievements.
+     * @return method success.
+     * @throws RestClientException can throw exception.
+     */
+    public static boolean changeAchievements(String achievements)
+            throws RestClientException {
+
+        ChangeAchievements req = new ChangeAchievements(loginData, achievements);
+
+        ResponseEntity<Boolean> res = restTemplate.postForEntity(URL + "changeachievements",
+                req, Boolean.class);
+
+        System.out.println(res);
+
+        return res.getBody();
+    }
+
+    /**
+     * Marks one achievement for a user as done.
+     * @param user the user.
+     * @param id the index of the achievement to be changed.
+     */
+    public static void changeAchievements(CO2 user, int id) {
+        String oldAchievements = user.getAchievement();
+        String newAchievements = oldAchievements.substring(0,id)
+                + '1' + oldAchievements.substring(id + 1);
+        System.out.println(newAchievements);
+
+        // Show new achievement pop up.
+        AlertBox.display(Achievement.getName(id + 1) + "\n\n"
+                + Achievement.getDescription(id + 1), "New Achievement!");
+
+        ClientApplication.changeAchievements(newAchievements);
     }
 
     /**
@@ -228,7 +269,6 @@ public class ClientApplication {
         return sendActivityAddRequest("activity/food/add", req);
     }
 
-
     /**
      * This method sends a post request to the server with data provided by the user about the local
      * produce they bought.
@@ -253,7 +293,8 @@ public class ClientApplication {
      * @return CO2Response - response object containing data returned by server.
      * @throws RestClientException - on request unsuccessful.
      */
-    public static CO2Response sendAddTransportRequest(TravelType travelType, int distance)
+    public static CO2Response sendAddTransportRequest(AddTransportRequest.TravelType travelType,
+                                                      int distance)
         throws RestClientException {
         AddTransportRequest req = new AddTransportRequest(loginData, travelType, distance);
         return sendActivityAddRequest("activity/transport/add", req);
@@ -287,5 +328,115 @@ public class ClientApplication {
         throws RestClientException {
         AddSolarPanelRequest req = new AddSolarPanelRequest(loginData, area, hoursSunlight);
         return sendActivityAddRequest("activity/solarpanel/add", req);
+    }
+
+    /**
+     * Checks if achievement 0 is received for the user.
+     */
+    public static void checkAchievement0() {
+        // Check for night mode
+    }
+
+    /**
+     * Checks wherther the user has a new Achievement.
+     * @param leaderboard the leaderboard.
+     * @return whether the user has a new achievement.
+     */
+    public static boolean checkAchievement1(Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(1) == '0') {
+            if (leaderboard.getUsers().get(0) == user) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks wherther the user has a new Achievement.
+     * @return whether the user has a new achievement.
+     */
+    public static boolean checkAchievement2() {
+        if (user.getAchievement().charAt(2) == '0') {
+            if (user.getCO2reduc() >= 1000) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks wherther the user has a new Achievement.
+     * @return whether the user has a new achievement.
+     */
+    public static boolean checkAchievement3() {
+        if (user.getAchievement().charAt(3) == '0') {
+            if (user.getCO2reduc() >= 10000) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks wherther the user has a new Achievement.
+     * @param leaderboard the leaderboard.
+     * @return whether the user has a new achievement.
+     */
+    public static boolean checkAchievement4(Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(4) == '0') {
+            if (leaderboard.getUsers().size() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks wherther the user has a new Achievement.
+     * @param leaderboard the leaderboard.
+     * @return whether the user has a new achievement.
+     */
+    public static boolean checkAchievement5(Leaderboard leaderboard) {
+        if (user.getAchievement().charAt(5) == '0' && leaderboard.getUsers().size() > 9) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks wherther the user has a new Achievement.
+     * @param checkbox the checkbox value.
+     * @return whether the user has a new achievement.
+     */
+    public static boolean checkAchievement9(boolean checkbox) {
+        if (user.getAchievement().charAt(9) == '0' && checkbox) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the user has a new achievement.
+     * @param id the achievement id.
+     * @return whether you got a new achievement.
+     */
+    public static boolean checkAchievement(int id) {
+        return user.getAchievement().charAt(id) == '0';
+    }
+
+    /**
+     * Getter for user.
+     * @return the user.
+     */
+    public static CO2 getUser() {
+        return user;
+    }
+
+    /**
+     * Setter for user.
+     * @param user the user.
+     */
+    public static void setUser(CO2 user) {
+        ClientApplication.user = user;
     }
 }

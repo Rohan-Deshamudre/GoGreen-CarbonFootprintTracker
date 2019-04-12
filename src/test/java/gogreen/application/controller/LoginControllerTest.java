@@ -135,6 +135,35 @@ class LoginControllerTest {
     }
 
     /**
+     * Test registration for a username that is already taken. Result to pass: HTTP 403 Forbidden,
+     * body: "Username is taken!"
+     */
+    @Test
+    void emptyRegistrationTest() throws Exception {
+
+        mockMvc.perform(
+                post("/login/register")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(new LoginData("", ""))))
+                .andExpect(status().isForbidden())
+                .andReturn();
+
+        mockMvc.perform(
+                post("/login/register")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(new LoginData("NOT EMPTY", ""))))
+                .andExpect(status().isForbidden())
+                .andReturn();
+
+        mockMvc.perform(
+                post("/login/register")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(new LoginData("", "NOT EMPTY"))))
+                .andExpect(status().isForbidden())
+                .andReturn();
+    }
+
+    /**
      * Test registration for a new user. Result to pass: HTTP 201 Created
      */
     @Test
