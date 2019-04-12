@@ -15,11 +15,11 @@ public class AlertBox {
      * @param message the message being displayed
      */
 
-    public static void display(String message) {
+    public static void display(String message, String title) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Thank you for using this application");
+        window.setTitle(title);
         window.setMinWidth(400);
 
         Label label = new Label(message);

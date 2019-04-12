@@ -141,7 +141,7 @@ public class AddFriendTest {
         setUserValid(fakeLoginData, userRepository);
 
         List<CO2> all = new ArrayList<>();
-        all.add(new CO2("dummyFriend", 4, 4, 4, 4));
+        all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
         when(co2Repository.findByCusername("dummyFriend")).thenReturn(all);
         List<Friend> friends = new ArrayList<>();
         friends.add(new Friend(0, "dummy", "dummyFriend"));
@@ -174,7 +174,8 @@ public class AddFriendTest {
         setUserValid(fakeLoginData, userRepository);
 
         List<CO2> all = new ArrayList<>();
-        all.add(new CO2("dummyFriend", 4, 4, 4, 4));
+        all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
+
         when(co2Repository.findByCusername("dummyFriend")).thenReturn(all);
 
         List<Friend> friends = new ArrayList<>();
@@ -208,7 +209,8 @@ public class AddFriendTest {
         setUserValid(fakeLoginData, userRepository);
 
         List<CO2> all = new ArrayList<>();
-        all.add(new CO2("dummy", 4, 4, 4, 4));
+        all.add(new CO2("dummy", 4, 4, 4, 4, "101010"));
+
         when(co2Repository.findByCusername("dummy")).thenReturn(all);
 
         List<Friend> friends = new ArrayList<>();
@@ -242,7 +244,7 @@ public class AddFriendTest {
                 userRepository);
 
         List<CO2> all = new ArrayList<>();
-        all.add(new CO2("dummyFriend", 4, 4, 4, 4));
+        all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
         when(co2Repository.findByCusername("dummyFriend")).thenReturn(all);
 
         List<FriendRequest> requests = new ArrayList<>();

@@ -10,6 +10,7 @@ import gogreen.application.communication.AddLocalProduceRequest;
 import gogreen.application.communication.AddSolarPanelRequest;
 import gogreen.application.communication.AddTransportRequest;
 import gogreen.application.communication.CO2Response;
+import gogreen.application.communication.ChangeAchievements;
 import gogreen.application.communication.FriendRequestResponse;
 import gogreen.application.communication.LoginData;
 import gogreen.application.model.CO2;
@@ -251,6 +252,33 @@ public class ActivityController {
         return new ResponseEntity<>(user.get(0), HttpStatus.OK);
     }
 
+    /**
+     * Handles changing the achievements of a user.
+     *
+     * @param req the ChangeAchievements.
+     * @return if method was successful.
+     */
+    @PostMapping(value = "/changeachievements",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Boolean> changeAchievements(@RequestBody ChangeAchievements req) {
+        if (!checkLoginData(req.getLoginData(), userRepository)) {
+            // session invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<CO2> user = co2Repository.findByCusername(req.getLoginData().getUsername());
+        if (!user.isEmpty()) {
+            CO2 update = user.get(0);
+            update.setAchievement(req.getAchievements());
+            co2Repository.save(update);
+
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
+    }
 
     /**
      * Add friend request
@@ -403,19 +431,3 @@ public class ActivityController {
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
