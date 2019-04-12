@@ -14,7 +14,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -70,7 +69,7 @@ public class GuiMain extends Application {
         screenWidth = (int) primaryScreenBounds.getWidth();
         screenHeight = (int) primaryScreenBounds.getHeight();
         window.setMaximized(true);
-        nightmodeon  =false;
+        nightmodeon  = false;
 
         loginPage();
     }
@@ -1122,8 +1121,6 @@ public class GuiMain extends Application {
      * @param pane - the window in which to display the menu bar.
      */
     public void menuBar(BorderPane pane) {
-        Menu settings = new Menu("Settings");
-
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> logout());
 
@@ -1136,6 +1133,7 @@ public class GuiMain extends Application {
             nightmodeon = !nightmodeon;
             showMainMenu();
         });
+        Menu settings = new Menu("Settings");
 
         settings.getItems().addAll(nightMode, logout);
 
