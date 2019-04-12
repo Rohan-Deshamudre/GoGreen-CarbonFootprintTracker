@@ -1227,6 +1227,10 @@ public class GuiMain extends Application {
         MenuItem nightMode = new MenuItem(nightText);
         nightMode.setOnAction(e -> {
             nightmodeon = !nightmodeon;
+            boolean gotten = ClientApplication.checkAchievement(0);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 0);
+            }
             showMainMenu();
         });
         Menu settings = new Menu("Settings");
