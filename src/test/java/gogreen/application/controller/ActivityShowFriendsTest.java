@@ -138,9 +138,9 @@ public class ActivityShowFriendsTest {
         when(friendRepository.findByFusername(fakeLoginData.getUsername())).thenReturn(all);
 
         List<CO2> friend1 = new ArrayList<>(1);
-        friend1.add(new CO2("dummyFriend1", 4, 4, 4, 4));
+        friend1.add(new CO2("dummyFriend1", 4, 4, 4, 4, "101010"));
         List<CO2> friend2 = new ArrayList<>(1);
-        friend2.add(new CO2("dummyFriend1", 20, 20, 20, 20));
+        friend2.add(new CO2("dummyFriend1", 20, 20, 20, 20, "101010"));
 
         when(co2Repository.findByCusername(all.get(0).getFriend())).thenReturn(friend1);
         when(co2Repository.findByCusername(all.get(1).getFriend())).thenReturn(friend2);

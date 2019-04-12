@@ -116,7 +116,7 @@ public class ActivityAddFoodDataTest {
     @Test
     void emptyCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0), co2Repository);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0, "101010"), co2Repository);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, fakeIntValue);
         MvcResult res = mockMvc.perform(
@@ -150,7 +150,7 @@ public class ActivityAddFoodDataTest {
     @Test
     void dataCarbonRequest() throws Exception {
         setUserValid(fakeLoginData, userRepository);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164, "101010");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, fakeIntValue);
