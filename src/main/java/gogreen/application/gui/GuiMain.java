@@ -222,11 +222,13 @@ public class GuiMain extends Application {
 
         // Buttons
         Button loginButton = new Button("Login");
+        loginButton.setId("loginbutton");
         loginButton.setFocusTraversable(false);
         loginButton.setOnAction(e -> {
             loginPage();
         });
         Button registrationButton = new Button("Register");
+        registrationButton.setId("regisbutton");
         registrationButton.setFocusTraversable(false);
         registrationButton.setOnAction(e -> {
             // Register
@@ -254,7 +256,7 @@ public class GuiMain extends Application {
             passwordLabel1, passwordField, passwordField1, buttons
         );
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-        loginScene.getStylesheets().add("Register_css.css");
+        loginScene.getStylesheets().add("Login_css.css");
         // Show window
         window.setScene(loginScene);
         window.setTitle("Registration Page");
