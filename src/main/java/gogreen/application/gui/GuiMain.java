@@ -1733,8 +1733,8 @@ public class GuiMain extends Application {
         GridPane grid = new GridPane();
         grid.setId("gridachieve");
         grid.setPadding(new Insets(100));
-        grid.setVgap(8);
-        grid.setHgap(10);
+        grid.setVgap(0);
+        grid.setHgap(20);
         grid.setAlignment(Pos.CENTER);
 
 
@@ -1762,7 +1762,7 @@ public class GuiMain extends Application {
                 }
                 itr++;
             }
-            row += 2;
+            row += 3;
         }
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
@@ -1787,25 +1787,32 @@ public class GuiMain extends Application {
     private void achievementTile(CO2 user, int id, GridPane grid, int x1, int y1) {
         Label name = new Label(Achievement.getName(id));
         name.setId("labelname");
-        name.setMaxWidth(120);
-        name.setMaxHeight(120);
+        name.setPrefWidth(120);
+        name.setPrefHeight(180);
         name.setWrapText(true);
+        name.setPadding(new Insets(5));
+
+
+        VBox nameBox = new VBox();
+        nameBox.setMinHeight(30);
+//        nameBox.setPadding(new Insets(50, 0, 0, 0));
+//        nameBox.getChildren().addAll(name);
 
         Label description = new Label(Achievement.getDescription(id));
-        description.setMaxWidth(120);
-        description.setMaxHeight(240);
-        description.setId("labeldescrip");
+        description.setPrefWidth(120);
+        description.setPrefHeight(200);
         description.setWrapText(true);
+        description.setPadding(new Insets(5));
+        description.setId("labeldescrip");
 
         if (user.getAchievement().charAt(id - 1) == '1') {
             name.setId("labelnamehave");
             description.setId("labeldescriphave");
         }
 
-        grid.add(name, x1, y1);
-        grid.add(description, x1 , y1 + 1);
-        grid.setVgap(0);
-        grid.setHgap(20);
+        grid.add(nameBox, x1, y1);
+        grid.add(name, x1, y1 + 1);
+        grid.add(description, x1 , y1 + 2);
     }
 
     /**
