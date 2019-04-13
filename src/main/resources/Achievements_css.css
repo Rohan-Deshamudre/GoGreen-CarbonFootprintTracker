@@ -47,12 +47,10 @@
     -fx-border-radius: 0 0 10 10;
     -fx-background-radius: 0 0 10 10;
     -fx-background-color: #ffffff;
-    -fx-border-color: #000000;
     -fx-border-color: transparent black black black;
 }
 
 #labelnamehave{
-    -fx-border-color: black;
     -fx-background-color: #b9efc7;
     -fx-border-radius: 10 10 0 0;
     -fx-background-radius: 10 10 0 0;
@@ -63,6 +61,5 @@
     -fx-border-color: black;
     -fx-border-radius: 0 0 10 10;
     -fx-background-radius: 0 0 10 10;
-    -fx-background-color: #FFFFFF;
     -fx-background-color: #c2d8f9;
 }

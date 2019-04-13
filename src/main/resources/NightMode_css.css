@@ -499,3 +499,31 @@
     -fx-border-color: grey;
     -fx-background-radius: 10px;
 }
+
+#labelname{
+    -fx-border-color: white;
+    -fx-background-color: grey;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+#labeldescrip{
+    -fx-border-radius: 0 0 10 10;
+    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: grey;
+    -fx-border-color: transparent white white white;
+}
+
+#labelnamehave{
+    -fx-background-color: #387038;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: white white transparent white;
+}
+
+#labeldescriphave{
+    -fx-border-color: white;
+    -fx-border-radius: 0 0 10 10;
+    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: #162464;
+}

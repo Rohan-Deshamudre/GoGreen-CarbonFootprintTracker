@@ -1153,7 +1153,6 @@ public class GuiMain extends Application {
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
-        borderPane.getStylesheets().add("Stats_css.css");
         borderPane.setLeft(grid);
         menuBar(borderPane);
 
@@ -1190,6 +1189,7 @@ public class GuiMain extends Application {
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
         Button viewAchievements = new Button("Achievements");
+        viewAchievements.setId("buttonachieve");
         grid.add(viewAchievements, 0, 21);
         viewAchievements.setOnAction(e -> showAchievements(user));
 
@@ -1206,6 +1206,11 @@ public class GuiMain extends Application {
         co2energyValue.setId("label1");
 
         statsScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            statsScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            statsScene.getStylesheets().add("Stats_css.css");
+        }
         window.setScene(statsScene);
         window.show();
     }
