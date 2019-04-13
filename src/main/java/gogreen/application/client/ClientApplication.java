@@ -122,7 +122,7 @@ public class ClientApplication {
         ResponseEntity<CO2> res = restTemplate.postForEntity(URL + "user", loginData, CO2.class);
 
         setUser(res.getBody());
-        System.out.println(res);
+        System.out.println(res.getBody());
         return res.getBody();
     }
 

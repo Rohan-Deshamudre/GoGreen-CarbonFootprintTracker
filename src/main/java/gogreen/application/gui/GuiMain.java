@@ -8,6 +8,7 @@ import gogreen.application.model.Achievement;
 import gogreen.application.model.Badge;
 import gogreen.application.model.CO2;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -15,24 +16,22 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -46,8 +45,14 @@ public class GuiMain extends Application {
 
     private Stage window;
     private Scene loginScene;
+    private Scene mainmenuScene;
+    private Scene foodScene;
+    private Scene homeScene;
+    private Scene transportScene;
+    private Scene statsScene;
     private int screenWidth;
     private int screenHeight;
+    private boolean nightmodeon;
 
     /**
      * Main method of the class, launches the application.
@@ -66,6 +71,7 @@ public class GuiMain extends Application {
         screenWidth = (int) primaryScreenBounds.getWidth();
         screenHeight = (int) primaryScreenBounds.getHeight();
         window.setMaximized(true);
+        nightmodeon  = false;
 
         loginPage();
     }
@@ -82,71 +88,84 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        // TOP
+        // layout
+        VBox vert = new VBox();
+        vert.setAlignment(Pos.CENTER);
+        vert.setSpacing(10);
+        vert.setPadding(new Insets(0, 0, 20, 0));
+
+        // Logo
         Group topGroup = new Group();
-        Text goGreenText = new Text("Go Green!");
-        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 50));
-        topGroup.getChildren().add(goGreenText);
-
-        // CENTER
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
-        grid.setVgap(8);
-        grid.setHgap(10);
-
-        // Hello client label
-        String helloString = ClientApplication.getRequestHeroku();
-        Label helloLabel = new Label(helloString);
-        GridPane.setConstraints(helloLabel, 1, 0);
+        topGroup.setId("logo");
+        ImageView image = new ImageView("images/GoGreenlogo.jpg");
+        image.setFitWidth(450);
+        image.setFitHeight(200);
+        topGroup.getChildren().add(image);
+        HBox logo = new HBox();
+        logo.setId("hbox1");
+        logo.setAlignment(Pos.CENTER);
+        logo.getChildren().addAll(topGroup);
 
         // Enter username
-        Label usernameLabel = new Label("Username: ");
         TextField usernameField = new TextField();
         usernameField.setPromptText("username");
         usernameField.setMaxWidth(300);
-        GridPane.setConstraints(usernameLabel, 0, 1);
-        GridPane.setConstraints(usernameField, 1, 1);
+
+        Label usernameLabel = new Label("Username:   ");
+        HBox textUsername = new HBox();
+        textUsername.setAlignment(Pos.CENTER);
+        textUsername.setPadding(new Insets(10, 0, 0, 0));
+        textUsername.getChildren().addAll(usernameLabel, usernameField);
 
         // Enter password
-        Label passwordLabel = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("password");
         passwordField.setMaxWidth(300);
-        GridPane.setConstraints(passwordLabel, 0, 2);
-        GridPane.setConstraints(passwordField, 1, 2);
+
+        Label passwordLabel = new Label("Password:    ");
+        HBox textPassword = new HBox();
+        textPassword.setAlignment(Pos.CENTER);
+        textPassword.getChildren().addAll(passwordLabel, passwordField);
 
         // Buttons
-        Button loginButton = new Button("Login");
+        Button registrationButton = new Button("Register");
+        registrationButton.setFocusTraversable(false);
+        registrationButton.setId("regisbutton");
+        registrationButton.setOnAction(e -> {
+            registrationPage();
+        });
+
+        Button loginButton = new Button();
+        loginButton.setDefaultButton(true);
+        loginButton.setId("loginbutton");
+        loginButton.setMinSize(100, 50);
         loginButton.setOnAction(e -> {
             loginButtonAction(usernameField.getText(), passwordField.getText());
             usernameField.setText("");
             passwordField.setText("");
         });
-        GridPane.setConstraints(loginButton, 1, 3);
+        loginButton.setText("Login");
 
-        Button registrationButton = new Button("Register");
-        registrationButton.setOnAction(e -> {
-            registrationPage();
-        });
         HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
         buttons.setSpacing(10);
-        buttons.getChildren().addAll(loginButton, registrationButton);
-        GridPane.setConstraints(buttons, 1, 3);
+        buttons.setPadding(new Insets(10, 0, 0, 0));
+        buttons.getChildren().addAll(registrationButton, loginButton);
+
+        // Make the scene
+        String helloString = ClientApplication.getRequestHeroku();
+        Label helloLabel = new Label(helloString);
+        Label whitespace = new Label("");
+        vert.getChildren().addAll(logo, whitespace, helloLabel,
+                textUsername, textPassword, buttons);
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
-        borderPane.setTop(topGroup);
-        borderPane.setCenter(grid);
-
-        // Make scene
-        grid.getChildren().addAll(
-            helloLabel, usernameLabel, usernameField,
-            passwordLabel, passwordField, buttons
-        );
+        borderPane.setCenter(vert);
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-
+        loginScene.getStylesheets().add("Login_css.css");
         // Show window
         window.setScene(loginScene);
         window.show();
@@ -160,15 +179,20 @@ public class GuiMain extends Application {
 
     private void registrationPage() {
         window.setTitle("Registration");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
         // TOP
         Group topGroup = new Group();
         Text goGreenText = new Text("Registration");
-        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
+        goGreenText.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
         topGroup.getChildren().add(goGreenText);
 
         // CENTER
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100, 100, 100, 100));
+        grid.setPadding(new Insets(250, 100, 100, 550));
         grid.setVgap(8);
         grid.setHgap(10);
 
@@ -198,10 +222,14 @@ public class GuiMain extends Application {
 
         // Buttons
         Button loginButton = new Button("Login");
+        loginButton.setId("loginbutton");
+        loginButton.setFocusTraversable(false);
         loginButton.setOnAction(e -> {
             loginPage();
         });
         Button registrationButton = new Button("Register");
+        registrationButton.setId("regisbutton");
+        registrationButton.setFocusTraversable(false);
         registrationButton.setOnAction(e -> {
             // Register
             registerButtonAction(usernameField.getText(), passwordField.getText(),
@@ -219,6 +247,7 @@ public class GuiMain extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setTop(topGroup);
+        borderPane.setAlignment(topGroup, Pos.TOP_CENTER);
         borderPane.setCenter(grid);
 
         // Make scene
@@ -227,7 +256,7 @@ public class GuiMain extends Application {
             passwordLabel1, passwordField, passwordField1, buttons
         );
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-
+        loginScene.getStylesheets().add("Login_css.css");
         // Show window
         window.setScene(loginScene);
         window.setTitle("Registration Page");
@@ -244,33 +273,79 @@ public class GuiMain extends Application {
             closeProgram();
         });
 
-        GridPane buttons = new GridPane();
-        buttons.setAlignment(Pos.CENTER);
-        buttons.setPadding(new Insets(10));
-        buttons.setVgap(10);
-        buttons.setHgap(10);
-        int buttonWidth = 160;
-        int buttonHeight = 160;
+        AnchorPane buttons = new AnchorPane();
+        buttons.setPadding(new Insets(20));
+        int buttonWidth = 180;
+        int buttonHeight = 180;
 
-        Button food = new Button("Food");
-        food.setMinSize(buttonWidth, buttonHeight);
+        Button food = new Button();
+        food.setFocusTraversable(false);
+        food.setId("button1");
+        food.setShape(new Circle(4));
         food.setOnAction(e -> showFoodPage());
-        buttons.add(food, 0, 0);
+        food.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(food, 150.0);
+        AnchorPane.setRightAnchor(food, 460.0);
+        AnchorPane.setLeftAnchor(food, 390.0);
+        buttons.getChildren().add(food);
+        Label food1 = new Label("Food");
+        food1.setId("labelmain");
+        AnchorPane.setTopAnchor(food1, 340.0);
+        AnchorPane.setRightAnchor(food1, 460.0);
+        AnchorPane.setLeftAnchor(food1, 460.0);
+        buttons.getChildren().add(food1);
 
-        Button homeE = new Button("Home");
-        homeE.setMinSize(buttonWidth, buttonHeight);
+        Button homeE = new Button();
+        homeE.setFocusTraversable(false);
+        homeE.setId("button2");
+        homeE.setShape(new Circle(4));
         homeE.setOnAction(e -> showHomeEnergy());
-        buttons.add(homeE, 0, 1);
+        homeE.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(homeE, 150.0);
+        AnchorPane.setRightAnchor(homeE, 260.0);
+        AnchorPane.setLeftAnchor(homeE, 590.0);
+        buttons.getChildren().add(homeE);
+        Label home = new Label("Home");
+        home.setId("labelmain");
+        AnchorPane.setTopAnchor(home, 340.0);
+        AnchorPane.setRightAnchor(home, 260.0);
+        AnchorPane.setLeftAnchor(home, 660.0);
+        buttons.getChildren().add(home);
 
-        Button transport = new Button("Transport");
-        transport.setMinSize(buttonWidth, buttonHeight);
+        Button transport = new Button();
+        transport.setFocusTraversable(false);
+        transport.setId("button3");
+        transport.setShape(new Circle(4));
         transport.setOnAction(e -> showTransportPage());
-        buttons.add(transport, 1, 0);
+        transport.setMinSize(buttonWidth, buttonHeight);
+        AnchorPane.setTopAnchor(transport, 400.0);
+        AnchorPane.setRightAnchor(transport, 460.0);
+        AnchorPane.setLeftAnchor(transport, 390.0);
+        buttons.getChildren().add(transport);
+        Label transport1 = new Label("Transport");
+        transport1.setId("labelmain");
+        AnchorPane.setTopAnchor(transport1, 590.0);
+        AnchorPane.setRightAnchor(transport1, 490.0);
+        AnchorPane.setLeftAnchor(transport1, 440.0);
+        buttons.getChildren().add(transport1);
 
-        Button share = new Button("Stats");
-        share.setMinSize(buttonWidth, buttonHeight);
-        share.setOnAction(e -> userPage());
-        buttons.add(share, 1, 1);
+        Button stats = new Button();
+        stats.setFocusTraversable(false);
+        stats.setId("button4");
+        stats.setShape(new Circle(4));
+        stats.setMinSize(buttonWidth, buttonHeight);
+        stats.setOnAction(e -> userPage());
+        AnchorPane.setTopAnchor(stats, 400.0);
+        AnchorPane.setRightAnchor(stats, 250.0);
+        AnchorPane.setLeftAnchor(stats, 600.0);
+        buttons.getChildren().add(stats);
+        Label stat = new Label("Stats");
+        stat.setId("labelmain");
+        AnchorPane.setTopAnchor(stat, 590.0);
+        AnchorPane.setRightAnchor(stat, 250.0);
+        AnchorPane.setLeftAnchor(stat, 670.0);
+        buttons.getChildren().add(stat);
+
 
         // Leaderboard
         Leaderboard leaderboard = null;
@@ -310,8 +385,10 @@ public class GuiMain extends Application {
 
 
         VBox scoreboard = leaderboard(leaderboard.getUsers());
+        scoreboard.setId("vbox3");
+        scoreboard.setPadding(new Insets(10, 200, 10, 10));
         scoreboard.setAlignment(Pos.CENTER_RIGHT);
-        BorderPane.setMargin(scoreboard, new Insets(10, 100, 10, 10));
+        BorderPane.setMargin(scoreboard, new Insets(10, 10, 10, 10));
 
         //setting up the window
         BorderPane menuPane = new BorderPane();
@@ -320,8 +397,13 @@ public class GuiMain extends Application {
         menuPane.setRight(scoreboard);
 
         //setting up the scene
-        Scene scene = new Scene(menuPane, screenWidth, screenHeight);
-        window.setScene(scene);
+        mainmenuScene = new Scene(menuPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            mainmenuScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            mainmenuScene.getStylesheets().add("MainMenu_css.css");
+        }
+        window.setScene(mainmenuScene);
         window.show();
     }
 
@@ -337,27 +419,35 @@ public class GuiMain extends Application {
 
         //set up the page
         VBox center = new VBox();
+        center.setPadding(new Insets(20));
         center.setAlignment(Pos.CENTER);
         center.setSpacing(10);
 
         // Set up buttons
         HBox buttons = new HBox();
+        buttons.setFocusTraversable(false);
+
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(180);
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
         Button option1 = new Button("Ate a vegetarian meal");
+        option1.setFocusTraversable(false);
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        option1.setId("buttonop1");
         option1.setOnAction(e -> veggieMealPage());
 
         Button option2 = new Button("Bought from a biological store");
+        option2.setFocusTraversable(false);
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
+        option2.setId("buttonop2");
         option2.setOnAction(e -> localStorePage());
 
         buttons.getChildren().addAll(option1, option2);
 
         Label foodTitle = new Label("Food");
+        foodTitle.setId("labeltitle");
 
         center.getChildren().addAll(foodTitle, buttons);
 
@@ -367,8 +457,13 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
-        window.setScene(foodPage);
+        foodScene = new Scene(foodPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            foodScene.getStylesheets().add("Food_css.css");
+        }
+        window.setScene(foodScene);
         window.show();
     }
 
@@ -388,13 +483,50 @@ public class GuiMain extends Application {
         center.setSpacing(10);
         center.setPadding(new Insets(30));
 
+        String sliderStyleFormat =
+                "-slider-track-color: linear-gradient(to right, -slider-filled-track-color 0%%, "
+                        + "-slider-filled-track-color %1$f%%, -fx-base %1$f%%, -fx-base 100%%);";
+
         Slider sizeSlider1 = sizeSlider();
+        sizeSlider1.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider1.getValue()
+                    - sizeSlider1.getMin()) / (sizeSlider1.getMax()
+                    - sizeSlider1.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
+        }, sizeSlider1.valueProperty(), sizeSlider1.minProperty(), sizeSlider1.maxProperty()));
+
         Slider sizeSlider2 = sizeSlider();
+        sizeSlider2.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider2.getValue()
+                    - sizeSlider2.getMin()) / (sizeSlider2.getMax()
+                    - sizeSlider2.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
+        }, sizeSlider2.valueProperty(), sizeSlider2.minProperty(), sizeSlider2.maxProperty()));
+
         Slider sizeSlider3 = sizeSlider();
+        sizeSlider3.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider3.getValue()
+                    - sizeSlider3.getMin()) / (sizeSlider3.getMax()
+                    - sizeSlider3.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
+        }, sizeSlider3.valueProperty(), sizeSlider3.minProperty(), sizeSlider3.maxProperty()));
+
         Slider sizeSlider4 = sizeSlider();
+        sizeSlider4.styleProperty().bind(Bindings.createStringBinding(() -> {
+            double percentage = (sizeSlider4.getValue()
+                    - sizeSlider4.getMin()) / (sizeSlider4.getMax()
+                    - sizeSlider4.getMin()) * 100.0 ;
+            return String.format(sliderStyleFormat, percentage);
+        }, sizeSlider4.valueProperty(), sizeSlider4.minProperty(), sizeSlider4.maxProperty()));
+
+
+
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddfood");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
+
         addButton.setOnAction(e -> {
             boolean gotten = ClientApplication.checkAchievement(7);
             if (gotten) {
@@ -414,11 +546,17 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         Label titleLabel = new Label("Vegetarian Meal");
+        titleLabel.setId("labelpage");
         Label sizeLabel = new Label("Size:");
+        sizeLabel.setId("labelpage");
         Label label1 = new Label("Salad");
+        label1.setId("labelpage");
         Label label2 = new Label("Fruits");
+        label2.setId("labelpage");
         Label label3 = new Label("Vegetarian Meat");
+        label3.setId("labelpage");
         Label label4 = new Label("Else");
+        label4.setId("labelpage");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(label1, 0, 1);
@@ -442,8 +580,13 @@ public class GuiMain extends Application {
         borderPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(foodPage);
+        foodScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            foodScene.getStylesheets().add("veggieMealPage_css.css");
+        }
+        window.setScene(foodScene);
         window.show();
     }
 
@@ -459,11 +602,13 @@ public class GuiMain extends Application {
 
         TextField weightField = new TextField();
         weightField.setMaxWidth(300);
-        weightField.setPromptText("weight");
+        weightField.setPromptText("weight(gram)");
 
         CheckBox checkBox = new CheckBox("Organic");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddlocal");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             boolean gotten = ClientApplication.checkAchievement(8);
@@ -484,7 +629,9 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
 
         Label titleLabel = new Label("Local Store");
+        titleLabel.setId("labelpage");
         Label weightLabel = new Label("Weight:");
+        weightLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 0, 0);
         centerGrid.add(weightLabel, 0, 1);
@@ -498,8 +645,13 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(scene);
+        foodScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            foodScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            foodScene.getStylesheets().add("localStorePage_css.css");
+        }
+        window.setScene(foodScene);
         window.show();
     }
 
@@ -520,22 +672,28 @@ public class GuiMain extends Application {
 
         // Set up buttons
         HBox buttons = new HBox();
+        buttons.setFocusTraversable(false);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(180);
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
         Button option1 = new Button("Bike");
+        option1.setFocusTraversable(false);
+        option1.setId("buttonop3");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> bikeRidePage());
 
         Button option2 = new Button("Public transport");
+        option2.setFocusTraversable(false);
+        option2.setId("buttonop4");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> publicTransportPage());
 
         buttons.getChildren().addAll(option1, option2);
 
         Label transportTitle = new Label("Transport");
+        transportTitle.setId("labeltitle");
 
         center.getChildren().addAll(transportTitle, buttons);
 
@@ -545,8 +703,13 @@ public class GuiMain extends Application {
         foodPane.setCenter(center);
 
         //set up the scene
-        Scene foodPage = new Scene(foodPane, screenWidth, screenHeight);
-        window.setScene(foodPage);
+        transportScene = new Scene(foodPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            transportScene.getStylesheets().add("Transport_css.css");
+        }
+        window.setScene(transportScene);
         window.show();
     }
 
@@ -565,6 +728,8 @@ public class GuiMain extends Application {
         distanceField.setPromptText("distance");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddbike");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             boolean gotten = ClientApplication.checkAchievement(12);
@@ -581,7 +746,9 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Bike Ride");
+        titleLabel.setId("labelpage");
         Label distanceLabel = new Label("Total distance:");
+        distanceLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
@@ -594,8 +761,13 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(scene);
+        transportScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            transportScene.getStylesheets().add("bikeRidePage_css.css");
+        }
+        window.setScene(transportScene);
         window.show();
     }
 
@@ -614,6 +786,8 @@ public class GuiMain extends Application {
         distanceField.setPromptText("distance");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddtrans");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             boolean gotten = ClientApplication.checkAchievement(13);
@@ -631,7 +805,9 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Public Transport");
+        titleLabel.setId("labelpage");
         Label distanceLabel = new Label("Total distance:");
+        distanceLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(distanceLabel, 0, 1);
@@ -644,8 +820,13 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(scene);
+        transportScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            transportScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            transportScene.getStylesheets().add("publicTransportPage_css.css");
+        }
+        window.setScene(transportScene);
         window.show();
     }
 
@@ -666,22 +847,29 @@ public class GuiMain extends Application {
 
         // Set up buttons
         HBox buttons = new HBox();
+        buttons.setFocusTraversable(false);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(180);
         buttons.setPrefHeight(180);
         buttons.setSpacing(20);
 
         Button option1 = new Button("Home Temperature");
+        option1.setFocusTraversable(false);
+        option1.setId("buttonop5");
         option1.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option1.setOnAction(e -> homeTemperaturePage());
 
         Button option2 = new Button("Solar Panels");
+        option2.setFocusTraversable(false);
+
+        option2.setId("buttonop6");
         option2.setMinSize(buttons.getPrefWidth(), buttons.getPrefHeight());
         option2.setOnAction(e -> solarPanelPage());
 
         buttons.getChildren().addAll(option1, option2);
 
         Label energyTitle = new Label("Home energy");
+        energyTitle.setId("labeltitle");
 
         center.getChildren().addAll(energyTitle, buttons);
 
@@ -691,8 +879,13 @@ public class GuiMain extends Application {
         energyPane.setCenter(center);
 
         //set up the scene
-        Scene energyPage = new Scene(energyPane, screenWidth, screenHeight);
-        window.setScene(energyPage);
+        homeScene = new Scene(energyPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            homeScene.getStylesheets().add("HomeEnergy_css.css");
+        }
+        window.setScene(homeScene);
         window.show();
     }
 
@@ -715,6 +908,8 @@ public class GuiMain extends Application {
         durationField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setId("buttonaddtem");
+        addButton.setFocusTraversable(false);
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             boolean gotten = ClientApplication.checkAchievement(10);
@@ -734,8 +929,11 @@ public class GuiMain extends Application {
         centerGrid.setHgap(30);
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Home Temperature");
+        titleLabel.setId("labelpage");
         Label temperatureLabel = new Label("Temperature reduction:");
+        temperatureLabel.setId("labelpage");
         Label durationLabel = new Label("Duration:");
+        durationLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
         centerGrid.add(temperatureLabel, 0, 1);
@@ -750,8 +948,13 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(scene);
+        homeScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            homeScene.getStylesheets().add("homeTemperaturePage_css.css");
+        }
+        window.setScene(homeScene);
         window.show();
     }
 
@@ -774,6 +977,8 @@ public class GuiMain extends Application {
         hoursSunlightField.setPromptText("hours");
 
         Button addButton = new Button("Add");
+        addButton.setFocusTraversable(false);
+        addButton.setId("buttonaddpanel");
         addButton.setMinSize(100, 50);
         addButton.setOnAction(e -> {
             boolean gotten = ClientApplication.checkAchievement(11);
@@ -788,8 +993,11 @@ public class GuiMain extends Application {
         });
 
         Label titleLabel = new Label("Solar Panels");
+        titleLabel.setId("labelpage");
         Label areaLabel = new Label("Total area:");
+        areaLabel.setId("labelpage");
         Label hoursSunlightLabel = new Label("Sunlight:");
+        hoursSunlightLabel.setId("labelpage");
 
         GridPane centerGrid = new GridPane();
         centerGrid.setPadding(new Insets(30));
@@ -810,72 +1018,13 @@ public class GuiMain extends Application {
         borderPane.setCenter(centerGrid);
 
         //set up the scene
-        Scene scene = new Scene(borderPane, screenWidth, screenHeight);
-        window.setScene(scene);
-        window.show();
-    }
-
-    /**
-     * Page for the share page.
-     */
-    private void showShare() {
-        window.setTitle("Stats");
-        window.setOnCloseRequest(e -> {
-            e.consume();
-            closeProgram();
-        });
-
-        //setup username select
-        ChoiceBox<String> userChoice = new ChoiceBox<>();
-        userChoice.getItems().addAll("User1", "User", "User3");
-        userChoice.setValue("User1");
-
-        //left buttons
-        VBox left = new VBox();
-        left.setPrefSize(70, 70);
-        left.setAlignment(Pos.CENTER);
-        left.setPadding(new Insets(10, 10, 10, 10));
-
-        Button react1 = new Button("Reaction 1");
-        react1.setMinSize(left.getPrefWidth(), left.getPrefHeight());
-        Button react2 = new Button("Reaction 2");
-        react2.setMinSize(left.getPrefWidth(), left.getPrefHeight());
-
-        Label whitespace = new Label("");
-
-        left.getChildren().addAll(userChoice, whitespace, react1, react2);
-
-        //right buttons
-        VBox right = new VBox();
-        right.setPrefSize(50, 70);
-        right.setAlignment(Pos.CENTER);
-        right.setPadding(new Insets(53, 10, 10, 10));
-
-        Button react3 = new Button("Reaction 3");
-        react3.setMinSize(right.getPrefWidth(), right.getPrefHeight());
-        Button react4 = new Button("Reaction 4");
-        react4.setMinSize(right.getPrefWidth(), right.getPrefHeight());
-
-        right.getChildren().addAll(react3, react4);
-
-        //Setting up the scoreboard
-        StackPane rightScore = new StackPane();
-        rightScore.setAlignment(Pos.CENTER_RIGHT);
-
-        Label scoreboard = new Label("Scoreboard");
-        scoreboard.setMinSize(80, 130);
-
-        rightScore.getChildren().addAll(scoreboard);
-
-        //Setting up the pane
-        BorderPane sharePane = new BorderPane();
-        menuBar(sharePane);
-        sharePane.setLeft(left);
-        sharePane.setCenter(right);
-        sharePane.setRight(rightScore);
-
-        Scene shareScene = new Scene(sharePane, screenWidth, screenHeight);
-        window.setScene(shareScene);
+        homeScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            homeScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            homeScene.getStylesheets().add("solarPanelPage_css.css");
+        }
+        window.setScene(homeScene);
         window.show();
     }
 
@@ -889,7 +1038,8 @@ public class GuiMain extends Application {
 
         // LEFT: Stats
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(100));
+        grid.setId("griduser");
+        grid.setPadding(new Insets(100, 20, 100, 50));
         grid.setVgap(8);
         grid.setHgap(10);
 
@@ -902,7 +1052,8 @@ public class GuiMain extends Application {
         }
         leaderboard.sortLeaderboard();
         VBox allFriends = showFriends(leaderboard.getUsers());
-        allFriends.setPadding(new Insets(100));
+        allFriends.setId("vboxfriends");
+        allFriends.setPadding(new Insets(100, 40, 100, 150));
 
         // Make BorderPane layout
         BorderPane borderPane = new BorderPane();
@@ -962,12 +1113,30 @@ public class GuiMain extends Application {
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
         Button viewAchievements = new Button("Achievements");
+        viewAchievements.setId("buttonachieve");
         grid.add(viewAchievements, 0, 7);
         viewAchievements.setOnAction(e -> showAchievements());
 
-        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+        stats.setId("label1");
+        username.setId("label1");
+        usernameValue.setId("label1");
+        totalCO2.setId("label1");
+        totalCO2Value.setId("label1");
+        co2food.setId("label1");
+        co2foodValue.setId("label1");
+        co2transport.setId("label1");
+        co2transportValue.setId("label1");
+        co2energy.setId("label1");
+        co2energyValue.setId("label1");
+        badgeLabel.setId("label1");
+        badge.setId("image1");
 
-        // Show window
+        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            loginScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            loginScene.getStylesheets().add("Stats_css.css");
+        }
         window.setScene(loginScene);
         window.show();
     }
@@ -982,6 +1151,7 @@ public class GuiMain extends Application {
 
         // CENTER
         GridPane grid = new GridPane();
+        grid.setId("grid1");
         grid.setPadding(new Insets(100));
         grid.setVgap(8);
         grid.setHgap(10);
@@ -1025,13 +1195,29 @@ public class GuiMain extends Application {
         Label badgeTitle = new Label(" " + Badge.getTitle(user.getCO2reduc()));
         badgeInfo.getChildren().addAll(badge, badgeTitle);
         Button viewAchievements = new Button("Achievements");
+        viewAchievements.setId("buttonachieve");
         grid.add(viewAchievements, 0, 21);
         viewAchievements.setOnAction(e -> showAchievements(user));
 
-        loginScene = new Scene(borderPane, screenWidth, screenHeight);
+        stats.setId("label1");
+        username.setId("label1");
+        usernameValue.setId("label1");
+        totalCO2.setId("label1");
+        totalCO2Value.setId("label1");
+        co2food.setId("label1");
+        co2foodValue.setId("label1");
+        co2transport.setId("label1");
+        co2transportValue.setId("label1");
+        co2energy.setId("label1");
+        co2energyValue.setId("label1");
 
-        // Show window
-        window.setScene(loginScene);
+        statsScene = new Scene(borderPane, screenWidth, screenHeight);
+        if (nightmodeon) {
+            statsScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            statsScene.getStylesheets().add("Stats_css.css");
+        }
+        window.setScene(statsScene);
         window.show();
     }
 
@@ -1041,44 +1227,34 @@ public class GuiMain extends Application {
      * @param pane - the window in which to display the menu bar.
      */
     public void menuBar(BorderPane pane) {
-        MenuItem goToHomeScreen = new MenuItem("Home");
-        goToHomeScreen.setOnAction(e -> showMainMenu());
-
-        MenuItem goToFood = new MenuItem("Food");
-        goToFood.setOnAction(e -> showFoodPage());
-        MenuItem goToTransport = new MenuItem("Transport");
-        goToTransport.setOnAction(e -> showTransportPage());
-        MenuItem goToEnergy = new MenuItem("Home energy");
-        goToEnergy.setOnAction(e -> showHomeEnergy());
-
-        MenuItem goToUserPage = new MenuItem("Stats");
-        goToUserPage.setOnAction(e -> userPage());
-        MenuItem goToShare = new MenuItem("Share");
-        goToShare.setOnAction(e -> showShare());
-        MenuItem goToAchievements = new MenuItem("Achievements");
-        goToAchievements.setOnAction(e -> showAchievements(
-                ClientApplication.sendGetUserStatsRequest()
-        ));
-
         MenuItem logout = new MenuItem("Logout");
-        logout.setOnAction(e -> {
-            logout();
+        logout.setOnAction(e -> logout());
+
+        String nightText = "Night mode";
+        if (nightmodeon) {
+            nightText = "Day mode";
+        }
+        MenuItem nightMode = new MenuItem(nightText);
+        nightMode.setOnAction(e -> {
+            nightmodeon = !nightmodeon;
+            boolean gotten = ClientApplication.checkAchievement(0);
+            if (gotten) {
+                ClientApplication.changeAchievements(ClientApplication.getUser(), 0);
+            }
+            showMainMenu();
         });
-
-        Menu menu = new Menu("Menu");
-        SeparatorMenuItem sep1 = new SeparatorMenuItem();
-        SeparatorMenuItem sep2 = new SeparatorMenuItem();
-        SeparatorMenuItem sep3 = new SeparatorMenuItem();
-
-        menu.getItems().addAll(
-            goToHomeScreen, sep1, goToFood, goToTransport,
-            goToEnergy, sep2, goToUserPage, goToShare, goToAchievements, sep3, logout
-        );
+        Menu settings = new Menu("Settings");
+        settings.getItems().addAll(nightMode, logout);
 
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu);
+        menuBar.setId("menuBar1");
+        menuBar.getMenus().addAll(settings);
 
         Button homeButton = new Button("Home");
+        homeButton.setFocusTraversable(false);
+
+        homeButton.setId("buttonhome");
+        homeButton.setMinSize(10, 10);
         homeButton.setOnAction(e -> showMainMenu());
         homeButton.setFocusTraversable(false);
 
@@ -1275,12 +1451,15 @@ public class GuiMain extends Application {
      */
     public GridPane nameTile() {
         GridPane nametile = new GridPane();
-        nametile.setPadding(new Insets(10));
+        nametile.setId("grid2");
+        nametile.setPadding(new Insets(10, 20, 10, 10));
         nametile.setHgap(20);
 
-        Label username = new Label("Name");
+        Label username = new Label("   Name");
+        username.setId("label1");
         username.setPrefWidth(150);
-        Label co2reduc = new Label("Score");
+        Label co2reduc = new Label("   Score");
+        co2reduc.setId("label1");
 
         nametile.add(username, 0, 0);
         nametile.add(co2reduc, 1, 0);
@@ -1295,13 +1474,18 @@ public class GuiMain extends Application {
      */
     public Button leaderboardTile(CO2 user) {
         GridPane gridtile = new GridPane();
+        gridtile.getStylesheets().add("Leaderboard_css.css");
+        gridtile.setId("grid1");
+
         gridtile.setPadding(new Insets(5, 10, 5, 10));
         gridtile.setHgap(20);
 
         Label cusername = new Label(user.getCUsername());
+        cusername.setId("labelleaderboard");
         cusername.setPrefWidth(150);
 
-        Label co2reduc = new Label( " " + Integer.toString(user.getCO2reduc()));
+        Label co2reduc = new Label(" " + Integer.toString(user.getCO2reduc()));
+        co2reduc.setId("labelleaderboard");
 
         String url = Badge.getBadge(user.getCO2reduc());
         ImageView badge = new ImageView(url);
@@ -1315,6 +1499,8 @@ public class GuiMain extends Application {
         gridtile.add(nameBox, 1, 0);
 
         Button tile = new Button("", gridtile);
+        tile.setId("buttonleaderboard");
+        tile.setFocusTraversable(false);
 
         return tile;
     }
@@ -1326,11 +1512,14 @@ public class GuiMain extends Application {
      */
     public VBox leaderboard(ArrayList<CO2> users) {
         VBox vbox = new VBox();
+        vbox.setId("vBoxleader");
         GridPane nametile = nameTile();
         vbox.getChildren().add(nametile);
+        vbox.setPadding(new Insets(10));
 
         for (CO2 user: users) {
             Button tile = leaderboardTile(user);
+            tile.setId("buttontile");
             tile.setFocusTraversable(false);
             tile.setOnAction(e -> showUserPage(user));
             tile.setPrefWidth(300);
@@ -1353,13 +1542,17 @@ public class GuiMain extends Application {
         badge.setFitHeight(25);
         badge.setFitWidth(25);
         Label cusername = new Label(user.getCUsername());
+
+        cusername.setId("labeluser");
         HBox nameBox = new HBox();
         nameBox.setPrefWidth(120);
         nameBox.getChildren().addAll(cusername, badge);
 
         Label co2reduc = new Label(Integer.toString(user.getCO2reduc()));
+        co2reduc.setId("labelco2reduc");
         co2reduc.setPrefWidth(50);
         Button accept = new Button("Accept");
+        accept.setId("buttonaccept");
         accept.setOnAction(e -> {
             try {
                 ClientApplication.respondToFriendRequest(user.getCUsername(), true);
@@ -1371,6 +1564,7 @@ public class GuiMain extends Application {
         accept.setPadding(new Insets(10));
 
         Button decline = new Button("Decline");
+        decline.setId("buttondecline");
         decline.setOnAction(e -> {
             // Check for achievement
             boolean gotten = ClientApplication.checkAchievement(6);
@@ -1391,6 +1585,7 @@ public class GuiMain extends Application {
         friendTile.add(co2reduc,1,0);
 
         Button friend = new Button("", friendTile);
+        friend.setId("buttonfriend");
         friend.setOnAction(e -> showUserPage(user));
         friend.setPadding(new Insets(10));
 
@@ -1408,7 +1603,7 @@ public class GuiMain extends Application {
      */
     public void makeFriendRequestTable(BorderPane borderPane) {
         VBox table  = friendRequestTable();
-        table.setPadding(new Insets(100));
+        table.setPadding(new Insets(100, 100, 100, 50));
         borderPane.setRight(table);
     }
 
@@ -1426,7 +1621,9 @@ public class GuiMain extends Application {
         friendRequests.sortLeaderboard();
 
         VBox vbox = new VBox();
-        vbox.getChildren().add(new Label("Friend requests: "));
+        Label friendrequest = new Label("Friend requests");
+        friendrequest.setId("label1");
+        vbox.getChildren().add(friendrequest);
 
         for (CO2 user: friendRequests.getUsers()) {
             GridPane tile = friendRequestTile(user);
@@ -1443,13 +1640,23 @@ public class GuiMain extends Application {
      */
     public VBox showFriends(ArrayList<CO2> friends) {
         ScrollPane scrollPane = new ScrollPane();
+
+        scrollPane.setMaxWidth(340);
+        scrollPane.setId("friends");
         scrollPane.setPrefHeight(350);
 
         VBox leaderboard = leaderboard(friends);
+        leaderboard.setPadding(new Insets(10, 20, 10, 20));
+        leaderboard.setMinWidth(340);
+        leaderboard.setId("vboxleader");
         scrollPane.setContent(leaderboard);
 
+        Label addFriendLabel = new Label("\nAdd friend: ");
+        addFriendLabel.setId("labelfriend");
         TextField addFriendField = new TextField();
+        addFriendField.setId("field1");
         Button addFriendButton = new Button("Add");
+        addFriendButton.setId("addFriend");
 
         addFriendButton.setOnAction(e -> {
             String friendUsername = addFriendField.getText();
@@ -1464,7 +1671,9 @@ public class GuiMain extends Application {
         });
 
         TextField removeFriendField = new TextField();
+        removeFriendField.setId("field1");
         Button removeFriendButton = new Button("Remove");
+        removeFriendButton.setId("buttonfriend");
 
         removeFriendButton.setOnAction(e -> {
             String friendUsername = removeFriendField.getText();
@@ -1488,21 +1697,26 @@ public class GuiMain extends Application {
             userPage();
         });
 
-        Label friendLabel = new Label("Friends: ");
-        Label addFriendLabel = new Label("\nAdd friend: ");
         Label removeFriendLabel = new Label("\nRemove friend: ");
+        removeFriendLabel.setId("labelfriend");
 
         HBox addFriendBox = new HBox();
+        addFriendBox.setSpacing(10);
         addFriendBox.getChildren().addAll(addFriendField, addFriendButton);
 
         HBox removeFriendBox = new HBox();
+        removeFriendBox.setSpacing(10);
         removeFriendBox.getChildren().addAll(removeFriendField, removeFriendButton);
 
+        Label friendLabel = new Label("Friends: ");
+        friendLabel.setId("label1");
         VBox total = new VBox();
+        total.setId("totalvbox");
         total.getChildren().addAll(friendLabel, scrollPane,
                 addFriendLabel, addFriendBox, removeFriendLabel, removeFriendBox);
         return total;
     }
+
 
     /**
      * Gets the user information from the server and calls
@@ -1528,9 +1742,10 @@ public class GuiMain extends Application {
 
         // CENTER
         GridPane grid = new GridPane();
+        grid.setId("gridachieve");
         grid.setPadding(new Insets(100));
-        grid.setVgap(8);
-        grid.setHgap(10);
+        grid.setVgap(0);
+        grid.setHgap(20);
         grid.setAlignment(Pos.CENTER);
 
 
@@ -1539,9 +1754,12 @@ public class GuiMain extends Application {
         borderPane.setLeft(grid);
         menuBar(borderPane);
 
-        Label stats = new Label("Stats");
         Label username = new Label("Username:");
+        username.setPadding(new Insets(50,10,0,10));
+        username.setId("labeluser");
         Label usernameValue = new Label(user.getCUsername());
+        usernameValue.setPadding(new Insets(50,10,0,10));
+        usernameValue.setId("labeluser");
         grid.add(username, 0, 0);
         grid.add(usernameValue, 1, 0);
 
@@ -1555,11 +1773,15 @@ public class GuiMain extends Application {
                 }
                 itr++;
             }
-            row += 2;
+            row += 3;
         }
 
         loginScene = new Scene(borderPane, screenWidth, screenHeight);
-
+        if (nightmodeon) {
+            loginScene.getStylesheets().add("NightMode_css.css");
+        } else {
+            loginScene.getStylesheets().add("Achievements_css.css");
+        }
         // Show window
         window.setScene(loginScene);
         window.show();
@@ -1575,20 +1797,31 @@ public class GuiMain extends Application {
      */
     private void achievementTile(CO2 user, int id, GridPane grid, int x1, int y1) {
         Label name = new Label(Achievement.getName(id));
-        name.setPrefWidth(100);
+        name.setId("labelname");
+        name.setPrefWidth(120);
+        name.setPrefHeight(180);
         name.setWrapText(true);
-        name.setPadding(new Insets(50, 0, 0, 0));
+        name.setPadding(new Insets(5));
 
-        if (user.getAchievement().charAt(id - 1) == '1') {
-            name.setStyle("-fx-font-weight: bold");
-        }
+
+        VBox nameBox = new VBox();
+        nameBox.setMinHeight(30);
 
         Label description = new Label(Achievement.getDescription(id));
-        description.setPrefWidth(100);
+        description.setPrefWidth(120);
+        description.setPrefHeight(200);
         description.setWrapText(true);
+        description.setPadding(new Insets(5));
+        description.setId("labeldescrip");
 
-        grid.add(name, x1, y1);
-        grid.add(description, x1 , y1 + 1);
+        if (user.getAchievement().charAt(id - 1) == '1') {
+            name.setId("labelnamehave");
+            description.setId("labeldescriphave");
+        }
+
+        grid.add(nameBox, x1, y1);
+        grid.add(name, x1, y1 + 1);
+        grid.add(description, x1 , y1 + 2);
     }
 
     /**

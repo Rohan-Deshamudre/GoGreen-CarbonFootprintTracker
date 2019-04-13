@@ -1,0 +1,528 @@
+.root {
+    -fx-background-color: black;
+}
+
+.label{
+    -fx-text-fill: white;
+}
+
+#label1 {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelmain{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labeltitle{
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelpage{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.text-field{
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-color: white;
+}
+
+#field1{
+    -fx-font-size: 15px;
+}
+
+#menuBar1{
+    -fx-font-size: 15px;
+    -fx-background-color: grey;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-padding: 0px;
+}
+
+.menu-item:hover{
+    -fx-background-color: #808080;
+}
+
+.menu-item{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#button1{
+    -fx-background-image: url("images/foodlogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: white;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#button2{
+    -fx-background-image: url("images/homelogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: #ffffff;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#button3{
+    -fx-background-image: url("images/transportlogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: #FFFFFF;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#button4{
+    -fx-background-image: url("images/statslogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: #FFFFFF;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#button1:hover{
+    -fx-border-color: #808080;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button2:hover{
+    -fx-border-color: #808080;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button3:hover{
+    -fx-border-color: #808080;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button4:hover{
+    -fx-border-color: #808080;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#buttonhome{
+    -fx-font-size: 15px;
+    -fx-border-color: #FFFFFF;
+    -fx-background-color: black;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonhome:hover{
+    -fx-background-color: #808080;
+}
+
+#buttonop1{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop2{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop1:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonop2:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+.slider {
+    -slider-filled-track-color: #96ff91;
+    -slider-track-color: -slider-filled-track-color ;
+}
+
+.slider .thumb {
+    -fx-background-color: #a4ee6f;
+}
+
+.slider .track {
+    -fx-background-color: -slider-track-color ;
+}
+
+.slider .axis {
+    -fx-tick-label-fill: white;
+}
+
+#buttonaddfood:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddfood{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+.check-box{
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: black;
+}
+
+.check-box:hover{
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#buttonaddlocal:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddlocal{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+#buttonop3{
+    -fx-border-radius: 5px;
+    -fx-border-color: #FFFFFF;
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop4 {
+    -fx-border-radius: 5px;
+    -fx-border-color: #FFFFFF;
+    -fx-font-size: 20px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop3:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonop4:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddbike:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddbike{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonaddtrans:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddtrans{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop5{
+    -fx-border-radius: 5px;
+    -fx-border-color: #FFFFFF;
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop6 {
+    -fx-border-radius: 5px;
+    -fx-border-color: #FFFFFF;
+    -fx-font-size: 20px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonop5:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonop6:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddtem:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddtem{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonaddpanel:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonaddpanel{
+    -fx-font-size: 20px;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#vboxleader{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#friends{
+    -fx-border-color: white;
+    -fx-background-color: black;
+}
+
+#buttonaccept{
+    -fx-font-size: 15px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonaccept:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttondecline{
+    -fx-font-size: 15px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttondecline:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#buttonfriend{
+    -fx-font-size: 15px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonfriend:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#addFriend{
+    -fx-font-size: 15px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#addFriend:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#labelfriend{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#grid2{
+    -fx-border-color: white;
+    -fx-background-color: black;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#labeluser{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelco2reduc{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttontile:hover{
+    -fx-background-color: #808080;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#buttontile{
+    -fx-border-color: white;
+    -fx-background-color: black;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    textfill: white;
+}
+
+#label1{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelleaderboard{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: grey;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: black;
+}
+
+#buttonachieve{
+    -fx-font-size: 15px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: white;
+}
+
+#buttonachieve:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #808080;
+}
+
+#gridachieve{
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+#labelname{
+    -fx-border-color: grey;
+    -fx-border-radius: 10px;
+    -fx-background-color: #b5e7c7;
+    -fx-background-radius: 10px;
+}
+
+#labeldescrip{
+    -fx-border-radius: 10px;
+    -fx-background-color: #c2d8f9;
+    -fx-border-color: grey;
+    -fx-background-radius: 10px;
+}
+
+#labelname{
+    -fx-border-color: white;
+    -fx-background-color: #595959;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+#labeldescrip{
+    -fx-border-radius: 0 0 10 10;
+    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: #595959;
+    -fx-border-color: transparent white white white;
+}
+
+#labelnamehave{
+    -fx-background-color: #078a1c;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: white white transparent white;
+}
+
+#labeldescriphave{
+    -fx-border-color: white;
+    -fx-border-radius: 0 0 10 10;
+    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: #051f8d;
+}

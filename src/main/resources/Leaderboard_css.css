@@ -1,0 +1,36 @@
+.button:hover{
+    -fx-background-color: #1aee40;
+}
+
+.button{
+    -fx-border-color: grey;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.label{
+    -fx-font-weight: bold;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#grid2{
+    -fx-border-color: grey;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonleaderboard{
+    -fx-border-color: grey;
+    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonleaderboard:hover{
+    -fx-background-color: #dbffd0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+

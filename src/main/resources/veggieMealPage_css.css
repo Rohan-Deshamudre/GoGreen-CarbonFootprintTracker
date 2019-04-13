@@ -1,0 +1,56 @@
+.root{
+    -fx-background-color: white;
+}
+
+#labelpage{
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.slider {
+    /* default track color: */
+    -slider-filled-track-color: #96ff91;
+    -slider-track-color: -slider-filled-track-color ;
+}
+
+.slider .thumb {
+    -fx-background-color: #a4ee6f;
+}
+
+.slider .track {
+    -fx-background-color: -slider-track-color ;
+}
+
+#buttonaddfood:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: #1aee40;
+}
+
+#buttonaddfood{
+    -fx-font-size: 20px;
+    -fx-border-color: #1aee40;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#menuBar1{
+    -fx-font-size: 15px;
+    -fx-background-color: #86a986;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.menu-bar{
+    -fx-padding: 0px;
+}
+
+#buttonhome{
+    -fx-font-size: 15px;
+    -fx-border-color: #a9a9a9;
+    -fx-background-color: #e4ffe2;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonhome:hover{
+    -fx-background-color: #1aee40;
+}
