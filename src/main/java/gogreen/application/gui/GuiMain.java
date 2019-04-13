@@ -25,7 +25,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -1800,8 +1804,6 @@ public class GuiMain extends Application {
 
         VBox nameBox = new VBox();
         nameBox.setMinHeight(30);
-//        nameBox.setPadding(new Insets(50, 0, 0, 0));
-//        nameBox.getChildren().addAll(name);
 
         Label description = new Label(Achievement.getDescription(id));
         description.setPrefWidth(120);

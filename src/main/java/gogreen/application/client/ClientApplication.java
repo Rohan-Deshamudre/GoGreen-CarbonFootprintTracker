@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class ClientApplication {
 
-//    private static final String URL = "https://gogreen32.herokuapp.com/";
+    //private static final String URL = "https://gogreen32.herokuapp.com/";
     private static final String URL = "http://localhost:8080/";
 
     private static Logger log = LogManager.getLogger(ClientApplication.class.getName());
