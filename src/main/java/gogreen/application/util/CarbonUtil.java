@@ -7,6 +7,8 @@ public class CarbonUtil {
 
     /**
      * Returns the amount of carbon reduced in kgs by diet choices.
+     * https://bit.ly/2oRzs7H
+     * https://bbc.in/2EhC2w6
      *
      * @param checkBoxValue the value of the check box
      * @return returns the amount of carbon reduced in grams.
@@ -63,6 +65,8 @@ public class CarbonUtil {
 
     /**
      * Returns the amount of carbon reduced in kgs by buying local produce.
+     * https://bit.ly/2VJWiw7
+     * https://bit.ly/2UXf5XD
      *
      * @param weight weight of the produce bought
      * @param organic true iff the produce is organic.
@@ -79,6 +83,8 @@ public class CarbonUtil {
 
     /**
      * Returns the amount of carbon reduced in kgs by travelling by other means than a car.
+     * https://bit.ly/2EOn2Tb
+     * https://bit.ly/2JmXfbR
      *
      * @param travelType the type of travelling done.
      * @param distance distance covered.
@@ -100,6 +106,8 @@ public class CarbonUtil {
     /**
      * Returns the amount of carbon reduced in kgs by turning a home thermostat lower than the
      * average.
+     * https://bit.ly/2DbKoUt
+     * https://bit.ly/2UVWX0n
      *
      * @param temp the amount of degrees lowered.
      * @param duration the time in hours the thermostat stays lowered.
@@ -113,6 +121,7 @@ public class CarbonUtil {
 
     /**
      * Returns the amount of carbon reduced in kgs by using solar panels.
+     * https://bit.ly/2E0dE2G
      *
      * @param area the area covered by solar panels.
      * @param hoursSunlight the time in hours the solar panels are generating electricity.
