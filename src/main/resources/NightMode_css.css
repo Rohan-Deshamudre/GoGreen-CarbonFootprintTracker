@@ -502,7 +502,7 @@
 
 #labelname{
     -fx-border-color: white;
-    -fx-background-color: grey;
+    -fx-background-color: #595959;
     -fx-border-radius: 10 10 0 0;
     -fx-background-radius: 10 10 0 0;
 }
@@ -510,12 +510,12 @@
 #labeldescrip{
     -fx-border-radius: 0 0 10 10;
     -fx-background-radius: 0 0 10 10;
-    -fx-background-color: grey;
+    -fx-background-color: #595959;
     -fx-border-color: transparent white white white;
 }
 
 #labelnamehave{
-    -fx-background-color: #387038;
+    -fx-background-color: #078a1c;
     -fx-border-radius: 10 10 0 0;
     -fx-background-radius: 10 10 0 0;
     -fx-border-color: white white transparent white;
@@ -525,5 +525,5 @@
     -fx-border-color: white;
     -fx-border-radius: 0 0 10 10;
     -fx-background-radius: 0 0 10 10;
-    -fx-background-color: #162464;
+    -fx-background-color: #051f8d;
 }
