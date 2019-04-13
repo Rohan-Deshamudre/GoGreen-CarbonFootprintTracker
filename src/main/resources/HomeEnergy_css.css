@@ -48,7 +48,6 @@
 #buttonhome{
     -fx-font-size: 15px;
     -fx-border-color: #a9a9a9;
-    -fx-background-radius: 15px;
     -fx-background-color: #e4ffe2;
     -fx-font-family: 'Helvetica', sans-serif;
 }
