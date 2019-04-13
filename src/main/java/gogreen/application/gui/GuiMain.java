@@ -25,11 +25,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -1748,9 +1744,11 @@ public class GuiMain extends Application {
         menuBar(borderPane);
 
         Label username = new Label("Username:");
-        username.setId("label1");
+        username.setPadding(new Insets(50,10,0,10));
+        username.setId("labeluser");
         Label usernameValue = new Label(user.getCUsername());
-        usernameValue.setId("label1");
+        usernameValue.setPadding(new Insets(50,10,0,10));
+        usernameValue.setId("labeluser");
         grid.add(username, 0, 0);
         grid.add(usernameValue, 1, 0);
 
@@ -1788,20 +1786,26 @@ public class GuiMain extends Application {
      */
     private void achievementTile(CO2 user, int id, GridPane grid, int x1, int y1) {
         Label name = new Label(Achievement.getName(id));
-        name.setPrefWidth(100);
+        name.setId("labelname");
+        name.setMaxWidth(120);
+        name.setMaxHeight(120);
         name.setWrapText(true);
-        name.setPadding(new Insets(50, 0, 0, 0));
-
-        if (user.getAchievement().charAt(id - 1) == '1') {
-            name.setStyle("-fx-font-weight: bold");
-        }
 
         Label description = new Label(Achievement.getDescription(id));
-        description.setPrefWidth(100);
+        description.setMaxWidth(120);
+        description.setMaxHeight(240);
+        description.setId("labeldescrip");
         description.setWrapText(true);
+
+        if (user.getAchievement().charAt(id - 1) == '1') {
+            name.setId("labelnamehave");
+            description.setId("labeldescriphave");
+        }
 
         grid.add(name, x1, y1);
         grid.add(description, x1 , y1 + 1);
+        grid.setVgap(0);
+        grid.setHgap(20);
     }
 
     /**

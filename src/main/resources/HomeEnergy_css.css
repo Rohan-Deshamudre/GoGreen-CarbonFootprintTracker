@@ -5,6 +5,7 @@
 #buttonop5{
     -fx-border-color: #1aee40;
     -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-size: 20px;
     -fx-font-family: 'Helvetica', sans-serif;
@@ -14,6 +15,7 @@
     -fx-border-color: #1aee40;
     -fx-border-radius: 5px;
     -fx-font-size: 20px;
+    -fx-background-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
 }
@@ -46,6 +48,7 @@
 #buttonhome{
     -fx-font-size: 15px;
     -fx-border-color: #a9a9a9;
+    -fx-background-radius: 15px;
     -fx-background-color: #e4ffe2;
     -fx-font-family: 'Helvetica', sans-serif;
 }

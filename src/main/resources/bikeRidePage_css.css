@@ -15,12 +15,14 @@
 #buttonaddbike:hover{
     -fx-border-radius: 5px;
     -fx-background-color: #1aee40;
+    -fx-background-radius: 5px;
 }
 
 #buttonaddbike{
     -fx-font-size: 20px;
     -fx-border-color: #1aee40;
     -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-family: 'Helvetica', sans-serif;
 }

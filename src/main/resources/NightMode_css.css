@@ -485,3 +485,17 @@
     -fx-font-size: 15px;
     -fx-text-fill: white;
 }
+
+#labelname{
+    -fx-border-color: grey;
+    -fx-border-radius: 10px;
+    -fx-background-color: #b5e7c7;
+    -fx-background-radius: 10px;
+}
+
+#labeldescrip{
+    -fx-border-radius: 10px;
+    -fx-background-color: #c2d8f9;
+    -fx-border-color: grey;
+    -fx-background-radius: 10px;
+}
