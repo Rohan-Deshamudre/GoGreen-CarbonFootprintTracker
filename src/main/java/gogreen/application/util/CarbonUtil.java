@@ -4,47 +4,87 @@ import gogreen.application.communication.AddTransportRequest.TravelType;
 
 public class CarbonUtil {
 
-    public static final String AES_ENCRYPTION_SECRETKEY = "Bar12345Bar12345";
-
-    public static final String FOOD_OPTION1 = "Ate a vegetarian meal";
-    public static final String FOOD_OPTION2 = "Bought from a biological store";
 
     /**
      * Returns the amount of carbon reduced in kgs by diet choices.
+     * https://bit.ly/2oRzs7H
+     * https://bbc.in/2EhC2w6
      *
      * @param checkBoxValue the value of the check box
-     * @return returns the amount of carbon reduced in kgs.
+     * @return returns the amount of carbon reduced in grams.
      */
-    public static int getFoodCarbonReduction(String checkBoxValue) {
-        int carbonFootprint = 0;
+    public static int getFoodCarbonReduction(String checkBoxValue, int amount) {
+
         if (checkBoxValue.equalsIgnoreCase("salad")) {
-            carbonFootprint = 100;
+            switch (amount) {
+                case 1:
+                    return 300;
+                case 2:
+                    return 500;
+                case 3:
+                    return 700;
+                default:
+                    return 0;
+            }
         } else if (checkBoxValue.equalsIgnoreCase("Vegetarian Meat")) {
-            carbonFootprint = 200;
+            switch (amount) {
+                case 1:
+                    return 740;
+                case 2:
+                    return 980;
+                case 3:
+                    return 1220;
+                default:
+                    return 0;
+            }
         } else if (checkBoxValue.equalsIgnoreCase("Fruit")) {
-            carbonFootprint = 80;
-        } else if (checkBoxValue.equalsIgnoreCase("Else")) {
-            carbonFootprint = 150;
+            switch (amount) {
+                case 1:
+                    return 140 ;
+                case 2:
+                    return 210;
+                case 3:
+                    return 280;
+                default:
+                    return 0;
+            }
+        } else if (checkBoxValue.equalsIgnoreCase("Vegan Meal")) {
+            switch (amount) {
+                case 1:
+                    return 900;
+                case 2:
+                    return 1150;
+                case 3:
+                    return 1350;
+                default:
+                    return 0;
+            }
         }
-        return carbonFootprint;
+        return 0;
     }
 
     /**
      * Returns the amount of carbon reduced in kgs by buying local produce.
+     * https://bit.ly/2VJWiw7
+     * https://bit.ly/2UXf5XD
      *
      * @param weight weight of the produce bought
      * @param organic true iff the produce is organic.
      * @return returns the amount of carbon reduced in kgs.
      */
     public static int getLocalProduceCarbonReduction(int weight, boolean organic) {
+        //0.4g of CO2 saved per g of Organic food
+        //1.6g of CO2 saved if food is bought from local store
         if (organic) {
-            return (int) (weight * 2.3);
+            return (int) (weight * 2.0);
         }
-        return (int) (weight * 1.7);
+        return (int) (1.6 * weight);
     }
 
     /**
      * Returns the amount of carbon reduced in kgs by travelling by other means than a car.
+     * https://bit.ly/2EOn2Tb
+     * https://bit.ly/2JmXfbR
      *
      * @param travelType the type of travelling done.
      * @param distance distance covered.
@@ -53,9 +93,11 @@ public class CarbonUtil {
     public static int getTransportCarbonReduction(TravelType travelType, int distance) {
         switch (travelType) {
             case BIKE:
-                return distance * 5;
+                //284-16 is the difference between using a bike and a car
+                return distance * (284 - 16);
             case PUB_TRANSPORT:
-                return distance * 2;
+                //idem
+                return distance * (284 - 101);
             default:
                 return -1;
         }
@@ -64,23 +106,29 @@ public class CarbonUtil {
     /**
      * Returns the amount of carbon reduced in kgs by turning a home thermostat lower than the
      * average.
+     * https://bit.ly/2DbKoUt
+     * https://bit.ly/2UVWX0n
      *
      * @param temp the amount of degrees lowered.
      * @param duration the time in hours the thermostat stays lowered.
      * @return returns the amount of carbon reduced in kgs.
      */
     public static int getHomeTempCarbonReduction(int temp, int duration) {
-        return (int) (temp * duration * 0.3);
+        // 270g of CO2 saved per hour of heating turned off.
+        //Per degree reduced on average 40g is reduced.
+        return (int) duration * (40 * temp);
     }
 
     /**
      * Returns the amount of carbon reduced in kgs by using solar panels.
+     * https://bit.ly/2E0dE2G
      *
      * @param area the area covered by solar panels.
      * @param hoursSunlight the time in hours the solar panels are generating electricity.
      * @return returns the amount of carbon reduced in kgs.
      */
     public static int getSolarPanelCarbonReduction(int area, int hoursSunlight) {
-        return (int) (area * hoursSunlight * 0.4);
+        //Each meter squared of solar panel saves 19.4g of CO2 per hour
+        return (int) (19.4 * area * hoursSunlight);
     }
 }

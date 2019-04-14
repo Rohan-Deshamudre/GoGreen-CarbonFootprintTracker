@@ -67,7 +67,8 @@ public class ActivityAddFoodDataTest {
 
     private final LoginData fakeLoginData = new LoginData("Gucci", "Mane");
     private final String fakeCheckBoxValue = "salad";
-    private final int fakeCO2Reduction = CarbonUtil.getFoodCarbonReduction(fakeCheckBoxValue);
+    private final int fakeIntValue = 1;
+    private final int fakeCO2Reduction = CarbonUtil.getFoodCarbonReduction(fakeCheckBoxValue, fakeIntValue);
 
     @BeforeEach
     void init() {
@@ -124,7 +125,7 @@ public class ActivityAddFoodDataTest {
         setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
                 "00000000000000"), co2Repository);
 
-        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, fakeIntValue);
         MvcResult res = mockMvc.perform(
             post("/activity/food/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -160,7 +161,7 @@ public class ActivityAddFoodDataTest {
                 "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
-        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
+        AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, fakeIntValue);
         MvcResult res = mockMvc.perform(
             post("/activity/food/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
