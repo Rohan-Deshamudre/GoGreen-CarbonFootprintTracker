@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -57,6 +58,9 @@ public class RemoveFriendTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/removefriend";
 
@@ -94,7 +98,7 @@ public class RemoveFriendTest {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
-                userRepository);
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)
@@ -108,7 +112,7 @@ public class RemoveFriendTest {
     void notFriendsTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<Friend> friend = new ArrayList<>();
         when(friendRepository.findByFusernameAndFriend( "dummy","dummyFriend"))
@@ -134,7 +138,7 @@ public class RemoveFriendTest {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()),
-                userRepository);
+                userRepository, passwordEncoder);
 
         List<Friend> list1 = new ArrayList<>();
         Friend friend1 = new Friend(0, "dummyFriend", "dummy");

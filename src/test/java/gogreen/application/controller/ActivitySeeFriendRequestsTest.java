@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -59,6 +60,9 @@ public class ActivitySeeFriendRequestsTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/seefriendrequests";
 
@@ -95,7 +99,8 @@ public class ActivitySeeFriendRequestsTest {
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
                 post(url)
@@ -111,7 +116,7 @@ public class ActivitySeeFriendRequestsTest {
     @Test
     void noFriendsTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
         // username with no friends returns an empty list.
         when(friendRequestRepository.findByRequestTo("shdah")).thenReturn(null);
 
@@ -131,7 +136,7 @@ public class ActivitySeeFriendRequestsTest {
     @Test
     void friendsTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<FriendRequest> all = new ArrayList<>();
         List<CO2> friend = new ArrayList<>();

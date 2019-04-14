@@ -1,5 +1,6 @@
 package gogreen.application.controller;
 
+import static gogreen.application.controller.MockitoTestHelper.setUserValid;
 import static gogreen.application.controller.MockitoTestHelper.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -43,6 +45,9 @@ class LoginControllerTest {
 
     @MockBean
     private CO2Repository co2Repository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void init() {
@@ -73,7 +78,10 @@ class LoginControllerTest {
     @Test
     void emptyUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserDb(fakeLoginData, false);
+        User fakeUser = mock(User.class);
+        List<User> fakeUserList = new ArrayList<>();
+        fakeUserList.add(fakeUser);
+        when(userRepository.findByUsername(fakeLoginData.getUsername())).thenReturn(fakeUserList);
 
         mockMvc.perform(
             post("/login")
@@ -90,7 +98,8 @@ class LoginControllerTest {
     @Test
     void passwordUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserDb(new LoginData(fakeLoginData.getUsername(), "boogie"), true);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "boogie"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post("/login")
@@ -106,7 +115,7 @@ class LoginControllerTest {
     @Test
     void validUserTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Albert", "HoFFman420");
-        setUserDb(fakeLoginData, true);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         mockMvc.perform(
             post("/login")
@@ -124,7 +133,8 @@ class LoginControllerTest {
     @Test
     void usernameTakenRegistrationTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Bob", "R0$$");
-        setUserDb(new LoginData(fakeLoginData.getUsername(), "marl3y"), true);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "marl3y"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post("/login/register")
@@ -169,6 +179,8 @@ class LoginControllerTest {
     @Test
     void newUserRegistrationTest() throws Exception {
         LoginData fakeLoginData = new LoginData("Marco", "p0lO");
+        when(passwordEncoder.encode(fakeLoginData.getPassword()))
+                .thenReturn("TestEncryptedPassword");
 
         mockMvc.perform(
             post("/login/register")
@@ -182,7 +194,7 @@ class LoginControllerTest {
         User userSaved = userArgumentCaptor.getValue();
 
         assertEquals(fakeLoginData.getUsername(), userSaved.getUsername());
-        assertEquals(fakeLoginData.getPassword(), userSaved.getPassword());
+        assertEquals(passwordEncoder.encode(fakeLoginData.getPassword()), userSaved.getPassword());
 
         // verify that an empty CO2 entry for the user is saved to the co2repository.
         ArgumentCaptor<CO2> co2ArgumentCaptor = ArgumentCaptor.forClass(CO2.class);
@@ -194,24 +206,5 @@ class LoginControllerTest {
         assertEquals(0, co2Saved.getCO2energy());
         assertEquals(0, co2Saved.getCO2transport());
         assertEquals(0, co2Saved.getCO2reduc());
-    }
-
-    /**
-     * Configures the mocked database to control the login behaviour.
-     *
-     * @param loginData - login credentials to set to a state.
-     * @param valid - whether the provided login credentials should be valid or not
-     */
-    private void setUserDb(LoginData loginData, boolean valid) {
-        User fakeUser = mock(User.class);
-
-        if (valid) {
-            when(fakeUser.getPassword()).thenReturn(loginData.getPassword());
-        }
-
-        List<User> fakeUserList = new ArrayList<>();
-        fakeUserList.add(fakeUser);
-
-        when(userRepository.findByUsername(loginData.getUsername())).thenReturn(fakeUserList);
     }
 }

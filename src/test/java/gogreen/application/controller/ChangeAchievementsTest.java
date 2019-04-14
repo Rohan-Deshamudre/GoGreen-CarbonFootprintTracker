@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -57,6 +58,9 @@ public class ChangeAchievementsTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/changeachievements";
 
@@ -94,8 +98,7 @@ public class ChangeAchievementsTest {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
-
-                userRepository);
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)
@@ -109,7 +112,7 @@ public class ChangeAchievementsTest {
     void userNotExistTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         when(co2Repository.findByCusername("dummy")).thenReturn(new ArrayList<>());
 
@@ -130,7 +133,7 @@ public class ChangeAchievementsTest {
     void successTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<CO2> rep = new ArrayList<>();
         rep.add(new CO2("dummy", 20, 20, 20, 20, "101010"));

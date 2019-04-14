@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -60,6 +61,9 @@ public class ActivityAddHomeTempTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final LoginData fakeLoginData = new LoginData("Gucci", "Mane");
     private final int fakeTemp = 21;
@@ -99,7 +103,8 @@ public class ActivityAddHomeTempTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         AddHomeTempRequest req = new AddHomeTempRequest(fakeLoginData, fakeTemp, fakeDuration);
         mockMvc.perform(
@@ -116,8 +121,9 @@ public class ActivityAddHomeTempTest {
      */
     @Test
     void emptyCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0, "101010"), co2Repository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
+                "00000000000000"), co2Repository);
 
         AddHomeTempRequest req = new AddHomeTempRequest(fakeLoginData, fakeTemp, fakeDuration);
         MvcResult res = mockMvc.perform(
@@ -150,8 +156,9 @@ public class ActivityAddHomeTempTest {
      */
     @Test
     void dataCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164, "101010");
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164,
+                "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddHomeTempRequest req = new AddHomeTempRequest(fakeLoginData, fakeTemp, fakeDuration);

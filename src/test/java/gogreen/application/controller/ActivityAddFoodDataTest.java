@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -60,6 +61,9 @@ public class ActivityAddFoodDataTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final LoginData fakeLoginData = new LoginData("Gucci", "Mane");
     private final String fakeCheckBoxValue = "salad";
@@ -97,7 +101,8 @@ public class ActivityAddFoodDataTest {
     @Test
     void wrongPassword() throws Exception {
         // same username but different password.
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository,
+                passwordEncoder);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         mockMvc.perform(
@@ -114,8 +119,10 @@ public class ActivityAddFoodDataTest {
      */
     @Test
     void emptyCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
-        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0, "101010"), co2Repository);
+        setUserValid(fakeLoginData, userRepository,
+                passwordEncoder);
+        setCarbonRecord(new CO2(fakeLoginData.getUsername(), 0, 0, 0, 0,
+                "00000000000000"), co2Repository);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);
         MvcResult res = mockMvc.perform(
@@ -148,8 +155,9 @@ public class ActivityAddFoodDataTest {
      */
     @Test
     void dataCarbonRequest() throws Exception {
-        setUserValid(fakeLoginData, userRepository);
-        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164, "101010");
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
+        CO2 fakeCO2 = new CO2(fakeLoginData.getUsername(), 23, 42, 99, 164,
+                "00000000000000");
         setCarbonRecord(fakeCO2, co2Repository);
 
         AddFoodRequest req = new AddFoodRequest(fakeLoginData, fakeCheckBoxValue, 2);

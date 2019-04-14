@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -59,6 +60,9 @@ public class AddFriendTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/addfriend";
 
@@ -97,7 +101,7 @@ public class AddFriendTest {
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
 
-                userRepository);
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)
@@ -111,7 +115,7 @@ public class AddFriendTest {
     void friendNotExistTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         when(co2Repository.findByCusername("dummyFriend")).thenReturn(null);
 
@@ -138,7 +142,7 @@ public class AddFriendTest {
     void alreadyFriendsTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<CO2> all = new ArrayList<>();
         all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
@@ -171,7 +175,7 @@ public class AddFriendTest {
     void alreadyFriendRequestTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<CO2> all = new ArrayList<>();
         all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));
@@ -206,7 +210,7 @@ public class AddFriendTest {
     void notYourOwnFriendTest() throws Exception {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
         List<CO2> all = new ArrayList<>();
         all.add(new CO2("dummy", 4, 4, 4, 4, "101010"));
@@ -241,7 +245,7 @@ public class AddFriendTest {
         LoginData fakeLoginData = new LoginData("dummy", "qwerty");
 
         setUserValid(new LoginData(fakeLoginData.getUsername(), fakeLoginData.getPassword()),
-                userRepository);
+                userRepository, passwordEncoder);
 
         List<CO2> all = new ArrayList<>();
         all.add(new CO2("dummyFriend", 4, 4, 4, 4, "101010"));

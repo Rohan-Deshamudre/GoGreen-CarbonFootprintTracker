@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +26,10 @@ public class LoginController {
     @Autowired
     private CO2Repository co2Repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     /**
      * Adds a page /login which handles responding to login requests.
      *
@@ -37,8 +42,7 @@ public class LoginController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity handleLoginRequest(@RequestBody LoginData cred) {
-
-        if (checkLoginData(cred, userRepository)) {
+        if (checkLoginData(cred, userRepository, passwordEncoder)) {
             // login successful
             return new ResponseEntity(HttpStatus.OK);
         }
@@ -58,19 +62,22 @@ public class LoginController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity handleRegisterRequest(@RequestBody LoginData cred) {
+        if (cred.getPassword().equals("") || cred.getUsername().equals("")) {
+            // Empty Field
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
         if (!userRepository.findByUsername(cred.getUsername()).isEmpty()) {
             // Username is taken
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
-        if (!cred.getUsername().equals("") && !cred.getPassword().equals("")) {
-            userRepository.save(new User(cred.getUsername(), cred.getPassword()));
-            co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0, "00000000000000"));
+        // Register new account
+        String encryptedPassword = passwordEncoder.encode(cred.getPassword());
+        userRepository.save(new User(cred.getUsername(),encryptedPassword));
+        co2Repository.save(new CO2(cred.getUsername(), 0, 0, 0, 0, "00000000000000"));
 
-            return new ResponseEntity(HttpStatus.CREATED);
-        }
-
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
@@ -78,13 +85,15 @@ public class LoginController {
      *
      * @param loginData      - LoginData object containing the users login credentials.
      * @param userRepository - the repository storing users to check.
+     * @param passwordEncoder - a spring passwordencoder instance
      * @return - true iff login is successful.
      */
-    public static boolean checkLoginData(LoginData loginData, UserRepository userRepository) {
+    public static boolean checkLoginData(
+            LoginData loginData, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         List<User> userDb = userRepository.findByUsername(loginData.getUsername());
 
         for (User user : userDb) {
-            if (loginData.getPassword().equals(user.getPassword())) {
+            if (passwordEncoder.matches(loginData.getPassword(), user.getPassword())) {
                 return true;
             }
         }

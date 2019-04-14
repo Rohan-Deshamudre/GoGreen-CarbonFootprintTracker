@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -58,6 +59,9 @@ public class RespondToFriendRequestTest {
 
     @MockBean
     private FriendRequestRepository friendRequestRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private final String url = "/respondtofriendrequest";
 
@@ -95,7 +99,8 @@ public class RespondToFriendRequestTest {
     void wrongPassword() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
-        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"), userRepository);
+        setUserValid(new LoginData(fakeLoginData.getUsername(), "hunter2"),
+                userRepository, passwordEncoder);
 
         mockMvc.perform(
             post(url)
@@ -110,7 +115,7 @@ public class RespondToFriendRequestTest {
     void requestDeniedTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
 
         List<FriendRequest> all = new ArrayList<>();
@@ -142,7 +147,7 @@ public class RespondToFriendRequestTest {
     void requestAcceptedTest() throws Exception {
         LoginData fakeLoginData = new LoginData("shdah", "adjasj");
 
-        setUserValid(fakeLoginData, userRepository);
+        setUserValid(fakeLoginData, userRepository, passwordEncoder);
 
 
         List<FriendRequest> all = new ArrayList<>();
