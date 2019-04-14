@@ -4,6 +4,21 @@ import gogreen.application.communication.AddTransportRequest.TravelType;
 
 public class CarbonUtil {
 
+    static  int[] values = {
+        0,
+        300,
+        500,
+        700,
+        740,
+        980,
+        1220,
+        140,
+        210,
+        280,
+        900,
+        1150,
+        1350
+    };
 
     /**
      * Returns the amount of carbon reduced in kgs by diet choices.
@@ -15,52 +30,22 @@ public class CarbonUtil {
      */
     public static int getFoodCarbonReduction(String checkBoxValue, int amount) {
 
-        if (checkBoxValue.equalsIgnoreCase("salad")) {
-            switch (amount) {
-                case 1:
-                    return 300;
-                case 2:
-                    return 500;
-                case 3:
-                    return 700;
-                default:
-                    return 0;
-            }
-        } else if (checkBoxValue.equalsIgnoreCase("Vegetarian Meat")) {
-            switch (amount) {
-                case 1:
-                    return 740;
-                case 2:
-                    return 980;
-                case 3:
-                    return 1220;
-                default:
-                    return 0;
-            }
-        } else if (checkBoxValue.equalsIgnoreCase("Fruit")) {
-            switch (amount) {
-                case 1:
-                    return 140 ;
-                case 2:
-                    return 210;
-                case 3:
-                    return 280;
-                default:
-                    return 0;
-            }
-        } else if (checkBoxValue.equalsIgnoreCase("Vegan Meal")) {
-            switch (amount) {
-                case 1:
-                    return 900;
-                case 2:
-                    return 1150;
-                case 3:
-                    return 1350;
-                default:
-                    return 0;
-            }
+        if (amount == 0) {
+            return 0;
         }
-        return 0;
+
+        int index = 0;
+
+        if (checkBoxValue.equalsIgnoreCase("salad")) {
+            index = amount;
+        } else if (checkBoxValue.equalsIgnoreCase("Vegetarian Meat")) {
+            index = amount + 3;
+        } else if (checkBoxValue.equalsIgnoreCase("Fruit")) {
+            index = amount + 6;
+        } else if (checkBoxValue.equalsIgnoreCase("Vegan Meal")) {
+            index = amount + 9;
+        }
+        return values[index];
     }
 
     /**
