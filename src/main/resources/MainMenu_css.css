@@ -1,0 +1,136 @@
+.root{
+    -fx-background-color: white;
+}
+
+#label1{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: black;
+}
+
+#grid2{
+    -fx-border-color: grey;
+    -fx-border-radius: 5px;
+}
+
+#button1{
+    -fx-background-image: url("images/foodlogo.jpg");
+    -fx-font-size: 25px;
+    -fx-border-color: #a9a9a9;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#button2{
+    -fx-background-image: url("images/homelogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#button3{
+    -fx-background-image: url("images/transportlogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#button4{
+    -fx-background-image: url("images/statslogo.jpg");
+    -fx-font-size: 25;
+    -fx-border-color: #a9a9a9;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#vboxleader{
+    -fx-background-color: white;
+    -fx-border-color: grey;
+    -fx-border-radius: 5px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonhome{
+    -fx-font-size: 15px;
+    -fx-border-color: #a9a9a9;
+    -fx-background-color: #e4ffe2;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonhome:hover{
+     -fx-background-color: #1aee40;
+ }
+
+#labelmain{
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#button1:hover{
+    -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button2:hover{
+    -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button3:hover{
+    -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#button4:hover{
+    -fx-border-color: #1aee40;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+
+#menuBar1{
+    -fx-font-size: 15px;
+    -fx-background-color: #86a986;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.menu-bar{
+    -fx-padding: 0px;
+}
+
+#buttontile:hover{
+    -fx-background-color: #dbffd0;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#buttontile{
+    -fx-border-color: grey;
+    -fx-background-color: white;
+    -fx-border-radius: 3px;
+    -fx-font-family: 'Helvetica', sans-serif;
+    -fx-text-fill: black;
+}
+
+#labelleaderboard{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labeluser{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelco2reduc{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#labelleaderboard{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+}

@@ -1,0 +1,21 @@
+#button1:hover{
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-background-color: #1aee40;
+}
+
+#button1{
+    -fx-font-size: 20px;
+    -fx-border-color: #1aee40;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#menuBar1{
+    -fx-font-size: 15px;
+    -fx-background-color: #86a986;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.menu-bar{
+    -fx-padding: 0px;
+}

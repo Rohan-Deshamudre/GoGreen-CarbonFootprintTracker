@@ -1,0 +1,65 @@
+.root{
+    background-color: white;
+}
+
+#label1{
+    -fx-font-size: 15px;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#gridachieve{
+    -fx-font-size: 15px;
+}
+
+#menuBar1{
+    -fx-font-size: 15px;
+    -fx-background-color: #86a986;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+.menu-bar{
+    -fx-padding: 0px;
+}
+
+#buttonhome{
+    -fx-font-size: 15px;
+    -fx-border-color: #a9a9a9;
+    -fx-background-color: #e4ffe2;
+    -fx-font-family: 'Helvetica', sans-serif;
+}
+
+#buttonhome:hover{
+    -fx-background-color: #1aee40;
+}
+
+#labeluser{
+    -fx-font-size: 18px;
+}
+
+#labelname{
+    -fx-border-color: black;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+#labeldescrip{
+    -fx-border-radius: 0 0 10 10;
+    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent black black black;
+}
+
+#labelnamehave{
+    -fx-background-color: #b9efc7;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: black black transparent black;
+}
+
+#labeldescriphave{
+    -fx-border-color: black;
+    -fx-border-radius: 0 0 10 10;
+    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: #c2d8f9;
+}
