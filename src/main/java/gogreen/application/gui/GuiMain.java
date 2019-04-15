@@ -725,7 +725,6 @@ public class GuiMain extends Application {
 
         TextField distanceField = new TextField();
         distanceField.setMaxWidth(300);
-        distanceField.setPromptText("km");
 
         Button addButton = new Button("Add");
         addButton.setId("buttonaddbike");
@@ -747,7 +746,7 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Bike Ride");
         titleLabel.setId("labelpage");
-        Label distanceLabel = new Label("Total distance:");
+        Label distanceLabel = new Label("Total distance (km):");
         distanceLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);
@@ -806,7 +805,7 @@ public class GuiMain extends Application {
         centerGrid.setVgap(20);
         Label titleLabel = new Label("Public Transport");
         titleLabel.setId("labelpage");
-        Label distanceLabel = new Label("Total distance:");
+        Label distanceLabel = new Label("Total distance (km):");
         distanceLabel.setId("labelpage");
 
         centerGrid.add(titleLabel, 1, 0);

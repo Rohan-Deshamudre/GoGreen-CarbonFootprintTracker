@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import gogreen.application.communication.LoginData;
 import org.junit.jupiter.api.Test;
 
-
 class LoginDataTest {
 
     @Test
