@@ -555,7 +555,7 @@ public class GuiMain extends Application {
         label2.setId("labelpage");
         Label label3 = new Label("Vegetarian Meat");
         label3.setId("labelpage");
-        Label label4 = new Label("Else");
+        Label label4 = new Label("Vegan Meal");
         label4.setId("labelpage");
 
         centerGrid.add(titleLabel, 0, 0);
