@@ -1,15 +1,4 @@
-![pipeline](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-32/template/badges/continuous-integration/pipeline.svg) 
-![coverage](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-32/template/badges/continuous-integration/coverage.svg)
-![build](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-32/template/badges/continuous-integration/build.svg)
-
-# TI1216 Template Repository
-
-This a template gogreen.application.repository to help you get started on making the best project possible!
-
-You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
-
-http://stackoverflow.com/a/6466993
-
+# Go-Green Carbon footprint tracker
 ## How to import into your IDE
 
 Eclipse:
